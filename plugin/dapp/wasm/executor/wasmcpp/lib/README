@@ -1,0 +1,2 @@
+libasmjs.a  libbuiltins.a  libchainbase.a             libfc.a  libLogging.a  libPlatform.a  libsoftfloat.a  libwasm.a  libwasm_adapter.a
+libast.a    libcfg.a       libemscripten-optimizer.a  libIR.a  libpasses.a   libRuntime.a   libsupport.a    libWASM.a  libWAST.a

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+EOSIO_BIN_INSTALL_DIR=`dirname $0`
+if [ "${EOSIO_BIN_INSTALL_DIR}" == "." ]; then
+  EOSIO_BIN_INSTALL_DIR=`pwd`
+fi
+EOSIO_INSTALL_DIR=`dirname ${EOSIO_BIN_INSTALL_DIR}`
+ABIGEN=${EOSIO_INSTALL_DIR}/bin/eosio-abigen
+BOOST_INCLUDE_DIR=/home/hezhengjun/opt/boost/include
+echo ${EOSIO_INSTALL_DIR}

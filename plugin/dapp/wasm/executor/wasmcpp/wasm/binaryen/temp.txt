@@ -1,0 +1,161 @@
+./test/emscripten/system/lib/libcxxabi/src/private_typeinfo.cpp:1172:  if (ret) *thrown = temp; // apply changes only if we are catching
+./test/emscripten/system/lib/libcxxabi/src/cxa_personality.cpp:289:    // then apply indirection 
+./test/emscripten/tests/box2d/glui/algebra3.cpp:37:  vectors, and print(), set(), apply() for all classes.
+./test/emscripten/tests/box2d/glui/algebra3.cpp:203:vec2 &vec2::apply(V_FCT_PTR fct)
+./test/emscripten/tests/box2d/glui/algebra3.cpp:494:vec3 &vec3::apply(V_FCT_PTR fct)
+./test/emscripten/tests/box2d/glui/algebra3.cpp:773:vec4 &vec4::apply(V_FCT_PTR fct)
+./test/emscripten/tests/box2d/glui/algebra3.cpp:1082:mat3 &mat3::apply(V_FCT_PTR fct) 
+./test/emscripten/tests/box2d/glui/algebra3.cpp:1084:    v[VX].apply(fct);
+./test/emscripten/tests/box2d/glui/algebra3.cpp:1085:    v[VY].apply(fct);
+./test/emscripten/tests/box2d/glui/algebra3.cpp:1086:    v[VZ].apply(fct);
+./test/emscripten/tests/box2d/glui/algebra3.cpp:1340:mat4 &mat4::apply(V_FCT_PTR fct)
+./test/emscripten/tests/box2d/glui/algebra3.cpp:1342:    v[VX].apply(fct); 
+./test/emscripten/tests/box2d/glui/algebra3.cpp:1343:    v[VY].apply(fct); 
+./test/emscripten/tests/box2d/glui/algebra3.cpp:1344:    v[VZ].apply(fct); 
+./test/emscripten/tests/box2d/glui/algebra3.cpp:1345:    v[VW].apply(fct);
+./test/emscripten/tests/box2d/Box2D/Dynamics/b2Island.cpp:189:	// Integrate velocities and apply damping. Initialize the body state.
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:37:  vectors, and print(), set(), apply() for all classes.
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:203:vec2 &vec2::apply(V_FCT_PTR fct)
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:494:vec3 &vec3::apply(V_FCT_PTR fct)
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:773:vec4 &vec4::apply(V_FCT_PTR fct)
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:1082:mat3 &mat3::apply(V_FCT_PTR fct) 
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:1084:    v[VX].apply(fct);
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:1085:    v[VY].apply(fct);
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:1086:    v[VZ].apply(fct);
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:1340:mat4 &mat4::apply(V_FCT_PTR fct)
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:1342:    v[VX].apply(fct); 
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:1343:    v[VY].apply(fct); 
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:1344:    v[VZ].apply(fct); 
+./test/emscripten/tests/bullet/Extras/glui/algebra3.cpp:1345:    v[VW].apply(fct);
+./test/emscripten/tests/bullet/Extras/ConvexDecomposition/bestfit.cpp:354:      kDiff.x = w*(p[0] - kOrigin.x); // apply vertex weighting!
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:1546:	applyForces();
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:1617:	applyClusters(false);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:1703:	applyClusters(true);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2376:void					btSoftBody::applyClusters(bool drift)
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2488:	m_bodies[0].applyImpulse(-impulse,m_rpos[0]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2489:	m_bodies[1].applyImpulse( impulse,m_rpos[1]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2497:		m_bodies[0].applyDImpulse(-m_sdrift,m_rpos[0]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2498:		m_bodies[1].applyDImpulse( m_sdrift,m_rpos[1]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2533:	m_bodies[0].applyAImpulse(-impulse);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2534:	m_bodies[1].applyAImpulse( impulse);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2542:		m_bodies[0].applyDAImpulse(-m_sdrift);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2543:		m_bodies[1].applyDAImpulse( m_sdrift);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2599:					m_bodies[0].applyImpulse(-impulse*m_bodies[0].m_soft->m_selfCollisionImpulseFactor,m_rpos[0]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2600:					m_bodies[1].applyImpulse( impulse*m_bodies[0].m_soft->m_selfCollisionImpulseFactor,m_rpos[1]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2606:		m_bodies[0].applyImpulse(-impulse,m_rpos[0]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2607:		m_bodies[1].applyImpulse( impulse,m_rpos[1]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2616:		m_bodies[0].applyDImpulse(-m_sdrift,m_rpos[0]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2617:		m_bodies[1].applyDImpulse( m_sdrift,m_rpos[1]);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2622:void				btSoftBody::applyForces()
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2625:	BT_PROFILE("SoftBody applyForces");
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2771:		a.m_body->applyImpulse(-impulse,a.m_c1);
+./test/emscripten/tests/bullet/src/BulletSoftBody/btSoftBody.cpp:2798:				tmpRigid->applyImpulse(impulse,c.m_c1);
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btSimpleDynamicsWorld.cpp:61:	///apply gravity, predict motion
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btSimpleDynamicsWorld.cpp:237:					body->applyGravity();
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btSimpleDynamicsWorld.cpp:239:					body->applyDamping(timeStep);
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btContinuousDynamicsWorld.cpp:61:	///apply gravity, predict motion
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btRigidBody.cpp:157:///applyDamping damps the velocity, using the given m_linearDamping and m_angularDamping
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btRigidBody.cpp:158:void			btRigidBody::applyDamping(btScalar timeStep)
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btRigidBody.cpp:215:void btRigidBody::applyGravity()
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btRigidBody.cpp:220:	applyCentralForce(m_gravity);	
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp:171:		//it might break backward compatibility (people applying forces on sleeping objects get never cleared and accumulate on wake-up
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp:176:///apply gravity, call this once per timestep
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp:177:void	btDiscreteDynamicsWorld::applyGravity()
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp:185:			body->applyGravity();
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp:284:		applyGravity();
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp:317:	///apply gravity, predict motion
+./test/emscripten/tests/bullet/src/BulletDynamics/Dynamics/btDiscreteDynamicsWorld.cpp:1072:			body->applyDamping(timeStep);
+./test/emscripten/tests/bullet/src/BulletDynamics/Vehicle/btRaycastVehicle.cpp:308:		//apply suspension force
+./test/emscripten/tests/bullet/src/BulletDynamics/Vehicle/btRaycastVehicle.cpp:320:		getRigidBody()->applyImpulse(impulse, relpos);
+./test/emscripten/tests/bullet/src/BulletDynamics/Vehicle/btRaycastVehicle.cpp:382:void	btRaycastVehicle::applyEngineForce(btScalar force, int wheel)
+./test/emscripten/tests/bullet/src/BulletDynamics/Vehicle/btRaycastVehicle.cpp:677:		// apply the impulses
+./test/emscripten/tests/bullet/src/BulletDynamics/Vehicle/btRaycastVehicle.cpp:688:					m_chassisBody->applyImpulse(m_forwardWS[wheel]*(m_forwardImpulse[wheel]),rel_pos);
+./test/emscripten/tests/bullet/src/BulletDynamics/Vehicle/btRaycastVehicle.cpp:706:					m_chassisBody->applyImpulse(sideImp,rel_pos);
+./test/emscripten/tests/bullet/src/BulletDynamics/Vehicle/btRaycastVehicle.cpp:708:					//apply friction impulse on the ground
+./test/emscripten/tests/bullet/src/BulletDynamics/Vehicle/btRaycastVehicle.cpp:709:					groundObject->applyImpulse(-sideImp,rel_pos2);
+./test/emscripten/tests/bullet/src/BulletDynamics/Character/btKinematicCharacterController.cpp:601:	m_rigidBody->applyCentralImpulse (up * magnitude);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp:187:		return 0.0f;//no need for applying force
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp:220:	//body0->applyTorqueImpulse(motorImp);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp:221:	//body1->applyTorqueImpulse(-motorImp);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp:297:	/// apply displacement correction
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp:343:	//body1.applyImpulse( impulse_vector, rel_pos1);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp:344:	//body2.applyImpulse(-impulse_vector, rel_pos2);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btGeneric6DofConstraint.cpp:917:                    // only apply bounce if the velocity is incoming, and if the
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSliderConstraint.cpp:568:				// only apply bounce if the velocity is incoming, and if the
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSliderConstraint.cpp:670:				// only apply bounce if the velocity is incoming, and if the
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btHingeConstraint.cpp:550:				// only apply bounce if the velocity is incoming, and if the
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btHingeConstraint.cpp:937:				// only apply bounce if the velocity is incoming, and if the
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:316:void	applyAnisotropicFriction(btCollisionObject* colObj,btVector3& frictionDirection);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:317:void	applyAnisotropicFriction(btCollisionObject* colObj,btVector3& frictionDirection)
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:324:		//apply anisotropic friction
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:703:						applyAnisotropicFriction(colObj0,cp.m_lateralFrictionDir2);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:704:						applyAnisotropicFriction(colObj1,cp.m_lateralFrictionDir2);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:708:					applyAnisotropicFriction(colObj0,cp.m_lateralFrictionDir1);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:709:					applyAnisotropicFriction(colObj1,cp.m_lateralFrictionDir1);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:718:						applyAnisotropicFriction(colObj0,cp.m_lateralFrictionDir2);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:719:						applyAnisotropicFriction(colObj1,cp.m_lateralFrictionDir2);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:723:					applyAnisotropicFriction(colObj0,cp.m_lateralFrictionDir1);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btSequentialImpulseConstraintSolver.cpp:724:					applyAnisotropicFriction(colObj1,cp.m_lateralFrictionDir1);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btConeTwistConstraint.cpp:349:		// apply motor
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btContactConstraint.cpp:112:	body1->applyImpulse(normal*(normalImpulse), rel_pos1);
+./test/emscripten/tests/bullet/src/BulletDynamics/ConstraintSolver/btContactConstraint.cpp:114:		body2->applyImpulse(-normal*(normalImpulse), rel_pos2);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11.cpp:614:	SAFE_RELEASE( applyForcesKernel.constBuffer );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11.cpp:615:	SAFE_RELEASE( applyForcesKernel.kernel );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11.cpp:971:void btDX11SoftBodySolver::applyForces( float solverdt )
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11.cpp:1014:	m_dx11Context->CSSetShader( applyForcesKernel.kernel, NULL, 0 );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11.cpp:1039:} // btDX11SoftBodySolver::applyForces
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11.cpp:2084:	applyForcesKernel = dxFunctions.compileComputeShaderFromString( ApplyForcesHLSLString, "ApplyForcesKernel", sizeof(ApplyForcesCB) );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11.cpp:2085:	if( !applyForcesKernel.constBuffer )
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11.cpp:2196:	applyForces(  timeStep * getTimeScale() );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11SIMDAware.cpp:528:	applyForcesKernel = dxFunctions.compileComputeShaderFromString( ApplyForcesHLSLString, "ApplyForcesKernel", sizeof(ApplyForcesCB) );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/DX11/btSoftBodySolver_DX11SIMDAware.cpp:529:	if( !applyForcesKernel.constBuffer )
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCLSIMDAware.cpp:528:	applyForcesKernel = clFunctions.compileCLKernelFromString( ApplyForcesCLString, "ApplyForcesKernel", "" );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:643:	applyForcesKernel = 0;
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:666:	RELEASE_CL_KERNEL( applyForcesKernel );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:946:void btOpenCLSoftBodySolver::applyForces( float solverdt )
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:959:	ciErrNum = clSetKernelArg(applyForcesKernel, 0, sizeof(int), &numVerts);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:960:	ciErrNum = clSetKernelArg(applyForcesKernel, 1, sizeof(float), &solverdt);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:962:	ciErrNum = clSetKernelArg(applyForcesKernel, 2, sizeof(float), &fl);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:963:	ciErrNum = clSetKernelArg(applyForcesKernel, 3, sizeof(cl_mem), &m_vertexData.m_clClothIdentifier.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:964:	ciErrNum = clSetKernelArg(applyForcesKernel, 4, sizeof(cl_mem), &m_vertexData.m_clVertexNormal.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:965:	ciErrNum = clSetKernelArg(applyForcesKernel, 5, sizeof(cl_mem), &m_vertexData.m_clVertexArea.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:966:	ciErrNum = clSetKernelArg(applyForcesKernel, 6, sizeof(cl_mem), &m_vertexData.m_clVertexInverseMass.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:967:	ciErrNum = clSetKernelArg(applyForcesKernel, 7, sizeof(cl_mem), &m_clPerClothLiftFactor.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:968:	ciErrNum = clSetKernelArg(applyForcesKernel, 8 ,sizeof(cl_mem), &m_clPerClothDragFactor.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:969:	ciErrNum = clSetKernelArg(applyForcesKernel, 9, sizeof(cl_mem), &m_clPerClothWindVelocity.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:970:	ciErrNum = clSetKernelArg(applyForcesKernel,10, sizeof(cl_mem), &m_clPerClothAcceleration.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:971:	ciErrNum = clSetKernelArg(applyForcesKernel,11, sizeof(cl_mem), &m_clPerClothMediumDensity.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:972:	ciErrNum = clSetKernelArg(applyForcesKernel,12, sizeof(cl_mem), &m_vertexData.m_clVertexForceAccumulator.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:973:	ciErrNum = clSetKernelArg(applyForcesKernel,13, sizeof(cl_mem), &m_vertexData.m_clVertexVelocity.m_buffer);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:977:		ciErrNum = clEnqueueNDRangeKernel(m_cqCommandQue,applyForcesKernel, 1, NULL, &numWorkItems, &m_defaultWorkGroupSize, 0,0,0);
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:980:			btAssert( 0 &&  "enqueueNDRangeKernel(applyForcesKernel)");
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:1533:		BT_PROFILE("applyForces");
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:1535:		applyForces(  timeStep * getTimeScale() );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/OpenCL/btSoftBodySolver_OpenCL.cpp:1664:	applyForcesKernel = clFunctions.compileCLKernelFromString( ApplyForcesCLString, "ApplyForcesKernel" );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/CPU/btSoftBodySolver_CPU.cpp:307:void btCPUSoftBodySolver::applyForces( float solverdt )
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/CPU/btSoftBodySolver_CPU.cpp:324:			// First apply the global acceleration to all vertices
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/CPU/btSoftBodySolver_CPU.cpp:359:} // btCPUSoftBodySolver::applyForces
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/CPU/btSoftBodySolver_CPU.cpp:806:							// we need to apply bi-directionally it becomes more complicated
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/CPU/btSoftBodySolver_CPU.cpp:811:							// Only apply if the vertex is moving towards the object to reduce jitter error
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/GpuSoftBodySolvers/CPU/btSoftBodySolver_CPU.cpp:966:	applyForces(  timeStep * getTimeScale() );
+./test/emscripten/tests/bullet/src/BulletMultiThreaded/SpuSampleTask/SpuSampleTask.cpp:175:							body->applyDamping(timeStep);
+./test/emscripten/tests/bullet/src/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp:434:		ptri0.applyTransform(orgtrans0);
+./test/emscripten/tests/bullet/src/BulletCollision/Gimpact/btGImpactCollisionAlgorithm.cpp:435:		ptri1.applyTransform(orgtrans1);
+./test/emscripten/tests/poppler/cpp/poppler-page-renderer.cpp:151: \param rotate the rotation to apply when rendering the page
+./src/passes/SSAify.cpp:83:    // apply - we now know the sets for each get
+./src/passes/Vacuum.cpp:199:    // if the condition is a constant, just apply it
+./src/passes/ReorderLocals.cpp:86:    // apply the renaming to AST nodes
+./src/passes/ReorderLocals.cpp:107:    // apply to the names
+./src/passes/CoalesceLocals.cpp:223:  void applyIndices(std::vector<Index>& indices, Expression* root);
+./src/passes/CoalesceLocals.cpp:292:  // apply indices
+./src/passes/CoalesceLocals.cpp:293:  applyIndices(indices, func->body);
+./src/passes/CoalesceLocals.cpp:608:void CoalesceLocals::applyIndices(std::vector<Index>& indices, Expression* root) {
+./src/passes/CoalesceLocals.cpp:706:      // apply the order
+./src/passes/OptimizeInstructions.cpp:94:// Check for matches and apply them
+./src/passes/OptimizeInstructions.cpp:149:  Expression* apply() {
+./src/passes/OptimizeInstructions.cpp:367:    // we may be able to apply multiple patterns, one may open opportunities that look deeper NB: patterns must not have cycles
+./src/passes/OptimizeInstructions.cpp:383:          curr = match.apply();
+./src/wasm/wasm-binary.cpp:1695:  // now that we have names for each function, apply things
+./src/tools/wasm-ctor-eval.cpp:20:// applying their changes to memory as needed, then writes it. In
+./src/wasm-js.cpp:303:        return lookup.apply(null, tempArguments);
+./src/wasm-js.cpp:334:          return func.apply(null, tempArguments);

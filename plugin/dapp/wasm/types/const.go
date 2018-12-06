@@ -1,0 +1,48 @@
+// Copyright Fuzamei Corp. 2018 All Rights Reserved.
+// Use of this source code is governed by a BSD-style
+// license that can be found in the LICENSE file.
+
+package types
+
+const (
+	// EVM本执行器支持的查询方法
+	CheckAddrExistsFunc    = "CheckAddrExistsWasm"
+	EstimateGasWasm        = "EstimateGasWasm"
+	WasmDebug              = "WasmDebug"
+	WasmGetAbi             = "WasmGetAbi"
+	QueryFromContract      = "QueryFromContract"
+	GAS_EXHAUSTED_ERR_CODE = 0x81234567
+	WasmX                  = "wasm"
+	UserWasmX              = "user.wasm."
+	CreateWasmContractStr  = "CreateWasmContract"
+	CallWasmContractStr    = "CallWasmContract"
+)
+
+//wasm contract action
+const (
+	CreateWasmContractAction = 1 + iota
+	CallWasmContractAction
+)
+
+const (
+	// log for wasm
+	// 合约代码日志
+	TyLogContractDataWasm = iota
+	// 合约状态数据日志
+	TyLogContractStateWasm
+	// 合约调用日志
+	TyLogCallContractWasm
+
+	TyLogStateChangeItemWasm
+
+	//用于wasm合约输出可读信息的日志记录，尤其是query的相关信息
+	//为什么不将该种信息类型的获取不放置在query中呢，因为query的操作
+	// 中是不含交易费的，如果碰到恶意的wasm合约，输出无限长度的信息，
+	// 会对我们的wasm合约系统的安全性造成威胁，基于这样的考虑我们
+	TyLogOutputItemWasm
+)
+
+const (
+	VMWavm = iota
+	VMBinaryen
+)
