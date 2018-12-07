@@ -93,7 +93,7 @@ func (wasm WasmType) CreateTx(action string, message json.RawMessage) (*types.Tr
 		return nil, types.ErrInvalidParam
 	}
 
-	txType := param.value.WasmContractActionType()
+	txType := param.Value.WasmContractActionType()
 	if CreateWasmContractAction == txType || CallWasmContractAction == txType {
 		return createWasmTx(&param)
 	}
@@ -113,9 +113,9 @@ func (wasm *WasmType) GetLogMap() map[int64]*types.LogInfo {
 }
 
 func createWasmTx(param *CreateOrCallWasmContract) (*types.Transaction, error) {
-	txType := param.value.WasmContractActionType()
+	txType := param.Value.WasmContractActionType()
 	if CreateWasmContractAction == txType {
-		creatPara, ok := param.value.(CreateWasmContractPara)
+		creatPara, ok := param.Value.(CreateWasmContractPara)
 		if !ok {
 			return nil, ErrCreateWasmPara
 		}
@@ -137,7 +137,7 @@ func createWasmTx(param *CreateOrCallWasmContract) (*types.Transaction, error) {
 		return createRawWasmTx(action, address.ExecAddress(types.ExecName(WasmX)), creatPara.Fee)
 	}
 
-	callPara, ok := param.value.(CallWasmContractPara)
+	callPara, ok := param.Value.(CallWasmContractPara)
 	if !ok {
 		return nil, ErrCreateWasmPara
 	}

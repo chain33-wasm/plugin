@@ -5,7 +5,8 @@ import (
 
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/types"
-    loccom "github.com/33cn/chain33/plugin/dapp/wasm/executor/common"
+    loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
+	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
 )
 
 // 数据状态变更接口
@@ -61,7 +62,7 @@ func (ver *Snapshot) getData(opType loccom.WasmContratOpType) (kvSet []*types.Ke
 			logs = append(logs, entry.getLog(ver.statedb)...)
 		}
 
-		if loccom.CallWasmContrcat == opType {
+		if wasmtypes.CallWasmContractAction == opType {
 			if stChg, ok := entry.(storageChange); ok {
 				localKvSet = append(localKvSet, stChg.getDataFromLocalDB(ver.statedb)...)
 			}
@@ -76,7 +77,7 @@ func (ver *Snapshot) getData(opType loccom.WasmContratOpType) (kvSet []*types.Ke
 	////////////////////////////
 	//因为调用合约时的stroagechange的数据存储在localdb中，为保证数据的一致性，需要将
 	//将所有storagechange的数据key和value进行append，进行hash计算并进行存储
-	if loccom.CallWasmContrcat == opType {
+	if wasmtypes.CallWasmContractAction == opType {
 		for _, kv := range localKvSet {
 			localDataMap[string(kv.Key)] = kv
 		}
@@ -94,7 +95,7 @@ func (ver *Snapshot) getData(opType loccom.WasmContratOpType) (kvSet []*types.Ke
 		}
 		keyHash := common.Sha256(keys)
 		valueHash := common.Sha256(values)
-		kvSet = append(kvSet, &types.KeyValue{[]byte(loccom.WasmContractKvPrefix+string(keyHash)), valueHash})
+		kvSet = append(kvSet, &types.KeyValue{Key: []byte(loccom.WasmContractKvPrefix+string(keyHash)), Value: valueHash})
 	}
 	///////////////////////////////////
 
@@ -287,8 +288,8 @@ func (ch storageChange) getLog(mdb *MemoryStateDB) []*types.ReceiptLog {
 	acc := mdb.accounts[ch.account]
 	if acc != nil {
 		currentVal := acc.GetState(string(ch.key))
-		receipt := &types.EVMStateChangeItem{Key: getStateItemKey(ch.account, string(ch.key)), PreValue: ch.prevalue, CurrentValue: currentVal}
-		return []*types.ReceiptLog{{Ty: types.TyLogStateChangeItemWasm, Log: types.Encode(receipt)}}
+		receipt := &wasmtypes.WASMStateChangeItem{Key: getStateItemKey(ch.account, string(ch.key)), PreValue: ch.prevalue, CurrentValue: currentVal}
+		return []*types.ReceiptLog{{Ty: wasmtypes.TyLogStateChangeItemWasm, Log: types.Encode(receipt)}}
 	}
 
 	return nil

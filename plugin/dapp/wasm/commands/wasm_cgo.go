@@ -1,7 +1,7 @@
 package commands
 
-//#cgo CFLAGS: -I../../../external/abi/include/
-//#cgo LDFLAGS: -L../../../external/abi/lib/ -labiconv -lboost_date_time -lstdc++
+//#cgo CFLAGS: -I../executor/external/abi/include/
+//#cgo LDFLAGS: -L../executor/external/abi/lib/ -labiconv -lboost_date_time -lstdc++
 //#include <stdio.h>
 //#include <stdlib.h>
 //#include "abieos.h"

@@ -4,13 +4,14 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/inconshreveable/log15"
+	"github.com/33cn/chain33/common/log/log15"
 	"github.com/33cn/chain33/account"
 	"github.com/33cn/chain33/common/db"
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/types"
-	loccom "github.com/33cn/chain33/plugin/dapp/wasm/executor/common"
-	"github.com/33cn/chain33/plugin/dapp/evm/executor/vm/model"
+	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
+	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
+
 )
 
 
@@ -457,12 +458,12 @@ func (self *MemoryStateDB) checkExecAccount(addr string, value int64) bool {
 	}
 	contract := self.GetAccount(addr)
 	if contract == nil {
-		err = model.ErrAddrNotExists
+		err = wasmtypes.ErrAddrNotExists
 		return false
 	}
 	creator := contract.GetCreator()
 	if len(creator) == 0 {
-		err = model.ErrNoCreator
+		err = wasmtypes.ErrNoCreator
 		return false
 	}
 
@@ -491,7 +492,7 @@ func (self *MemoryStateDB) checkTransfer(sender, recipient string, amount uint64
 	}
 	if self.CoinsAccount == nil {
 		log15.Error("no coinsaccount exists", "sender", sender, "recipient", recipient, "amount", amount)
-		return Error, model.NoCoinsAccount
+		return Error, wasmtypes.NoCoinsAccount
 	}
 
 	// 首先需要检查转账双方的信息，是属于合约账户还是外部账户
@@ -500,7 +501,7 @@ func (self *MemoryStateDB) checkTransfer(sender, recipient string, amount uint64
 
 	if execRecipient && execSender {
 		// 双方均为合约账户，不支持
-		err = model.ErrTransferBetweenContracts
+		err = wasmtypes.ErrTransferBetweenContracts
 		tType = Error
 	} else if execSender {
 		// 从合约账户到外部账户转账 （这里调用外部账户从合约账户取钱接口）
@@ -512,7 +513,7 @@ func (self *MemoryStateDB) checkTransfer(sender, recipient string, amount uint64
 		err = nil
 	} else {
 		// 双方都是外部账户，不支持
-		err = model.ErrTransferBetweenEOA
+		err = wasmtypes.ErrTransferBetweenEOA
 		tType = Error
 	}
 
@@ -578,11 +579,11 @@ func (self *MemoryStateDB) transfer2Contract(sender, recipient string, amount in
 	// 首先获取合约的创建者信息
 	contract := self.GetAccount(recipient)
 	if contract == nil {
-		return nil, model.ErrAddrNotExists
+		return nil, wasmtypes.ErrAddrNotExists
 	}
 	creator := contract.GetCreator()
 	if len(creator) == 0 {
-		return nil, model.ErrNoCreator
+		return nil, wasmtypes.ErrNoCreator
 	}
 	execAddr := recipient
 
@@ -608,11 +609,11 @@ func (self *MemoryStateDB) transfer2External(sender, recipient string, amount in
 	// 首先获取合约的创建者信息
 	contract := self.GetAccount(sender)
 	if contract == nil {
-		return nil, model.ErrAddrNotExists
+		return nil, wasmtypes.ErrAddrNotExists
 	}
 	creator := contract.GetCreator()
 	if len(creator) == 0 {
-		return nil, model.ErrNoCreator
+		return nil, wasmtypes.ErrNoCreator
 	}
 
 	execAddr := sender

@@ -1,7 +1,7 @@
 package common
 
 import (
-	"github.com/inconshreveable/log15"
+	"github.com/33cn/chain33/common/log/log15"
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/common/address"
 )

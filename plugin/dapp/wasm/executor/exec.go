@@ -1,13 +1,13 @@
 package executor
 
-//#cgo CFLAGS: -I./../../../../wasmcpp/adapter/include
-//#cgo LDFLAGS: -L./../../../../wasmcpp/lib -lwasm_adapter -ldl -lpthread -lz -ltinfo -lc  -lssl -lcrypto -lsecp256k1 -lchainbase -lWAST -lWASM -lRuntime -lIR -lLogging -lPlatform  -lwasm -lasmjs -lpasses -lcfg -last -lemscripten-optimizer -lsupport -lsoftfloat -lbuiltins -lfc -lm -lstdc++
+//#cgo CFLAGS: -I./wasmcpp/adapter/include
+//#cgo LDFLAGS: -L./wasmcpp/lib -lwasm_adapter -ldl -lpthread -lz -ltinfo -lc  -lssl -lcrypto -lsecp256k1 -lchainbase -lWAST -lWASM -lRuntime -lIR -lLogging -lPlatform  -lwasm -lasmjs -lpasses -lcfg -last -lemscripten-optimizer -lsupport -lsoftfloat -lbuiltins -lfc -lm -lstdc++
 //#cgo LDFLAGS: -L/usr/local/lib -lboost_filesystem -lboost_system -lboost_chrono -lboost_date_time
 //#cgo LDFLAGS: -L/usr/lib/llvm-4.0/lib -lLLVMPasses -lLLVMipo -lLLVMInstrumentation -lLLVMVectorize -lLLVMIRReader -lLLVMAsmParser -lLLVMLinker -lLLVMMCJIT -lLLVMExecutionEngine -lLLVMRuntimeDyld -lLLVMDebugInfoDWARF -lLLVMX86CodeGen -lLLVMAsmPrinter -lLLVMDebugInfoCodeView -lLLVMDebugInfoMSF -lLLVMGlobalISel -lLLVMSelectionDAG -lLLVMCodeGen -lLLVMScalarOpts -lLLVMInstCombine -lLLVMBitWriter -lLLVMTransformUtils -lLLVMTarget -lLLVMAnalysis -lLLVMProfileData -lLLVMX86AsmParser -lLLVMX86Desc -lLLVMX86AsmPrinter -lLLVMX86Utils -lLLVMObject -lLLVMMCParser -lLLVMBitReader -lLLVMCore -lLLVMX86Disassembler -lLLVMX86Info -lLLVMMCDisassembler -lLLVMMC -lLLVMSupport -lLLVMDemangle
 //#include <stdio.h>
 //#include <stdlib.h>
 //#include <string.h>
-//#include <../../../../wasmcpp/adapter/include/eosio/chain/wasm_interface_adapter.h>
+//#include <wasmcpp/adapter/include/eosio/chain/wasm_interface_adapter.h>
 import "C"
 
 import (
@@ -24,14 +24,14 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(CreateWasmContract *wasmtypes.
 	contractAddr := wasm.getNewAddr(wasm.tx.Hash())
 	contractAddrInStr := contractAddr.String()
 	if !wasm.mStateDB.Empty(contractAddrInStr) {
-		return nil, loccom.ErrContractAddressCollisionWASM
+		return nil, wasmtypes.ErrContractAddressCollisionWASM
 	}
 
 	log.Debug("wasm create", "new created wasm contract addr =", contractAddrInStr)
 
 	codeSize := len(CreateWasmContract.GetCode())
 	if codeSize > loccom.MaxCodeSize {
-		return nil, loccom.ErrMaxCodeSizeExceededWASM
+		return nil, wasmtypes.ErrMaxCodeSizeExceededWASM
 	}
 
 	// 此处暂时不考虑消息发送签名的处理，chain33在mempool中对签名做了检查
@@ -47,7 +47,7 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(CreateWasmContract *wasmtypes.
 	defer C.free(code)
 	if result := C.wasm_validate_contract((*C.char)(code), C.int(len(CreateWasmContract.Code))); result != C.Success {
 		log.Error("wasm_validate_contract", "failed with result", result)
-		return nil, loccom.ErrWASMValidationFail
+		return nil, wasmtypes.ErrWASMValidationFail
 	}
 	// 创建新的合约对象，包含双方地址以及合约代码，可用Gas信息
 	contract := loccom.NewContract(loccom.AccountRef(*from), loccom.AccountRef(*contractAddr), 0, CreateWasmContract.GasLimit)
@@ -61,7 +61,7 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(CreateWasmContract *wasmtypes.
 	if contract.UseGas(createDataGas) {
 		wasm.mStateDB.SetCodeAndAbi(contractAddrInStr, CreateWasmContract.Code, []byte(CreateWasmContract.Abi))
 	} else {
-		return nil, loccom.ErrCodeStoreOutOfGasWASM
+		return nil, wasmtypes.ErrCodeStoreOutOfGasWASM
 	}
 
 	usedGas := CreateWasmContract.GasLimit - contract.Gas
@@ -72,7 +72,7 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(CreateWasmContract *wasmtypes.
 		execName,
 		contract.CallerAddress.String(),
 		contractAddrInStr,
-		loccom.CreateWasmContrcat)
+		wasmtypes.CreateWasmContractAction)
 	log.Debug("wasm create", "receipt", receipt, "err info", err)
 
 	return receipt, err
@@ -81,7 +81,7 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(CreateWasmContract *wasmtypes.
 func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.CallWasmContract) (*types.Receipt, error) {
 	if callWasmContract.VmType != wasmtypes.VMBinaryen {
 		panic("Now only binaryen is supported")
-		return nil, loccom.ErrWASMWavmNotSupported
+		return nil, wasmtypes.ErrWASMWavmNotSupported
 	}
 
 	log.Debug("wasm call", "Para CallWasmContract", callWasmContract)
@@ -89,7 +89,7 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 	code := wasm.mStateDB.GetCode(callWasmContract.ContractAddr)
 	if nil == code {
 		log.Error("call wasm contract ", "failed to get code from contract address", callWasmContract.ContractAddr)
-		return nil, loccom.ErrWrongContractAddr
+		return nil, wasmtypes.ErrWrongContractAddr
 	}
 
 	snapshot := wasm.mStateDB.Snapshot()
@@ -132,13 +132,13 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 	//合约执行失败
 	if leftGas < 0 && leftGas == wasmtypes.GAS_EXHAUSTED_ERR_CODE {
 		wasm.mStateDB.RevertToSnapshot(snapshot)
-		log.Error("call wasm contract ", "failed to call contract due to", loccom.ErrWasmContractExecFailed)
-		return nil, loccom.ErrWasmContractExecFailed
+		log.Error("call wasm contract ", "failed to call contract due to", wasmtypes.ErrWasmContractExecFailed)
+		return nil, wasmtypes.ErrWasmContractExecFailed
 	} else if leftGas < 0 {
 		//合约购买的gas不够
 		wasm.mStateDB.RevertToSnapshot(snapshot)
-		log.Error("call wasm contract ", "failed to call contract due to", loccom.ErrOutOfGasWASM)
-		return nil, loccom.ErrOutOfGasWASM
+		log.Error("call wasm contract ", "failed to call contract due to", wasmtypes.ErrOutOfGasWASM)
+		return nil, wasmtypes.ErrOutOfGasWASM
 	}
 	usedGas := callWasmContract.GasLimit - uint64(leftGas)
 
@@ -151,7 +151,7 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 		contractAccount.GetExecName(),
 		caller,
 		callWasmContract.ContractAddr,
-		loccom.CallWasmContrcat)
+		wasmtypes.CallWasmContractAction)
 	log.Debug("wasm call", "receipt", receipt, "err info", err)
 
 	return receipt, err

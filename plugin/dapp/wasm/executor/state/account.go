@@ -4,10 +4,11 @@ import (
 	"fmt"
 
 	"github.com/golang/protobuf/proto"
-	"github.com/inconshreveable/log15"
+	"github.com/33cn/chain33/common/log/log15"
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/common/db"
-	"github.com/33cn/chain33/types"
+	chain33Types "github.com/33cn/chain33/types"
+	"github.com/33cn/plugin/plugin/dapp/wasm/types"
 )
 
 var (
@@ -199,30 +200,30 @@ func (self *ContractAccount) GetExecName() string {
 }
 
 // 合约固定数据，包含合约代码，以及代码哈希
-func (self *ContractAccount) GetDataKV() (kvSet []*types.KeyValue) {
+func (self *ContractAccount) GetDataKV() (kvSet []*chain33Types.KeyValue) {
 	self.Data.Addr = self.Addr
 	datas, err := proto.Marshal(&self.Data)
 	if err != nil {
 		log15.Error("marshal contract data error!", "addr", self.Addr, "error", err)
 		return
 	}
-	kvSet = append(kvSet, &types.KeyValue{Key: self.GetDataKey(), Value: datas})
+	kvSet = append(kvSet, &chain33Types.KeyValue{Key: self.GetDataKey(), Value: datas})
 	return
 }
 
 // 获取合约状态数据，包含nonce、是否自杀、存储哈希、存储数据
-func (self *ContractAccount) GetStateKV() (kvSet []*types.KeyValue) {
+func (self *ContractAccount) GetStateKV() (kvSet []*chain33Types.KeyValue) {
 	datas, err := proto.Marshal(&self.State)
 	if err != nil {
 		log15.Error("marshal contract state error!", "addr", self.Addr, "error", err)
 		return
 	}
-	kvSet = append(kvSet, &types.KeyValue{Key: self.GetStateKey(), Value: datas})
+	kvSet = append(kvSet, &chain33Types.KeyValue{Key: self.GetStateKey(), Value: datas})
 	return
 }
 
 // 构建变更日志
-func (self *ContractAccount) BuildDataLog() (log *types.ReceiptLog) {
+func (self *ContractAccount) BuildDataLog() (log *chain33Types.ReceiptLog) {
 	logWASMContractData := types.LogWASMContractData{
 		Creator:  self.Data.Creator,
 		Name:     self.Data.Name,
@@ -237,30 +238,30 @@ func (self *ContractAccount) BuildDataLog() (log *types.ReceiptLog) {
 		log15.Error("marshal contract data error!", "addr", self.Addr, "error", err)
 		return
 	}
-	return &types.ReceiptLog{types.TyLogContractDataWasm, logdatas}
+	return &chain33Types.ReceiptLog{Ty: types.TyLogContractDataWasm, Log: logdatas}
 }
 
 // 构建变更日志
-func (self *ContractAccount) BuildStateLog() (log *types.ReceiptLog) {
+func (self *ContractAccount) BuildStateLog() (log *chain33Types.ReceiptLog) {
 	datas, err := proto.Marshal(&self.State)
 	if err != nil {
 		log15.Error("marshal contract state log error!", "addr", self.Addr, "error", err)
 		return
 	}
 
-	return &types.ReceiptLog{types.TyLogContractStateWasm, datas}
+	return &chain33Types.ReceiptLog{Ty: types.TyLogContractStateWasm, Log: datas}
 }
 
 func (self *ContractAccount) GetDataKey() []byte {
-	return []byte("mavl-" + types.ExecName(types.WasmX) + "-data: " + self.Addr)
+	return []byte("mavl-" + chain33Types.ExecName(types.WasmX) + "-data: " + self.Addr)
 }
 
 func (self *ContractAccount) GetStateKey() []byte {
-	return []byte("mavl-" + types.ExecName(types.WasmX) + "-state: " + self.Addr)
+	return []byte("mavl-" + chain33Types.ExecName(types.WasmX) + "-state: " + self.Addr)
 }
 
 func getStateItemKey(addr, key string) string {
-	return fmt.Sprintf("mavl-"+types.ExecName(types.WasmX)+"-state:%v:%v", addr, key)
+	return fmt.Sprintf("mavl-"+chain33Types.ExecName(types.WasmX)+"-state:%v:%v", addr, key)
 }
 
 func (self *ContractAccount) Suicide() bool {

@@ -7,7 +7,7 @@ package executor
 //#include <stdio.h>
 //#include <stdlib.h>
 //#include <string.h>
-//#include <../../../../wasmcpp/adapter/include/eosio/chain/wasm_interface_adapter.h>
+//#include <wasmcpp/adapter/include/eosio/chain/wasm_interface_adapter.h>
 import "C"
 
 import (
@@ -33,7 +33,7 @@ var (
 	log            = log15.New("module", "execs.token")
 )
 
-func Init(name string) {
+func Init(name string, sub []byte) {
 	drivers.Register(GetName(), newWASMDriver, 0)
 	wasmAddress = address.ExecAddress(GetName())
 }
@@ -166,7 +166,7 @@ func (wasm *WASMExecutor) GenerateExecReceipt(usedGas, gasPrice uint64, snapshot
 			wasm.mStateDB.RevertToSnapshot(snapshot)
 		}
 		log.Error("GenerateExecReceipt", "overflow", overflow, "usedfee", usedFee, "txFee", wasm.tx.Fee)
-		return nil, loccom.ErrOutOfGasWASM
+		return nil, wasmtypes.ErrOutOfGasWASM
 	}
 
 	// 打印合约中生成的日志
@@ -207,7 +207,7 @@ func (wasm *WASMExecutor) queryFromExec(contractAddr string,
 	code := wasm.mStateDB.GetCode(contractAddr)
 	if nil == code {
 		log.Error("call wasm contract ", "failed to get code from contract address", contractAddr)
-		return nil, loccom.ErrWrongContractAddr
+		return nil, wasmtypes.ErrWrongContractAddr
 	}
 	AliasStr := wasm.mStateDB.GetAlias(contractAddr)
 
@@ -324,7 +324,7 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQuery) (types.Messa
 
 	abi := wasm.mStateDB.GetAbi(in.ContractAddr)
 	if nil == abi {
-		return nil, loccom.ErrAddrNotExists
+		return nil, wasmtypes.ErrAddrNotExists
 	}
 	abi4CStr := C.CString(string(abi))
 	defer C.free(unsafe.Pointer(abi4CStr))
@@ -338,7 +338,7 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQuery) (types.Messa
 
 		if 0 != C.convertData2Json(abi4CStr, (*C.char)(serializedData), (C.int)(len(wasmOutItem.Data)), structName, &jsonResult) {
 			log.Error("wasm query", "structure", wasmOutItem.ItemType)
-			return nil, loccom.ErrUnserialize
+			return nil, wasmtypes.ErrUnserialize
 		}
 
 		result := &wasmtypes.QueryResultItem{
@@ -361,7 +361,7 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQuery) (types.Messa
 func (wasm *WASMExecutor) checkAddrExists(req *wasmtypes.CheckWASMAddrReq) (types.Message, error) {
 	addrStr := req.Addr
 	if len(addrStr) == 0 {
-		return nil, loccom.ErrAddrNotExists
+		return nil, wasmtypes.ErrAddrNotExists
 	}
 
 	var addr *address.Address
@@ -372,7 +372,7 @@ func (wasm *WASMExecutor) checkAddrExists(req *wasmtypes.CheckWASMAddrReq) (type
 		addr2, err := address.NewAddrFromString(addrStr)
 		if err != nil {
 			log.Error("create address form string error", "string:", addrStr)
-			return nil, loccom.ErrAddrNotExists
+			return nil, wasmtypes.ErrAddrNotExists
 		}
 
 		addr = addr2

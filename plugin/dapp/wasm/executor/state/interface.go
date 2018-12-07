@@ -2,7 +2,7 @@ package state
 
 import (
      "github.com/33cn/chain33/common"
-	loccom "github.com/33cn/chain33/plugin/dapp/wasm/executor/common"
+	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
 )
 
 // 状态数据库封装，面向EVM业务执行逻辑；

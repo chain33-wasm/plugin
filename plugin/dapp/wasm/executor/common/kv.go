@@ -2,10 +2,9 @@ package common
 
 import (
 	"fmt"
-	"github.com/33cn/chain33/types"
+	"github.com/33cn/plugin/plugin/dapp/wasm/types"
 	"github.com/33cn/chain33/common"
-	"github.com/33cn/chain33/types/executor/wasm"
-
+	chain33types "github.com/33cn/chain33/types"
 )
 
 type WasmContratOpType int
@@ -17,18 +16,6 @@ const (
 	// 本执行器名称
 	ExecutorName = types.WasmX
 
-	CallWasmContrcat   = WasmContratOpType(1)
-	CreateWasmContrcat = WasmContratOpType(2)
-
-
-	// EVM本执行器支持的查询方法
-	CheckAddrExistsFunc = "CheckAddrExistsWasm"
-	EstimateGasFunc     = "EstimateGasWasm"
-	WasmDebug           = "WasmDebug"
-	WasmGetAbi          = "WasmGetAbi"
-	//QueryFromContract   = "QueryFromContract"
-	QueryFromContract   = wasm.QueryFromContract
-
 	//各种数据存储前缀
 	WasmContractCodePrefix     = "mavl-wasm-contract-code"
 	WasmContractABIPrefix      = "mavl-wasm-contract-abi"
@@ -37,7 +24,7 @@ const (
 )
 
 func CalcWasmContractName(txhash []byte) string {
-	return types.ExecName(WasmPrefix) + common.ToHex(txhash)
+	return chain33types.ExecName(WasmPrefix) + common.ToHex(txhash)
 }
 
 //mavl-wasm-contract-code-user.wasm.contrAddr --->>wasm byte opcode

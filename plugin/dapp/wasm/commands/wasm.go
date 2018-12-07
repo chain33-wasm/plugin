@@ -1,17 +1,8 @@
 package commands
 
-//#cgo CPPFLAGS: -I./../../../wasmcpp/serialize -I./../../../wasmcpp/fc/include -I./../../../wasmcpp/adapter/include -I./../../../external/magic_get/include/
-//#cgo LDFLAGS: -L/usr/local/lib -lboost_filesystem -lboost_system -lboost_chrono -lboost_date_time
-//#cgo LDFLAGS: -L./../../../wasmcpp/lib -lwasm_serialize -lfc
-//#include <../../../wasmcpp/serialize/serialize_api.h>
-import "C"
-
 import (
-	"encoding/hex"
 	"fmt"
-	"math/rand"
 	"os"
-	"time"
 	"io/ioutil"
 
 	"strings"
@@ -20,14 +11,10 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/common/address"
-	"github.com/33cn/chain33/rpc"
 	rpctypes "github.com/33cn/chain33/rpc/types"
 	"github.com/33cn/chain33/types"
 	"github.com/33cn/chain33/rpc/jsonclient"
-	cty "github.com/33cn/chain33/system/dapp/coins/types"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
-
-	"strconv"
 	"encoding/json"
 )
 
