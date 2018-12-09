@@ -6,16 +6,19 @@ package types
 
 const (
 	// EVM本执行器支持的查询方法
-	CheckAddrExistsFunc    = "CheckAddrExistsWasm"
+	CheckNameExistsFunc    = "CheckContractNameExist"
 	EstimateGasWasm        = "EstimateGasWasm"
 	WasmDebug              = "WasmDebug"
 	WasmGetAbi             = "WasmGetAbi"
+	ConvertJson2Abi        = "ConvertJson2Abi"
 	QueryFromContract      = "QueryFromContract"
 	GAS_EXHAUSTED_ERR_CODE = 0x81234567
 	WasmX                  = "wasm"
 	UserWasmX              = "user.wasm."
 	CreateWasmContractStr  = "CreateWasmContract"
 	CallWasmContractStr    = "CallWasmContract"
+	AccountOpFail          = -1
+	AccountOpSuccess       = 0
 )
 
 //wasm contract action

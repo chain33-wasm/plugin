@@ -61,7 +61,7 @@ func (self *ContractAccount) GetState(key string) []byte {
 	if val, ok := self.stateCache[key]; ok {
 		return val
 	}
-	keyStr := getStateItemKey(self.Addr, key)
+	keyStr := self.GetStateItemKey(self.Addr, key)
 	// 如果缓存中取不到数据，则只能到本地数据库中查询
 	val, err := self.mdb.LocalDB.Get([]byte(keyStr))
 	if err != nil {
@@ -82,7 +82,7 @@ func (self *ContractAccount) SetState(key string, value []byte) {
 	})
 	self.stateCache[key] = value
 	//需要设置到localdb中，以免同一个区块中同一个合约多次调用时，状态数据丢失
-	keyStr := getStateItemKey(self.Addr, key)
+	keyStr := self.GetStateItemKey(self.Addr, key)
 	self.mdb.LocalDB.Set([]byte(keyStr), value)
 }
 
@@ -179,18 +179,6 @@ func (self *ContractAccount) SetExecName(execName string) {
 	self.Data.Name = execName
 }
 
-func (self *ContractAccount) SetAliasName(alias string) {
-	if len(alias) == 0 {
-		log15.Error("SetAliasName error", "aliasName", alias)
-		return
-	}
-	self.Data.Alias = alias
-}
-
-func (self *ContractAccount) GetAliasName() string {
-	return self.Data.Alias
-}
-
 func (self *ContractAccount) GetCreator() string {
 	return self.Data.Creator
 }
@@ -227,7 +215,6 @@ func (self *ContractAccount) BuildDataLog() (log *chain33Types.ReceiptLog) {
 	logWASMContractData := types.LogWASMContractData{
 		Creator:  self.Data.Creator,
 		Name:     self.Data.Name,
-		Alias:    self.Data.Alias,
 		Addr:     self.Data.Addr,
 		CodeHash: common.BytesToHash(self.Data.Code).String(),
 		AbiHash:  common.BytesToHash(self.Data.Abi).String(),
@@ -253,15 +240,15 @@ func (self *ContractAccount) BuildStateLog() (log *chain33Types.ReceiptLog) {
 }
 
 func (self *ContractAccount) GetDataKey() []byte {
-	return []byte("mavl-" + chain33Types.ExecName(types.WasmX) + "-data: " + self.Addr)
+	return []byte("mavl-" + self.Data.Name + "-data: " + self.Addr)
 }
 
 func (self *ContractAccount) GetStateKey() []byte {
-	return []byte("mavl-" + chain33Types.ExecName(types.WasmX) + "-state: " + self.Addr)
+	return []byte("mavl-" + self.Data.Name + "-state: " + self.Addr)
 }
 
-func getStateItemKey(addr, key string) string {
-	return fmt.Sprintf("mavl-"+chain33Types.ExecName(types.WasmX)+"-state:%v:%v", addr, key)
+func (self *ContractAccount) GetStateItemKey(addr, key string) string {
+	return fmt.Sprintf("mavl-" + self.Data.Name + "-state:%v:%v", addr, key)
 }
 
 func (self *ContractAccount) Suicide() bool {

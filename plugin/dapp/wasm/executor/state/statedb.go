@@ -4,17 +4,15 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/33cn/chain33/common/log/log15"
 	"github.com/33cn/chain33/account"
-	"github.com/33cn/chain33/common/db"
 	"github.com/33cn/chain33/common"
+	"github.com/33cn/chain33/common/db"
+	"github.com/33cn/chain33/common/log/log15"
 	"github.com/33cn/chain33/types"
 	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
+	"github.com/33cn/chain33/common/address"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
-
 )
-
-
 
 // 内存状态数据库，保存在区块操作时内部的数据变更操作
 // 本数据库不会直接写文件，只会暂存变更记录
@@ -90,14 +88,13 @@ func (self *MemoryStateDB) Prepare(txHash common.Hash, txIndex int) {
 }
 
 // 创建一个新的合约账户对象
-func (self *MemoryStateDB) CreateAccount(addr, creator string, execName, alias string) {
+func (self *MemoryStateDB) CreateAccount(addr, creator string, name string) {
 	acc := self.GetAccount(addr)
 	if acc == nil {
 		// 这种情况下为新增合约账户
 		acc := NewContractAccount(addr, self)
 		acc.SetCreator(creator)
-		acc.SetExecName(execName)
-		acc.SetAliasName(alias)
+		acc.SetExecName(name)
 		self.accounts[addr] = acc
 		self.addChange(createAccountChange{baseChange: baseChange{}, account: addr})
 	}
@@ -189,10 +186,10 @@ func (self *MemoryStateDB) GetAbi(addr string) []byte {
 	return nil
 }
 
-func (self *MemoryStateDB) GetAlias(addr string) string {
+func (self *MemoryStateDB) GetName(addr string) string {
 	acc := self.GetAccount(addr)
 	if acc != nil {
-		return acc.Data.GetAlias()
+		return acc.Data.GetName()
 	}
 	return ""
 }
@@ -407,8 +404,6 @@ func (self *MemoryStateDB) GetChangedData(version int, opType loccom.WasmContrat
 	return
 }
 
-
-
 // 借助coins执行器进行转账相关操作
 func (self *MemoryStateDB) CanTransfer(sender, recipient string, amount uint64) bool {
 
@@ -559,7 +554,7 @@ func (self *MemoryStateDB) Transfer(sender, recipient string, amount uint64) boo
 		return false
 	} else {
 		if ret != nil {
-			self.addChange(transferChange{
+			self.addChange(balanceChange{
 				baseChange: baseChange{},
 				amount:     value,
 				data:       ret.KV,
@@ -691,4 +686,95 @@ func (self *MemoryStateDB) WritePreimages(number int64) {
 func (self *MemoryStateDB) ResetDatas() {
 	self.currentVer = nil
 	self.snapshots = self.snapshots[:0]
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////
+
+func (self *MemoryStateDB) ExecFrozen(tx *types.Transaction, addr string, amount int64) int {
+	if tx.From() != addr {
+		log15.Error("ExecFrozen not form own address", "tx.From()", tx.From(), "addr", addr)
+		return wasmtypes.AccountOpFail
+	}
+
+	execaddr := address.ExecAddress(string(tx.Execer))
+	ret, err := self.CoinsAccount.ExecFrozen(addr, execaddr, amount)
+	if err != nil {
+		log15.Error("ExecFrozen error", "addr", addr, "execaddr", execaddr, "amount", amount, "err info", err)
+		return wasmtypes.AccountOpFail
+	}
+
+	if ret != nil {
+		self.addChange(balanceChange{
+			baseChange: baseChange{},
+			amount:     amount,
+			data:       ret.KV,
+			logs:       ret.Logs,
+		})
+	}
+	return wasmtypes.AccountOpSuccess
+}
+
+func (self *MemoryStateDB) ExecActive(tx *types.Transaction, addr string, amount int64) int {
+	execaddr := address.ExecAddress(string(tx.Execer))
+	ret, err := self.CoinsAccount.ExecActive(addr, execaddr, amount)
+	if err != nil {
+		log15.Error("ExecFrozen error", "addr", addr, "execaddr", execaddr, "amount", amount, "err info", err)
+		return wasmtypes.AccountOpFail
+	}
+
+	if ret != nil {
+		self.addChange(balanceChange{
+			baseChange: baseChange{},
+			amount:     amount,
+			data:       ret.KV,
+			logs:       ret.Logs,
+		})
+	}
+	return wasmtypes.AccountOpSuccess
+
+}
+
+//export ExecTransfer
+func (self *MemoryStateDB) ExecTransfer(tx *types.Transaction, from, to string, amount int64) int {
+	if tx.From() != from {
+		log15.Error("ExecTransfer not from own address", "tx.From()", tx.From(), "to", to)
+		return wasmtypes.AccountOpFail
+	}
+
+	execaddr := address.ExecAddress(string(tx.Execer))
+	ret, err := self.CoinsAccount.ExecTransfer(from, to, execaddr, amount)
+	if err != nil {
+		log15.Error("ExecFrozen error", "from", from, "to", to, "execaddr", execaddr, "amount", amount, "err info", err)
+		return wasmtypes.AccountOpFail
+	}
+
+	if ret != nil {
+		self.addChange(balanceChange{
+			baseChange: baseChange{},
+			amount:     amount,
+			data:       ret.KV,
+			logs:       ret.Logs,
+		})
+	}
+	return wasmtypes.AccountOpSuccess
+}
+
+//export ExecTransferFrozen
+func (self *MemoryStateDB) ExecTransferFrozen(tx *types.Transaction, from, to string, amount int64) int {
+	execaddr := address.ExecAddress(string(tx.Execer))
+	ret, err := self.CoinsAccount.ExecTransferFrozen(from, to, execaddr, amount)
+	if err != nil {
+		log15.Error("ExecFrozen error", "from", from, "to", to, "execaddr", execaddr, "amount", amount, "err info", err)
+		return wasmtypes.AccountOpFail
+	}
+
+	if ret != nil {
+		self.addChange(balanceChange{
+			baseChange: baseChange{},
+			amount:     amount,
+			data:       ret.KV,
+			logs:       ret.Logs,
+		})
+	}
+	return wasmtypes.AccountOpSuccess
 }

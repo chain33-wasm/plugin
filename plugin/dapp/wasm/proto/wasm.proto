@@ -13,7 +13,6 @@ message WASMContractObject {
 message WASMContractData {
     string creator  = 1;
     string name     = 2;
-    string alias    = 3;
     string addr     = 4;
     bytes  code     = 5;
     bytes  codeHash = 6;
@@ -23,10 +22,9 @@ message WASMContractData {
 message LogWASMContractData {
     string creator  = 1;
     string name     = 2;
-    string alias    = 3;
-    string addr     = 4;
-    string codeHash = 5;
-    string abiHash  = 6;
+    string addr     = 3;
+    string codeHash = 4;
+    string abiHash  = 5;
 }
 
 // 存放合约变化数据
@@ -47,42 +45,33 @@ message WasmContractAction {
 // 创建wasm合约
 message CreateWasmContract {
     // 消耗限制，默认为Transaction.Fee
-    uint64 gasLimit    = 2;
+    uint64 gasLimit    = 1;
     // gas价格，默认为1
-    uint32 gasPrice    = 3;
+    uint32 gasPrice    = 2;
     // 合约数据
-    bytes code      = 4;
+    bytes code         = 3;
     //abi数据
-    string abi      = 5;
-    // 合约别名，方便识别
-    string alias    = 6;
+    string abi         = 4;
+    // 用户自定义wasm合约名字，必须是user.wasm.xxx的风格，且xxx由a-z，0-9组成的4-16字符长度组成
+    string name        = 5;
     // 交易备注
-    string note     = 7;
+    string note        = 6;
 }
 
 // 调用wasm合约
 message CallWasmContract {
-    // 转账金额
-    uint64 amount      = 1;
     // 消耗限制，默认为Transaction.Fee
-    uint64 gasLimit    = 2;
+    uint64 gasLimit    = 1;
     // gas价格，默认为1
-    uint32 gasPrice    = 3;
-    // 合约地址
-    string contractAddr= 4;
-    //合约id
-    //bytes codeHash     = 5;
-    // 合约别名，方便识别
-    string alias       = 6;
+    uint32 gasPrice    = 2;
     // 交易备注
-    string note        = 7;
+    string note        = 3;
     //虚拟机解释器类型
-    int32 vmType       = 8;
+    int32 vmType       = 4;
     //执行动作名称
-    string actionName  = 9;
+    string actionName  = 5;
     //执行参数
-    bytes actionData   = 10;
-
+    bytes actionData   = 6;
 }
 
 // 合约创建/调用日志
@@ -104,10 +93,9 @@ message WASMStateChangeItem {
 message WASMContractDataCmd {
     string creator  = 1;
     string name     = 2;
-    string alias    = 3;
-    string addr     = 4;
-    string code     = 5;
-    string codeHash = 6;
+    string addr     = 3;
+    string code     = 4;
+    string codeHash = 5;
 }
 
 // 存放合约变化数据
@@ -129,14 +117,11 @@ message ReceiptWASMContractCmd {
     string ret = 5;
 }
 
-message CheckWASMAddrReq {
-    string addr = 1;
+message CheckWASMContractNameReq {
+    string WasmContractName = 1;
 }
 message CheckWASMAddrResp {
-    bool   contract     = 1;
-    string contractAddr = 2;
-    string contractName = 3;
-    string aliasName    = 4;
+    bool   existAlready     = 1;
 }
 
 message EstimateWASMGasReq {
@@ -162,10 +147,9 @@ message WasmGetAbiResp {
     bytes abi = 1;
 }
 
-message WasmQuery {
-    string contractAddr = 1;
-    string actionName   = 2;
-    bytes abidata       = 3;
+message WasmQueryContractTableReq {
+    string contractName         = 1;
+    repeated string tableName   = 2;
 }
 
 message WasmOutItem {
@@ -181,5 +165,16 @@ message QueryResultItem {
 message WasmQueryResponse {
     repeated QueryResultItem queryResultItems  = 1;
 }
+
+message ConvertJson2AbiReq {
+    string ContractName       = 1;
+    string ActionName         = 2;
+    string AbiDataInJson      = 3;
+}
+
+message Json2AbiResponse {
+    bytes AbiData      = 1;
+}
+
 
 

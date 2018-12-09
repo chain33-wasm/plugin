@@ -164,7 +164,7 @@ type (
 
 	// 转账事件
 	// 合约转账动作不执行回滚，失败后数据不会写入区块
-	transferChange struct {
+	balanceChange struct {
 		baseChange
 		amount int64
 		data   []*types.KeyValue
@@ -288,7 +288,8 @@ func (ch storageChange) getLog(mdb *MemoryStateDB) []*types.ReceiptLog {
 	acc := mdb.accounts[ch.account]
 	if acc != nil {
 		currentVal := acc.GetState(string(ch.key))
-		receipt := &wasmtypes.WASMStateChangeItem{Key: getStateItemKey(ch.account, string(ch.key)), PreValue: ch.prevalue, CurrentValue: currentVal}
+		key := acc.GetStateItemKey(ch.account, string(ch.key))
+		receipt := &wasmtypes.WASMStateChangeItem{Key: key, PreValue: ch.prevalue, CurrentValue: currentVal}
 		return []*types.ReceiptLog{{Ty: wasmtypes.TyLogStateChangeItemWasm, Log: types.Encode(receipt)}}
 	}
 
@@ -324,9 +325,9 @@ func (ch addPreimageChange) revert(mdb *MemoryStateDB) {
 	delete(mdb.preimages, ch.hash)
 }
 
-func (ch transferChange) getData(mdb *MemoryStateDB) []*types.KeyValue {
+func (ch balanceChange) getData(mdb *MemoryStateDB) []*types.KeyValue {
 	return ch.data
 }
-func (ch transferChange) getLog(mdb *MemoryStateDB) []*types.ReceiptLog {
+func (ch balanceChange) getLog(mdb *MemoryStateDB) []*types.ReceiptLog {
 	return ch.logs
 }

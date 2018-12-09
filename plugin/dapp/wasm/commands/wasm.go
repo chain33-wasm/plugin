@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"os"
 	"io/ioutil"
-
-	"strings"
-
 	"github.com/golang/protobuf/proto"
 	"github.com/spf13/cobra"
 	"github.com/33cn/chain33/common"
@@ -26,12 +23,12 @@ func WasmCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(
+		wasmCheckContractNameCmd(),
 		wasmCreateContractCmd(),
 		wasmGenAbiCmd(),
 		wasmCallContractCmd(),
 		wasmQueryContractCmd(),
 		wasmEstimateContractCmd(),
-		wasmCheckContractAddrCmd(),
 		wasmDebugCmd(),
 	)
 
@@ -64,11 +61,7 @@ func wasmAddCreateContractFlags(cmd *cobra.Command) {
 func wasmCreateContract(cmd *cobra.Command, args []string) {
 	contractName, _ := cmd.Flags().GetString("contract")
 	path, _ := cmd.Flags().GetString("path")
-
-	//caller, _ := cmd.Flags().GetString("caller")
-	//expire, _ := cmd.Flags().GetString("expire")
 	note, _ := cmd.Flags().GetString("note")
-	alias, _ := cmd.Flags().GetString("alias")
 	fee, _ := cmd.Flags().GetFloat64("fee")
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
 	//paraName, _ := cmd.Flags().GetString("paraName")
@@ -93,7 +86,7 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 		Value: wasmtypes.CreateWasmContractPara{
 			Code:code,
 			Abi: string(abi),
-			Alias: alias,
+			Name: contractName,
 			Note: note,
 			Fee: int64(feeInt64),
 		},
@@ -108,7 +101,7 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 
 	params := &rpctypes.CreateTxIn{
 		Execer:wasmtypes.WasmX,
-		ActionName:"CreateCall",
+		ActionName:"CreateWasmContract",
 		Payload:paramJson,
 	}
 
@@ -166,35 +159,17 @@ func wasmQueryContractCmd() *cobra.Command {
 }
 
 func wasmQueryContract(cmd *cobra.Command, args []string) {
-	contractAddr, _ := cmd.Flags().GetString("exec")
-	actionName, _ := cmd.Flags().GetString("action")
-	abiPara, _ := cmd.Flags().GetString("para")
+	contractName, _ := cmd.Flags().GetString("exec")
+	tableName, _ := cmd.Flags().GetString("table")
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
 
-	//从区块链获取abi文件，并根据abi文件将相应的json字符串转化为abi data
-	req := types.ReqAddr{Addr: contractAddr}
-	var res wasmtypes.WasmGetAbiResp
-	var actionData []byte
-	query := sendQuery4wasm(rpcLaddr, wasmtypes.WasmGetAbi, &req, &res)
-	if query {
-		actionData = genAbiData(string(res.Abi), contractAddr, actionName, abiPara)
-		if nil == actionData {
-			fmt.Fprintln(os.Stderr, "Failed to convert parameter from json to abi format")
-			return
-		}
-	} else {
-		fmt.Fprintln(os.Stderr, "get abi data error")
-		return
-	}
-
-	queryReq := wasmtypes.WasmQuery{
-		ContractAddr: contractAddr,
-		ActionName:actionName,
-		Abidata:actionData,
+	queryReq := wasmtypes.WasmQueryContractTableReq{
+		ContractName: contractName,
+		TableName:[]string{tableName},
 	}
 
 	var WasmQueryResponse wasmtypes.WasmQueryResponse
-	query = sendQuery4wasm(rpcLaddr, wasmtypes.QueryFromContract, &queryReq, &WasmQueryResponse)
+	query := sendQuery4wasm(rpcLaddr, wasmtypes.QueryFromContract, &queryReq, &WasmQueryResponse)
 	if query {
 		for _, WasmOutItem := range WasmQueryResponse.QueryResultItems {
 			fmt.Println(WasmOutItem.ItemType);
@@ -207,14 +182,11 @@ func wasmQueryContract(cmd *cobra.Command, args []string) {
 }
 
 func wasmAddQueryContractFlags(cmd *cobra.Command) {
-	cmd.Flags().StringP("exec", "e", "", "wasm contract address")
+	cmd.Flags().StringP("exec", "e", "", "wasm contract name")
 	cmd.MarkFlagRequired("exec")
 
-	cmd.Flags().StringP("action", "x", "", "external contract action name")
-	cmd.MarkFlagRequired("action")
-
-	cmd.Flags().StringP("para", "r", "", "external contract execution parameter in json string")
-	cmd.MarkFlagRequired("para")
+	cmd.Flags().StringP("table", "n", "", "one of wasm contract's table name")
+	cmd.MarkFlagRequired("table")
 }
 
 // 调用WASM合约
@@ -230,24 +202,24 @@ func wasmCallContractCmd() *cobra.Command {
 
 func wasmCallContract(cmd *cobra.Command, args []string) {
 	note, _ := cmd.Flags().GetString("note")
-	amount, _ := cmd.Flags().GetFloat64("amount")
 	fee, _ := cmd.Flags().GetFloat64("fee")
-	contractAddr, _ := cmd.Flags().GetString("exec")
+	contractName, _ := cmd.Flags().GetString("exec")
 	actionName, _ := cmd.Flags().GetString("action")
 	abiPara, _ := cmd.Flags().GetString("para")
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
 
-	amountInt64 := uint64(amount*1e4) * 1e4
 	feeInt64 := uint64(fee*1e4) * 1e4
 
-	//从区块链获取abi文件，并根据abi文件将相应的json字符串转化为abi data
-	req := types.ReqAddr{Addr: contractAddr}
-	var res wasmtypes.WasmGetAbiResp
+	req := wasmtypes.ConvertJson2AbiReq{
+		ContractName: contractName,
+		ActionName: actionName,
+		AbiDataInJson: abiPara,
+		}
+	var json2AbiResponse wasmtypes.Json2AbiResponse
 	var actionData []byte
-	query := sendQuery4wasm(rpcLaddr, "WasmGetAbi", &req, &res)
+	query := sendQuery4wasm(rpcLaddr, wasmtypes.ConvertJson2Abi, &req, &json2AbiResponse)
 	if query {
-		actionData = genAbiData(string(res.Abi), contractAddr, actionName, abiPara)
-		//fmt.Println(string("The converted abi data is:") + common.ToHex(actionData))
+		actionData = json2AbiResponse.AbiData
 	} else {
 		fmt.Fprintln(os.Stderr, "get abi data error")
 		return
@@ -255,9 +227,7 @@ func wasmCallContract(cmd *cobra.Command, args []string) {
 
 	param := &wasmtypes.CreateOrCallWasmContract{
 		Value: wasmtypes.CallWasmContractPara{
-			Amount:amountInt64,
-			ContractAddr: contractAddr,
-			Alias:"",
+			Name:contractName,
 			Note: note,
 			ActionName:actionName,
 			ActionData:actionData,
@@ -274,7 +244,7 @@ func wasmCallContract(cmd *cobra.Command, args []string) {
 
 	params := &rpctypes.CreateTxIn{
 		Execer:wasmtypes.WasmX,
-		ActionName:"CreateCall",
+		ActionName:"CallWasmContract",
 		Payload:paramJson,
 	}
 
@@ -284,7 +254,7 @@ func wasmCallContract(cmd *cobra.Command, args []string) {
 
 func wasmAddCallContractFlags(cmd *cobra.Command) {
 	wasmAddCommonFlags(cmd)
-	cmd.Flags().StringP("exec", "e", "", "wasm contract address")
+	cmd.Flags().StringP("exec", "e", "", "wasm contract name,like user.wasm.xxx")
 	cmd.MarkFlagRequired("exec")
 
 	cmd.Flags().StringP("action", "x", "", "external contract action name")
@@ -292,16 +262,9 @@ func wasmAddCallContractFlags(cmd *cobra.Command) {
 
 	cmd.Flags().StringP("para", "r", "", "external contract execution parameter in json string")
 	cmd.MarkFlagRequired("para")
-
-	cmd.Flags().Float64P("amount", "a", 0, "the amount transfer to the contract (optional)")
 }
 
 func wasmAddCommonFlags(cmd *cobra.Command) {
-	//cmd.Flags().StringP("caller", "c", "", "the caller address")
-	//cmd.MarkFlagRequired("caller")
-
-	//cmd.Flags().StringP("expire", "p", "120s", "transaction expire time (optional)")
-
 	cmd.Flags().StringP("note", "n", "", "transaction note info (optional)")
 
 	cmd.Flags().Float64P("fee", "f", 0, "contract gas fee (optional)")
@@ -371,10 +334,10 @@ func wasmEstimateContractCmd() *cobra.Command {
 }
 
 // 检查地址是否为WASM合约
-func wasmCheckContractAddrCmd() *cobra.Command {
+func wasmCheckContractNameCmd() *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "check",
-		Short: "Check if the address is a valid WASM contract",
+		Short: "Check if wasm contract used has been used already",
 		Run:   wasmCheckContractAddr,
 	}
 	wasmAddCheckContractAddrFlags(cmd)
@@ -382,29 +345,17 @@ func wasmCheckContractAddrCmd() *cobra.Command {
 }
 
 func wasmAddCheckContractAddrFlags(cmd *cobra.Command) {
-	cmd.Flags().StringP("to", "t", "", "external contract address (optional)")
-	cmd.Flags().StringP("exec", "e", "", "external contract name, like user.external.xxxxx (optional)")
+	cmd.Flags().StringP("exec", "e", "", "wasm contract name, like user.wasm.xxxxx(a-z0-9, within length [4-16])")
+	cmd.MarkFlagRequired("exec")
 }
 
 func wasmCheckContractAddr(cmd *cobra.Command, args []string) {
-	to, _ := cmd.Flags().GetString("to")
 	name, _ := cmd.Flags().GetString("exec")
-	toAddr := to
-	if len(toAddr) == 0 && len(name) > 0 {
-		if strings.Contains(name, wasmtypes.UserWasmX) {
-			toAddr = address.ExecAddress(name)
-		}
-	}
-	if len(toAddr) == 0 {
-		fmt.Fprintln(os.Stderr, "one of the 'to (contract address)' and 'name (contract name)' must be set")
-		cmd.Help()
-		return
-	}
 
-	var checkAddrReq = wasmtypes.CheckWASMAddrReq{Addr: toAddr}
+	var checkAddrReq = wasmtypes.CheckWASMContractNameReq{WasmContractName: name}
 	var checkAddrResp wasmtypes.CheckWASMAddrResp
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
-	query := sendQuery4wasm(rpcLaddr, "CheckAddrExists", &checkAddrReq, &checkAddrResp)
+	query := sendQuery4wasm(rpcLaddr, wasmtypes.CheckNameExistsFunc, &checkAddrReq, &checkAddrResp)
 
 	if query {
 		proto.MarshalText(os.Stdout, &checkAddrResp)

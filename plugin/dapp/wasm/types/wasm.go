@@ -70,11 +70,7 @@ func (wasm WasmType) GetRealToAddr(tx *types.Transaction) string {
 		return tx.To
 	}
 
-	if action.Ty == CallWasmContractAction {
-		return action.GetCallWasmContract().ContractAddr
-	}
-
-	return tx.To
+	return ""
 }
 
 // Amount 获取金额
@@ -114,6 +110,7 @@ func (wasm *WasmType) GetLogMap() map[int64]*types.LogInfo {
 
 func createWasmTx(param *CreateOrCallWasmContract) (*types.Transaction, error) {
 	txType := param.Value.WasmContractActionType()
+	//创建部署wasm合约的交易
 	if CreateWasmContractAction == txType {
 		creatPara, ok := param.Value.(CreateWasmContractPara)
 		if !ok {
@@ -127,28 +124,28 @@ func createWasmTx(param *CreateOrCallWasmContract) (*types.Transaction, error) {
 					GasPrice:1,
 					Code:  creatPara.Code,
 					Abi:   creatPara.Abi,
-					Alias: creatPara.Alias,
+					Name:  types.ExecName(creatPara.Name),
 					Note:  creatPara.Note,
 				},
 			},
 			Ty: CreateWasmContractAction,
 		}
 
-		return createRawWasmTx(action, address.ExecAddress(types.ExecName(WasmX)), creatPara.Fee)
+		return createRawWasmTx(action, WasmX, creatPara.Fee)
 	}
-
+    //创建调用用户自定义的user.wasm.xxx合约的交易
 	callPara, ok := param.Value.(CallWasmContractPara)
 	if !ok {
 		return nil, ErrCreateWasmPara
 	}
 
+
+
 	action := &WasmContractAction{
 		Value: &WasmContractAction_CallWasmContract{
 			CallWasmContract:&CallWasmContract{
-				Amount:callPara.Amount,
 				GasLimit:uint64(callPara.Fee),
 				GasPrice: 1,
-				ContractAddr: callPara.ContractAddr,
 				Note: callPara.Note,
 				VmType: VMBinaryen, //当前只支持binaryen解释执行的方式
 				ActionName:callPara.ActionName,
@@ -158,14 +155,14 @@ func createWasmTx(param *CreateOrCallWasmContract) (*types.Transaction, error) {
 		Ty: CallWasmContractAction,
 	}
 
-	return createRawWasmTx(action, address.ExecAddress(types.ExecName(WasmX)), callPara.Fee)
+	return createRawWasmTx(action, callPara.Name, callPara.Fee)
 }
 
-func createRawWasmTx(action proto.Message, wasmAddr string, fee int64) (*types.Transaction, error) {
+func createRawWasmTx(action proto.Message, wasmName string, fee int64) (*types.Transaction, error) {
 	tx := &types.Transaction{
-		Execer:  []byte(WasmX),
+		Execer:  []byte(types.ExecName(wasmName)),
 		Payload: types.Encode(action),
-		To:      wasmAddr,
+		To:      address.ExecAddress(types.ExecName(wasmName)),
 	}
 
 	tx, err := types.FormatTx(string(tx.Execer), tx)

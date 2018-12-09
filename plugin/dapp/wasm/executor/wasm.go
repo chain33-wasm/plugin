@@ -11,7 +11,6 @@ package executor
 import "C"
 
 import (
-	"bytes"
 	"fmt"
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/common/address"
@@ -21,7 +20,6 @@ import (
 	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
 	"github.com/33cn/plugin/plugin/dapp/wasm/executor/state"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
-	"strings"
 	"unsafe"
 )
 
@@ -134,6 +132,28 @@ func Output2UserCallback(typeName *C.char, value *C.char, len C.int) {
 	return
 }
 
+////////////以下接口用于user.wasm.xxx合约内部转账/////////////////////////////
+//冻结user.wasm.xxx合约addr上的部分余额,其中的
+//export ExecFrozen
+func ExecFrozen(addr *C.char, amount C.longlong) int {
+	return pWasm.mStateDB.ExecFrozen(pWasm.tx, C.GoString(addr), int64(amount))
+}
+//激活user.wasm.xxx合约addr上的部分余额
+//export ExecActive
+func ExecActive(addr *C.char, amount C.longlong) int {
+	return pWasm.mStateDB.ExecActive(pWasm.tx, C.GoString(addr), int64(amount))
+}
+
+//export ExecTransfer
+func ExecTransfer(from, to *C.char, amount C.longlong) int {
+	return pWasm.mStateDB.ExecTransfer(pWasm.tx, C.GoString(from), C.GoString(to), int64(amount))
+}
+
+//export ExecTransferFrozen
+func ExecTransferFrozen(from, to *C.char, amount C.longlong) int {
+	return pWasm.mStateDB.ExecTransferFrozen(pWasm.tx, C.GoString(from), C.GoString(to), int64(amount))
+}
+
 func (wasm *WASMExecutor) GetName() string {
 	return types.ExecName(wasmtypes.WasmX)
 }
@@ -145,14 +165,15 @@ func (wasm *WASMExecutor) prepareExecContext(tx *types.Transaction, index int) {
 	if wasm.mStateDB == nil {
 		wasm.mStateDB = state.NewMemoryStateDB(wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
 	}
+
 	wasm.tx = tx
 	wasm.txIndex = index
 }
 
 // 根据交易hash生成一个新的合约对象地址
-func (wasm *WASMExecutor) getNewAddr(txHash []byte) *address.Address {
-	return address.GetExecAddress(loccom.CalcWasmContractName(txHash))
-}
+//func (wasm *WASMExecutor) getNewAddr(txHash []byte) *address.Address {
+//	return address.GetExecAddress(loccom.CalcWasmContractName(txHash))
+//}
 
 func (wasm *WASMExecutor) GenerateExecReceipt(usedGas, gasPrice uint64, snapshot int, execName, caller, contractAddr string, opType loccom.WasmContratOpType) (*types.Receipt, error) {
 	curVer := wasm.mStateDB.GetLastSnapshot()
@@ -198,8 +219,6 @@ func (wasm *WASMExecutor) GenerateExecReceipt(usedGas, gasPrice uint64, snapshot
 	return receipt, nil
 }
 
-
-
 func (wasm *WASMExecutor) queryFromExec(contractAddr string,
 	actionName string,
 	actionData []byte) ([]*wasmtypes.WasmOutItem, error) {
@@ -209,7 +228,7 @@ func (wasm *WASMExecutor) queryFromExec(contractAddr string,
 		log.Error("call wasm contract ", "failed to get code from contract address", contractAddr)
 		return nil, wasmtypes.ErrWrongContractAddr
 	}
-	AliasStr := wasm.mStateDB.GetAlias(contractAddr)
+	AliasStr := wasm.mStateDB.GetName(contractAddr)
 
 	setWasm4Callback(wasm)
 
@@ -256,14 +275,6 @@ func (wasm *WASMExecutor) collectWasmTxLog(tx *types.Transaction, cr *wasmtypes.
 		log.Debug("ReceiptLog", "Type", kv.Ty, "log", common.Bytes2Hex(kv.Log))
 	}
 	log.Debug("wasm collect end")
-}
-
-//获取运行状态名
-func (wasm *WASMExecutor) GetActionName(tx *types.Transaction) string {
-	if bytes.Equal(tx.Execer, []byte(types.ExecName(loccom.ExecutorName))) {
-		return types.ExecName(loccom.ExecutorName)
-	}
-	return tx.ActionName()
 }
 
 func (wasm *WASMExecutor) ExecLocal(tx *types.Transaction, receipt *types.ReceiptData, index int) (*types.LocalDBSet, error) {
@@ -316,13 +327,14 @@ func (wasm *WASMExecutor) ExecDelLocal(tx *types.Transaction, receipt *types.Rec
 	return set, err
 }
 
-func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQuery) (types.Message, error) {
+func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableReq) (types.Message, error) {
 	wasm.prepareExecContext(nil, 0)
 
 	resp := &wasmtypes.WasmQueryResponse{}
-	wasmOutItems, err := wasm.queryFromExec(in.ContractAddr, in.ActionName, in.Abidata)
+	contractAddr := address.ExecAddress(in.ContractName)
+	wasmOutItems, err := wasm.queryFromExec(contractAddr, in.ActionName, in.Abidata)
 
-	abi := wasm.mStateDB.GetAbi(in.ContractAddr)
+	abi := wasm.mStateDB.GetAbi(contractAddr)
 	if nil == abi {
 		return nil, wasmtypes.ErrAddrNotExists
 	}
@@ -358,36 +370,14 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQuery) (types.Messa
 }
 
 // 检查合约地址是否存在，此操作不会改变任何状态，所以可以直接从statedb查询
-func (wasm *WASMExecutor) checkAddrExists(req *wasmtypes.CheckWASMAddrReq) (types.Message, error) {
-	addrStr := req.Addr
-	if len(addrStr) == 0 {
+func (wasm *WASMExecutor) checkContractNameExists(req *wasmtypes.CheckWASMContractNameReq) (types.Message, error) {
+	contractName := req.WasmContractName
+	if len(contractName) == 0 {
 		return nil, wasmtypes.ErrAddrNotExists
 	}
 
-	var addr *address.Address
-	// 合约名称
-	if strings.HasPrefix(addrStr, types.ExecName(loccom.WasmPrefix)) {
-		addr = address.GetExecAddress(addrStr)
-	} else {
-		addr2, err := address.NewAddrFromString(addrStr)
-		if err != nil {
-			log.Error("create address form string error", "string:", addrStr)
-			return nil, wasmtypes.ErrAddrNotExists
-		}
-
-		addr = addr2
-	}
-
-	exists := wasm.GetMStateDB().Exist(addr.String())
-	ret := &wasmtypes.CheckWASMAddrResp{Contract: exists}
-	if exists {
-		account := wasm.GetMStateDB().GetAccount(addr.String())
-		if account != nil {
-			ret.ContractAddr = account.Addr
-			ret.ContractName = account.GetExecName()
-			ret.AliasName = account.GetAliasName()
-		}
-	}
+	exists := wasm.GetMStateDB().Exist(address.ExecAddress(contractName))
+	ret := &wasmtypes.CheckWASMAddrResp{ExistAlready: exists}
 	return ret, nil
 }
 

@@ -19,9 +19,10 @@ import (
 	"unsafe"
 )
 
-func (wasm *WASMExecutor) Exec_CreateWasmContract(CreateWasmContract *wasmtypes.CreateWasmContract) (*types.Receipt, error) {
+func (wasm *WASMExecutor) Exec_CreateWasmContract(createWasmContract *wasmtypes.CreateWasmContract, tx *types.Transaction, index int) (*types.Receipt, error) {
+	wasm.prepareExecContext(tx, index)
 	// 使用随机生成的地址作为合约地址（这个可以保证每次创建的合约地址不会重复，不存在冲突的情况）
-	contractAddr := wasm.getNewAddr(wasm.tx.Hash())
+	contractAddr := address.GetExecAddress(createWasmContract.Name)
 	contractAddrInStr := contractAddr.String()
 	if !wasm.mStateDB.Empty(contractAddrInStr) {
 		return nil, wasmtypes.ErrContractAddressCollisionWASM
@@ -29,7 +30,7 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(CreateWasmContract *wasmtypes.
 
 	log.Debug("wasm create", "new created wasm contract addr =", contractAddrInStr)
 
-	codeSize := len(CreateWasmContract.GetCode())
+	codeSize := len(createWasmContract.GetCode())
 	if codeSize > loccom.MaxCodeSize {
 		return nil, wasmtypes.ErrMaxCodeSizeExceededWASM
 	}
@@ -43,33 +44,32 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(CreateWasmContract *wasmtypes.
 
 	snapshot := wasm.mStateDB.Snapshot()
 	//验证合约代码的正确性
-	code := C.CBytes(CreateWasmContract.Code)
+	code := C.CBytes(createWasmContract.Code)
 	defer C.free(code)
-	if result := C.wasm_validate_contract((*C.char)(code), C.int(len(CreateWasmContract.Code))); result != C.Success {
+	if result := C.wasm_validate_contract((*C.char)(code), C.int(len(createWasmContract.Code))); result != C.Success {
 		log.Error("wasm_validate_contract", "failed with result", result)
 		return nil, wasmtypes.ErrWASMValidationFail
 	}
 	// 创建新的合约对象，包含双方地址以及合约代码，可用Gas信息
-	contract := loccom.NewContract(loccom.AccountRef(*from), loccom.AccountRef(*contractAddr), 0, CreateWasmContract.GasLimit)
-	contract.SetCallCode(*contractAddr, common.BytesToHash(common.Sha256(CreateWasmContract.Code)), CreateWasmContract.Code)
+	contract := loccom.NewContract(loccom.AccountRef(*from), loccom.AccountRef(*contractAddr), 0, createWasmContract.GasLimit)
+	contract.SetCallCode(*contractAddr, common.BytesToHash(common.Sha256(createWasmContract.Code)), createWasmContract.Code)
 
 	// 创建一个新的账户对象（合约账户）
-	execName := loccom.CalcWasmContractName(wasm.tx.Hash())
-	wasm.mStateDB.CreateAccount(contractAddrInStr, contract.CallerAddress.String(), execName, CreateWasmContract.Alias)
+	wasm.mStateDB.CreateAccount(contractAddrInStr, contract.CallerAddress.String(), createWasmContract.Name)
 
-	createDataGas := (uint64(len(CreateWasmContract.Code)) + uint64(len(CreateWasmContract.Abi))) * loccom.CreateDataGas
+	createDataGas := (uint64(len(createWasmContract.Code)) + uint64(len(createWasmContract.Abi))) * loccom.CreateDataGas
 	if contract.UseGas(createDataGas) {
-		wasm.mStateDB.SetCodeAndAbi(contractAddrInStr, CreateWasmContract.Code, []byte(CreateWasmContract.Abi))
+		wasm.mStateDB.SetCodeAndAbi(contractAddrInStr, createWasmContract.Code, []byte(createWasmContract.Abi))
 	} else {
 		return nil, wasmtypes.ErrCodeStoreOutOfGasWASM
 	}
 
-	usedGas := CreateWasmContract.GasLimit - contract.Gas
+	usedGas := createWasmContract.GasLimit - contract.Gas
 
 	receipt, err := wasm.GenerateExecReceipt(usedGas,
-		uint64(CreateWasmContract.GasPrice),
+		uint64(createWasmContract.GasPrice),
 		snapshot,
-		execName,
+		createWasmContract.Name,
 		contract.CallerAddress.String(),
 		contractAddrInStr,
 		wasmtypes.CreateWasmContractAction)
@@ -78,7 +78,8 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(CreateWasmContract *wasmtypes.
 	return receipt, err
 }
 
-func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.CallWasmContract) (*types.Receipt, error) {
+func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.CallWasmContract, tx *types.Transaction, index int) (*types.Receipt, error) {
+	wasm.prepareExecContext(tx, index)
 	if callWasmContract.VmType != wasmtypes.VMBinaryen {
 		panic("Now only binaryen is supported")
 		return nil, wasmtypes.ErrWASMWavmNotSupported
@@ -86,9 +87,10 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 
 	log.Debug("wasm call", "Para CallWasmContract", callWasmContract)
 
-	code := wasm.mStateDB.GetCode(callWasmContract.ContractAddr)
+	userWasmAddr := address.ExecAddress(string(tx.Execer))
+	code := wasm.mStateDB.GetCode(userWasmAddr)
 	if nil == code {
-		log.Error("call wasm contract ", "failed to get code from contract address", callWasmContract.ContractAddr)
+		log.Error("call wasm contract ", "failed to get code from contract", string(tx.Execer))
 		return nil, wasmtypes.ErrWrongContractAddr
 	}
 
@@ -97,12 +99,11 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 
 	//1st step: create apply context
 	log.Debug("wasm call para", "ActionData", callWasmContract.ActionData,
-		"ContractAddr", callWasmContract.ContractAddr,
-		"Alias", callWasmContract.Alias,
+		"ContractName", string(tx.Execer),
 		"ActionName", callWasmContract.ActionName)
 	actiondata := C.CBytes(callWasmContract.ActionData)
-	ContractAddr := C.CString(callWasmContract.ContractAddr)
-	Alias := C.CString(callWasmContract.Alias)
+	ContractAddr := C.CString(userWasmAddr)
+	Alias := C.CString(string(tx.Execer))
 	ActionName := C.CString(callWasmContract.ActionName)
 	from := C.CString(address.PubKeyToAddress(wasm.tx.GetSignature().GetPubkey()).String())
 	defer C.free(unsafe.Pointer(actiondata))
@@ -142,15 +143,16 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 	}
 	usedGas := callWasmContract.GasLimit - uint64(leftGas)
 
-	contractAccount := wasm.mStateDB.GetAccount(callWasmContract.ContractAddr)
-	caller := address.PubKeyToAddress(wasm.tx.GetSignature().GetPubkey()).String()
+	contractAccount := wasm.mStateDB.GetAccount(userWasmAddr)
+	caller := tx.From()
+
 
 	receipt, err := wasm.GenerateExecReceipt(usedGas,
 		uint64(callWasmContract.GasPrice),
 		snapshot,
 		contractAccount.GetExecName(),
 		caller,
-		callWasmContract.ContractAddr,
+		userWasmAddr,
 		wasmtypes.CallWasmContractAction)
 	log.Debug("wasm call", "receipt", receipt, "err info", err)
 
