@@ -54,6 +54,7 @@ func (ver *Snapshot) getData(opType loccom.WasmContratOpType) (kvSet []*types.Ke
 
 	var localKvSet []*types.KeyValue
 	localDataMap := make(map[string]*types.KeyValue)
+	var wasmContractName string
 	for _, entry := range ver.entries {
 
 		items := entry.getData(ver.statedb)
@@ -61,9 +62,10 @@ func (ver *Snapshot) getData(opType loccom.WasmContratOpType) (kvSet []*types.Ke
 		if logEntry != nil {
 			logs = append(logs, entry.getLog(ver.statedb)...)
 		}
-
+        //当前的storage的状态变化仅存放在localDB中，所有需要将其进行汇总，作为第二步的备用数据
 		if wasmtypes.CallWasmContractAction == opType {
 			if stChg, ok := entry.(storageChange); ok {
+				wasmContractName = ver.statedb.GetAccount(stChg.account).Data.Name
 				localKvSet = append(localKvSet, stChg.getDataFromLocalDB(ver.statedb)...)
 			}
 		}
@@ -95,7 +97,8 @@ func (ver *Snapshot) getData(opType loccom.WasmContratOpType) (kvSet []*types.Ke
 		}
 		keyHash := common.Sha256(keys)
 		valueHash := common.Sha256(values)
-		kvSet = append(kvSet, &types.KeyValue{Key: []byte(loccom.WasmContractKvPrefix+string(keyHash)), Value: valueHash})
+		key := loccom.CalcStrorageChangeKey(wasmContractName, common.ToHex(keyHash))
+		kvSet = append(kvSet, &types.KeyValue{Key: key, Value: valueHash})
 	}
 	///////////////////////////////////
 

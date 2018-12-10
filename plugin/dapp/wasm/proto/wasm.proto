@@ -160,6 +160,7 @@ message WasmOutItem {
 message QueryResultItem {
     string ItemType     = 1;
     string resultJSON   = 2;
+    bool   found        = 3;
 }
 
 message WasmQueryResponse {

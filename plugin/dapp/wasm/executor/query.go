@@ -20,6 +20,7 @@ func (wasm *WASMExecutor) Query_CheckContractNameExist(in *wasmtypes.CheckWASMCo
 	if in == nil {
 		return nil, types.ErrInvalidParam
 	}
+	wasm.prepareQueryContext()
 	return wasm.checkContractNameExists(in)
 }
 
@@ -48,6 +49,7 @@ func (wasm *WASMExecutor) Query_ConvertJson2Abi(in *wasmtypes.ConvertJson2AbiReq
 	if in == nil {
 		return nil, types.ErrInvalidParam
 	}
+	wasm.prepareQueryContext()
 
 	resp := &wasmtypes.Json2AbiResponse{}
 	contractAddr := address.ExecAddress(types.ExecName(in.ContractName))
@@ -62,6 +64,7 @@ func (wasm *WASMExecutor) Query_WasmGetAbi(in *types.ReqAddr) (types.Message, er
 	if in == nil {
 		return nil, types.ErrInvalidParam
 	}
+	wasm.prepareQueryContext()
 
 	resp := &wasmtypes.WasmGetAbiResp{}
 	resp.Abi = wasm.mStateDB.GetAbi(in.Addr)
@@ -73,6 +76,8 @@ func (wasm *WASMExecutor) Query_WasmGetContractTable(in *wasmtypes.WasmQueryCont
 	if in == nil {
 		return nil, types.ErrInvalidParam
 	}
+	wasm.prepareQueryContext()
+
 	return wasm.getContractTable(in)
 }
 

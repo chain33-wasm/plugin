@@ -170,6 +170,12 @@ func (wasm *WASMExecutor) prepareExecContext(tx *types.Transaction, index int) {
 	wasm.txIndex = index
 }
 
+func (wasm *WASMExecutor) prepareQueryContext() {
+	if wasm.mStateDB == nil {
+		wasm.mStateDB = state.NewMemoryStateDB(wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
+	}
+}
+
 // 根据交易hash生成一个新的合约对象地址
 //func (wasm *WASMExecutor) getNewAddr(txHash []byte) *address.Address {
 //	return address.GetExecAddress(loccom.CalcWasmContractName(txHash))
@@ -198,7 +204,6 @@ func (wasm *WASMExecutor) GenerateExecReceipt(usedGas, gasPrice uint64, snapshot
 	}
 	// 从状态机中获取数据变更和变更日志
 	data, logs := wasm.mStateDB.GetChangedData(curVer.GetId(), opType)
-
 	contractReceipt := &wasmtypes.ReceiptWASMContract{caller, execName, contractAddr, usedGas}
 
 	//调用wasm执行器的log
@@ -331,8 +336,7 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableR
 	wasm.prepareExecContext(nil, 0)
 
 	resp := &wasmtypes.WasmQueryResponse{}
-	contractAddr := address.ExecAddress(in.ContractName)
-	wasmOutItems, err := wasm.queryFromExec(contractAddr, in.ActionName, in.Abidata)
+	contractAddr := address.ExecAddress(types.ExecName(in.ContractName))
 
 	abi := wasm.mStateDB.GetAbi(contractAddr)
 	if nil == abi {
@@ -341,7 +345,26 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableR
 	abi4CStr := C.CString(string(abi))
 	defer C.free(unsafe.Pointer(abi4CStr))
 
+	var wasmOutItems []*wasmtypes.WasmOutItem
+	for _, tableName := range in.TableName {
+		data := wasm.mStateDB.GetState(contractAddr, tableName)
+		wasmOutItem := &wasmtypes.WasmOutItem{
+			ItemType: tableName,
+			Data:data,
+		}
+		wasmOutItems = append(wasmOutItems, wasmOutItem)
+	}
+
 	for _, wasmOutItem := range wasmOutItems {
+		if nil == wasmOutItem.Data {
+			result := &wasmtypes.QueryResultItem{
+				ItemType:   wasmOutItem.ItemType,
+				ResultJSON: "Error:can't find this kind of table",
+				Found:      false,
+			}
+			resp.QueryResultItems = append(resp.QueryResultItems, result)
+			continue
+		}
 		var jsonResult *C.char
 		structName := C.CString(wasmOutItem.ItemType)
 		serializedData := C.CBytes(wasmOutItem.Data)
@@ -356,6 +379,7 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableR
 		result := &wasmtypes.QueryResultItem{
 			ItemType:   wasmOutItem.ItemType,
 			ResultJSON: C.GoString(jsonResult),
+			Found:      true,
 		}
 
 		log.Debug("wasm query", "ResultJSON", result.ResultJSON)
@@ -366,7 +390,7 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableR
 		C.free(unsafe.Pointer(jsonResult))
 	}
 
-	return resp, err
+	return resp, nil
 }
 
 // 检查合约地址是否存在，此操作不会改变任何状态，所以可以直接从statedb查询

@@ -14,8 +14,14 @@ const (
 //	WasmContractCodePrefix     = "mavl-wasm-contract-code"
 //	WasmContractABIPrefix      = "mavl-wasm-contract-abi"
     WasmContractKvPrefix       = "mavl-wasm-contract-kv"
+
 //	WasmContractAliasPrefix    = "local-wasm-alias"
 )
+
+func CalcStrorageChangeKey(wasmContractAddr string, hash string) []byte {
+    return  []byte("mavl-" + wasmContractAddr + "-storagechange-" + hash)
+}
+
 //
 //func CalcWasmContractName(txhash []byte) string {
 //	return chain33types.ExecName(WasmPrefix) + common.ToHex(txhash)

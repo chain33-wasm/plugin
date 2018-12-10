@@ -26,6 +26,7 @@ var (
 	ErrWASMWavmNotSupported          = errors.New("wasm: vm wavm is not supported now")
 	ErrWasmContractExecFailed        = errors.New("wasm: contract exec failed")
 	ErrAddrNotExists                 = errors.New("wasm: contract addr not exists")
+	ErrContractNotExists             = errors.New("wasm: contract not exists")
 	ErrNoCreator                     = errors.New("wasm: no creator for contract")
 	NoCoinsAccount                   = errors.New("wasm: no coins Account")
 	ErrTransferBetweenContracts      = errors.New("wasm: not allow to thansfer between contracts account")
