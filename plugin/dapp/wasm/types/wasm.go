@@ -13,6 +13,10 @@ import (
 
 	"strings"
 	"reflect"
+	"regexp"
+	"fmt"
+	"os"
+	"bytes"
 )
 
 var (
@@ -66,7 +70,7 @@ func (wasm *WasmType) GetTypeMap() map[string]int32 {
 func (wasm WasmType) GetRealToAddr(tx *types.Transaction) string {
 	var action WasmContractAction
 	err := types.Decode(tx.Payload, &action)
-	if err != nil {
+	if err == nil {
 		return tx.To
 	}
 
@@ -90,6 +94,23 @@ func (wasm WasmType) CreateTx(action string, message json.RawMessage) (*types.Tr
 			return nil, types.ErrInvalidParam
 		}
 
+		execer := types.GetRealExecName([]byte(creatPara.Name))
+		if bytes.HasPrefix(execer, []byte(UserWasmX)) {
+			execer = execer[len(UserWasmX):]
+		}
+
+		execerStr := string(execer)
+		nameReg, err:= regexp.Compile(NameRegExp)
+		if !nameReg.MatchString(execerStr) {
+			fmt.Fprintln(os.Stderr, "Wrong wasm contract name format, which should be a-z and 0-9 ")
+			return nil, ErrWrongContracName
+		}
+
+		if len(execerStr) > 16 || len(execerStr) < 4 {
+			fmt.Fprintln(os.Stderr, "wasm contract name's length should be within range [4-16]")
+			return nil, ErrWrongContracNameLen
+		}
+
 		action := &WasmContractAction{
 			Value: &WasmContractAction_CreateWasmContract{
 				CreateWasmContract:&CreateWasmContract{
@@ -97,7 +118,7 @@ func (wasm WasmType) CreateTx(action string, message json.RawMessage) (*types.Tr
 					GasPrice:1,
 					Code:  creatPara.Code,
 					Abi:   creatPara.Abi,
-					Name:  types.ExecName(creatPara.Name),
+					Name:  types.ExecName(UserWasmX + execerStr),
 					Note:  creatPara.Note,
 				},
 			},
@@ -142,6 +163,7 @@ func (wasm *WasmType) GetLogMap() map[int64]*types.LogInfo {
 		TyLogContractStateWasm:       {Ty: reflect.TypeOf(WASMContractState{}), Name: "LogContractStateWasm"},
 		TyLogCallContractWasm:      {Ty: reflect.TypeOf(ReceiptWASMContract{}), Name: "LogCallContractWasm"},
 		TyLogStateChangeItemWasm: {Ty: reflect.TypeOf(WASMStateChangeItem{}), Name: "LogStateChangeItemWasm"},
+		TyLogCreateUserWasmContract: {Ty: reflect.TypeOf(ReceiptWASMContract{}), Name: "LogCreateUserWasmContract"},
 	}
 	return logInfo
 }

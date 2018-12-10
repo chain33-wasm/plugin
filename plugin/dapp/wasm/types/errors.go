@@ -34,4 +34,6 @@ var (
 	ErrUnserialize                   = errors.New("wasm: unserialize")
 	ErrCreateWasmPara                = errors.New("wasm: wrong parameter for creating new wasm contract")
 	ErrCallWasmPara                  = errors.New("wasm: wrong parameter for creating call wasm contract")
+	ErrWrongContracName              = errors.New("wasm: Contract name should be a-z and 0-9")
+	ErrWrongContracNameLen           = errors.New("wasm: Contract name length should within [4-16]")
 )

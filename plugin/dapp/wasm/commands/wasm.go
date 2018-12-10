@@ -13,6 +13,7 @@ import (
 	"github.com/spf13/cobra"
 	"io/ioutil"
 	"os"
+	"regexp"
 )
 
 func WasmCmd() *cobra.Command {
@@ -64,6 +65,17 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 	fee, _ := cmd.Flags().GetFloat64("fee")
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
 	//paraName, _ := cmd.Flags().GetString("paraName")
+
+	nameReg, err:= regexp.Compile(wasmtypes.NameRegExp)
+	if !nameReg.MatchString(contractName) {
+		fmt.Fprintln(os.Stderr, "Wrong wasm contract name format, which should be a-z and 0-9 ")
+		return
+	}
+
+	if len(contractName) > 16 || len(contractName) < 4 {
+		fmt.Fprintln(os.Stderr, "wasm contract name's length should be within range [4-16]")
+		return
+	}
 
 	feeInt64 := uint64(fee*1e4) * 1e4
 

@@ -17,8 +17,10 @@ const (
 	UserWasmX              = "user.wasm."
 	CreateWasmContractStr  = "CreateWasmContract"
 	CallWasmContractStr    = "CallWasmContract"
-	AccountOpFail          = -1
-	AccountOpSuccess       = 0
+	//NameRegExp             = "[a-z0-9]"^[a-z]+\[[0-9]+\]$
+	NameRegExp             = "^[a-z0-9]+$"
+	AccountOpFail          = int(-1)
+	AccountOpSuccess       = int(0)
 )
 
 //wasm contract action
@@ -30,13 +32,15 @@ const (
 const (
 	// log for wasm
 	// 合约代码日志
-	TyLogContractDataWasm = iota
+	TyLogContractDataWasm = iota + 100
 	// 合约状态数据日志
 	TyLogContractStateWasm
 	// 合约调用日志
 	TyLogCallContractWasm
-
+	//
 	TyLogStateChangeItemWasm
+	//
+	TyLogCreateUserWasmContract
 
 	//用于wasm合约输出可读信息的日志记录，尤其是query的相关信息
 	//为什么不将该种信息类型的获取不放置在query中呢，因为query的操作

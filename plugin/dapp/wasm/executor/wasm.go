@@ -31,6 +31,11 @@ var (
 	log            = log15.New("module", "execs.token")
 )
 
+func init() {
+	ety := types.LoadExecutorType(wasmtypes.WasmX)
+	ety.InitFuncList(types.ListMethod(&WASMExecutor{}))
+}
+
 func Init(name string, sub []byte) {
 	drivers.Register(GetName(), newWASMDriver, 0)
 	wasmAddress = address.ExecAddress(GetName())
@@ -60,6 +65,7 @@ func NewWASMExecutor() *WASMExecutor {
 
 	exec.vmCfg = &loccom.Config{}
 	exec.SetChild(exec)
+	exec.SetExecutorType(types.LoadExecutorType(wasmtypes.WasmX))
 	return exec
 }
 
@@ -163,7 +169,7 @@ func (wasm *WASMExecutor) GetDriverName() string {
 }
 func (wasm *WASMExecutor) prepareExecContext(tx *types.Transaction, index int) {
 	if wasm.mStateDB == nil {
-		wasm.mStateDB = state.NewMemoryStateDB(wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
+		wasm.mStateDB = state.NewMemoryStateDB(string(tx.Execer), wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
 	}
 
 	wasm.tx = tx
@@ -172,7 +178,7 @@ func (wasm *WASMExecutor) prepareExecContext(tx *types.Transaction, index int) {
 
 func (wasm *WASMExecutor) prepareQueryContext() {
 	if wasm.mStateDB == nil {
-		wasm.mStateDB = state.NewMemoryStateDB(wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
+		wasm.mStateDB = state.NewMemoryStateDB("", wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
 	}
 }
 
@@ -206,10 +212,15 @@ func (wasm *WASMExecutor) GenerateExecReceipt(usedGas, gasPrice uint64, snapshot
 	data, logs := wasm.mStateDB.GetChangedData(curVer.GetId(), opType)
 	contractReceipt := &wasmtypes.ReceiptWASMContract{caller, execName, contractAddr, usedGas}
 
-	//调用wasm执行器的log
-	logs = append(logs, &types.ReceiptLog{
+	runLog := &types.ReceiptLog{
 		Ty:  wasmtypes.TyLogCallContractWasm,
-		Log: types.Encode(contractReceipt)})
+		Log: types.Encode(contractReceipt)}
+	if opType == wasmtypes.CreateWasmContractAction {
+		runLog.Ty = wasmtypes.TyLogCreateUserWasmContract
+	}
+
+	//调用wasm执行器的log
+	logs = append(logs, runLog)
 	logs = append(logs, wasm.mStateDB.GetReceiptLogs(contractAddr)...)
 
 	receipt := &types.Receipt{Ty: types.ExecOk, KV: data, Logs: logs}

@@ -27,6 +27,7 @@ build:
 	@go build $(BUILD_FLAGS) -v -i -o $(APP)
 	@go build -v -i -o $(CLI) $(SRC_CLI)
 	@cp chain33.toml build/
+	@cp $(CLI) build/cli
 
 build_ci: depends ## Build the binary file for CI
 	@go build -v -i -o $(CLI) $(SRC_CLI)

@@ -6,11 +6,11 @@ import (
 
 	"github.com/33cn/chain33/account"
 	"github.com/33cn/chain33/common"
+	"github.com/33cn/chain33/common/address"
 	"github.com/33cn/chain33/common/db"
 	"github.com/33cn/chain33/common/log/log15"
 	"github.com/33cn/chain33/types"
 	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
-	"github.com/33cn/chain33/common/address"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
 )
 
@@ -21,6 +21,8 @@ import (
 // 执行器的Exec阶段会返回：交易收据、合约账户（包含合约地址、合约代码、合约存储信息）
 // 执行器的ExecLocal阶段会返回：合约创建人和合约的关联信息
 type MemoryStateDB struct {
+	//current executor's name, could be wasm, user.p.xxx.user.wasm.xxx or usr.wasm.xxx
+	ExecutorName string
 	// 状态DB，从执行器框架传入
 	StateDB db.KV
 
@@ -63,8 +65,9 @@ type MemoryStateDB struct {
 // 基于执行器框架的三个DB构建内存状态机对象
 // 此对象的生命周期对应一个区块，在同一个区块内的多个交易执行时共享同一个DB对象
 // 开始执行下一个区块时（执行器框架调用setEnv设置的区块高度发生变更时），会重新创建此DB对象
-func NewMemoryStateDB(StateDB db.KV, LocalDB db.KVDB, CoinsAccount *account.DB, blockHeight int64) *MemoryStateDB {
+func NewMemoryStateDB(executorName string, StateDB db.KV, LocalDB db.KVDB, CoinsAccount *account.DB, blockHeight int64) *MemoryStateDB {
 	mdb := &MemoryStateDB{
+		ExecutorName: executorName,
 		StateDB:      StateDB,
 		LocalDB:      LocalDB,
 		CoinsAccount: CoinsAccount,
