@@ -82,39 +82,12 @@ func (wasm WasmType) Amount(tx *types.Transaction) (int64, error) {
 func (wasm WasmType) CreateTx(action string, message json.RawMessage) (*types.Transaction, error) {
 	elog.Debug("wasm.CreateTx", "action", action)
 
-	var param CreateOrCallWasmContract
-	err := json.Unmarshal(message, &param)
-	if err != nil {
-		elog.Error("CreateTx", "Error", err)
-		return nil, types.ErrInvalidParam
-	}
-
-	txType := param.Value.WasmContractActionType()
-	if CreateWasmContractAction == txType || CallWasmContractAction == txType {
-		return createWasmTx(&param)
-	}
-
-	return nil, types.ErrNotSupport
-}
-
-// GetLogMap 获取日志类型映射
-func (wasm *WasmType) GetLogMap() map[int64]*types.LogInfo {
-	logInfo := map[int64]*types.LogInfo{
-		TyLogContractDataWasm:       {Ty: reflect.TypeOf(LogWASMContractData{}), Name: "LogContractDataWasm"},
-		TyLogContractStateWasm:       {Ty: reflect.TypeOf(WASMContractState{}), Name: "LogContractStateWasm"},
-		TyLogCallContractWasm:      {Ty: reflect.TypeOf(ReceiptWASMContract{}), Name: "LogCallContractWasm"},
-		TyLogStateChangeItemWasm: {Ty: reflect.TypeOf(WASMStateChangeItem{}), Name: "LogStateChangeItemWasm"},
-	}
-	return logInfo
-}
-
-func createWasmTx(param *CreateOrCallWasmContract) (*types.Transaction, error) {
-	txType := param.Value.WasmContractActionType()
-	//创建部署wasm合约的交易
-	if CreateWasmContractAction == txType {
-		creatPara, ok := param.Value.(CreateWasmContractPara)
-		if !ok {
-			return nil, ErrCreateWasmPara
+	if action == CreateWasmContractStr {
+		var creatPara CreateWasmContractPara
+		err := json.Unmarshal(message, &creatPara)
+		if err != nil {
+			elog.Error("CreateTx", "Error", err)
+			return nil, types.ErrInvalidParam
 		}
 
 		action := &WasmContractAction{
@@ -132,30 +105,45 @@ func createWasmTx(param *CreateOrCallWasmContract) (*types.Transaction, error) {
 		}
 
 		return createRawWasmTx(action, WasmX, creatPara.Fee)
-	}
-    //创建调用用户自定义的user.wasm.xxx合约的交易
-	callPara, ok := param.Value.(CallWasmContractPara)
-	if !ok {
-		return nil, ErrCreateWasmPara
-	}
 
+	} else if action == CallWasmContractStr {
+		var callPara CallWasmContractPara
+		err := json.Unmarshal(message, &callPara)
+		if err != nil {
+			elog.Error("CreateTx", "Error", err)
+			return nil, types.ErrInvalidParam
+		}
 
-
-	action := &WasmContractAction{
-		Value: &WasmContractAction_CallWasmContract{
-			CallWasmContract:&CallWasmContract{
-				GasLimit:uint64(callPara.Fee),
-				GasPrice: 1,
-				Note: callPara.Note,
-				VmType: VMBinaryen, //当前只支持binaryen解释执行的方式
-				ActionName:callPara.ActionName,
-				ActionData:callPara.ActionData,
+		action := &WasmContractAction{
+			Value: &WasmContractAction_CallWasmContract{
+				CallWasmContract:&CallWasmContract{
+					GasLimit:uint64(callPara.Fee),
+					GasPrice: 1,
+					Note: callPara.Note,
+					VmType: VMBinaryen, //当前只支持binaryen解释执行的方式
+					ActionName:callPara.ActionName,
+					ActionData:callPara.ActionData,
+				},
 			},
-		},
-		Ty: CallWasmContractAction,
+			Ty: CallWasmContractAction,
+		}
+
+		return createRawWasmTx(action, callPara.Name, callPara.Fee)
+
 	}
 
-	return createRawWasmTx(action, callPara.Name, callPara.Fee)
+	return nil, types.ErrNotSupport
+}
+
+// GetLogMap 获取日志类型映射
+func (wasm *WasmType) GetLogMap() map[int64]*types.LogInfo {
+	logInfo := map[int64]*types.LogInfo{
+		TyLogContractDataWasm:       {Ty: reflect.TypeOf(LogWASMContractData{}), Name: "LogContractDataWasm"},
+		TyLogContractStateWasm:       {Ty: reflect.TypeOf(WASMContractState{}), Name: "LogContractStateWasm"},
+		TyLogCallContractWasm:      {Ty: reflect.TypeOf(ReceiptWASMContract{}), Name: "LogCallContractWasm"},
+		TyLogStateChangeItemWasm: {Ty: reflect.TypeOf(WASMStateChangeItem{}), Name: "LogStateChangeItemWasm"},
+	}
+	return logInfo
 }
 
 func createRawWasmTx(action proto.Message, wasmName string, fee int64) (*types.Transaction, error) {

@@ -1,18 +1,18 @@
 package commands
 
 import (
+	"encoding/json"
 	"fmt"
-	"os"
-	"io/ioutil"
-	"github.com/golang/protobuf/proto"
-	"github.com/spf13/cobra"
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/common/address"
+	"github.com/33cn/chain33/rpc/jsonclient"
 	rpctypes "github.com/33cn/chain33/rpc/types"
 	"github.com/33cn/chain33/types"
-	"github.com/33cn/chain33/rpc/jsonclient"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
-	"encoding/json"
+	"github.com/golang/protobuf/proto"
+	"github.com/spf13/cobra"
+	"io/ioutil"
+	"os"
 )
 
 func WasmCmd() *cobra.Command {
@@ -23,6 +23,7 @@ func WasmCmd() *cobra.Command {
 	}
 
 	cmd.AddCommand(
+		//
 		wasmCheckContractNameCmd(),
 		wasmCreateContractCmd(),
 		wasmGenAbiCmd(),
@@ -54,8 +55,6 @@ func wasmAddCreateContractFlags(cmd *cobra.Command) {
 
 	cmd.Flags().StringP("path", "d", "", "path where stores wasm code and abi")
 	cmd.MarkFlagRequired("path")
-
-	cmd.Flags().StringP("alias", "s", "", "human readable contract alias name(optional)")
 }
 
 func wasmCreateContract(cmd *cobra.Command, args []string) {
@@ -82,17 +81,15 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	param := &wasmtypes.CreateOrCallWasmContract{
-		Value: wasmtypes.CreateWasmContractPara{
-			Code:code,
-			Abi: string(abi),
-			Name: contractName,
-			Note: note,
-			Fee: int64(feeInt64),
-		},
+	value := wasmtypes.CreateWasmContractPara{
+		Code: code,
+		Abi:  string(abi),
+		Name: contractName,
+		Note: note,
+		Fee:  int64(feeInt64),
 	}
 
-	paramJson, errInfo := json.Marshal(param)
+	paramJson, errInfo := json.Marshal(value)
 	if errInfo != nil {
 		fmt.Fprintln(os.Stderr, "json.Marshal error ", errInfo)
 		return
@@ -100,9 +97,9 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 	}
 
 	params := &rpctypes.CreateTxIn{
-		Execer:wasmtypes.WasmX,
-		ActionName:"CreateWasmContract",
-		Payload:paramJson,
+		Execer:     wasmtypes.WasmX,
+		ActionName: wasmtypes.CreateWasmContractStr,
+		Payload:    paramJson,
 	}
 
 	ctx := jsonclient.NewRPCCtx(rpcLaddr, "Chain33.CreateTransaction", params, nil)
@@ -165,15 +162,15 @@ func wasmQueryContract(cmd *cobra.Command, args []string) {
 
 	queryReq := wasmtypes.WasmQueryContractTableReq{
 		ContractName: contractName,
-		TableName:[]string{tableName},
+		TableName:    []string{tableName},
 	}
 
 	var WasmQueryResponse wasmtypes.WasmQueryResponse
 	query := sendQuery4wasm(rpcLaddr, wasmtypes.QueryFromContract, &queryReq, &WasmQueryResponse)
 	if query {
 		for _, WasmOutItem := range WasmQueryResponse.QueryResultItems {
-			fmt.Println(WasmOutItem.ItemType);
-			fmt.Println(WasmOutItem.ResultJSON);
+			fmt.Println(WasmOutItem.ItemType)
+			fmt.Println(WasmOutItem.ResultJSON)
 		}
 	} else {
 		fmt.Fprintln(os.Stderr, "get wasm query error")
@@ -211,10 +208,10 @@ func wasmCallContract(cmd *cobra.Command, args []string) {
 	feeInt64 := uint64(fee*1e4) * 1e4
 
 	req := wasmtypes.ConvertJson2AbiReq{
-		ContractName: contractName,
-		ActionName: actionName,
+		ContractName:  contractName,
+		ActionName:    actionName,
 		AbiDataInJson: abiPara,
-		}
+	}
 	var json2AbiResponse wasmtypes.Json2AbiResponse
 	var actionData []byte
 	query := sendQuery4wasm(rpcLaddr, wasmtypes.ConvertJson2Abi, &req, &json2AbiResponse)
@@ -225,17 +222,14 @@ func wasmCallContract(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	param := &wasmtypes.CreateOrCallWasmContract{
-		Value: wasmtypes.CallWasmContractPara{
-			Name:contractName,
-			Note: note,
-			ActionName:actionName,
-			ActionData:actionData,
-			Fee: int64(feeInt64),
-		},
-	}
+	value := wasmtypes.CallWasmContractPara{
+			Name:       contractName,
+			Note:       note,
+			ActionName: actionName,
+			ActionData: actionData,
+			Fee:        int64(feeInt64)}
 
-	paramJson, errInfo := json.Marshal(param)
+	paramJson, errInfo := json.Marshal(value)
 	if errInfo != nil {
 		fmt.Fprintln(os.Stderr, "json.Marshal error ", errInfo)
 		return
@@ -243,9 +237,9 @@ func wasmCallContract(cmd *cobra.Command, args []string) {
 	}
 
 	params := &rpctypes.CreateTxIn{
-		Execer:wasmtypes.WasmX,
-		ActionName:"CallWasmContract",
-		Payload:paramJson,
+		Execer:     types.ExecName(wasmtypes.WasmX),
+		ActionName: wasmtypes.CallWasmContractStr,
+		Payload:    paramJson,
 	}
 
 	ctx := jsonclient.NewRPCCtx(rpcLaddr, "Chain33.CreateTransaction", params, nil)
