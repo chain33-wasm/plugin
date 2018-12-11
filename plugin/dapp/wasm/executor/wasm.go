@@ -168,9 +168,26 @@ func (wasm *WASMExecutor) GetName() string {
 func (wasm *WASMExecutor) GetDriverName() string {
 	return wasmtypes.WasmX
 }
+
+// Allow 允许哪些交易在本命执行器执行
+func (wasm *WASMExecutor) Allow(tx *types.Transaction, index int) error {
+	err := wasm.DriverBase.Allow(tx, index)
+	if err == nil {
+		return nil
+	}
+	//增加新的规则:
+	//主链: user.wasm.xxx  执行 wasm用户自定义 合约
+	//平行链: user.p.guodun.user.wasm.xxx 执行 wasm用户自定义合约
+	exec := types.GetParaExec(tx.Execer)
+	if wasm.AllowIsUserDot2(exec) {
+		return nil
+	}
+	return types.ErrNotAllow
+}
+
 func (wasm *WASMExecutor) prepareExecContext(tx *types.Transaction, index int) {
 	if wasm.mStateDB == nil {
-		wasm.mStateDB = state.NewMemoryStateDB(string(tx.Execer), wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
+		wasm.mStateDB = state.NewMemoryStateDB(types.ExecName(string(tx.Execer)), wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
 	}
 
 	wasm.tx = tx

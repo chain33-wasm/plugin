@@ -692,6 +692,9 @@ func (self *MemoryStateDB) ResetDatas() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////
+func (self *MemoryStateDB) SetCurrentExecutorName(executorName string) {
+	self.ExecutorName = executorName
+}
 
 func (self *MemoryStateDB) ExecFrozen(tx *types.Transaction, addr string, amount int64) int {
 	if tx.From() != addr {

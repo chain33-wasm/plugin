@@ -80,6 +80,9 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(createWasmContract *wasmtypes.
 
 func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.CallWasmContract, tx *types.Transaction, index int) (*types.Receipt, error) {
 	wasm.prepareExecContext(tx, index)
+	//因为在真正地执行user.wasm.xxx合约前，还需要通过wasm合约平台获取其合约字节码，
+	//所以需要先将其合约名字设置为wasm
+	wasm.mStateDB.SetCurrentExecutorName(wasmtypes.WasmX)
 	if callWasmContract.VmType != wasmtypes.VMBinaryen {
 		panic("Now only binaryen is supported")
 		return nil, wasmtypes.ErrWASMWavmNotSupported
@@ -93,7 +96,8 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 		log.Error("call wasm contract ", "failed to get code from contract", string(tx.Execer))
 		return nil, wasmtypes.ErrWrongContractAddr
 	}
-
+	//将当前合约执行名字修改为user.wasm.xxx
+	wasm.mStateDB.SetCurrentExecutorName(types.ExecName(string(tx.Execer)))
 	snapshot := wasm.mStateDB.Snapshot()
 	setWasm4Callback(wasm)
 
