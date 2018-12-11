@@ -63,7 +63,7 @@ func (self *ContractAccount) GetState(key string) []byte {
 	}
 	keyStr := self.GetStateItemKey(self.Addr, key)
 	// 如果缓存中取不到数据，则只能到本地数据库中查询
-	val, err := self.mdb.LocalDB.Get([]byte(keyStr))
+	val, err := self.mdb.StateDB.Get([]byte(keyStr))
 	if err != nil {
 		log15.Debug("GetState error!", "key", key, "error", err)
 		return nil
@@ -83,7 +83,7 @@ func (self *ContractAccount) SetState(key string, value []byte) {
 	self.stateCache[key] = value
 	//需要设置到localdb中，以免同一个区块中同一个合约多次调用时，状态数据丢失
 	keyStr := self.GetStateItemKey(self.Addr, key)
-	self.mdb.LocalDB.Set([]byte(keyStr), value)
+	self.mdb.StateDB.Set([]byte(keyStr), value)
 }
 
 // 从原有的存储在一个对象，将状态数据分散存储到多个KEY，保证合约可以支撑大量状态数据
@@ -240,7 +240,7 @@ func (self *ContractAccount) BuildStateLog() (log *chain33Types.ReceiptLog) {
 }
 
 func (self *ContractAccount) GetDataKey() []byte {
-	return []byte("mavl-" + self.mdb.ExecutorName + "-data: " + self.Addr)
+	return []byte("mavl-" + self.mdb.ExecutorName + "-WasmContractInfo: " + self.Addr)
 }
 
 func (self *ContractAccount) GetStateKey() []byte {

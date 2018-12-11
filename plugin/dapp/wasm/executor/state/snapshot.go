@@ -5,8 +5,8 @@ import (
 
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/types"
-    loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
-	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
+	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
+	//wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
 )
 
 // 数据状态变更接口
@@ -52,9 +52,9 @@ func (ver *Snapshot) getData(opType loccom.WasmContratOpType) (kvSet []*types.Ke
 	// 获取中间的数据变更
 	dataMap := make(map[string]*types.KeyValue)
 
-	var localKvSet []*types.KeyValue
-	localDataMap := make(map[string]*types.KeyValue)
-	var wasmContractName string
+	//var localKvSet []*types.KeyValue
+	//localDataMap := make(map[string]*types.KeyValue)
+	//var wasmContractName string
 	for _, entry := range ver.entries {
 
 		items := entry.getData(ver.statedb)
@@ -62,13 +62,13 @@ func (ver *Snapshot) getData(opType loccom.WasmContratOpType) (kvSet []*types.Ke
 		if logEntry != nil {
 			logs = append(logs, entry.getLog(ver.statedb)...)
 		}
-        //当前的storage的状态变化仅存放在localDB中，所有需要将其进行汇总，作为第二步的备用数据
-		if wasmtypes.CallWasmContractAction == opType {
-			if stChg, ok := entry.(storageChange); ok {
-				wasmContractName = ver.statedb.GetAccount(stChg.account).Data.Name
-				localKvSet = append(localKvSet, stChg.getDataFromLocalDB(ver.statedb)...)
-			}
-		}
+		////当前的storage的状态变化仅存放在localDB中，所有需要将其进行汇总，作为第二步的备用数据
+		//if wasmtypes.CallWasmContractAction == opType {
+		//	if stChg, ok := entry.(storageChange); ok {
+		//		wasmContractName = ver.statedb.GetAccount(stChg.account).Data.Name
+		//		localKvSet = append(localKvSet, stChg.getDataFromLocalDB(ver.statedb)...)
+		//	}
+		//}
 
 		// 执行去重操作
 		for _, kv := range items {
@@ -79,27 +79,27 @@ func (ver *Snapshot) getData(opType loccom.WasmContratOpType) (kvSet []*types.Ke
 	////////////////////////////
 	//因为调用合约时的stroagechange的数据存储在localdb中，为保证数据的一致性，需要将
 	//将所有storagechange的数据key和value进行append，进行hash计算并进行存储
-	if wasmtypes.CallWasmContractAction == opType {
-		for _, kv := range localKvSet {
-			localDataMap[string(kv.Key)] = kv
-		}
-		locnames := make([]string, 0, len(localDataMap))
-		for name := range localDataMap {
-			locnames = append(locnames, name)
-		}
-		sort.Strings(locnames)
-
-		var keys []byte
-		var values []byte
-		for _, name := range locnames {
-			keys = append(keys, localDataMap[name].Key...)
-			values = append(values, localDataMap[name].Value...)
-		}
-		keyHash := common.Sha256(keys)
-		valueHash := common.Sha256(values)
-		key := loccom.CalcStrorageChangeKey(wasmContractName, common.ToHex(keyHash))
-		kvSet = append(kvSet, &types.KeyValue{Key: key, Value: valueHash})
-	}
+	//if wasmtypes.CallWasmContractAction == opType {
+	//	for _, kv := range localKvSet {
+	//		localDataMap[string(kv.Key)] = kv
+	//	}
+	//	locnames := make([]string, 0, len(localDataMap))
+	//	for name := range localDataMap {
+	//		locnames = append(locnames, name)
+	//	}
+	//	sort.Strings(locnames)
+	//
+	//	var keys []byte
+	//	var values []byte
+	//	for _, name := range locnames {
+	//		keys = append(keys, localDataMap[name].Key...)
+	//		values = append(values, localDataMap[name].Value...)
+	//	}
+	//	keyHash := common.Sha256(keys)
+	//	valueHash := common.Sha256(values)
+	//	key := loccom.CalcStrorageChangeKey(wasmContractName, common.ToHex(keyHash))
+	//	kvSet = append(kvSet, &types.KeyValue{Key: key, Value: valueHash})
+	//}
 	///////////////////////////////////
 
 	// 这里也可能会引起数据顺序不一致的问题，需要修改（目前看KV的顺序不会影响哈希计算，但代码最好保证顺序一致）
@@ -280,22 +280,17 @@ func (ch storageChange) revert(mdb *MemoryStateDB) {
 }
 
 func (ch storageChange) getData(mdb *MemoryStateDB) []*types.KeyValue {
-	acc := mdb.accounts[ch.account]
-	if _, ok := mdb.stateDirty[ch.account]; ok && acc != nil {
-		return acc.GetStateKV()
+	value := mdb.GetState(ch.account, string(ch.key))
+	if value == nil {
+		return nil
 	}
-	return nil
+	acc := mdb.GetAccount(ch.account)
+	key := acc.GetStateItemKey(ch.account, string(ch.key))
+
+	return []*types.KeyValue{{Key: []byte(key), Value: value}}
 }
 
 func (ch storageChange) getLog(mdb *MemoryStateDB) []*types.ReceiptLog {
-	acc := mdb.accounts[ch.account]
-	if acc != nil {
-		currentVal := acc.GetState(string(ch.key))
-		key := acc.GetStateItemKey(ch.account, string(ch.key))
-		receipt := &wasmtypes.WASMStateChangeItem{Key: key, PreValue: ch.prevalue, CurrentValue: currentVal}
-		return []*types.ReceiptLog{{Ty: wasmtypes.TyLogStateChangeItemWasm, Log: types.Encode(receipt)}}
-	}
-
 	return nil
 }
 
@@ -304,7 +299,7 @@ func (ch storageChange) getDataFromLocalDB(mdb *MemoryStateDB) []*types.KeyValue
 	if acc != nil {
 		currentVal := acc.GetState(string(ch.key))
 		var kvSet []*types.KeyValue
-		kvSet = append(kvSet, &types.KeyValue{Key:[]byte(ch.key), Value: currentVal})
+		kvSet = append(kvSet, &types.KeyValue{Key: []byte(ch.key), Value: currentVal})
 		return kvSet
 	}
 	return nil

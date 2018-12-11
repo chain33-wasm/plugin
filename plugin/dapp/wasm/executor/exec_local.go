@@ -18,17 +18,17 @@ func (wasm *WASMExecutor) ExecLocal_CallWasmContract(payload *wasmtypes.CallWasm
 func (wasm *WASMExecutor) execLocal(tx *types.Transaction, receipt *types.ReceiptData, index int) (*types.LocalDBSet, error) {
 	set := &types.LocalDBSet{}
 	// 需要将Exec中生成的合约状态变更信息写入localdb
-	for _, logItem := range receipt.Logs {
-		if wasmtypes.TyLogStateChangeItemWasm == logItem.Ty {
-			data := logItem.Log
-			var changeItem wasmtypes.WASMStateChangeItem
-			err := types.Decode(data, &changeItem)
-			if err != nil {
-				return set, err
-			}
-			set.KV = append(set.KV, &types.KeyValue{Key: []byte(changeItem.Key), Value: changeItem.CurrentValue})
-		}
-	}
+	//for _, logItem := range receipt.Logs {
+	//	if wasmtypes.TyLogStateChangeItemWasm == logItem.Ty {
+	//		data := logItem.Log
+	//		var changeItem wasmtypes.WASMStateChangeItem
+	//		err := types.Decode(data, &changeItem)
+	//		if err != nil {
+	//			return set, err
+	//		}
+	//		set.KV = append(set.KV, &types.KeyValue{Key: []byte(changeItem.Key), Value: changeItem.CurrentValue})
+	//	}
+	//}
 
 	return set, nil
 }
