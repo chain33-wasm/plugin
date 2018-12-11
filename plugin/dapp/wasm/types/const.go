@@ -11,7 +11,7 @@ const (
 	WasmDebug              = "WasmDebug"
 	WasmGetAbi             = "WasmGetAbi"
 	ConvertJson2Abi        = "ConvertJson2Abi"
-	QueryFromContract      = "QueryFromContract"
+	WasmGetContractTable   = "WasmGetContractTable"
 	GAS_EXHAUSTED_ERR_CODE = 0x81234567
 	WasmX                  = "wasm"
 	UserWasmX              = "user.wasm."

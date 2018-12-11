@@ -362,23 +362,23 @@ func (wasm *WASMExecutor) ExecDelLocal(tx *types.Transaction, receipt *types.Rec
 }
 
 func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableReq) (types.Message, error) {
-	wasm.prepareExecContext(nil, 0)
-
 	resp := &wasmtypes.WasmQueryResponse{}
 	contractAddr := address.ExecAddress(types.ExecName(in.ContractName))
-
+	wasm.prepareQueryContext(types.ExecName(wasmtypes.WasmX))
 	abi := wasm.mStateDB.GetAbi(contractAddr)
 	if nil == abi {
+		log.Error("getContractTable", "Failed to get abi for wasm contract", in.ContractName)
 		return nil, wasmtypes.ErrAddrNotExists
 	}
+	wasm.mStateDB.SetCurrentExecutorName(types.ExecName(in.ContractName))
 	abi4CStr := C.CString(string(abi))
 	defer C.free(unsafe.Pointer(abi4CStr))
 
 	var wasmOutItems []*wasmtypes.WasmOutItem
-	for _, tableName := range in.TableName {
-		data := wasm.mStateDB.GetState(contractAddr, tableName)
+	for _, item := range in.Items {
+		data := wasm.mStateDB.GetState(contractAddr, item.Key)
 		wasmOutItem := &wasmtypes.WasmOutItem{
-			ItemType: tableName,
+			ItemType: item.TableName,
 			Data:data,
 		}
 		wasmOutItems = append(wasmOutItems, wasmOutItem)

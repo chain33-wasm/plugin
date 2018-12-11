@@ -147,9 +147,14 @@ message WasmGetAbiResp {
     bytes abi = 1;
 }
 
+message WasmQueryTableItem {
+    string tableName   = 1;
+    string key         = 2;
+}
+
 message WasmQueryContractTableReq {
-    string contractName         = 1;
-    repeated string tableName   = 2;
+    string contractName                 = 1;
+    repeated WasmQueryTableItem items   = 2;
 }
 
 message WasmOutItem {

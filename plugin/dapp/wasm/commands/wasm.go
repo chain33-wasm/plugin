@@ -171,15 +171,16 @@ func wasmQueryContractCmd() *cobra.Command {
 func wasmQueryContract(cmd *cobra.Command, args []string) {
 	contractName, _ := cmd.Flags().GetString("exec")
 	tableName, _ := cmd.Flags().GetString("table")
+	key, _ := cmd.Flags().GetString("key")
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
 
 	queryReq := wasmtypes.WasmQueryContractTableReq{
 		ContractName: contractName,
-		TableName:    []string{tableName},
+		Items:    []*wasmtypes.WasmQueryTableItem{{tableName, key}},
 	}
 
 	var WasmQueryResponse wasmtypes.WasmQueryResponse
-	query := sendQuery4wasm(rpcLaddr, wasmtypes.QueryFromContract, &queryReq, &WasmQueryResponse)
+	query := sendQuery4wasm(rpcLaddr, wasmtypes.WasmGetContractTable, &queryReq, &WasmQueryResponse)
 	if query {
 		for _, WasmOutItem := range WasmQueryResponse.QueryResultItems {
 			fmt.Println(WasmOutItem.ItemType)
@@ -197,6 +198,9 @@ func wasmAddQueryContractFlags(cmd *cobra.Command) {
 
 	cmd.Flags().StringP("table", "n", "", "one of wasm contract's table name")
 	cmd.MarkFlagRequired("table")
+
+	cmd.Flags().StringP("key", "k", "", "key of the table info")
+	cmd.MarkFlagRequired("key")
 }
 
 // 调用WASM合约

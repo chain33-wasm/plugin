@@ -12,6 +12,7 @@ import (
 	"github.com/33cn/chain33/common/address"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
 	"unsafe"
+	"bytes"
 )
 
 
@@ -76,9 +77,15 @@ func (wasm *WASMExecutor) Query_WasmGetContractTable(in *wasmtypes.WasmQueryCont
 	if in == nil {
 		return nil, types.ErrInvalidParam
 	}
-	wasm.prepareQueryContext(types.ExecName(in.ContractName))
+	contractName := in.ContractName
+	if !bytes.Contains([]byte(in.ContractName), []byte(wasmtypes.UserWasmX)) {
+		contractName = wasmtypes.UserWasmX + contractName
+	}
 
-	return wasm.getContractTable(in)
+	incp := *in
+	incp.ContractName = contractName
+
+	return wasm.getContractTable(&incp)
 }
 
 func genAbiData(contractAbi, contractName, actionName, abiJson string) []byte {
