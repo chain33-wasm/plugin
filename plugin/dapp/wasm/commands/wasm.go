@@ -14,6 +14,7 @@ import (
 	"io/ioutil"
 	"os"
 	"regexp"
+	"bytes"
 )
 
 func WasmCmd() *cobra.Command {
@@ -357,14 +358,22 @@ func wasmAddCheckContractAddrFlags(cmd *cobra.Command) {
 
 func wasmCheckContractAddr(cmd *cobra.Command, args []string) {
 	name, _ := cmd.Flags().GetString("exec")
+	if bytes.Contains([]byte(name), []byte(wasmtypes.UserWasmX)) {
+		name = name[len(wasmtypes.UserWasmX):]
+	}
+
+	match, _ := regexp.MatchString(wasmtypes.NameRegExp, name)
+	if !match {
+		fmt.Fprintln(os.Stderr, "Wrong wasm contract name format, which should be a-z and 0-9 ")
+		return
+	}
 
 	var checkAddrReq = wasmtypes.CheckWASMContractNameReq{WasmContractName: name}
 	var checkAddrResp wasmtypes.CheckWASMAddrResp
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
 	query := sendQuery4wasm(rpcLaddr, wasmtypes.CheckNameExistsFunc, &checkAddrReq, &checkAddrResp)
-
 	if query {
-		proto.MarshalText(os.Stdout, &checkAddrResp)
+		fmt.Fprintln(os.Stdout, checkAddrResp.ExistAlready)
 	} else {
 		fmt.Fprintln(os.Stderr, "error")
 	}

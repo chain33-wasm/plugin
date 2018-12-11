@@ -8,7 +8,7 @@ var (
 	ErrDepthWASM                    = errors.New("max call depth exceeded for wasm")
 	ErrTraceLimitReachedWASM        = errors.New("the number of logs reached the specified limit for wasm")
 	ErrInsufficientBalanceWASM      = errors.New("insufficient balance for transfer for wasm")
-	ErrContractAddressCollisionWASM = errors.New("contract address collision for wasm")
+	ErrContractAddressCollisionWASM = errors.New("The Name of contract was used by other contract already")
 	ErrGasLimitReachedWASM          = errors.New("gas limit reached for wasm")
 	ErrGasUintOverflowWASM          = errors.New("gas uint64 overflow for wasm")
 	ErrAddrNotExistsWASM            = errors.New("address not exists for wasm")

@@ -21,6 +21,7 @@ import (
 	"github.com/33cn/plugin/plugin/dapp/wasm/executor/state"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
 	"unsafe"
+	"bytes"
 )
 
 var (
@@ -176,9 +177,9 @@ func (wasm *WASMExecutor) prepareExecContext(tx *types.Transaction, index int) {
 	wasm.txIndex = index
 }
 
-func (wasm *WASMExecutor) prepareQueryContext() {
+func (wasm *WASMExecutor) prepareQueryContext(executorName string) {
 	if wasm.mStateDB == nil {
-		wasm.mStateDB = state.NewMemoryStateDB("", wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
+		wasm.mStateDB = state.NewMemoryStateDB(executorName, wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
 	}
 }
 
@@ -409,6 +410,10 @@ func (wasm *WASMExecutor) checkContractNameExists(req *wasmtypes.CheckWASMContra
 	contractName := req.WasmContractName
 	if len(contractName) == 0 {
 		return nil, wasmtypes.ErrAddrNotExists
+	}
+
+	if !bytes.Contains([]byte(contractName), []byte(wasmtypes.UserWasmX)) {
+		contractName = wasmtypes.UserWasmX + contractName
 	}
 
 	exists := wasm.GetMStateDB().Exist(address.ExecAddress(contractName))
