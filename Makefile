@@ -10,6 +10,7 @@ SRC_CLI := github.com/33cn/plugin/cli
 APP := build/chain33
 CHAIN33=github.com/33cn/chain33
 CHAIN33_PATH=vendor/${CHAIN33}
+WASMCPP=plugin/dapp/wasm/executor/wasmcpp
 LDFLAGS := -ldflags "-w -s"
 PKG_LIST_VET := `go list ./... | grep -v "vendor" | grep -v plugin/dapp/evm/executor/vm/common/crypto/bn256`
 PKG_LIST := `go list ./... | grep -v "vendor" | grep -v "chain33/test" | grep -v "mocks" | grep -v "pbft"`
@@ -21,7 +22,18 @@ DAPP := ""
 PROJ := "build"
 .PHONY: default dep all build release cli linter race test fmt vet bench msan coverage coverhtml docker docker-compose protobuf clean help autotest
 
-default: build depends
+default: wasmlib build depends
+
+wasmlib: ### Build for wasm libraries
+	@make -C $(WASMCPP)/build -j4
+	@cp $(WASMCPP)/build/adapter/libwasm_adapter.a $(WASMCPP)/lib
+	@cp $(WASMCPP)/build/wasm/binaryen/lib/libasmjs.a $(WASMCPP)/lib/libasmjs.a
+	@cp $(WASMCPP)/build/wasm/binaryen/lib/libast.a $(WASMCPP)/lib/libast.a
+	@cp $(WASMCPP)/build/wasm/binaryen/lib/libwasm.a $(WASMCPP)/lib/libwasm.a
+	@cp $(WASMCPP)/build/wasm-jit/Source/WASM/libWASM.a $(WASMCPP)/lib/libWASM.a
+	@cp $(WASMCPP)/build/wasm-jit/Source/WAST/libWAST.a $(WASMCPP)/lib/libWAST.a
+	@cp $(WASMCPP)/build/serialize/libwasm_serialize.a $(WASMCPP)/lib/libwasm_serialize.a
+
 
 build:
 	@go build $(BUILD_FLAGS) -v -i -o $(APP)

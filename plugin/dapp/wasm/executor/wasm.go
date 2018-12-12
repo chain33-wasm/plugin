@@ -145,36 +145,36 @@ func Output2UserCallback(typeName *C.char, value *C.char, len C.int) {
 func ExecFrozen(addr *C.char, amount C.longlong) C.int {
 	if nil == pWasm || nil == pWasm.mStateDB {
 		log.Error("ExecFrozen failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
-		return wasmtypes.AccountOpFail
+		return C.int(wasmtypes.AccountOpFail)
 	}
-	return pWasm.mStateDB.ExecFrozen(pWasm.tx, C.GoString(addr), int64(amount))
+	return C.int(pWasm.mStateDB.ExecFrozen(pWasm.tx, C.GoString(addr), int64(amount)))
 }
 //激活user.wasm.xxx合约addr上的部分余额
 //export ExecActive
 func ExecActive(addr *C.char, amount C.longlong) C.int {
 	if nil == pWasm || nil == pWasm.mStateDB {
 		log.Error("ExecActive failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
-		return wasmtypes.AccountOpFail
+		return C.int(wasmtypes.AccountOpFail)
 	}
-	return pWasm.mStateDB.ExecActive(pWasm.tx, C.GoString(addr), int64(amount))
+	return C.int(pWasm.mStateDB.ExecActive(pWasm.tx, C.GoString(addr), int64(amount)))
 }
 
 //export ExecTransfer
 func ExecTransfer(from, to *C.char, amount C.longlong) C.int {
 	if nil == pWasm || nil == pWasm.mStateDB {
 		log.Error("ExecTransfer failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
-		return wasmtypes.AccountOpFail
+		return C.int(wasmtypes.AccountOpFail)
 	}
-	return pWasm.mStateDB.ExecTransfer(pWasm.tx, C.GoString(from), C.GoString(to), int64(amount))
+	return C.int(pWasm.mStateDB.ExecTransfer(pWasm.tx, C.GoString(from), C.GoString(to), int64(amount)))
 }
 
 //export ExecTransferFrozen
 func ExecTransferFrozen(from, to *C.char, amount C.longlong) C.int {
 	if nil == pWasm || nil == pWasm.mStateDB {
 		log.Error("ExecTransferFrozen failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
-		return wasmtypes.AccountOpFail
+		return C.int(wasmtypes.AccountOpFail)
 	}
-	return pWasm.mStateDB.ExecTransferFrozen(pWasm.tx, C.GoString(from), C.GoString(to), int64(amount))
+	return C.int(pWasm.mStateDB.ExecTransferFrozen(pWasm.tx, C.GoString(from), C.GoString(to), int64(amount)))
 }
 
 func (wasm *WASMExecutor) GetName() string {
