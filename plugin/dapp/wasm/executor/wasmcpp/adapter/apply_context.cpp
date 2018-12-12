@@ -151,7 +151,21 @@ int apply_context::get_from(char *fromAddr, size_t from_size) {
 	return min;
 }
 
+////////////functions for token operations//////////////////////
+int apply_context::execFrozenCoin(char* addr, long long int p1) {
+    return execFrozen(addr, p1);
+}
 
+int apply_context::execActiveCoin(char* addr, long long int p1) {
+	return execActive(addr, p1);
+}
 
+int apply_context::execTransferCoin(char* from, char* to, long long int p2) {
+	return execTransfer(from, to, p2);
+}
+
+int apply_context::execTransferFrozenCoin(char* from, char* to, long long int p2) {
+    return execTransferFrozen(from, to, p2);
+}
 
 } } /// eosio::chain

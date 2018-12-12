@@ -18,6 +18,26 @@ void Output2UserViaBlockchain(char *p0, char* p1, int p2) {
 	Output2UserCallback(p0, p1, p2);
 }
 
+int execFrozen (char* addr, long long int p1) {
+	return ExecFrozen(addr, p1);
+}
+
+
+int execActive (char* addr, long long int p1) {
+	return ExecActive(addr, p1);
+}
+
+int execTransfer (char* from, char* to, long long int p2) {
+	return ExecTransfer(from, to, p2);
+
+}
+
+int execTransferFrozen (char* from, char* to, long long int p2) {
+	return ExecTransferFrozen(from, to, p2);
+
+}
+
+
 
 
 

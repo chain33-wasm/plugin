@@ -30,6 +30,20 @@ int StateDBGetValueSizeCallback(char* p0, char* p1, int p2) {
 void Output2UserCallback(char* p0, char* p1, int p2) {
 
 }
+
+int ExecFrozen(char *addr, long long int amount) {
+	return 0;
+}
+int ExecActive(char *addr, long long int amount) {
+	return 0;
+}
+int ExecTransfer(char *from, char *to, long long int amount) {
+	return 0;
+}
+int ExecTransferFrozen(char *from, char *to, long long int amount) {
+	return 0;
+}
+
 #endif
 
 using namespace std;

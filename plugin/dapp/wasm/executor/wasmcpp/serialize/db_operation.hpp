@@ -30,13 +30,6 @@ inline int getFrom4chain33(char *from, int fromLen) {
     return get_from(from, fromLen);
 }
 
-#if 0
-inline void output2user(const char *type, const char* data, uint32_t len) {
-	setOutType(type);
-	setOutValue(data, len);
-}
-#endif
-
 
 }
 

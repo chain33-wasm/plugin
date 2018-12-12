@@ -916,6 +916,22 @@ class database_api : public context_aware_api {
 		int get_valueSize(array_ptr<const char> key, size_t keyLen) {
 			return context.getValueSize(key, keyLen);
 		}
+
+		int execFrozenCoin(null_terminated_ptr addr, int64_t amount) {
+			return context.execFrozenCoin(addr, (long long)amount);
+		}
+		
+	    int execActiveCoin(null_terminated_ptr addr, int64_t amount) {
+			return context.execActiveCoin(addr, (long long)amount);
+		}
+		
+	    int execTransferCoin(null_terminated_ptr from, null_terminated_ptr to, int64_t amount) {
+            return context.execTransferCoin(from, to, amount);
+		}
+		
+	    int execTransferFrozenCoin(null_terminated_ptr from, null_terminated_ptr to, int64_t amount) {
+            return context.execTransferFrozenCoin(from, to, amount);
+		}
 };
 
 class memory_api : public context_aware_api {
@@ -1328,10 +1344,14 @@ REGISTER_INTRINSICS(system_api,
 );
 
 REGISTER_INTRINSICS(database_api,
-   (pass_key, void(int, int) )
-   (set_value, void(int, int) )
-   (get_value, int(int, int)  )
-   (get_valueSize, int(int, int)  )
+   (pass_key, void(int, int))
+   (set_value, void(int, int))
+   (get_value, int(int, int))
+   (get_valueSize, int(int, int))
+   (execFrozenCoin, int(int, int64_t))
+   (execActiveCoin, int(int, int64_t))
+   (execTransferCoin, int(int, int, int64_t))
+   (execTransferFrozenCoin, int(int, int, int64_t))
 );
 
 REGISTER_INTRINSICS(context_free_system_api,

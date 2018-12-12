@@ -20,10 +20,6 @@ int get_from(void *value, int buffer_size);
 //The total accumlated size within one tx can't exceed 1M bytes,
 //otherwise, the latter info will be ignored
 void output2user(const char *type, const char* data, uint32_t len);
-#if 0
-void setOutType(const char *type);
-void setOutValue(const char *data, int buffer_size);
-#endif
 
 #ifdef __cplusplus
 }

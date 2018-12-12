@@ -16,6 +16,12 @@ void StateDBSetState(char* p0, char* p1, int p2, char* p3, int p4);
 int StateDBGetValueSize(char* p0, char* p1, int p2);
 void Output2UserViaBlockchain(char *p0, char* p1, int p2);
 
+int execFrozen(char* addr, long long int p1);
+int execActive(char* addr, long long int p1);
+int execTransfer(char* from, char* to, long long int p2);
+int execTransferFrozen(char* from, char* to, long long int p2);
+
+
 
 
 //#ifdef __cplusplus

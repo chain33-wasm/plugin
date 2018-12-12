@@ -80,7 +80,11 @@ class apply_context {
 	  int64_t getBlockTime()const;
 	  int get_from(char *from, size_t from_size);
 	  void output2user(const char *type, const char *data, int len);
-
+	  int execFrozenCoin(char* addr, long long int p1);
+	  int execActiveCoin(char* addr, long long int p1);
+	  int execTransferCoin(char* from, char* to, long long int p2);
+	  int execTransferFrozenCoin(char* from, char* to, long long int p2);
+	  
    /// Fields:  
       action                  actInfo; ///< message being applied
       ///< the code that is currently running, actully, it's contract code-id

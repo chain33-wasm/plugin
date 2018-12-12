@@ -5,7 +5,7 @@
 /* Start of preamble from import "C" comments.  */
 
 
-#line 3 "/home/hezhengjun/work/maintain_chain33/src/gitlab.33.cn/chain33/chain33/plugin/dapp/wasm/executor/wasm.go"
+#line 3 "/home/hezhengjun/work/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/wasm.go"
 
 
 
@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <../../../../wasmcpp/adapter/include/eosio/chain/wasm_interface_adapter.h>
+#include "../../../../../wasmcpp/adapter/include/eosio/chain/wasm_interface_adapter.h"
 
 #line 1 "cgo-generated-wrapper"
 
@@ -71,6 +71,15 @@ extern void StateDBSetStateCallback (char* p0, char* p1, int p2, char* p3, int p
 
 //该接口用于返回查询结果的返回
 extern void Output2UserCallback (char* p0, char* p1, int p2);
+
+////////////以下接口用于user.wasm.xxx合约内部转账/////////////////////////////
+//冻结user.wasm.xxx合约addr上的部分余额,其中的
+extern int ExecFrozen (char* p0, long long int p1);
+
+//激活user.wasm.xxx合约addr上的部分余额
+extern int ExecActive (char* p0, long long int p1);
+extern int ExecTransfer (char* p0, char* p1, long long int p2);
+extern int ExecTransferFrozen (char* p0, char* p1, long long int p2);
 
 #ifdef __cplusplus
 }
