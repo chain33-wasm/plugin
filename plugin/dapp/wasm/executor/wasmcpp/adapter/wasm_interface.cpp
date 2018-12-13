@@ -573,7 +573,7 @@ class softfloat_api : public context_aware_api {
 
 };
 
-#if 0
+#if 1
 class crypto_api : public context_aware_api {
    public:
       explicit crypto_api( apply_context& ctx )
@@ -611,12 +611,13 @@ class crypto_api : public context_aware_api {
 
       template<class Encoder> auto encode(char* data, size_t datalen) {
          Encoder e;
-         const size_t bs = eosio::chain::config::hashing_checktime_block_size;
+         //const size_t bs = eosio::chain::config::hashing_checktime_block_size;
+		 const size_t bs = 10*1024;
          while ( datalen > bs ) {
             e.write( data, bs );
             data += bs;
             datalen -= bs;
-            context.trx_context.checktime();
+            check_gas();
          }
          e.write( data, datalen );
          return e.result();
@@ -741,6 +742,11 @@ class action_api : public context_aware_api {
 
 	  int get_from(array_ptr<char> from, size_t from_size) {
 	      return context.get_from(from, from_size);
+	  }
+
+	  int get_random(array_ptr<char> randomDataOutput, size_t maxLen) {
+	  	return GetRandom(randomDataOutput , maxLen);
+
 	  }
 };
 
@@ -1322,8 +1328,7 @@ REGISTER_INTRINSICS(compiler_builtins,
    (__trunctfsf2,  float(int64_t, int64_t)                        )
 );
 
-#if 0
-
+#if 1
 REGISTER_INTRINSICS(crypto_api,
    (assert_recover_key,     void(int, int, int, int, int) )
    (recover_key,            int(int, int, int, int, int)  )
@@ -1365,8 +1370,9 @@ REGISTER_INTRINSICS(context_free_system_api,
 REGISTER_INTRINSICS(action_api,
    (read_action_data,       int(int, int)  )
    (action_data_size,       int()          )
-   (current_receiver,   int64_t()          )
-   (get_from,                int(int, int)  )
+   (current_receiver,       int64_t()      )
+   (get_from,               int(int, int)  )
+   (get_random,             int(int, int)  )
 );
 
 REGISTER_INTRINSICS(console_api,

@@ -81,6 +81,8 @@ extern int ExecActive (char* p0, long long int p1);
 extern int ExecTransfer (char* p0, char* p1, long long int p2);
 extern int ExecTransferFrozen (char* p0, char* p1, long long int p2);
 
+//为wasm用户自定义合约提供随机数，该随机数是64位hash值,返回值为实际获取到的长度
+extern int func GetRandom(char* randomDataOutput , int maxLen);
 #ifdef __cplusplus
 }
 #endif

@@ -11,6 +11,7 @@ package executor
 import "C"
 
 import (
+	"bytes"
 	"fmt"
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/common/address"
@@ -20,9 +21,15 @@ import (
 	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
 	"github.com/33cn/plugin/plugin/dapp/wasm/executor/state"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
+	"google.golang.org/grpc"
+	"context"
 	"unsafe"
-	"bytes"
+	"time"
 )
+
+type subConfig struct {
+	ParaRemoteGrpcClient string `json:"paraRemoteGrpcClient"`
+}
 
 var (
 	// 本合约地址
@@ -30,6 +37,7 @@ var (
 	pMemoryStateDB *state.MemoryStateDB
 	pWasm          *WASMExecutor
 	log            = log15.New("module", "execs.token")
+    cfg subConfig
 )
 
 func init() {
@@ -40,6 +48,10 @@ func init() {
 func Init(name string, sub []byte) {
 	drivers.Register(GetName(), newWASMDriver, 0)
 	wasmAddress = address.ExecAddress(GetName())
+
+	if sub != nil {
+		types.MustDecode(sub, &cfg)
+	}
 }
 
 func GetName() string {
@@ -58,6 +70,7 @@ type WASMExecutor struct {
 	mStateDB *state.MemoryStateDB
 	tx       *types.Transaction
 	txIndex  int
+	grpcClient   types.Chain33Client
 	out2User []*wasmtypes.WasmOutItem
 }
 
@@ -149,6 +162,7 @@ func ExecFrozen(addr *C.char, amount C.longlong) C.int {
 	}
 	return C.int(pWasm.mStateDB.ExecFrozen(pWasm.tx, C.GoString(addr), int64(amount)))
 }
+
 //激活user.wasm.xxx合约addr上的部分余额
 //export ExecActive
 func ExecActive(addr *C.char, amount C.longlong) C.int {
@@ -175,6 +189,61 @@ func ExecTransferFrozen(from, to *C.char, amount C.longlong) C.int {
 		return C.int(wasmtypes.AccountOpFail)
 	}
 	return C.int(pWasm.mStateDB.ExecTransferFrozen(pWasm.tx, C.GoString(from), C.GoString(to), int64(amount)))
+}
+
+//为wasm用户自定义合约提供随机数，该随机数是64位hash值,返回值为实际返回的长度
+//export GetRandom
+func GetRandom(randomDataOutput *C.char, maxLen C.int) C.int {
+	var msg types.Message
+	var err error
+	var hash []byte
+	blockNum := int64(5)
+	if nil == pWasm {
+		log.Error("GetRandom failed due to nil handle", "pWasm", pWasm)
+		return C.int(wasmtypes.AccountOpFail)
+	}
+
+	//发消息给random模块
+	//在主链上，当前高度查询不到，如果要保证区块个数，高度传入action.height-1
+	log.Debug("GetRandom")
+	if !types.IsPara() {
+		req := &types.ReqRandHash{ExecName: "ticket", Height: pWasm.GetHeight() - 1, BlockNum: blockNum}
+		msg, err = pWasm.GetAPI().Query("ticket", "RandNumHash", req)
+		if err != nil {
+			return -1
+		}
+		reply := msg.(*types.ReplyHash)
+		hash = reply.Hash
+	} else {
+		mainHeight := pWasm.GetMainHeightByTxHash(pWasm.tx.Hash())
+		if mainHeight < 0 {
+			log.Error("GetRandom", "mainHeight", mainHeight)
+			return -1
+		}
+		req := &types.ReqRandHash{ExecName: "ticket", Height: mainHeight, BlockNum: blockNum}
+		reply, err := pWasm.grpcClient.QueryRandNum(context.Background(), req)
+		if err != nil {
+			return -1
+		}
+		hash = reply.Hash
+	}
+	random := C.GoBytes(unsafe.Pointer(randomDataOutput), max_len)
+
+	return  C.int(copy(random, hash))
+}
+
+func (wasm *WASMExecutor) GetMainHeightByTxHash(txHash []byte) int64 {
+	for i := 0; i < wasmtypes.RetryNum; i++ {
+		req := &types.ReqHash{Hash: txHash}
+		txDetail, err := pWasm.grpcClient.QueryTransaction(context.Background(), req)
+		if err != nil {
+			time.Sleep(time.Second)
+		} else {
+			return txDetail.GetHeight()
+		}
+	}
+
+	return -1
 }
 
 func (wasm *WASMExecutor) GetName() string {
@@ -208,6 +277,19 @@ func (wasm *WASMExecutor) prepareExecContext(tx *types.Transaction, index int) {
 
 	wasm.tx = tx
 	wasm.txIndex = index
+	//如果是调用wasm合约交易，则为期创建grpc调用channel
+	if string(tx.Execer) != types.ExecName(wasmtypes.WasmX) {
+
+		msgRecvOp := grpc.WithMaxMsgSize(wasmtypes.GRPCRecSize)
+		if types.IsPara() && cfg.ParaRemoteGrpcClient == "" {
+			panic("ParaRemoteGrpcClient error")
+		}
+		conn, err := grpc.Dial(cfg.ParaRemoteGrpcClient, grpc.WithInsecure(), msgRecvOp)
+		if err != nil {
+			panic(err)
+		}
+		wasm.grpcClient = types.NewChain33Client(conn)
+	}
 }
 
 func (wasm *WASMExecutor) prepareQueryContext(executorName string) {
@@ -395,7 +477,7 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableR
 		data := wasm.mStateDB.GetState(contractAddr, item.Key)
 		wasmOutItem := &wasmtypes.WasmOutItem{
 			ItemType: item.TableName,
-			Data:data,
+			Data:     data,
 		}
 		wasmOutItems = append(wasmOutItems, wasmOutItem)
 	}
@@ -453,7 +535,6 @@ func (wasm *WASMExecutor) checkContractNameExists(req *wasmtypes.CheckWASMContra
 	ret := &wasmtypes.CheckWASMAddrResp{ExistAlready: exists}
 	return ret, nil
 }
-
 
 func (wasm *WASMExecutor) GetMStateDB() *state.MemoryStateDB {
 	return wasm.mStateDB

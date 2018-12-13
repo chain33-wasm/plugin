@@ -21,6 +21,8 @@ const (
 	NameRegExp             = "^[a-z0-9]+$"
 	AccountOpFail          = int(-1)
 	AccountOpSuccess       = int(0)
+    RetryNum               = int(10)
+	GRPCRecSize            = 5 * 30 * 1024 * 1024
 )
 
 //wasm contract action
