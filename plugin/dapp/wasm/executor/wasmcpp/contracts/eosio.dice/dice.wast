@@ -1326,8 +1326,14 @@
   (i64.store
    (get_local $11)
    (tee_local $6
-    (i64.load8_s offset=191
-     (get_local $11)
+    (i64.div_s
+     (i64.mul
+      (i64.load8_s offset=191
+       (get_local $11)
+      )
+      (i64.const 100)
+     )
+     (i64.const 16)
     )
    )
   )

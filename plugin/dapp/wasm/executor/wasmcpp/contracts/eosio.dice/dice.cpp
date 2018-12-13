@@ -49,6 +49,7 @@ void dice::play(string player, int64_t amount, int64_t number, int64_t direction
   int length = GetRandom(temp, 64);
   eosio_assert(length==64, "GetRandom length error");
   int64_t rand_num = int64_t(temp[63]);
+  rand_num = rand_num * 100 / 16;
   printf("rand num:%lld\n",rand_num);
   roundinfo info;
   info.round = this->get_status_round() + 1;
