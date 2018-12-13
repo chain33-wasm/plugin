@@ -21,8 +21,7 @@ int execActive(char* addr, long long int p1);
 int execTransfer(char* from, char* to, long long int p2);
 int execTransferFrozen(char* from, char* to, long long int p2);
 
-
-
+int getRandom(char* randomDataOutput , int maxLen);
 
 //#ifdef __cplusplus
 //}

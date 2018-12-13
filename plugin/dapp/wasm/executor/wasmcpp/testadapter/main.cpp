@@ -44,6 +44,11 @@ int ExecTransferFrozen(char *from, char *to, long long int amount) {
 	return 0;
 }
 
+int GetRandom(char* randomDataOutput , int maxLen) {
+    return 0;
+}
+
+
 #endif
 
 using namespace std;

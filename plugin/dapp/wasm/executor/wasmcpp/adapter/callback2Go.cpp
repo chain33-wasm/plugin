@@ -34,8 +34,12 @@ int execTransfer (char* from, char* to, long long int p2) {
 
 int execTransferFrozen (char* from, char* to, long long int p2) {
 	return ExecTransferFrozen(from, to, p2);
-
 }
+
+int getRandom(char* randomDataOutput , int maxLen) {
+    return GetRandom(randomDataOutput , maxLen);
+}
+
 
 
 

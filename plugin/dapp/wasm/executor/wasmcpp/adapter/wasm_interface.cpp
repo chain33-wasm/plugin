@@ -745,7 +745,7 @@ class action_api : public context_aware_api {
 	  }
 
 	  int get_random(array_ptr<char> randomDataOutput, size_t maxLen) {
-	  	return GetRandom(randomDataOutput , maxLen);
+		  return getRandom(randomDataOutput , maxLen);
 
 	  }
 };

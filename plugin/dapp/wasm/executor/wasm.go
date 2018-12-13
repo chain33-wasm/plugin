@@ -227,7 +227,7 @@ func GetRandom(randomDataOutput *C.char, maxLen C.int) C.int {
 		}
 		hash = reply.Hash
 	}
-	random := C.GoBytes(unsafe.Pointer(randomDataOutput), max_len)
+	random := C.GoBytes(unsafe.Pointer(randomDataOutput), maxLen)
 
 	return  C.int(copy(random, hash))
 }
