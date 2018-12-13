@@ -45,8 +45,11 @@ void dice::play(string player, int64_t amount, int64_t number, int64_t direction
   }
     
   int64_t payout = amount * (100 - probability) / probability;
-  int64_t rand_num = 50;
-  printf("rand num:%d\n",rand_num);
+  char temp[64] = {0};
+  int length = GetRandom(temp, 64);
+  eosio_assert(length==64, "GetRandom length error");
+  int64_t rand_num = int64_t(temp[63]);
+  printf("rand num:%lld\n",rand_num);
   roundinfo info;
   info.round = this->get_status_round() + 1;
   info.account = player;
@@ -140,7 +143,7 @@ void dice::change_game_balance(int64_t change)
 void dice::add_roundinfo(roundinfo info)
 {
   char temp[64] = {0};
-  sprintf(temp, "round:%d,player:%s,amount:%d,guess_num:%d",
+  sprintf(temp, "round:%lld,player:%s,amount:%lld,guess_num:%lld",
       info.round, info.account.c_str(), info.amount, info.guess_num);
   string key(temp);
   size_t size = pack_size( info );
