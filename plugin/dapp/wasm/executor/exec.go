@@ -97,7 +97,7 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 		return nil, wasmtypes.ErrWrongContractAddr
 	}
 	//将当前合约执行名字修改为user.wasm.xxx
-	wasm.mStateDB.SetCurrentExecutorName(types.ExecName(string(tx.Execer)))
+	wasm.mStateDB.SetCurrentExecutorName(string(types.GetParaExec(tx.Execer)))
 	snapshot := wasm.mStateDB.Snapshot()
 	setWasm4Callback(wasm)
 
