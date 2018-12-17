@@ -6,7 +6,7 @@ using eosio::dice;
 using eosio::status_key;
 using eosio::max_stack_buffer_size;
 
-void dice::start_game(string creator, int64_t deposit)
+void dice::startgame(string creator, int64_t deposit)
 { 
   int valueSize = dbGetValueSize4chain33(status_key.c_str(), status_key.length());
   eosio_assert( valueSize == 0, "game already exists" );
@@ -80,7 +80,7 @@ void dice::play(string player, int64_t amount, int64_t number, int64_t direction
   this->add_roundinfo(info);
 }
 
-void dice::stop_game()
+void dice::stopgame()
 {
   char fromBuf[64] = {0};
   int fromsize = getFrom4chain33(fromBuf, 64);
