@@ -6,11 +6,14 @@ using eosio::dice;
 using eosio::status_key;
 using eosio::max_stack_buffer_size;
 
-void dice::startgame(string creator, int64_t deposit)
+void dice::startgame(int64_t deposit)
 { 
   int valueSize = dbGetValueSize4chain33(status_key.c_str(), status_key.length());
   eosio_assert( valueSize == 0, "game already exists" );
   eosio_assert(deposit > 0, "deposit must be positive");
+  char fromBuf[64] = {0};
+  int fromsize = getFrom4chain33(fromBuf, 64);
+	string creator(fromBuf);
   eosio_assert(OK == execFrozenCoin(creator.c_str(), deposit), "fail to frozen coins");
   gamestatus status;
   status.is_active = true;
@@ -24,15 +27,18 @@ void dice::startgame(string creator, int64_t deposit)
   this->set_status(status);
 }
 
-void dice::play(string player, int64_t amount, int64_t number, int64_t direction)
+void dice::play(int64_t amount, int64_t number, int64_t direction)
 { 
   eosio_assert(this->is_active(), "game is not active");
   eosio_assert(amount > 0, "amount must be positive");
-  eosio_assert(number>=0 && number<=99, "number must be within range of 0~99");
+  eosio_assert(number>=2 && number<=97, "number must be within range of 2~97");
   eosio_assert(direction==0 || direction==1, "direction must be 0 or 1");
   
   int64_t game_balance = get_game_balance();
   eosio_assert(50 * amount < game_balance, "amount is too big");
+  char fromBuf[64] = {0};
+  int fromsize = getFrom4chain33(fromBuf, 64);
+	string player(fromBuf);
   eosio_assert(OK == execFrozenCoin(player.c_str(), amount), "fail to frozen coins");
   int64_t probability = 0; //赢的概率
   if (direction == 0)
@@ -45,10 +51,10 @@ void dice::play(string player, int64_t amount, int64_t number, int64_t direction
   }
     
   int64_t payout = amount * (100 - probability) / probability;
-  char temp[64] = {0};
-  int length = GetRandom(temp, 64);
-  eosio_assert(length==64, "GetRandom length error");
-  int64_t rand_num = int64_t(temp[63]);
+  char temp[32] = {0};
+  int length = GetRandom(temp, 32);
+  eosio_assert(length==32, "GetRandom length error");
+  int64_t rand_num = int64_t(temp[31]);
   rand_num = rand_num * 100 / 16;
   printf("rand num:%lld\n",rand_num);
   roundinfo info;
@@ -57,7 +63,7 @@ void dice::play(string player, int64_t amount, int64_t number, int64_t direction
   info.amount = amount;
   info.guess_num = number;
   info.result_num = rand_num;
-  if ((direction==0&&rand_num<number) || (direction==1&&rand_num>number))
+  if ((direction==0 && rand_num<number) || (direction==1 && rand_num>number))
   {
     //TODO
     //保证原子操作？
@@ -144,8 +150,7 @@ void dice::change_game_balance(int64_t change)
 void dice::add_roundinfo(roundinfo info)
 {
   char temp[64] = {0};
-  sprintf(temp, "round:%lld,player:%s,amount:%lld,guess_num:%lld",
-      info.round, info.account.c_str(), info.amount, info.guess_num);
+  sprintf(temp, "round:%lld", info.round);
   string key(temp);
   size_t size = pack_size( info );
   void* buffer = max_stack_buffer_size < size ? malloc(size) : alloca(size);
@@ -172,6 +177,26 @@ void dice::add_status_round()
   this->set_status(status);
 }
 
+void dice::getroundinfo(int64_t round)
+{
+  char temp[64] = {0};
+  sprintf(temp, "round:%lld", round);
+  string key(temp);
+  size_t size = pack_size( key );
+  void* buffer = max_stack_buffer_size < size ? malloc(size) : alloca(size);
+  eosio::dbGet4chain33(status_key.c_str(), status_key.length(), (char *)buffer, size);
+  datastream<char*> ds( (char*)buffer, size );
+  roundinfo info;
+  ds >> info;
+  printf("round;%lld,player:%s,amount:%lld,guess_num:%lld,result_num:%lld,is_player_win:%d,",
+      info.round, info.account.c_str(), info.amount, info.guess_num, info.result_num, info.player_win);
+  
+  if (size > max_stack_buffer_size)
+  {
+    free(buffer);
+  }
+}
+
 void dice::withdraw()
 {
   int64_t balance = this->get_game_balance();
@@ -189,6 +214,7 @@ bool dice::is_active()
   return status.is_active;
 }
 
+EOSIO_ABI( eosio::dice, (startgame)(play)(stopgame))
 
 
 

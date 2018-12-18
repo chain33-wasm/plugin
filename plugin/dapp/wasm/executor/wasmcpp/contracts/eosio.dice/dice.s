@@ -1,5 +1,5 @@
 	.text
-	.file	"/tmp/tmp.sY6E4WgyLX/linked.bc"
+	.file	"/tmp/tmp.I35kOiacSJ/linked.bc"
 	.section	.text.__startup,"ax",@progbits
 	.type	_GLOBAL__sub_I_dice.cpp,@function
 _GLOBAL__sub_I_dice.cpp:
@@ -139,151 +139,232 @@ now:
 .Lfunc_end5:
 	.size	now, .Lfunc_end5-now
 
-	.hidden	_ZN5eosio4dice10start_gameENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEx
-	.globl	_ZN5eosio4dice10start_gameENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEx
-	.type	_ZN5eosio4dice10start_gameENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEx,@function
-_ZN5eosio4dice10start_gameENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEx:
-	.param  	i32, i32, i64
+	.hidden	_ZN5eosio4dice9startgameEx
+	.globl	_ZN5eosio4dice9startgameEx
+	.type	_ZN5eosio4dice9startgameEx,@function
+_ZN5eosio4dice9startgameEx:
+	.param  	i32, i64
 	.local  	i32, i32, i32, i32
-	i32.const	$push51=, 0
-	i32.const	$push48=, 0
-	i32.load	$push49=, __stack_pointer($pop48)
-	i32.const	$push50=, 64
-	i32.sub 	$push67=, $pop49, $pop50
-	tee_local	$push66=, $6=, $pop67
-	i32.store	__stack_pointer($pop51), $pop66
+	i32.const	$push75=, 0
+	i32.const	$push72=, 0
+	i32.load	$push73=, __stack_pointer($pop72)
+	i32.const	$push74=, 144
+	i32.sub 	$push113=, $pop73, $pop74
+	tee_local	$push112=, $5=, $pop113
+	i32.store	__stack_pointer($pop75), $pop112
 	i32.const	$push0=, 0
-	i32.load	$push4=, _ZN5eosioL10status_keyE+8($pop0)
-	i32.const	$push5=, _ZN5eosioL10status_keyE+1
-	i32.const	$push65=, 0
-	i32.load8_u	$push64=, _ZN5eosioL10status_keyE($pop65)
-	tee_local	$push63=, $5=, $pop64
-	i32.const	$push62=, 1
-	i32.and 	$push61=, $pop63, $pop62
-	tee_local	$push60=, $4=, $pop61
-	i32.select	$push6=, $pop4, $pop5, $pop60
-	i32.const	$push59=, 0
-	i32.load	$push2=, _ZN5eosioL10status_keyE+4($pop59)
-	i32.const	$push58=, 1
-	i32.shr_u	$push1=, $5, $pop58
-	i32.select	$push3=, $pop2, $pop1, $4
-	i32.call	$push7=, get_valueSize@FUNCTION, $pop6, $pop3
-	i32.eqz 	$push8=, $pop7
-	i32.const	$push9=, .L.str.1
-	call    	eosio_assert@FUNCTION, $pop8, $pop9
-	i64.const	$push10=, 0
-	i64.gt_s	$push11=, $2, $pop10
-	i32.const	$push12=, .L.str.2
-	call    	eosio_assert@FUNCTION, $pop11, $pop12
+	i32.load	$push5=, _ZN5eosioL10status_keyE+8($pop0)
+	i32.const	$push6=, _ZN5eosioL10status_keyE+1
+	i32.const	$push111=, 0
+	i32.load8_u	$push110=, _ZN5eosioL10status_keyE($pop111)
+	tee_local	$push109=, $4=, $pop110
+	i32.const	$push1=, 1
+	i32.and 	$push108=, $pop109, $pop1
+	tee_local	$push107=, $3=, $pop108
+	i32.select	$push7=, $pop5, $pop6, $pop107
+	i32.const	$push106=, 0
+	i32.load	$push3=, _ZN5eosioL10status_keyE+4($pop106)
+	i32.const	$push105=, 1
+	i32.shr_u	$push2=, $4, $pop105
+	i32.select	$push4=, $pop3, $pop2, $3
+	i32.call	$push8=, get_valueSize@FUNCTION, $pop7, $pop4
+	i32.eqz 	$push9=, $pop8
+	i32.const	$push10=, .L.str.1
+	call    	eosio_assert@FUNCTION, $pop9, $pop10
+	i64.const	$push11=, 0
+	i64.gt_s	$push12=, $1, $pop11
+	i32.const	$push13=, .L.str.2
+	call    	eosio_assert@FUNCTION, $pop12, $pop13
+	i32.const	$push79=, 80
+	i32.add 	$push80=, $5, $pop79
+	i32.const	$push104=, 0
+	i32.const	$push14=, 64
+	i32.call	$drop=, memset@FUNCTION, $pop80, $pop104, $pop14
+	i32.const	$push81=, 80
+	i32.add 	$push82=, $5, $pop81
+	i32.const	$push103=, 64
+	i32.call	$drop=, get_from@FUNCTION, $pop82, $pop103
+	i32.const	$push15=, 72
+	i32.add 	$push16=, $5, $pop15
+	i32.const	$push102=, 0
+	i32.store	0($pop16), $pop102
+	i64.const	$push101=, 0
+	i64.store	64($5), $pop101
+	block   	
+	i32.const	$push83=, 80
+	i32.add 	$push84=, $5, $pop83
+	i32.call	$push100=, strlen@FUNCTION, $pop84
+	tee_local	$push99=, $4=, $pop100
+	i32.const	$push17=, -16
+	i32.ge_u	$push18=, $pop99, $pop17
+	br_if   	0, $pop18
 	block   	
 	block   	
-	i32.load8_u	$push13=, 0($1)
-	i32.const	$push57=, 1
-	i32.and 	$push14=, $pop13, $pop57
-	br_if   	0, $pop14
-	i32.const	$push68=, 1
-	i32.add 	$5=, $1, $pop68
-	br      	1
-.LBB6_2:
-	end_block
-	i32.load	$5=, 8($1)
+	block   	
+	i32.const	$push19=, 11
+	i32.ge_u	$push20=, $4, $pop19
+	br_if   	0, $pop20
+	i32.const	$push26=, 1
+	i32.shl 	$push27=, $4, $pop26
+	i32.store8	64($5), $pop27
+	i32.const	$push87=, 64
+	i32.add 	$push88=, $5, $pop87
+	i32.const	$push116=, 1
+	i32.or  	$push115=, $pop88, $pop116
+	tee_local	$push114=, $2=, $pop115
+	copy_local	$3=, $pop114
+	br_if   	1, $4
+	br      	2
 .LBB6_3:
 	end_block
-	i32.call	$push15=, execFrozenCoin@FUNCTION, $5, $2
-	i32.eqz 	$push16=, $pop15
-	i32.const	$push17=, .L.str.3
-	call    	eosio_assert@FUNCTION, $pop16, $pop17
-	i32.const	$push18=, 44
-	i32.add 	$push19=, $6, $pop18
-	i32.const	$push20=, 0
-	i32.store	0($pop19), $pop20
-	i64.const	$push78=, 0
-	i64.store	36($6):p2align=2, $pop78
-	i32.const	$push77=, 1
-	i32.store8	32($6), $pop77
-	i32.const	$push55=, 32
-	i32.add 	$push56=, $6, $pop55
-	i32.const	$push21=, 4
-	i32.or  	$push76=, $pop56, $pop21
-	tee_local	$push75=, $3=, $pop76
-	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_@FUNCTION, $pop75, $1
-	i64.const	$push22=, 1
-	i64.store	56($6), $pop22
-	i64.store	48($6), $2
-	i32.load	$push25=, 40($6)
-	i32.load8_u	$push74=, 36($6)
-	tee_local	$push73=, $5=, $pop74
-	i32.const	$push72=, 1
-	i32.shr_u	$push24=, $pop73, $pop72
-	i32.const	$push71=, 1
-	i32.and 	$push23=, $5, $pop71
-	i32.select	$push70=, $pop25, $pop24, $pop23
-	tee_local	$push69=, $4=, $pop70
-	i32.const	$push26=, 17
-	i32.add 	$5=, $pop69, $pop26
-	i64.extend_u/i32	$2=, $4
-	i32.const	$push27=, 48
-	i32.add 	$4=, $6, $pop27
+	i32.const	$push21=, 16
+	i32.add 	$push22=, $4, $pop21
+	i32.const	$push23=, -16
+	i32.and 	$push119=, $pop22, $pop23
+	tee_local	$push118=, $2=, $pop119
+	i32.call	$3=, _Znwj@FUNCTION, $pop118
+	i32.const	$push24=, 1
+	i32.or  	$push25=, $2, $pop24
+	i32.store	64($5), $pop25
+	i32.store	72($5), $3
+	i32.store	68($5), $4
+	i32.const	$push97=, 64
+	i32.add 	$push98=, $5, $pop97
+	i32.const	$push117=, 1
+	i32.or  	$2=, $pop98, $pop117
 .LBB6_4:
-	loop    	
-	i32.const	$push83=, 1
-	i32.add 	$5=, $5, $pop83
-	i64.const	$push82=, 7
-	i64.shr_u	$push81=, $2, $pop82
-	tee_local	$push80=, $2=, $pop81
-	i64.const	$push79=, 0
-	i64.ne  	$push28=, $pop80, $pop79
-	br_if   	0, $pop28
-	end_loop
-	i32.store	8($0), $5
-	i32.const	$push85=, 12
-	i32.add 	$push29=, $0, $pop85
-	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_@FUNCTION, $pop29, $1
-	i32.load8_u	$push30=, 32($6)
-	i32.store8	0($6), $pop30
-	i32.const	$push31=, 4
-	i32.or  	$push32=, $6, $pop31
-	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop32, $3
-	i32.const	$push36=, 24
-	i32.add 	$push37=, $6, $pop36
-	i32.const	$push33=, 8
-	i32.add 	$push34=, $4, $pop33
-	i64.load	$push35=, 0($pop34)
-	i64.store	0($pop37), $pop35
-	i64.load	$push38=, 0($4)
-	i64.store	16($6), $pop38
-	call    	_ZN5eosio4dice10set_statusENS0_10gamestatusE@FUNCTION, $0, $6
-	block   	
-	i32.load8_u	$push39=, 4($6)
-	i32.const	$push84=, 1
-	i32.and 	$push40=, $pop39, $pop84
-	i32.eqz 	$push88=, $pop40
-	br_if   	0, $pop88
-	i32.const	$push86=, 12
-	i32.add 	$push41=, $6, $pop86
-	i32.load	$push42=, 0($pop41)
-	call    	_ZdlPv@FUNCTION, $pop42
-.LBB6_7:
 	end_block
+	i32.const	$push95=, 80
+	i32.add 	$push96=, $5, $pop95
+	i32.call	$drop=, memcpy@FUNCTION, $3, $pop96, $4
+.LBB6_5:
+	end_block
+	i32.add 	$push28=, $3, $4
+	i32.const	$push29=, 0
+	i32.store8	0($pop28), $pop29
+	i32.load	$push32=, 72($5)
+	i32.load8_u	$push30=, 64($5)
+	i32.const	$push131=, 1
+	i32.and 	$push31=, $pop30, $pop131
+	i32.select	$push33=, $pop32, $2, $pop31
+	i32.call	$push34=, execFrozenCoin@FUNCTION, $pop33, $1
+	i32.eqz 	$push35=, $pop34
+	i32.const	$push36=, .L.str.3
+	call    	eosio_assert@FUNCTION, $pop35, $pop36
+	i32.const	$push37=, 44
+	i32.add 	$push38=, $5, $pop37
+	i32.const	$push130=, 0
+	i32.store	0($pop38), $pop130
+	i64.const	$push129=, 0
+	i64.store	36($5):p2align=2, $pop129
+	i32.const	$push128=, 1
+	i32.store8	32($5), $pop128
+	i32.const	$push89=, 32
+	i32.add 	$push90=, $5, $pop89
+	i32.const	$push39=, 4
+	i32.or  	$push127=, $pop90, $pop39
+	tee_local	$push126=, $2=, $pop127
+	i32.const	$push91=, 64
+	i32.add 	$push92=, $5, $pop91
+	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_@FUNCTION, $pop126, $pop92
+	i64.const	$push40=, 1
+	i64.store	56($5), $pop40
+	i64.store	48($5), $1
+	i32.load	$push43=, 40($5)
+	i32.load8_u	$push125=, 36($5)
+	tee_local	$push124=, $4=, $pop125
+	i32.const	$push123=, 1
+	i32.shr_u	$push42=, $pop124, $pop123
+	i32.const	$push122=, 1
+	i32.and 	$push41=, $4, $pop122
+	i32.select	$push121=, $pop43, $pop42, $pop41
+	tee_local	$push120=, $3=, $pop121
+	i32.const	$push44=, 17
+	i32.add 	$4=, $pop120, $pop44
+	i64.extend_u/i32	$1=, $3
+	i32.const	$push45=, 48
+	i32.add 	$3=, $5, $pop45
+.LBB6_6:
+	loop    	
+	i32.const	$push136=, 1
+	i32.add 	$4=, $4, $pop136
+	i64.const	$push135=, 7
+	i64.shr_u	$push134=, $1, $pop135
+	tee_local	$push133=, $1=, $pop134
+	i64.const	$push132=, 0
+	i64.ne  	$push46=, $pop133, $pop132
+	br_if   	0, $pop46
+	end_loop
+	i32.store	8($0), $4
+	i32.const	$push138=, 12
+	i32.add 	$push47=, $0, $pop138
+	i32.const	$push93=, 64
+	i32.add 	$push94=, $5, $pop93
+	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_@FUNCTION, $pop47, $pop94
+	i32.load8_u	$push48=, 32($5)
+	i32.store8	0($5), $pop48
+	i32.const	$push49=, 4
+	i32.or  	$push50=, $5, $pop49
+	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop50, $2
+	i32.const	$push54=, 24
+	i32.add 	$push55=, $5, $pop54
+	i32.const	$push51=, 8
+	i32.add 	$push52=, $3, $pop51
+	i64.load	$push53=, 0($pop52)
+	i64.store	0($pop55), $pop53
+	i64.load	$push56=, 0($3)
+	i64.store	16($5), $pop56
+	call    	_ZN5eosio4dice10set_statusENS0_10gamestatusE@FUNCTION, $0, $5
 	block   	
-	i32.load8_u	$push43=, 36($6)
-	i32.const	$push87=, 1
-	i32.and 	$push44=, $pop43, $pop87
-	i32.eqz 	$push89=, $pop44
-	br_if   	0, $pop89
-	i32.const	$push45=, 44
-	i32.add 	$push46=, $6, $pop45
-	i32.load	$push47=, 0($pop46)
-	call    	_ZdlPv@FUNCTION, $pop47
+	i32.load8_u	$push57=, 4($5)
+	i32.const	$push137=, 1
+	i32.and 	$push58=, $pop57, $pop137
+	i32.eqz 	$push141=, $pop58
+	br_if   	0, $pop141
+	i32.const	$push139=, 12
+	i32.add 	$push59=, $5, $pop139
+	i32.load	$push60=, 0($pop59)
+	call    	_ZdlPv@FUNCTION, $pop60
 .LBB6_9:
 	end_block
-	i32.const	$push54=, 0
-	i32.const	$push52=, 64
-	i32.add 	$push53=, $6, $pop52
-	i32.store	__stack_pointer($pop54), $pop53
+	block   	
+	i32.load8_u	$push61=, 36($5)
+	i32.const	$push140=, 1
+	i32.and 	$push62=, $pop61, $pop140
+	i32.eqz 	$push142=, $pop62
+	br_if   	0, $pop142
+	i32.const	$push63=, 44
+	i32.add 	$push64=, $5, $pop63
+	i32.load	$push65=, 0($pop64)
+	call    	_ZdlPv@FUNCTION, $pop65
+.LBB6_11:
+	end_block
+	block   	
+	i32.load8_u	$push67=, 64($5)
+	i32.const	$push66=, 1
+	i32.and 	$push68=, $pop67, $pop66
+	i32.eqz 	$push143=, $pop68
+	br_if   	0, $pop143
+	i32.const	$push69=, 72
+	i32.add 	$push70=, $5, $pop69
+	i32.load	$push71=, 0($pop70)
+	call    	_ZdlPv@FUNCTION, $pop71
+.LBB6_13:
+	end_block
+	i32.const	$push78=, 0
+	i32.const	$push76=, 144
+	i32.add 	$push77=, $5, $pop76
+	i32.store	__stack_pointer($pop78), $pop77
+	return
+.LBB6_14:
+	end_block
+	i32.const	$push85=, 64
+	i32.add 	$push86=, $5, $pop85
+	call    	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv@FUNCTION, $pop86
+	unreachable
 	.endfunc
 .Lfunc_end6:
-	.size	_ZN5eosio4dice10start_gameENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEx, .Lfunc_end6-_ZN5eosio4dice10start_gameENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEEx
+	.size	_ZN5eosio4dice9startgameEx, .Lfunc_end6-_ZN5eosio4dice9startgameEx
 
 	.hidden	_ZN5eosio4dice10set_statusENS0_10gamestatusE
 	.globl	_ZN5eosio4dice10set_statusENS0_10gamestatusE
@@ -398,7 +479,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKbRKNSt3_
 	i32.sub 	$push4=, $pop3, $pop2
 	i32.const	$push5=, 0
 	i32.gt_s	$push6=, $pop4, $pop5
-	i32.const	$push7=, .L.str.22
+	i32.const	$push7=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop6, $pop7
 	i32.load	$push8=, 4($2)
 	i32.const	$push37=, 15
@@ -420,7 +501,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKbRKNSt3_
 	i32.sub 	$push16=, $pop15, $pop14
 	i32.const	$push17=, 7
 	i32.gt_s	$push18=, $pop16, $pop17
-	i32.const	$push46=, .L.str.22
+	i32.const	$push46=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop18, $pop46
 	i32.load	$push19=, 4($2)
 	i32.const	$push20=, 8
@@ -437,7 +518,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKbRKNSt3_
 	i32.sub 	$push25=, $pop24, $pop23
 	i32.const	$push42=, 7
 	i32.gt_s	$push26=, $pop25, $pop42
-	i32.const	$push41=, .L.str.22
+	i32.const	$push41=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop26, $pop41
 	i32.load	$push27=, 4($2)
 	i32.const	$push40=, 8
@@ -502,7 +583,7 @@ _ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNSt3__112basic_stringIcNS6_11char_trai
 	i32.sub 	$push9=, $pop8, $6
 	i32.const	$push48=, 0
 	i32.gt_s	$push10=, $pop9, $pop48
-	i32.const	$push47=, .L.str.22
+	i32.const	$push47=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop10, $pop47
 	i32.load	$push12=, 0($5)
 	i32.const	$push35=, 15
@@ -537,7 +618,7 @@ _ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNSt3__112basic_stringIcNS6_11char_trai
 	i32.load	$push19=, 0($pop18)
 	i32.sub 	$push20=, $pop19, $6
 	i32.ge_s	$push21=, $pop20, $5
-	i32.const	$push22=, .L.str.22
+	i32.const	$push22=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop21, $pop22
 	i32.const	$push69=, 4
 	i32.add 	$push68=, $0, $pop69
@@ -562,526 +643,601 @@ _ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNSt3__112basic_stringIcNS6_11char_trai
 	.size	_ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEE, .Lfunc_end9-_ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEE
 
 	.text
-	.hidden	_ZN5eosio4dice4playENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEExxx
-	.globl	_ZN5eosio4dice4playENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEExxx
-	.type	_ZN5eosio4dice4playENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEExxx,@function
-_ZN5eosio4dice4playENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEExxx:
-	.param  	i32, i32, i64, i64, i64
-	.local  	i64, i64, i64, i32, i32, i32, i32
-	i32.const	$push192=, 0
-	i32.const	$push189=, 0
-	i32.load	$push190=, __stack_pointer($pop189)
-	i32.const	$push191=, 256
-	i32.sub 	$push256=, $pop190, $pop191
-	tee_local	$push255=, $11=, $pop256
-	i32.store	__stack_pointer($pop192), $pop255
-	i32.const	$10=, 0
+	.hidden	_ZN5eosio4dice4playExxx
+	.globl	_ZN5eosio4dice4playExxx
+	.type	_ZN5eosio4dice4playExxx,@function
+_ZN5eosio4dice4playExxx:
+	.param  	i32, i64, i64, i64
+	.local  	i32, i64, i64, i64, i32, i32, i32
+	i32.const	$push230=, 0
+	i32.const	$push227=, 0
+	i32.load	$push228=, __stack_pointer($pop227)
+	i32.const	$push229=, 304
+	i32.sub 	$push316=, $pop228, $pop229
+	tee_local	$push315=, $10=, $pop316
+	i32.store	__stack_pointer($pop230), $pop315
+	i32.const	$4=, 0
 	block   	
-	i32.const	$push254=, 0
-	i32.load	$push5=, _ZN5eosioL10status_keyE+8($pop254)
+	i32.const	$push314=, 0
+	i32.load	$push5=, _ZN5eosioL10status_keyE+8($pop314)
 	i32.const	$push6=, _ZN5eosioL10status_keyE+1
-	i32.const	$push253=, 0
-	i32.load8_u	$push252=, _ZN5eosioL10status_keyE($pop253)
-	tee_local	$push251=, $8=, $pop252
-	i32.const	$push250=, 1
-	i32.and 	$push249=, $pop251, $pop250
-	tee_local	$push248=, $9=, $pop249
-	i32.select	$push7=, $pop5, $pop6, $pop248
-	i32.const	$push247=, 0
-	i32.load	$push3=, _ZN5eosioL10status_keyE+4($pop247)
-	i32.const	$push246=, 1
-	i32.shr_u	$push2=, $8, $pop246
+	i32.const	$push313=, 0
+	i32.load8_u	$push312=, _ZN5eosioL10status_keyE($pop313)
+	tee_local	$push311=, $8=, $pop312
+	i32.const	$push310=, 1
+	i32.and 	$push309=, $pop311, $pop310
+	tee_local	$push308=, $9=, $pop309
+	i32.select	$push7=, $pop5, $pop6, $pop308
+	i32.const	$push307=, 0
+	i32.load	$push3=, _ZN5eosioL10status_keyE+4($pop307)
+	i32.const	$push306=, 1
+	i32.shr_u	$push2=, $8, $pop306
 	i32.select	$push4=, $pop3, $pop2, $9
 	i32.call	$push8=, get_valueSize@FUNCTION, $pop7, $pop4
-	i32.eqz 	$push307=, $pop8
-	br_if   	0, $pop307
-	i32.const	$push244=, 128
-	i32.add 	$push245=, $11, $pop244
-	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop245, $0
-	i32.load8_u	$10=, 128($11)
+	i32.eqz 	$push380=, $pop8
+	br_if   	0, $pop380
+	i32.const	$push304=, 176
+	i32.add 	$push305=, $10, $pop304
+	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop305, $0
+	i32.load8_u	$4=, 176($10)
 	block   	
-	i32.load8_u	$push9=, 132($11)
-	i32.const	$push257=, 1
-	i32.and 	$push10=, $pop9, $pop257
-	i32.eqz 	$push308=, $pop10
-	br_if   	0, $pop308
-	i32.const	$push11=, 140
-	i32.add 	$push12=, $11, $pop11
+	i32.load8_u	$push9=, 180($10)
+	i32.const	$push317=, 1
+	i32.and 	$push10=, $pop9, $pop317
+	i32.eqz 	$push381=, $pop10
+	br_if   	0, $pop381
+	i32.const	$push11=, 188
+	i32.add 	$push12=, $10, $pop11
 	i32.load	$push13=, 0($pop12)
 	call    	_ZdlPv@FUNCTION, $pop13
 .LBB10_3:
 	end_block
-	i32.const	$push258=, 0
-	i32.ne  	$10=, $10, $pop258
+	i32.const	$push318=, 0
+	i32.ne  	$4=, $4, $pop318
 .LBB10_4:
 	end_block
 	i32.const	$push14=, .L.str.4
-	call    	eosio_assert@FUNCTION, $10, $pop14
-	i64.const	$push15=, 0
-	i64.gt_s	$push16=, $2, $pop15
-	i32.const	$push17=, .L.str.5
-	call    	eosio_assert@FUNCTION, $pop16, $pop17
-	i64.const	$push18=, 100
-	i64.lt_u	$push19=, $3, $pop18
-	i32.const	$push20=, .L.str.6
-	call    	eosio_assert@FUNCTION, $pop19, $pop20
-	i64.const	$push21=, 1
-	i64.or  	$push22=, $4, $pop21
-	i64.const	$push260=, 1
-	i64.eq  	$push23=, $pop22, $pop260
-	i32.const	$push24=, .L.str.7
-	call    	eosio_assert@FUNCTION, $pop23, $pop24
-	i32.const	$push196=, 128
-	i32.add 	$push197=, $11, $pop196
-	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop197, $0
-	i64.load	$6=, 144($11)
+	call    	eosio_assert@FUNCTION, $4, $pop14
+	i64.const	$push321=, 0
+	i64.gt_s	$push15=, $1, $pop321
+	i32.const	$push16=, .L.str.5
+	call    	eosio_assert@FUNCTION, $pop15, $pop16
+	i64.const	$push17=, -2
+	i64.add 	$push18=, $2, $pop17
+	i64.const	$push19=, 96
+	i64.lt_u	$push20=, $pop18, $pop19
+	i32.const	$push21=, .L.str.6
+	call    	eosio_assert@FUNCTION, $pop20, $pop21
+	i64.const	$push22=, 1
+	i64.or  	$push23=, $3, $pop22
+	i64.const	$push320=, 1
+	i64.eq  	$push24=, $pop23, $pop320
+	i32.const	$push25=, .L.str.7
+	call    	eosio_assert@FUNCTION, $pop24, $pop25
+	i32.const	$push234=, 176
+	i32.add 	$push235=, $10, $pop234
+	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop235, $0
+	i64.load	$6=, 192($10)
 	block   	
-	i32.load8_u	$push25=, 132($11)
-	i32.const	$push259=, 1
-	i32.and 	$push26=, $pop25, $pop259
-	i32.eqz 	$push309=, $pop26
-	br_if   	0, $pop309
-	i32.const	$push27=, 140
-	i32.add 	$push28=, $11, $pop27
-	i32.load	$push29=, 0($pop28)
-	call    	_ZdlPv@FUNCTION, $pop29
+	i32.load8_u	$push26=, 180($10)
+	i32.const	$push319=, 1
+	i32.and 	$push27=, $pop26, $pop319
+	i32.eqz 	$push382=, $pop27
+	br_if   	0, $pop382
+	i32.const	$push28=, 188
+	i32.add 	$push29=, $10, $pop28
+	i32.load	$push30=, 0($pop29)
+	call    	_ZdlPv@FUNCTION, $pop30
 .LBB10_6:
 	end_block
-	i64.const	$push30=, 50
-	i64.mul 	$push31=, $2, $pop30
-	i64.lt_s	$push32=, $pop31, $6
-	i32.const	$push33=, .L.str.8
-	call    	eosio_assert@FUNCTION, $pop32, $pop33
+	i64.const	$push31=, 50
+	i64.mul 	$push32=, $1, $pop31
+	i64.lt_s	$push33=, $pop32, $6
+	i32.const	$push34=, .L.str.8
+	call    	eosio_assert@FUNCTION, $pop33, $pop34
+	i32.const	$push236=, 176
+	i32.add 	$push237=, $10, $pop236
+	i32.const	$push36=, 0
+	i32.const	$push35=, 64
+	i32.call	$drop=, memset@FUNCTION, $pop237, $pop36, $pop35
+	i32.const	$push238=, 176
+	i32.add 	$push239=, $10, $pop238
+	i32.const	$push326=, 64
+	i32.call	$drop=, get_from@FUNCTION, $pop239, $pop326
+	i32.const	$push37=, 168
+	i32.add 	$push38=, $10, $pop37
+	i32.const	$push325=, 0
+	i32.store	0($pop38), $pop325
+	i64.const	$push324=, 0
+	i64.store	160($10), $pop324
+	block   	
+	i32.const	$push240=, 176
+	i32.add 	$push241=, $10, $pop240
+	i32.call	$push323=, strlen@FUNCTION, $pop241
+	tee_local	$push322=, $4=, $pop323
+	i32.const	$push39=, -16
+	i32.ge_u	$push40=, $pop322, $pop39
+	br_if   	0, $pop40
 	block   	
 	block   	
-	i32.load8_u	$push34=, 0($1)
-	i32.const	$push261=, 1
-	i32.and 	$push35=, $pop34, $pop261
-	br_if   	0, $pop35
-	i32.const	$push262=, 1
-	i32.add 	$10=, $1, $pop262
-	br      	1
-.LBB10_8:
-	end_block
-	i32.load	$10=, 8($1)
+	block   	
+	i32.const	$push41=, 11
+	i32.ge_u	$push42=, $4, $pop41
+	br_if   	0, $pop42
+	i32.const	$push48=, 1
+	i32.shl 	$push49=, $4, $pop48
+	i32.store8	160($10), $pop49
+	i32.const	$push244=, 160
+	i32.add 	$push245=, $10, $pop244
+	i32.const	$push329=, 1
+	i32.or  	$push328=, $pop245, $pop329
+	tee_local	$push327=, $8=, $pop328
+	copy_local	$9=, $pop327
+	br_if   	1, $4
+	br      	2
 .LBB10_9:
 	end_block
-	i32.call	$push36=, execFrozenCoin@FUNCTION, $10, $2
-	i32.eqz 	$push37=, $pop36
-	i32.const	$push38=, .L.str.3
-	call    	eosio_assert@FUNCTION, $pop37, $pop38
-	i32.const	$push198=, 128
-	i32.add 	$push199=, $11, $pop198
-	i32.const	$push40=, 0
-	i32.const	$push39=, 64
-	i32.call	$drop=, memset@FUNCTION, $pop199, $pop40, $pop39
-	i32.const	$push200=, 128
-	i32.add 	$push201=, $11, $pop200
-	i32.const	$push272=, 64
-	i32.call	$push41=, GetRandom@FUNCTION, $pop201, $pop272
-	i32.const	$push271=, 64
-	i32.eq  	$push42=, $pop41, $pop271
-	i32.const	$push43=, .L.str.9
-	call    	eosio_assert@FUNCTION, $pop42, $pop43
-	i64.load8_s	$push45=, 191($11)
-	i64.const	$push44=, 100
-	i64.mul 	$push46=, $pop45, $pop44
-	i64.const	$push47=, 16
-	i64.div_s	$push270=, $pop46, $pop47
-	tee_local	$push269=, $6=, $pop270
-	i64.store	0($11), $pop269
-	i32.const	$push48=, .L.str.10
-	i32.call	$drop=, printf@FUNCTION, $pop48, $11
-	i32.const	$push49=, 88
-	i32.add 	$push50=, $11, $pop49
-	i32.const	$push268=, 0
-	i32.store	0($pop50), $pop268
-	i64.const	$push51=, 0
-	i64.store	80($11), $pop51
-	i32.const	$push202=, 224
-	i32.add 	$push203=, $11, $pop202
-	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop203, $0
-	i64.const	$push267=, 100
-	i64.const	$push52=, 99
-	i64.sub 	$push53=, $pop52, $3
-	i64.eqz 	$push266=, $4
-	tee_local	$push265=, $10=, $pop266
-	i64.select	$push264=, $3, $pop53, $pop265
-	tee_local	$push263=, $5=, $pop264
-	i64.sub 	$push54=, $pop267, $pop263
-	i64.mul 	$push55=, $pop54, $2
-	i64.div_s	$5=, $pop55, $5
-	i64.load	$7=, 248($11)
-	block   	
-	i32.load8_u	$push57=, 228($11)
-	i32.const	$push56=, 1
-	i32.and 	$push58=, $pop57, $pop56
-	i32.eqz 	$push310=, $pop58
-	br_if   	0, $pop310
-	i32.const	$push59=, 236
-	i32.add 	$push60=, $11, $pop59
-	i32.load	$push61=, 0($pop60)
-	call    	_ZdlPv@FUNCTION, $pop61
+	i32.const	$push43=, 16
+	i32.add 	$push44=, $4, $pop43
+	i32.const	$push45=, -16
+	i32.and 	$push332=, $pop44, $pop45
+	tee_local	$push331=, $8=, $pop332
+	i32.call	$9=, _Znwj@FUNCTION, $pop331
+	i32.const	$push46=, 1
+	i32.or  	$push47=, $8, $pop46
+	i32.store	160($10), $pop47
+	i32.store	168($10), $9
+	i32.store	164($10), $4
+	i32.const	$push302=, 160
+	i32.add 	$push303=, $10, $pop302
+	i32.const	$push330=, 1
+	i32.or  	$8=, $pop303, $pop330
+.LBB10_10:
+	end_block
+	i32.const	$push300=, 176
+	i32.add 	$push301=, $10, $pop300
+	i32.call	$drop=, memcpy@FUNCTION, $9, $pop301, $4
 .LBB10_11:
 	end_block
-	i64.const	$push275=, 1
-	i64.add 	$push63=, $7, $pop275
-	i64.store	72($11), $pop63
-	i32.const	$push64=, 80
-	i32.add 	$push274=, $11, $pop64
-	tee_local	$push273=, $8=, $pop274
-	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_@FUNCTION, $pop273, $1
-	i64.store	96($11), $2
-	i64.store	112($11), $6
-	i64.store	104($11), $3
+	i32.add 	$push50=, $9, $4
+	i32.const	$push51=, 0
+	i32.store8	0($pop50), $pop51
+	i32.load	$push55=, 168($10)
+	i32.load8_u	$push53=, 160($10)
+	i32.const	$push52=, 1
+	i32.and 	$push54=, $pop53, $pop52
+	i32.select	$push56=, $pop55, $8, $pop54
+	i32.call	$push57=, execFrozenCoin@FUNCTION, $pop56, $1
+	i32.eqz 	$push58=, $pop57
+	i32.const	$push59=, .L.str.3
+	call    	eosio_assert@FUNCTION, $pop58, $pop59
+	i32.const	$push246=, 128
+	i32.add 	$push247=, $10, $pop246
+	i32.const	$push348=, 24
+	i32.add 	$push60=, $pop247, $pop348
+	i64.const	$push61=, 0
+	i64.store	0($pop60), $pop61
+	i32.const	$push248=, 128
+	i32.add 	$push249=, $10, $pop248
+	i32.const	$push62=, 16
+	i32.add 	$push63=, $pop249, $pop62
+	i64.const	$push347=, 0
+	i64.store	0($pop63), $pop347
+	i64.const	$push346=, 0
+	i64.store	136($10), $pop346
+	i64.const	$push345=, 0
+	i64.store	128($10), $pop345
+	i32.const	$push250=, 128
+	i32.add 	$push251=, $10, $pop250
+	i32.const	$push64=, 32
+	i32.call	$push65=, GetRandom@FUNCTION, $pop251, $pop64
+	i32.const	$push344=, 32
+	i32.eq  	$push66=, $pop65, $pop344
+	i32.const	$push67=, .L.str.9
+	call    	eosio_assert@FUNCTION, $pop66, $pop67
+	i64.load8_s	$push69=, 159($10)
+	i64.const	$push68=, 100
+	i64.mul 	$push70=, $pop69, $pop68
+	i64.const	$push71=, 16
+	i64.div_s	$push343=, $pop70, $pop71
+	tee_local	$push342=, $6=, $pop343
+	i64.store	0($10), $pop342
+	i32.const	$push72=, .L.str.10
+	i32.call	$drop=, printf@FUNCTION, $pop72, $10
+	i32.const	$push252=, 72
+	i32.add 	$push253=, $10, $pop252
+	i32.const	$push341=, 16
+	i32.add 	$push73=, $pop253, $pop341
+	i32.const	$push340=, 0
+	i32.store	0($pop73), $pop340
+	i64.const	$push339=, 0
+	i64.store	80($10), $pop339
+	i32.const	$push254=, 272
+	i32.add 	$push255=, $10, $pop254
+	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop255, $0
+	i64.const	$push338=, 100
+	i64.const	$push74=, 99
+	i64.sub 	$push75=, $pop74, $2
+	i64.eqz 	$push337=, $3
+	tee_local	$push336=, $4=, $pop337
+	i64.select	$push335=, $2, $pop75, $pop336
+	tee_local	$push334=, $5=, $pop335
+	i64.sub 	$push76=, $pop338, $pop334
+	i64.mul 	$push77=, $pop76, $1
+	i64.div_s	$5=, $pop77, $5
+	i64.load	$7=, 296($10)
 	block   	
-	block   	
-	block   	
-	block   	
-	block   	
-	block   	
-	block   	
-	block   	
-	block   	
-	block   	
-	i64.lt_s	$push67=, $6, $3
-	i32.and 	$push68=, $10, $pop67
-	br_if   	0, $pop68
-	i64.const	$push276=, 1
-	i64.eq  	$push65=, $4, $pop276
-	i64.gt_s	$push66=, $6, $3
-	i32.and 	$push62=, $pop65, $pop66
-	br_if   	0, $pop62
-	i32.load8_u	$push69=, 0($1)
-	i32.const	$push277=, 1
-	i32.and 	$push70=, $pop69, $pop277
-	br_if   	1, $pop70
-	i32.const	$push278=, 1
-	i32.add 	$1=, $1, $pop278
-	br      	2
-.LBB10_15:
+	i32.load8_u	$push78=, 276($10)
+	i32.const	$push333=, 1
+	i32.and 	$push79=, $pop78, $pop333
+	i32.eqz 	$push383=, $pop79
+	br_if   	0, $pop383
+	i32.const	$push80=, 284
+	i32.add 	$push81=, $10, $pop80
+	i32.load	$push82=, 0($pop81)
+	call    	_ZdlPv@FUNCTION, $pop82
+.LBB10_13:
 	end_block
-	i32.load8_u	$push103=, 12($0)
-	i32.const	$push279=, 1
-	i32.and 	$push104=, $pop103, $pop279
-	br_if   	2, $pop104
-	i32.const	$push102=, 12
-	i32.add 	$push0=, $0, $pop102
-	i32.const	$push280=, 1
-	i32.add 	$10=, $pop0, $pop280
-	br      	3
+	i64.const	$push351=, 1
+	i64.add 	$push84=, $7, $pop351
+	i64.store	72($10), $pop84
+	i32.const	$push85=, 80
+	i32.add 	$push350=, $10, $pop85
+	tee_local	$push349=, $9=, $pop350
+	i32.const	$push256=, 160
+	i32.add 	$push257=, $10, $pop256
+	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_@FUNCTION, $pop349, $pop257
+	i64.store	96($10), $1
+	i64.store	112($10), $6
+	i64.store	104($10), $2
+	block   	
+	block   	
+	block   	
+	block   	
+	i64.lt_s	$push88=, $6, $2
+	i32.and 	$push89=, $4, $pop88
+	br_if   	0, $pop89
+	i64.const	$push352=, 1
+	i64.eq  	$push86=, $3, $pop352
+	i64.gt_s	$push87=, $6, $2
+	i32.and 	$push83=, $pop86, $pop87
+	br_if   	0, $pop83
+	i32.const	$push92=, 168
+	i32.add 	$push93=, $10, $pop92
+	i32.load	$push94=, 0($pop93)
+	i32.load8_u	$push90=, 160($10)
+	i32.const	$push354=, 1
+	i32.and 	$push91=, $pop90, $pop354
+	i32.select	$4=, $pop94, $8, $pop91
+	i32.load8_u	$push96=, 12($0)
+	i32.const	$push353=, 1
+	i32.and 	$push97=, $pop96, $pop353
+	br_if   	1, $pop97
+	i32.const	$push95=, 12
+	i32.add 	$push1=, $0, $pop95
+	i32.const	$push355=, 1
+	i32.add 	$8=, $pop1, $pop355
+	br      	2
 .LBB10_17:
 	end_block
-	i32.load	$1=, 8($1)
-.LBB10_18:
+	block   	
+	block   	
+	i32.load8_u	$push127=, 12($0)
+	i32.const	$push356=, 1
+	i32.and 	$push128=, $pop127, $pop356
+	br_if   	0, $pop128
+	i32.const	$push126=, 12
+	i32.add 	$push0=, $0, $pop126
+	i32.const	$push357=, 1
+	i32.add 	$4=, $pop0, $pop357
+	br      	1
+.LBB10_19:
 	end_block
-	i32.load8_u	$push72=, 12($0)
-	i32.const	$push281=, 1
-	i32.and 	$push73=, $pop72, $pop281
-	br_if   	2, $pop73
-	i32.const	$push71=, 12
-	i32.add 	$push1=, $0, $pop71
-	i32.const	$push282=, 1
-	i32.add 	$10=, $pop1, $pop282
-	br      	3
+	i32.const	$push129=, 20
+	i32.add 	$push130=, $0, $pop129
+	i32.load	$4=, 0($pop130)
 .LBB10_20:
 	end_block
-	i32.const	$push105=, 20
-	i32.add 	$push106=, $0, $pop105
-	i32.load	$10=, 0($pop106)
-.LBB10_21:
+	i32.const	$push133=, 168
+	i32.add 	$push134=, $10, $pop133
+	i32.load	$push135=, 0($pop134)
+	i32.load8_u	$push131=, 160($10)
+	i32.const	$push361=, 1
+	i32.and 	$push132=, $pop131, $pop361
+	i32.select	$push136=, $pop135, $8, $pop132
+	i32.call	$push137=, execTransferFrozenCoin@FUNCTION, $4, $pop136, $5
+	i32.eqz 	$push138=, $pop137
+	i32.const	$push139=, .L.str.11
+	call    	eosio_assert@FUNCTION, $pop138, $pop139
+	i32.const	$push258=, 272
+	i32.add 	$push259=, $10, $pop258
+	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop259, $0
+	i32.load8_u	$push140=, 272($10)
+	i32.store8	240($10), $pop140
+	i64.load	$push141=, 288($10)
+	i64.sub 	$push142=, $pop141, $5
+	i64.store	288($10), $pop142
+	i32.const	$push262=, 240
+	i32.add 	$push263=, $10, $pop262
+	i32.const	$push143=, 4
+	i32.or  	$push145=, $pop263, $pop143
+	i32.const	$push260=, 272
+	i32.add 	$push261=, $10, $pop260
+	i32.const	$push360=, 4
+	i32.or  	$push144=, $pop261, $pop360
+	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop145, $pop144
+	i32.const	$push264=, 240
+	i32.add 	$push265=, $10, $pop264
+	i32.const	$push146=, 24
+	i32.add 	$push147=, $pop265, $pop146
+	i32.const	$push266=, 272
+	i32.add 	$push267=, $10, $pop266
+	i32.const	$push359=, 24
+	i32.add 	$push148=, $pop267, $pop359
+	i64.load	$push149=, 0($pop148)
+	i64.store	0($pop147), $pop149
+	i64.load	$push150=, 288($10)
+	i64.store	256($10), $pop150
+	i32.const	$push268=, 240
+	i32.add 	$push269=, $10, $pop268
+	call    	_ZN5eosio4dice10set_statusENS0_10gamestatusE@FUNCTION, $0, $pop269
+	block   	
+	i32.load8_u	$push151=, 244($10)
+	i32.const	$push358=, 1
+	i32.and 	$push152=, $pop151, $pop358
+	i32.eqz 	$push384=, $pop152
+	br_if   	0, $pop384
+	i32.const	$push153=, 252
+	i32.add 	$push154=, $10, $pop153
+	i32.load	$push155=, 0($pop154)
+	call    	_ZdlPv@FUNCTION, $pop155
+.LBB10_22:
 	end_block
-	i32.load8_u	$push107=, 0($1)
-	i32.const	$push283=, 1
-	i32.and 	$push108=, $pop107, $pop283
-	br_if   	2, $pop108
-	i32.const	$push284=, 1
-	i32.add 	$9=, $1, $pop284
-	br      	3
-.LBB10_23:
-	end_block
-	i32.const	$push74=, 20
-	i32.add 	$push75=, $0, $pop74
-	i32.load	$10=, 0($pop75)
+	block   	
+	i32.load8_u	$push156=, 276($10)
+	i32.const	$push362=, 1
+	i32.and 	$push157=, $pop156, $pop362
+	i32.eqz 	$push385=, $pop157
+	br_if   	0, $pop385
+	i32.const	$push158=, 284
+	i32.add 	$push159=, $10, $pop158
+	i32.load	$push160=, 0($pop159)
+	call    	_ZdlPv@FUNCTION, $pop160
 .LBB10_24:
 	end_block
-	i32.call	$push76=, execTransferFrozenCoin@FUNCTION, $1, $10, $2
-	i32.eqz 	$push77=, $pop76
-	i32.const	$push78=, .L.str.11
-	call    	eosio_assert@FUNCTION, $pop77, $pop78
-	i32.const	$push232=, 224
-	i32.add 	$push233=, $11, $pop232
-	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop233, $0
-	i32.load8_u	$push79=, 224($11)
-	i32.store8	192($11), $pop79
-	i64.load	$push80=, 240($11)
-	i64.add 	$push81=, $pop80, $2
-	i64.store	240($11), $pop81
-	i32.const	$push236=, 192
-	i32.add 	$push237=, $11, $pop236
-	i32.const	$push82=, 4
-	i32.or  	$push84=, $pop237, $pop82
-	i32.const	$push234=, 224
-	i32.add 	$push235=, $11, $pop234
-	i32.const	$push287=, 4
-	i32.or  	$push83=, $pop235, $pop287
-	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop84, $pop83
-	i32.const	$push238=, 192
-	i32.add 	$push239=, $11, $pop238
-	i32.const	$push85=, 24
-	i32.add 	$push86=, $pop239, $pop85
-	i32.const	$push240=, 224
-	i32.add 	$push241=, $11, $pop240
-	i32.const	$push286=, 24
-	i32.add 	$push87=, $pop241, $pop286
-	i64.load	$push88=, 0($pop87)
-	i64.store	0($pop86), $pop88
-	i64.load	$push89=, 240($11)
-	i64.store	208($11), $pop89
-	i32.const	$push242=, 192
-	i32.add 	$push243=, $11, $pop242
-	call    	_ZN5eosio4dice10set_statusENS0_10gamestatusE@FUNCTION, $0, $pop243
-	block   	
-	i32.load8_u	$push90=, 196($11)
-	i32.const	$push285=, 1
-	i32.and 	$push91=, $pop90, $pop285
-	i32.eqz 	$push311=, $pop91
-	br_if   	0, $pop311
-	i32.const	$push92=, 204
-	i32.add 	$push93=, $11, $pop92
-	i32.load	$push94=, 0($pop93)
-	call    	_ZdlPv@FUNCTION, $pop94
+	i32.const	$push164=, 168
+	i32.add 	$push165=, $10, $pop164
+	i32.load	$push166=, 0($pop165)
+	i32.load8_u	$push162=, 160($10)
+	i32.const	$push161=, 1
+	i32.and 	$push163=, $pop162, $pop161
+	i32.select	$push167=, $pop166, $8, $pop163
+	i64.add 	$push168=, $5, $1
+	i32.call	$push169=, execActiveCoin@FUNCTION, $pop167, $pop168
+	i32.eqz 	$push170=, $pop169
+	i32.const	$push171=, .L.str.12
+	call    	eosio_assert@FUNCTION, $pop170, $pop171
+	i32.const	$push363=, 1
+	i32.store8	120($10), $pop363
+	i32.const	$push173=, .L.str.13
+	i32.const	$push172=, 0
+	i32.call	$drop=, printf@FUNCTION, $pop173, $pop172
+	br      	2
+.LBB10_25:
+	end_block
+	i32.const	$push98=, 20
+	i32.add 	$push99=, $0, $pop98
+	i32.load	$8=, 0($pop99)
 .LBB10_26:
 	end_block
+	i32.call	$push100=, execTransferFrozenCoin@FUNCTION, $4, $8, $1
+	i32.eqz 	$push101=, $pop100
+	i32.const	$push102=, .L.str.11
+	call    	eosio_assert@FUNCTION, $pop101, $pop102
+	i32.const	$push288=, 272
+	i32.add 	$push289=, $10, $pop288
+	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop289, $0
+	i32.load8_u	$push103=, 272($10)
+	i32.store8	240($10), $pop103
+	i64.load	$push104=, 288($10)
+	i64.add 	$push105=, $pop104, $1
+	i64.store	288($10), $pop105
+	i32.const	$push292=, 240
+	i32.add 	$push293=, $10, $pop292
+	i32.const	$push106=, 4
+	i32.or  	$push108=, $pop293, $pop106
+	i32.const	$push290=, 272
+	i32.add 	$push291=, $10, $pop290
+	i32.const	$push366=, 4
+	i32.or  	$push107=, $pop291, $pop366
+	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop108, $pop107
+	i32.const	$push294=, 240
+	i32.add 	$push295=, $10, $pop294
+	i32.const	$push109=, 24
+	i32.add 	$push110=, $pop295, $pop109
+	i32.const	$push296=, 272
+	i32.add 	$push297=, $10, $pop296
+	i32.const	$push365=, 24
+	i32.add 	$push111=, $pop297, $pop365
+	i64.load	$push112=, 0($pop111)
+	i64.store	0($pop110), $pop112
+	i64.load	$push113=, 288($10)
+	i64.store	256($10), $pop113
+	i32.const	$push298=, 240
+	i32.add 	$push299=, $10, $pop298
+	call    	_ZN5eosio4dice10set_statusENS0_10gamestatusE@FUNCTION, $0, $pop299
 	block   	
-	i32.load8_u	$push95=, 228($11)
-	i32.const	$push288=, 1
-	i32.and 	$push96=, $pop95, $pop288
-	i32.eqz 	$push312=, $pop96
-	br_if   	0, $pop312
-	i32.const	$push97=, 236
-	i32.add 	$push98=, $11, $pop97
-	i32.load	$push99=, 0($pop98)
-	call    	_ZdlPv@FUNCTION, $pop99
+	i32.load8_u	$push114=, 244($10)
+	i32.const	$push364=, 1
+	i32.and 	$push115=, $pop114, $pop364
+	i32.eqz 	$push386=, $pop115
+	br_if   	0, $pop386
+	i32.const	$push116=, 252
+	i32.add 	$push117=, $10, $pop116
+	i32.load	$push118=, 0($pop117)
+	call    	_ZdlPv@FUNCTION, $pop118
 .LBB10_28:
 	end_block
-	i32.const	$push100=, 0
-	i32.store8	120($11), $pop100
-	i32.const	$push101=, .L.str.14
-	i32.const	$push289=, 0
-	i32.call	$drop=, printf@FUNCTION, $pop101, $pop289
-	br      	2
-.LBB10_29:
-	end_block
-	i32.load	$9=, 8($1)
+	block   	
+	i32.load8_u	$push119=, 276($10)
+	i32.const	$push367=, 1
+	i32.and 	$push120=, $pop119, $pop367
+	i32.eqz 	$push387=, $pop120
+	br_if   	0, $pop387
+	i32.const	$push121=, 284
+	i32.add 	$push122=, $10, $pop121
+	i32.load	$push123=, 0($pop122)
+	call    	_ZdlPv@FUNCTION, $pop123
 .LBB10_30:
 	end_block
-	i32.call	$push109=, execTransferFrozenCoin@FUNCTION, $10, $9, $5
-	i32.eqz 	$push110=, $pop109
-	i32.const	$push111=, .L.str.11
-	call    	eosio_assert@FUNCTION, $pop110, $pop111
-	i32.const	$push204=, 224
-	i32.add 	$push205=, $11, $pop204
-	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop205, $0
-	i32.load8_u	$push112=, 224($11)
-	i32.store8	192($11), $pop112
-	i64.load	$push113=, 240($11)
-	i64.sub 	$push114=, $pop113, $5
-	i64.store	240($11), $pop114
-	i32.const	$push208=, 192
-	i32.add 	$push209=, $11, $pop208
-	i32.const	$push115=, 4
-	i32.or  	$push117=, $pop209, $pop115
-	i32.const	$push206=, 224
-	i32.add 	$push207=, $11, $pop206
-	i32.const	$push292=, 4
-	i32.or  	$push116=, $pop207, $pop292
-	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop117, $pop116
-	i32.const	$push210=, 192
-	i32.add 	$push211=, $11, $pop210
-	i32.const	$push118=, 24
-	i32.add 	$push119=, $pop211, $pop118
-	i32.const	$push212=, 224
-	i32.add 	$push213=, $11, $pop212
-	i32.const	$push291=, 24
-	i32.add 	$push120=, $pop213, $pop291
-	i64.load	$push121=, 0($pop120)
-	i64.store	0($pop119), $pop121
-	i64.load	$push122=, 240($11)
-	i64.store	208($11), $pop122
-	i32.const	$push214=, 192
-	i32.add 	$push215=, $11, $pop214
-	call    	_ZN5eosio4dice10set_statusENS0_10gamestatusE@FUNCTION, $0, $pop215
-	block   	
-	i32.load8_u	$push123=, 196($11)
-	i32.const	$push290=, 1
-	i32.and 	$push124=, $pop123, $pop290
-	i32.eqz 	$push313=, $pop124
-	br_if   	0, $pop313
-	i32.const	$push125=, 204
-	i32.add 	$push126=, $11, $pop125
-	i32.load	$push127=, 0($pop126)
-	call    	_ZdlPv@FUNCTION, $pop127
-.LBB10_32:
+	i32.const	$push124=, 0
+	i32.store8	120($10), $pop124
+	i32.const	$push125=, .L.str.14
+	i32.const	$push368=, 0
+	i32.call	$drop=, printf@FUNCTION, $pop125, $pop368
+.LBB10_31:
 	end_block
+	i32.const	$push270=, 272
+	i32.add 	$push271=, $10, $pop270
+	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop271, $0
+	i32.load8_u	$push174=, 272($10)
+	i32.store8	240($10), $pop174
+	i64.load	$push176=, 296($10)
+	i64.const	$push175=, 1
+	i64.add 	$push177=, $pop176, $pop175
+	i64.store	296($10), $pop177
+	i32.const	$push274=, 240
+	i32.add 	$push275=, $10, $pop274
+	i32.const	$push178=, 4
+	i32.or  	$push180=, $pop275, $pop178
+	i32.const	$push272=, 272
+	i32.add 	$push273=, $10, $pop272
+	i32.const	$push370=, 4
+	i32.or  	$push179=, $pop273, $pop370
+	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop180, $pop179
+	i32.const	$push181=, 264
+	i32.add 	$push182=, $10, $pop181
+	i64.load	$push183=, 296($10)
+	i64.store	0($pop182), $pop183
+	i64.load	$push184=, 288($10)
+	i64.store	256($10), $pop184
+	i32.const	$push276=, 240
+	i32.add 	$push277=, $10, $pop276
+	call    	_ZN5eosio4dice10set_statusENS0_10gamestatusE@FUNCTION, $0, $pop277
 	block   	
-	i32.load8_u	$push128=, 228($11)
-	i32.const	$push293=, 1
-	i32.and 	$push129=, $pop128, $pop293
-	i32.eqz 	$push314=, $pop129
-	br_if   	0, $pop314
-	i32.const	$push130=, 236
-	i32.add 	$push131=, $11, $pop130
-	i32.load	$push132=, 0($pop131)
-	call    	_ZdlPv@FUNCTION, $pop132
-.LBB10_34:
+	i32.load8_u	$push185=, 244($10)
+	i32.const	$push369=, 1
+	i32.and 	$push186=, $pop185, $pop369
+	i32.eqz 	$push388=, $pop186
+	br_if   	0, $pop388
+	i32.const	$push187=, 252
+	i32.add 	$push188=, $10, $pop187
+	i32.load	$push189=, 0($pop188)
+	call    	_ZdlPv@FUNCTION, $pop189
+.LBB10_33:
 	end_block
+	i32.const	$push278=, 72
+	i32.add 	$push279=, $10, $pop278
+	i32.const	$push372=, 24
+	i32.add 	$0=, $pop279, $pop372
 	block   	
-	block   	
-	i32.load8_u	$push133=, 0($1)
-	i32.const	$push294=, 1
-	i32.and 	$push134=, $pop133, $pop294
-	br_if   	0, $pop134
-	i32.const	$push295=, 1
-	i32.add 	$1=, $1, $pop295
-	br      	1
-.LBB10_36:
+	i32.load8_u	$push190=, 276($10)
+	i32.const	$push371=, 1
+	i32.and 	$push191=, $pop190, $pop371
+	i32.eqz 	$push389=, $pop191
+	br_if   	0, $pop389
+	i32.const	$push192=, 284
+	i32.add 	$push193=, $10, $pop192
+	i32.load	$push194=, 0($pop193)
+	call    	_ZdlPv@FUNCTION, $pop194
+.LBB10_35:
 	end_block
-	i32.load	$1=, 8($1)
+	i64.load	$push195=, 72($10)
+	i64.store	16($10), $pop195
+	i32.const	$push280=, 16
+	i32.add 	$push281=, $10, $pop280
+	i32.const	$push376=, 8
+	i32.add 	$push196=, $pop281, $pop376
+	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop196, $9
+	i32.const	$push200=, 64
+	i32.add 	$push201=, $10, $pop200
+	i32.const	$push197=, 24
+	i32.add 	$push198=, $0, $pop197
+	i32.load8_u	$push199=, 0($pop198)
+	i32.store8	0($pop201), $pop199
+	i32.const	$push204=, 56
+	i32.add 	$push205=, $10, $pop204
+	i32.const	$push375=, 16
+	i32.add 	$push202=, $0, $pop375
+	i64.load	$push203=, 0($pop202)
+	i64.store	0($pop205), $pop203
+	i32.const	$push208=, 48
+	i32.add 	$push209=, $10, $pop208
+	i32.const	$push374=, 8
+	i32.add 	$push206=, $0, $pop374
+	i64.load	$push207=, 0($pop206)
+	i64.store	0($pop209), $pop207
+	i64.load	$push210=, 0($0)
+	i64.store	40($10), $pop210
+	i32.const	$push282=, 16
+	i32.add 	$push283=, $10, $pop282
+	call    	_ZN5eosio4dice13add_roundinfoENS0_9roundinfoE@FUNCTION, $10, $pop283
+	block   	
+	i32.load8_u	$push211=, 24($10)
+	i32.const	$push373=, 1
+	i32.and 	$push212=, $pop211, $pop373
+	i32.eqz 	$push390=, $pop212
+	br_if   	0, $pop390
+	i32.const	$push286=, 16
+	i32.add 	$push287=, $10, $pop286
+	i32.const	$push377=, 16
+	i32.add 	$push213=, $pop287, $pop377
+	i32.load	$push214=, 0($pop213)
+	call    	_ZdlPv@FUNCTION, $pop214
 .LBB10_37:
 	end_block
-	i64.add 	$push135=, $5, $2
-	i32.call	$push136=, execActiveCoin@FUNCTION, $1, $pop135
-	i32.eqz 	$push137=, $pop136
-	i32.const	$push138=, .L.str.12
-	call    	eosio_assert@FUNCTION, $pop137, $pop138
-	i32.const	$push139=, 1
-	i32.store8	120($11), $pop139
-	i32.const	$push141=, .L.str.13
-	i32.const	$push140=, 0
-	i32.call	$drop=, printf@FUNCTION, $pop141, $pop140
-.LBB10_38:
-	end_block
-	i32.const	$push216=, 224
-	i32.add 	$push217=, $11, $pop216
-	call    	_ZN5eosio4dice10get_statusEv@FUNCTION, $pop217, $0
-	i32.load8_u	$push142=, 224($11)
-	i32.store8	192($11), $pop142
-	i64.load	$push144=, 248($11)
-	i64.const	$push143=, 1
-	i64.add 	$push145=, $pop144, $pop143
-	i64.store	248($11), $pop145
-	i32.const	$push220=, 192
-	i32.add 	$push221=, $11, $pop220
-	i32.const	$push146=, 4
-	i32.or  	$push148=, $pop221, $pop146
-	i32.const	$push218=, 224
-	i32.add 	$push219=, $11, $pop218
-	i32.const	$push297=, 4
-	i32.or  	$push147=, $pop219, $pop297
-	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop148, $pop147
-	i32.const	$push149=, 216
-	i32.add 	$push150=, $11, $pop149
-	i64.load	$push151=, 248($11)
-	i64.store	0($pop150), $pop151
-	i64.load	$push152=, 240($11)
-	i64.store	208($11), $pop152
-	i32.const	$push222=, 192
-	i32.add 	$push223=, $11, $pop222
-	call    	_ZN5eosio4dice10set_statusENS0_10gamestatusE@FUNCTION, $0, $pop223
 	block   	
-	i32.load8_u	$push153=, 196($11)
-	i32.const	$push296=, 1
-	i32.and 	$push154=, $pop153, $pop296
-	i32.eqz 	$push315=, $pop154
-	br_if   	0, $pop315
-	i32.const	$push155=, 204
-	i32.add 	$push156=, $11, $pop155
-	i32.load	$push157=, 0($pop156)
-	call    	_ZdlPv@FUNCTION, $pop157
-.LBB10_40:
+	i32.const	$push284=, 72
+	i32.add 	$push285=, $10, $pop284
+	i32.const	$push379=, 8
+	i32.add 	$push215=, $pop285, $pop379
+	i32.load8_u	$push216=, 0($pop215)
+	i32.const	$push378=, 1
+	i32.and 	$push217=, $pop216, $pop378
+	i32.eqz 	$push391=, $pop217
+	br_if   	0, $pop391
+	i32.const	$push218=, 88
+	i32.add 	$push219=, $10, $pop218
+	i32.load	$push220=, 0($pop219)
+	call    	_ZdlPv@FUNCTION, $pop220
+.LBB10_39:
 	end_block
-	i32.const	$push299=, 96
-	i32.add 	$0=, $11, $pop299
 	block   	
-	i32.load8_u	$push158=, 228($11)
-	i32.const	$push298=, 1
-	i32.and 	$push159=, $pop158, $pop298
-	i32.eqz 	$push316=, $pop159
-	br_if   	0, $pop316
-	i32.const	$push160=, 236
-	i32.add 	$push161=, $11, $pop160
-	i32.load	$push162=, 0($pop161)
-	call    	_ZdlPv@FUNCTION, $pop162
+	i32.load8_u	$push222=, 160($10)
+	i32.const	$push221=, 1
+	i32.and 	$push223=, $pop222, $pop221
+	i32.eqz 	$push392=, $pop223
+	br_if   	0, $pop392
+	i32.const	$push224=, 168
+	i32.add 	$push225=, $10, $pop224
+	i32.load	$push226=, 0($pop225)
+	call    	_ZdlPv@FUNCTION, $pop226
+.LBB10_41:
+	end_block
+	i32.const	$push233=, 0
+	i32.const	$push231=, 304
+	i32.add 	$push232=, $10, $pop231
+	i32.store	__stack_pointer($pop233), $pop232
+	return
 .LBB10_42:
 	end_block
-	i64.load	$push163=, 72($11)
-	i64.store	16($11), $pop163
-	i32.const	$push224=, 16
-	i32.add 	$push225=, $11, $pop224
-	i32.const	$push303=, 8
-	i32.add 	$push164=, $pop225, $pop303
-	i32.call	$drop=, _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_@FUNCTION, $pop164, $8
-	i32.const	$push168=, 64
-	i32.add 	$push169=, $11, $pop168
-	i32.const	$push165=, 24
-	i32.add 	$push166=, $0, $pop165
-	i32.load8_u	$push167=, 0($pop166)
-	i32.store8	0($pop169), $pop167
-	i32.const	$push172=, 56
-	i32.add 	$push173=, $11, $pop172
-	i32.const	$push302=, 16
-	i32.add 	$push170=, $0, $pop302
-	i64.load	$push171=, 0($pop170)
-	i64.store	0($pop173), $pop171
-	i32.const	$push176=, 48
-	i32.add 	$push177=, $11, $pop176
-	i32.const	$push301=, 8
-	i32.add 	$push174=, $0, $pop301
-	i64.load	$push175=, 0($pop174)
-	i64.store	0($pop177), $pop175
-	i64.load	$push178=, 0($0)
-	i64.store	40($11), $pop178
-	i32.const	$push226=, 16
-	i32.add 	$push227=, $11, $pop226
-	call    	_ZN5eosio4dice13add_roundinfoENS0_9roundinfoE@FUNCTION, $11, $pop227
-	block   	
-	i32.load8_u	$push179=, 24($11)
-	i32.const	$push300=, 1
-	i32.and 	$push180=, $pop179, $pop300
-	i32.eqz 	$push317=, $pop180
-	br_if   	0, $pop317
-	i32.const	$push230=, 16
-	i32.add 	$push231=, $11, $pop230
-	i32.const	$push304=, 16
-	i32.add 	$push181=, $pop231, $pop304
-	i32.load	$push182=, 0($pop181)
-	call    	_ZdlPv@FUNCTION, $pop182
-.LBB10_44:
-	end_block
-	block   	
-	i32.const	$push228=, 72
-	i32.add 	$push229=, $11, $pop228
-	i32.const	$push306=, 8
-	i32.add 	$push183=, $pop229, $pop306
-	i32.load8_u	$push184=, 0($pop183)
-	i32.const	$push305=, 1
-	i32.and 	$push185=, $pop184, $pop305
-	i32.eqz 	$push318=, $pop185
-	br_if   	0, $pop318
-	i32.const	$push186=, 88
-	i32.add 	$push187=, $11, $pop186
-	i32.load	$push188=, 0($pop187)
-	call    	_ZdlPv@FUNCTION, $pop188
-.LBB10_46:
-	end_block
-	i32.const	$push195=, 0
-	i32.const	$push193=, 256
-	i32.add 	$push194=, $11, $pop193
-	i32.store	__stack_pointer($pop195), $pop194
+	i32.const	$push242=, 160
+	i32.add 	$push243=, $10, $pop242
+	call    	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv@FUNCTION, $pop243
+	unreachable
 	.endfunc
 .Lfunc_end10:
-	.size	_ZN5eosio4dice4playENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEExxx, .Lfunc_end10-_ZN5eosio4dice4playENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEExxx
+	.size	_ZN5eosio4dice4playExxx, .Lfunc_end10-_ZN5eosio4dice4playExxx
 
 	.hidden	_ZN5eosio4dice10get_statusEv
 	.globl	_ZN5eosio4dice10get_statusEv
@@ -1184,225 +1340,198 @@ _ZN5eosio4dice10get_statusEv:
 	.type	_ZN5eosio4dice13add_roundinfoENS0_9roundinfoE,@function
 _ZN5eosio4dice13add_roundinfoENS0_9roundinfoE:
 	.param  	i32, i32
-	.local  	i32, i32, i32, i64, i32, i64, i32, i32, i32
-	i32.const	$push66=, 0
-	i32.const	$push63=, 0
-	i32.load	$push64=, __stack_pointer($pop63)
-	i32.const	$push65=, 160
-	i32.sub 	$push95=, $pop64, $pop65
-	tee_local	$push94=, $10=, $pop95
-	i32.store	__stack_pointer($pop66), $pop94
-	copy_local	$push93=, $10
-	tee_local	$push92=, $9=, $pop93
-	i32.const	$push70=, 64
-	i32.add 	$push71=, $pop92, $pop70
+	.local  	i32, i32, i64, i32, i32, i32
+	i32.const	$push60=, 0
+	i32.const	$push57=, 0
+	i32.load	$push58=, __stack_pointer($pop57)
+	i32.const	$push59=, 144
+	i32.sub 	$push91=, $pop58, $pop59
+	tee_local	$push90=, $7=, $pop91
+	i32.store	__stack_pointer($pop60), $pop90
+	copy_local	$push89=, $7
+	tee_local	$push88=, $6=, $pop89
+	i32.const	$push64=, 48
+	i32.add 	$push65=, $pop88, $pop64
 	i32.const	$push1=, 0
 	i32.const	$push0=, 64
-	i32.call	$drop=, memset@FUNCTION, $pop71, $pop1, $pop0
-	i32.const	$push2=, 8
-	i32.add 	$2=, $1, $pop2
-	i64.load	$7=, 0($1)
+	i32.call	$drop=, memset@FUNCTION, $pop65, $pop1, $pop0
+	i64.load	$push2=, 0($1)
+	i64.store	0($6), $pop2
+	i32.const	$push66=, 48
+	i32.add 	$push67=, $6, $pop66
+	i32.const	$push3=, .L.str.18
+	i32.call	$drop=, sprintf@FUNCTION, $pop67, $pop3, $6
+	i32.const	$push4=, 40
+	i32.add 	$push5=, $6, $pop4
+	i32.const	$push87=, 0
+	i32.store	0($pop5), $pop87
+	i64.const	$push6=, 0
+	i64.store	32($6), $pop6
+	block   	
+	i32.const	$push68=, 48
+	i32.add 	$push69=, $6, $pop68
+	i32.call	$push86=, strlen@FUNCTION, $pop69
+	tee_local	$push85=, $3=, $pop86
+	i32.const	$push7=, -16
+	i32.ge_u	$push8=, $pop85, $pop7
+	br_if   	0, $pop8
 	block   	
 	block   	
-	i32.load8_u	$push3=, 8($1)
-	i32.const	$push91=, 1
-	i32.and 	$push4=, $pop3, $pop91
-	br_if   	0, $pop4
-	i32.const	$push96=, 1
-	i32.add 	$6=, $2, $pop96
-	br      	1
-.LBB12_2:
-	end_block
-	i32.const	$push5=, 16
-	i32.add 	$push6=, $1, $pop5
-	i32.load	$6=, 0($pop6)
+	block   	
+	i32.const	$push9=, 11
+	i32.ge_u	$push10=, $3, $pop9
+	br_if   	0, $pop10
+	i32.const	$push16=, 1
+	i32.shl 	$push17=, $3, $pop16
+	i32.store8	32($6), $pop17
+	i32.const	$push72=, 32
+	i32.add 	$push73=, $6, $pop72
+	i32.const	$push92=, 1
+	i32.or  	$5=, $pop73, $pop92
+	br_if   	1, $3
+	br      	2
 .LBB12_3:
 	end_block
-	i64.load	$5=, 24($1)
-	i32.const	$push99=, 24
-	i32.add 	$push8=, $9, $pop99
-	i64.load	$push7=, 32($1)
-	i64.store	0($pop8), $pop7
-	i32.const	$push9=, 16
-	i32.add 	$push10=, $9, $pop9
-	i64.store	0($pop10), $5
-	i32.store	8($9), $6
-	i64.store	0($9), $7
-	i32.const	$push72=, 64
-	i32.add 	$push73=, $9, $pop72
-	i32.const	$push11=, .L.str.18
-	i32.call	$drop=, sprintf@FUNCTION, $pop73, $pop11, $9
-	i32.const	$push12=, 56
-	i32.add 	$push13=, $9, $pop12
-	i32.const	$push14=, 0
-	i32.store	0($pop13), $pop14
-	i64.const	$push15=, 0
-	i64.store	48($9), $pop15
-	block   	
-	i32.const	$push74=, 64
-	i32.add 	$push75=, $9, $pop74
-	i32.call	$push98=, strlen@FUNCTION, $pop75
-	tee_local	$push97=, $6=, $pop98
-	i32.const	$push16=, -16
-	i32.ge_u	$push17=, $pop97, $pop16
-	br_if   	0, $pop17
-	block   	
-	block   	
-	block   	
-	i32.const	$push18=, 11
-	i32.ge_u	$push19=, $6, $pop18
-	br_if   	0, $pop19
-	i32.const	$push25=, 1
-	i32.shl 	$push26=, $6, $pop25
-	i32.store8	48($9), $pop26
-	i32.const	$push78=, 48
-	i32.add 	$push79=, $9, $pop78
-	i32.const	$push100=, 1
-	i32.or  	$8=, $pop79, $pop100
-	br_if   	1, $6
-	br      	2
+	i32.const	$push11=, 16
+	i32.add 	$push12=, $3, $pop11
+	i32.const	$push13=, -16
+	i32.and 	$push94=, $pop12, $pop13
+	tee_local	$push93=, $2=, $pop94
+	i32.call	$5=, _Znwj@FUNCTION, $pop93
+	i32.const	$push14=, 1
+	i32.or  	$push15=, $2, $pop14
+	i32.store	32($6), $pop15
+	i32.store	40($6), $5
+	i32.store	36($6), $3
+.LBB12_4:
+	end_block
+	i32.const	$push82=, 48
+	i32.add 	$push83=, $6, $pop82
+	i32.call	$drop=, memcpy@FUNCTION, $5, $pop83, $3
+.LBB12_5:
+	end_block
+	i32.add 	$push18=, $5, $3
+	i32.const	$push19=, 0
+	i32.store8	0($pop18), $pop19
+	i32.const	$push22=, 12
+	i32.add 	$push23=, $1, $pop22
+	i32.load	$push24=, 0($pop23)
+	i32.load8_u	$push100=, 8($1)
+	tee_local	$push99=, $3=, $pop100
+	i32.const	$push98=, 1
+	i32.shr_u	$push21=, $pop99, $pop98
+	i32.const	$push97=, 1
+	i32.and 	$push20=, $3, $pop97
+	i32.select	$push96=, $pop24, $pop21, $pop20
+	tee_local	$push95=, $5=, $pop96
+	i32.const	$push25=, 33
+	i32.add 	$3=, $pop95, $pop25
+	i64.extend_u/i32	$4=, $5
+	i32.const	$push26=, 8
+	i32.add 	$2=, $1, $pop26
 .LBB12_6:
-	end_block
-	i32.const	$push20=, 16
-	i32.add 	$push21=, $6, $pop20
-	i32.const	$push22=, -16
-	i32.and 	$push102=, $pop21, $pop22
-	tee_local	$push101=, $4=, $pop102
-	i32.call	$8=, _Znwj@FUNCTION, $pop101
-	i32.const	$push23=, 1
-	i32.or  	$push24=, $4, $pop23
-	i32.store	48($9), $pop24
-	i32.store	56($9), $8
-	i32.store	52($9), $6
-.LBB12_7:
-	end_block
-	i32.const	$push88=, 64
-	i32.add 	$push89=, $9, $pop88
-	i32.call	$drop=, memcpy@FUNCTION, $8, $pop89, $6
-.LBB12_8:
-	end_block
-	i32.const	$push110=, 32
-	i32.add 	$4=, $1, $pop110
-	i32.const	$push109=, 24
-	i32.add 	$3=, $1, $pop109
-	i32.add 	$push27=, $8, $6
-	i32.const	$push28=, 0
-	i32.store8	0($pop27), $pop28
-	i32.const	$push33=, 12
-	i32.add 	$push34=, $1, $pop33
-	i32.load	$push35=, 0($pop34)
-	i32.const	$push29=, 8
-	i32.add 	$push30=, $1, $pop29
-	i32.load8_u	$push108=, 0($pop30)
-	tee_local	$push107=, $6=, $pop108
-	i32.const	$push106=, 1
-	i32.shr_u	$push32=, $pop107, $pop106
-	i32.const	$push105=, 1
-	i32.and 	$push31=, $6, $pop105
-	i32.select	$push104=, $pop35, $pop32, $pop31
-	tee_local	$push103=, $8=, $pop104
-	i32.const	$push36=, 33
-	i32.add 	$6=, $pop103, $pop36
-	i64.extend_u/i32	$7=, $8
-.LBB12_9:
 	loop    	
-	i32.const	$push115=, 1
-	i32.add 	$6=, $6, $pop115
-	i64.const	$push114=, 7
-	i64.shr_u	$push113=, $7, $pop114
-	tee_local	$push112=, $7=, $pop113
-	i64.const	$push111=, 0
-	i64.ne  	$push37=, $pop112, $pop111
-	br_if   	0, $pop37
+	i32.const	$push105=, 1
+	i32.add 	$3=, $3, $pop105
+	i64.const	$push104=, 7
+	i64.shr_u	$push103=, $4, $pop104
+	tee_local	$push102=, $4=, $pop103
+	i64.const	$push101=, 0
+	i64.ne  	$push27=, $pop102, $pop101
+	br_if   	0, $pop27
 	end_loop
 	block   	
 	block   	
-	i32.const	$push38=, 513
-	i32.lt_u	$push39=, $6, $pop38
-	br_if   	0, $pop39
-	i32.call	$8=, malloc@FUNCTION, $6
+	i32.const	$push28=, 513
+	i32.lt_u	$push29=, $3, $pop28
+	br_if   	0, $pop29
+	i32.call	$5=, malloc@FUNCTION, $3
 	br      	1
+.LBB12_9:
+	end_block
+	i32.const	$push56=, 0
+	i32.const	$push30=, 15
+	i32.add 	$push31=, $3, $pop30
+	i32.const	$push32=, -16
+	i32.and 	$push33=, $pop31, $pop32
+	i32.sub 	$push107=, $7, $pop33
+	tee_local	$push106=, $5=, $pop107
+	copy_local	$push84=, $pop106
+	i32.store	__stack_pointer($pop56), $pop84
+.LBB12_10:
+	end_block
+	i32.store	20($6), $5
+	i32.store	16($6), $5
+	i32.add 	$push34=, $5, $3
+	i32.store	24($6), $pop34
+	i32.const	$push74=, 16
+	i32.add 	$push75=, $6, $pop74
+	i32.store	112($6), $pop75
+	i32.store	124($6), $2
+	i32.store	120($6), $1
+	i32.const	$push35=, 24
+	i32.add 	$push36=, $1, $pop35
+	i32.store	128($6), $pop36
+	i32.const	$push37=, 32
+	i32.add 	$push38=, $1, $pop37
+	i32.store	132($6), $pop38
+	i32.const	$push39=, 40
+	i32.add 	$push40=, $1, $pop39
+	i32.store	136($6), $pop40
+	i32.const	$push41=, 48
+	i32.add 	$push42=, $1, $pop41
+	i32.store	140($6), $pop42
+	i32.const	$push76=, 120
+	i32.add 	$push77=, $6, $pop76
+	i32.const	$push78=, 112
+	i32.add 	$push79=, $6, $pop78
+	call    	_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKxRKNSt3__112basic_stringIcNS7_11char_traitsIcEENS7_9allocatorIcEEEES6_S6_S6_RKbEEEZN5eosiolsINSJ_10datastreamIPcEENSJ_4dice9roundinfoELPv0EEERT_SS_RKT0_EUlRKSR_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSS_OST_NS7_16integer_sequenceIjJXspT1_EEEENS7_17integral_constantIbLb0EEE@FUNCTION, $pop77, $pop79
+	i32.load	$push47=, 40($6)
+	i32.const	$push80=, 32
+	i32.add 	$push81=, $6, $pop80
+	i32.const	$push114=, 1
+	i32.or  	$push46=, $pop81, $pop114
+	i32.load8_u	$push113=, 32($6)
+	tee_local	$push112=, $1=, $pop113
+	i32.const	$push111=, 1
+	i32.and 	$push110=, $pop112, $pop111
+	tee_local	$push109=, $7=, $pop110
+	i32.select	$push48=, $pop47, $pop46, $pop109
+	i32.load	$push44=, 36($6)
+	i32.const	$push108=, 1
+	i32.shr_u	$push43=, $1, $pop108
+	i32.select	$push45=, $pop44, $pop43, $7
+	call    	pass_key@FUNCTION, $pop48, $pop45
+	call    	set_value@FUNCTION, $5, $3
+	block   	
+	i32.const	$push49=, 513
+	i32.lt_u	$push50=, $3, $pop49
+	br_if   	0, $pop50
+	call    	free@FUNCTION, $5
 .LBB12_12:
 	end_block
-	i32.const	$push62=, 0
-	i32.const	$push40=, 15
-	i32.add 	$push41=, $6, $pop40
-	i32.const	$push42=, -16
-	i32.and 	$push43=, $pop41, $pop42
-	i32.sub 	$push117=, $10, $pop43
-	tee_local	$push116=, $8=, $pop117
-	copy_local	$push90=, $pop116
-	i32.store	__stack_pointer($pop62), $pop90
-.LBB12_13:
-	end_block
-	i32.store	36($9), $8
-	i32.store	32($9), $8
-	i32.add 	$push44=, $8, $6
-	i32.store	40($9), $pop44
-	i32.const	$push80=, 32
-	i32.add 	$push81=, $9, $pop80
-	i32.store	128($9), $pop81
-	i32.store	140($9), $2
-	i32.store	144($9), $3
-	i32.store	148($9), $4
-	i32.store	136($9), $1
-	i32.const	$push45=, 40
-	i32.add 	$push46=, $1, $pop45
-	i32.store	152($9), $pop46
-	i32.const	$push47=, 48
-	i32.add 	$push48=, $1, $pop47
-	i32.store	156($9), $pop48
-	i32.const	$push82=, 136
-	i32.add 	$push83=, $9, $pop82
-	i32.const	$push84=, 128
-	i32.add 	$push85=, $9, $pop84
-	call    	_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKxRKNSt3__112basic_stringIcNS7_11char_traitsIcEENS7_9allocatorIcEEEES6_S6_S6_RKbEEEZN5eosiolsINSJ_10datastreamIPcEENSJ_4dice9roundinfoELPv0EEERT_SS_RKT0_EUlRKSR_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSS_OST_NS7_16integer_sequenceIjJXspT1_EEEENS7_17integral_constantIbLb0EEE@FUNCTION, $pop83, $pop85
-	i32.load	$push53=, 56($9)
-	i32.const	$push86=, 48
-	i32.add 	$push87=, $9, $pop86
-	i32.const	$push124=, 1
-	i32.or  	$push52=, $pop87, $pop124
-	i32.load8_u	$push123=, 48($9)
-	tee_local	$push122=, $1=, $pop123
-	i32.const	$push121=, 1
-	i32.and 	$push120=, $pop122, $pop121
-	tee_local	$push119=, $10=, $pop120
-	i32.select	$push54=, $pop53, $pop52, $pop119
-	i32.load	$push50=, 52($9)
-	i32.const	$push118=, 1
-	i32.shr_u	$push49=, $1, $pop118
-	i32.select	$push51=, $pop50, $pop49, $10
-	call    	pass_key@FUNCTION, $pop54, $pop51
-	call    	set_value@FUNCTION, $8, $6
 	block   	
-	i32.const	$push55=, 513
-	i32.lt_u	$push56=, $6, $pop55
-	br_if   	0, $pop56
-	call    	free@FUNCTION, $8
+	i32.load8_u	$push51=, 32($6)
+	i32.const	$push115=, 1
+	i32.and 	$push52=, $pop51, $pop115
+	i32.eqz 	$push116=, $pop52
+	br_if   	0, $pop116
+	i32.const	$push53=, 40
+	i32.add 	$push54=, $6, $pop53
+	i32.load	$push55=, 0($pop54)
+	call    	_ZdlPv@FUNCTION, $pop55
+.LBB12_14:
+	end_block
+	i32.const	$push63=, 0
+	i32.const	$push61=, 144
+	i32.add 	$push62=, $6, $pop61
+	i32.store	__stack_pointer($pop63), $pop62
+	return
 .LBB12_15:
 	end_block
-	block   	
-	i32.load8_u	$push57=, 48($9)
-	i32.const	$push125=, 1
-	i32.and 	$push58=, $pop57, $pop125
-	i32.eqz 	$push126=, $pop58
-	br_if   	0, $pop126
-	i32.const	$push59=, 56
-	i32.add 	$push60=, $9, $pop59
-	i32.load	$push61=, 0($pop60)
-	call    	_ZdlPv@FUNCTION, $pop61
-.LBB12_17:
-	end_block
-	i32.const	$push69=, 0
-	i32.const	$push67=, 160
-	i32.add 	$push68=, $9, $pop67
-	i32.store	__stack_pointer($pop69), $pop68
-	return
-.LBB12_18:
-	end_block
-	i32.const	$push76=, 48
-	i32.add 	$push77=, $9, $pop76
-	call    	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv@FUNCTION, $pop77
+	i32.const	$push70=, 32
+	i32.add 	$push71=, $6, $pop70
+	call    	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv@FUNCTION, $pop71
 	unreachable
 	.endfunc
 .Lfunc_end12:
@@ -1430,7 +1559,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKxRKNSt3_
 	i32.sub 	$push2=, $pop1, $pop0
 	i32.const	$push3=, 7
 	i32.gt_s	$push4=, $pop2, $pop3
-	i32.const	$push5=, .L.str.22
+	i32.const	$push5=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop4, $pop5
 	i32.load	$push6=, 4($2)
 	i32.const	$push7=, 8
@@ -1450,7 +1579,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKxRKNSt3_
 	i32.sub 	$push14=, $pop13, $pop12
 	i32.const	$push70=, 7
 	i32.gt_s	$push15=, $pop14, $pop70
-	i32.const	$push69=, .L.str.22
+	i32.const	$push69=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop15, $pop69
 	i32.load	$push16=, 4($2)
 	i32.const	$push68=, 8
@@ -1467,7 +1596,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKxRKNSt3_
 	i32.sub 	$push21=, $pop20, $pop19
 	i32.const	$push64=, 7
 	i32.gt_s	$push22=, $pop21, $pop64
-	i32.const	$push63=, .L.str.22
+	i32.const	$push63=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop22, $pop63
 	i32.load	$push23=, 4($2)
 	i32.const	$push62=, 8
@@ -1484,7 +1613,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKxRKNSt3_
 	i32.sub 	$push28=, $pop27, $pop26
 	i32.const	$push58=, 7
 	i32.gt_s	$push29=, $pop28, $pop58
-	i32.const	$push57=, .L.str.22
+	i32.const	$push57=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop29, $pop57
 	i32.load	$push30=, 4($2)
 	i32.const	$push56=, 8
@@ -1502,7 +1631,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRKxRKNSt3_
 	i32.sub 	$push37=, $pop36, $pop35
 	i32.const	$push38=, 0
 	i32.gt_s	$push39=, $pop37, $pop38
-	i32.const	$push54=, .L.str.22
+	i32.const	$push54=, .L.str.26
 	call    	eosio_assert@FUNCTION, $pop39, $pop54
 	i32.load	$push40=, 4($1)
 	i32.const	$push51=, 15
@@ -1541,7 +1670,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRbRNSt3__1
 	i32.load	$push1=, 8($pop49)
 	i32.load	$push0=, 4($3)
 	i32.ne  	$push2=, $pop1, $pop0
-	i32.const	$push3=, .L.str.20
+	i32.const	$push3=, .L.str.24
 	call    	eosio_assert@FUNCTION, $pop2, $pop3
 	i32.const	$push36=, 15
 	i32.add 	$push37=, $4, $pop36
@@ -1567,7 +1696,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRbRNSt3__1
 	i32.sub 	$push15=, $pop14, $pop13
 	i32.const	$push16=, 7
 	i32.gt_u	$push17=, $pop15, $pop16
-	i32.const	$push45=, .L.str.20
+	i32.const	$push45=, .L.str.24
 	call    	eosio_assert@FUNCTION, $pop17, $pop45
 	i32.load	$push18=, 4($3)
 	i32.const	$push19=, 8
@@ -1584,7 +1713,7 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRbRNSt3__1
 	i32.sub 	$push24=, $pop23, $pop22
 	i32.const	$push41=, 7
 	i32.gt_u	$push25=, $pop24, $pop41
-	i32.const	$push40=, .L.str.20
+	i32.const	$push40=, .L.str.24
 	call    	eosio_assert@FUNCTION, $pop25, $pop40
 	i32.load	$push26=, 4($1)
 	i32.const	$push39=, 8
@@ -1608,21 +1737,21 @@ _ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRbRNSt3__1
 _ZN5eosiorsINS_10datastreamIPcEEEERT_S5_RNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEE:
 	.param  	i32, i32
 	.result 	i32
-	.local  	i32, i32, i32, i32, i32, i32, i32, i32, i32, i32
-	i32.const	$push47=, 0
-	i32.const	$push44=, 0
-	i32.load	$push45=, __stack_pointer($pop44)
-	i32.const	$push46=, 32
-	i32.sub 	$push60=, $pop45, $pop46
-	tee_local	$push59=, $11=, $pop60
-	i32.store	__stack_pointer($pop47), $pop59
-	i32.const	$push58=, 0
-	i32.store	24($11), $pop58
-	i64.const	$push57=, 0
-	i64.store	16($11), $pop57
-	i32.const	$push51=, 16
-	i32.add 	$push52=, $11, $pop51
-	i32.call	$drop=, _ZN5eosiorsINS_10datastreamIPcEEEERT_S5_RNSt3__16vectorIcNS6_9allocatorIcEEEE@FUNCTION, $0, $pop52
+	.local  	i32, i32, i32, i32, i32, i32
+	i32.const	$push38=, 0
+	i32.const	$push35=, 0
+	i32.load	$push36=, __stack_pointer($pop35)
+	i32.const	$push37=, 32
+	i32.sub 	$push51=, $pop36, $pop37
+	tee_local	$push50=, $7=, $pop51
+	i32.store	__stack_pointer($pop38), $pop50
+	i32.const	$push49=, 0
+	i32.store	24($7), $pop49
+	i64.const	$push48=, 0
+	i64.store	16($7), $pop48
+	i32.const	$push42=, 16
+	i32.add 	$push43=, $7, $pop42
+	i32.call	$drop=, _ZN5eosiorsINS_10datastreamIPcEEEERT_S5_RNSt3__16vectorIcNS6_9allocatorIcEEEE@FUNCTION, $0, $pop43
 	block   	
 	block   	
 	block   	
@@ -1632,192 +1761,146 @@ _ZN5eosiorsINS_10datastreamIPcEEEERT_S5_RNSt3__112basic_stringIcNS6_11char_trait
 	block   	
 	block   	
 	block   	
-	i32.load	$push56=, 20($11)
-	tee_local	$push55=, $2=, $pop56
-	i32.load	$push54=, 16($11)
-	tee_local	$push53=, $8=, $pop54
-	i32.ne  	$push0=, $pop55, $pop53
+	i32.load	$push47=, 20($7)
+	tee_local	$push46=, $5=, $pop47
+	i32.load	$push45=, 16($7)
+	tee_local	$push44=, $4=, $pop45
+	i32.ne  	$push0=, $pop46, $pop44
 	br_if   	0, $pop0
-	i32.load8_u	$push34=, 0($1)
-	i32.const	$push35=, 1
-	i32.and 	$push36=, $pop34, $pop35
-	br_if   	1, $pop36
-	i32.const	$push40=, 0
-	i32.store16	0($1), $pop40
-	i32.const	$push41=, 8
-	i32.add 	$8=, $1, $pop41
+	i32.load8_u	$push25=, 0($1)
+	i32.const	$push26=, 1
+	i32.and 	$push27=, $pop25, $pop26
+	br_if   	1, $pop27
+	i32.const	$push31=, 0
+	i32.store16	0($1), $pop31
+	i32.const	$push32=, 8
+	i32.add 	$4=, $1, $pop32
 	br      	2
 .LBB15_3:
 	end_block
 	i32.const	$push1=, 8
-	i32.add 	$push2=, $11, $pop1
-	i32.const	$push64=, 0
-	i32.store	0($pop2), $pop64
-	i64.const	$push63=, 0
-	i64.store	0($11), $pop63
-	i32.sub 	$push62=, $2, $8
-	tee_local	$push61=, $3=, $pop62
+	i32.add 	$push2=, $7, $pop1
+	i32.const	$push55=, 0
+	i32.store	0($pop2), $pop55
+	i64.const	$push54=, 0
+	i64.store	0($7), $pop54
+	i32.sub 	$push53=, $5, $4
+	tee_local	$push52=, $2=, $pop53
 	i32.const	$push3=, -16
-	i32.ge_u	$push4=, $pop61, $pop3
+	i32.ge_u	$push4=, $pop52, $pop3
 	br_if   	7, $pop4
 	i32.const	$push5=, 11
-	i32.ge_u	$push6=, $3, $pop5
+	i32.ge_u	$push6=, $2, $pop5
 	br_if   	2, $pop6
 	i32.const	$push12=, 1
-	i32.shl 	$push13=, $3, $pop12
-	i32.store8	0($11), $pop13
-	i32.const	$push65=, 1
-	i32.or  	$10=, $11, $pop65
-	br_if   	3, $3
+	i32.shl 	$push13=, $2, $pop12
+	i32.store8	0($7), $pop13
+	i32.const	$push56=, 1
+	i32.or  	$6=, $7, $pop56
+	br_if   	3, $2
 	br      	4
 .LBB15_6:
 	end_block
-	i32.load	$push37=, 8($1)
-	i32.const	$push38=, 0
-	i32.store8	0($pop37), $pop38
-	i32.const	$push66=, 0
-	i32.store	4($1), $pop66
-	i32.const	$push39=, 8
-	i32.add 	$8=, $1, $pop39
+	i32.load	$push28=, 8($1)
+	i32.const	$push29=, 0
+	i32.store8	0($pop28), $pop29
+	i32.const	$push57=, 0
+	i32.store	4($1), $pop57
+	i32.const	$push30=, 8
+	i32.add 	$4=, $1, $pop30
 .LBB15_7:
 	end_block
-	i32.const	$push42=, 0
-	call    	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj@FUNCTION, $1, $pop42
-	i32.const	$push69=, 0
-	i32.store	0($8), $pop69
-	i64.const	$push43=, 0
-	i64.store	0($1):p2align=2, $pop43
-	i32.load	$push68=, 16($11)
-	tee_local	$push67=, $8=, $pop68
-	br_if   	3, $pop67
+	i32.const	$push33=, 0
+	call    	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj@FUNCTION, $1, $pop33
+	i32.const	$push60=, 0
+	i32.store	0($4), $pop60
+	i64.const	$push34=, 0
+	i64.store	0($1):p2align=2, $pop34
+	i32.load	$push59=, 16($7)
+	tee_local	$push58=, $4=, $pop59
+	br_if   	3, $pop58
 	br      	4
 .LBB15_8:
 	end_block
 	i32.const	$push7=, 16
-	i32.add 	$push8=, $3, $pop7
+	i32.add 	$push8=, $2, $pop7
 	i32.const	$push9=, -16
-	i32.and 	$push71=, $pop8, $pop9
-	tee_local	$push70=, $9=, $pop71
-	i32.call	$10=, _Znwj@FUNCTION, $pop70
+	i32.and 	$push62=, $pop8, $pop9
+	tee_local	$push61=, $5=, $pop62
+	i32.call	$6=, _Znwj@FUNCTION, $pop61
 	i32.const	$push10=, 1
-	i32.or  	$push11=, $9, $pop10
-	i32.store	0($11), $pop11
-	i32.store	8($11), $10
-	i32.store	4($11), $3
+	i32.or  	$push11=, $5, $pop10
+	i32.store	0($7), $pop11
+	i32.store	8($7), $6
+	i32.store	4($7), $2
 .LBB15_9:
 	end_block
-	copy_local	$9=, $10
-	block   	
-	block   	
-	i32.const	$push14=, 4
-	i32.lt_u	$push15=, $3, $pop14
-	br_if   	0, $pop15
-	block   	
-	i32.const	$push16=, -4
-	i32.and 	$push73=, $3, $pop16
-	tee_local	$push72=, $4=, $pop73
-	i32.eqz 	$push90=, $pop72
-	br_if   	0, $pop90
-	block   	
-	i32.ge_u	$push18=, $10, $2
-	br_if   	0, $pop18
-	copy_local	$9=, $10
-	i32.add 	$push17=, $10, $3
-	i32.lt_u	$push19=, $8, $pop17
-	br_if   	2, $pop19
-.LBB15_13:
-	end_block
-	i32.add 	$9=, $10, $4
-	i32.add 	$5=, $8, $4
-	copy_local	$6=, $4
-	copy_local	$7=, $10
-.LBB15_14:
+	copy_local	$3=, $2
+	copy_local	$5=, $6
+.LBB15_10:
 	loop    	
-	i32.load	$push20=, 0($8):p2align=0
-	i32.store	0($7):p2align=0, $pop20
-	i32.const	$push78=, 4
-	i32.add 	$8=, $8, $pop78
-	i32.const	$push77=, 4
-	i32.add 	$7=, $7, $pop77
-	i32.const	$push76=, -4
-	i32.add 	$push75=, $6, $pop76
-	tee_local	$push74=, $6=, $pop75
-	br_if   	0, $pop74
+	i32.load8_u	$push14=, 0($4)
+	i32.store8	0($5), $pop14
+	i32.const	$push67=, 1
+	i32.add 	$5=, $5, $pop67
+	i32.const	$push66=, 1
+	i32.add 	$4=, $4, $pop66
+	i32.const	$push65=, -1
+	i32.add 	$push64=, $3, $pop65
+	tee_local	$push63=, $3=, $pop64
+	br_if   	0, $pop63
 	end_loop
-	copy_local	$8=, $5
-	i32.ne  	$push21=, $3, $4
-	br_if   	1, $pop21
-	br      	2
+	i32.add 	$6=, $6, $2
+.LBB15_12:
+	end_block
+	i32.const	$push68=, 0
+	i32.store8	0($6), $pop68
+	block   	
+	block   	
+	i32.load8_u	$push15=, 0($1)
+	i32.const	$push16=, 1
+	i32.and 	$push17=, $pop15, $pop16
+	br_if   	0, $pop17
+	i32.const	$push69=, 0
+	i32.store16	0($1), $pop69
+	br      	1
+.LBB15_14:
+	end_block
+	i32.load	$push18=, 8($1)
+	i32.const	$push71=, 0
+	i32.store8	0($pop18), $pop71
+	i32.const	$push70=, 0
+	i32.store	4($1), $pop70
+.LBB15_15:
+	end_block
+	i32.const	$push19=, 0
+	call    	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj@FUNCTION, $1, $pop19
+	i32.const	$push20=, 8
+	i32.add 	$push21=, $1, $pop20
+	i32.const	$push74=, 8
+	i32.add 	$push22=, $7, $pop74
+	i32.load	$push23=, 0($pop22)
+	i32.store	0($pop21), $pop23
+	i64.load	$push24=, 0($7)
+	i64.store	0($1):p2align=2, $pop24
+	i32.load	$push73=, 16($7)
+	tee_local	$push72=, $4=, $pop73
+	i32.eqz 	$push75=, $pop72
+	br_if   	1, $pop75
 .LBB15_16:
 	end_block
-	copy_local	$9=, $10
+	i32.store	20($7), $4
+	call    	_ZdlPv@FUNCTION, $4
 .LBB15_17:
 	end_block
-.LBB15_18:
-	loop    	
-	i32.load8_u	$push22=, 0($8)
-	i32.store8	0($9), $pop22
-	i32.const	$push82=, 1
-	i32.add 	$9=, $9, $pop82
-	i32.const	$push81=, 1
-	i32.add 	$push80=, $8, $pop81
-	tee_local	$push79=, $8=, $pop80
-	i32.ne  	$push23=, $2, $pop79
-	br_if   	0, $pop23
-.LBB15_19:
-	end_loop
-	end_block
-	i32.add 	$10=, $10, $3
-.LBB15_20:
-	end_block
-	i32.const	$push83=, 0
-	i32.store8	0($10), $pop83
-	block   	
-	block   	
-	i32.load8_u	$push24=, 0($1)
-	i32.const	$push25=, 1
-	i32.and 	$push26=, $pop24, $pop25
-	br_if   	0, $pop26
-	i32.const	$push84=, 0
-	i32.store16	0($1), $pop84
-	br      	1
-.LBB15_22:
-	end_block
-	i32.load	$push27=, 8($1)
-	i32.const	$push86=, 0
-	i32.store8	0($pop27), $pop86
-	i32.const	$push85=, 0
-	i32.store	4($1), $pop85
-.LBB15_23:
-	end_block
-	i32.const	$push28=, 0
-	call    	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj@FUNCTION, $1, $pop28
-	i32.const	$push29=, 8
-	i32.add 	$push30=, $1, $pop29
-	i32.const	$push89=, 8
-	i32.add 	$push31=, $11, $pop89
-	i32.load	$push32=, 0($pop31)
-	i32.store	0($pop30), $pop32
-	i64.load	$push33=, 0($11)
-	i64.store	0($1):p2align=2, $pop33
-	i32.load	$push88=, 16($11)
-	tee_local	$push87=, $8=, $pop88
-	i32.eqz 	$push91=, $pop87
-	br_if   	1, $pop91
-.LBB15_24:
-	end_block
-	i32.store	20($11), $8
-	call    	_ZdlPv@FUNCTION, $8
-.LBB15_25:
-	end_block
-	i32.const	$push50=, 0
-	i32.const	$push48=, 32
-	i32.add 	$push49=, $11, $pop48
-	i32.store	__stack_pointer($pop50), $pop49
+	i32.const	$push41=, 0
+	i32.const	$push39=, 32
+	i32.add 	$push40=, $7, $pop39
+	i32.store	__stack_pointer($pop41), $pop40
 	return  	$0
-.LBB15_26:
+.LBB15_18:
 	end_block
-	call    	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv@FUNCTION, $11
+	call    	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv@FUNCTION, $7
 	unreachable
 	.endfunc
 .Lfunc_end15:
@@ -1842,7 +1925,7 @@ _ZN5eosiorsINS_10datastreamIPcEEEERT_S5_RNSt3__16vectorIcNS6_9allocatorIcEEEE:
 	loop    	
 	i32.load	$push1=, 0($2)
 	i32.lt_u	$push2=, $5, $pop1
-	i32.const	$push37=, .L.str.21
+	i32.const	$push37=, .L.str.25
 	call    	eosio_assert@FUNCTION, $pop2, $pop37
 	i32.load	$push36=, 0($3)
 	tee_local	$push35=, $5=, $pop36
@@ -1905,7 +1988,7 @@ _ZN5eosiorsINS_10datastreamIPcEEEERT_S5_RNSt3__16vectorIcNS6_9allocatorIcEEEE:
 	i32.sub 	$push52=, $7, $4
 	tee_local	$push51=, $5=, $pop52
 	i32.ge_u	$push20=, $pop19, $pop51
-	i32.const	$push21=, .L.str.20
+	i32.const	$push21=, .L.str.24
 	call    	eosio_assert@FUNCTION, $pop20, $pop21
 	i32.const	$push22=, 4
 	i32.add 	$push50=, $0, $pop22
@@ -2319,10 +2402,10 @@ _ZN5eosio4dice16add_status_roundEv:
 .Lfunc_end22:
 	.size	_ZN5eosio4dice16add_status_roundEv, .Lfunc_end22-_ZN5eosio4dice16add_status_roundEv
 
-	.hidden	_ZN5eosio4dice9stop_gameEv
-	.globl	_ZN5eosio4dice9stop_gameEv
-	.type	_ZN5eosio4dice9stop_gameEv,@function
-_ZN5eosio4dice9stop_gameEv:
+	.hidden	_ZN5eosio4dice8stopgameEv
+	.globl	_ZN5eosio4dice8stopgameEv
+	.type	_ZN5eosio4dice8stopgameEv,@function
+_ZN5eosio4dice8stopgameEv:
 	.param  	i32
 	.local  	i32, i32, i32, i64, i32, i32, i32, i32, i32, i32
 	i32.const	$push90=, 0
@@ -2646,7 +2729,7 @@ _ZN5eosio4dice9stop_gameEv:
 	unreachable
 	.endfunc
 .Lfunc_end23:
-	.size	_ZN5eosio4dice9stop_gameEv, .Lfunc_end23-_ZN5eosio4dice9stop_gameEv
+	.size	_ZN5eosio4dice8stopgameEv, .Lfunc_end23-_ZN5eosio4dice8stopgameEv
 
 	.hidden	_ZN5eosio4dice8withdrawEv
 	.globl	_ZN5eosio4dice8withdrawEv
@@ -2705,6 +2788,986 @@ _ZN5eosio4dice8withdrawEv:
 .Lfunc_end24:
 	.size	_ZN5eosio4dice8withdrawEv, .Lfunc_end24-_ZN5eosio4dice8withdrawEv
 
+	.hidden	_ZN5eosio4dice12getroundinfoEx
+	.globl	_ZN5eosio4dice12getroundinfoEx
+	.type	_ZN5eosio4dice12getroundinfoEx,@function
+_ZN5eosio4dice12getroundinfoEx:
+	.param  	i32, i64
+	.local  	i32, i64, i32, i32, i32, i32, i32
+	i32.const	$push73=, 0
+	i32.const	$push70=, 0
+	i32.load	$push71=, __stack_pointer($pop70)
+	i32.const	$push72=, 240
+	i32.sub 	$push114=, $pop71, $pop72
+	tee_local	$push113=, $8=, $pop114
+	i32.store	__stack_pointer($pop73), $pop113
+	copy_local	$push112=, $8
+	tee_local	$push111=, $7=, $pop112
+	i32.const	$push77=, 144
+	i32.add 	$push78=, $pop111, $pop77
+	i32.const	$push1=, 0
+	i32.const	$push0=, 64
+	i32.call	$drop=, memset@FUNCTION, $pop78, $pop1, $pop0
+	i64.store	48($7), $1
+	i32.const	$push79=, 144
+	i32.add 	$push80=, $7, $pop79
+	i32.const	$push2=, .L.str.18
+	i32.const	$push81=, 48
+	i32.add 	$push82=, $7, $pop81
+	i32.call	$drop=, sprintf@FUNCTION, $pop80, $pop2, $pop82
+	i32.const	$push3=, 136
+	i32.add 	$push4=, $7, $pop3
+	i32.const	$push110=, 0
+	i32.store	0($pop4), $pop110
+	i64.const	$push5=, 0
+	i64.store	128($7), $pop5
+	block   	
+	i32.const	$push83=, 144
+	i32.add 	$push84=, $7, $pop83
+	i32.call	$push109=, strlen@FUNCTION, $pop84
+	tee_local	$push108=, $5=, $pop109
+	i32.const	$push6=, -16
+	i32.ge_u	$push7=, $pop108, $pop6
+	br_if   	0, $pop7
+	block   	
+	block   	
+	block   	
+	i32.const	$push8=, 11
+	i32.ge_u	$push9=, $5, $pop8
+	br_if   	0, $pop9
+	i32.const	$push15=, 1
+	i32.shl 	$push16=, $5, $pop15
+	i32.store8	128($7), $pop16
+	i32.const	$push87=, 128
+	i32.add 	$push88=, $7, $pop87
+	i32.const	$push115=, 1
+	i32.or  	$6=, $pop88, $pop115
+	br_if   	1, $5
+	br      	2
+.LBB25_3:
+	end_block
+	i32.const	$push10=, 16
+	i32.add 	$push11=, $5, $pop10
+	i32.const	$push12=, -16
+	i32.and 	$push117=, $pop11, $pop12
+	tee_local	$push116=, $2=, $pop117
+	i32.call	$6=, _Znwj@FUNCTION, $pop116
+	i32.const	$push13=, 1
+	i32.or  	$push14=, $2, $pop13
+	i32.store	128($7), $pop14
+	i32.store	136($7), $6
+	i32.store	132($7), $5
+.LBB25_4:
+	end_block
+	i32.const	$push105=, 144
+	i32.add 	$push106=, $7, $pop105
+	i32.call	$drop=, memcpy@FUNCTION, $6, $pop106, $5
+.LBB25_5:
+	end_block
+	i32.add 	$push17=, $6, $5
+	i32.const	$push18=, 0
+	i32.store8	0($pop17), $pop18
+	i32.load	$push21=, 132($7)
+	i32.load8_u	$push123=, 128($7)
+	tee_local	$push122=, $5=, $pop123
+	i32.const	$push121=, 1
+	i32.shr_u	$push20=, $pop122, $pop121
+	i32.const	$push120=, 1
+	i32.and 	$push19=, $5, $pop120
+	i32.select	$push119=, $pop21, $pop20, $pop19
+	tee_local	$push118=, $5=, $pop119
+	i64.extend_u/i32	$1=, $pop118
+.LBB25_6:
+	loop    	
+	i32.const	$push128=, 1
+	i32.add 	$5=, $5, $pop128
+	i64.const	$push127=, 7
+	i64.shr_u	$push126=, $1, $pop127
+	tee_local	$push125=, $1=, $pop126
+	i64.const	$push124=, 0
+	i64.ne  	$push22=, $pop125, $pop124
+	br_if   	0, $pop22
+	end_loop
+	block   	
+	block   	
+	i32.const	$push23=, 513
+	i32.lt_u	$push24=, $5, $pop23
+	br_if   	0, $pop24
+	i32.call	$6=, malloc@FUNCTION, $5
+	br      	1
+.LBB25_9:
+	end_block
+	i32.const	$push69=, 0
+	i32.const	$push25=, 15
+	i32.add 	$push26=, $5, $pop25
+	i32.const	$push27=, -16
+	i32.and 	$push28=, $pop26, $pop27
+	i32.sub 	$push130=, $8, $pop28
+	tee_local	$push129=, $6=, $pop130
+	copy_local	$push107=, $pop129
+	i32.store	__stack_pointer($pop69), $pop107
+.LBB25_10:
+	end_block
+	i32.const	$push29=, 0
+	i32.load	$push33=, _ZN5eosioL10status_keyE+8($pop29)
+	i32.const	$push34=, _ZN5eosioL10status_keyE+1
+	i32.const	$push148=, 0
+	i32.load8_u	$push147=, _ZN5eosioL10status_keyE($pop148)
+	tee_local	$push146=, $8=, $pop147
+	i32.const	$push145=, 1
+	i32.and 	$push144=, $pop146, $pop145
+	tee_local	$push143=, $2=, $pop144
+	i32.select	$push35=, $pop33, $pop34, $pop143
+	i32.const	$push142=, 0
+	i32.load	$push31=, _ZN5eosioL10status_keyE+4($pop142)
+	i32.const	$push141=, 1
+	i32.shr_u	$push30=, $8, $pop141
+	i32.select	$push32=, $pop31, $pop30, $2
+	call    	pass_key@FUNCTION, $pop35, $pop32
+	i32.call	$drop=, get_value@FUNCTION, $6, $5
+	i32.store	116($7), $6
+	i32.store	112($7), $6
+	i32.add 	$push36=, $6, $5
+	i32.store	120($7), $pop36
+	i32.const	$push89=, 56
+	i32.add 	$push90=, $7, $pop89
+	i32.const	$push37=, 16
+	i32.add 	$push140=, $pop90, $pop37
+	tee_local	$push139=, $8=, $pop140
+	i32.const	$push138=, 0
+	i32.store	0($pop139), $pop138
+	i64.const	$push38=, 0
+	i64.store	64($7), $pop38
+	i32.const	$push91=, 112
+	i32.add 	$push92=, $7, $pop91
+	i32.store	208($7), $pop92
+	i32.const	$push39=, 64
+	i32.add 	$push137=, $7, $pop39
+	tee_local	$push136=, $2=, $pop137
+	i32.store	220($7), $pop136
+	i32.const	$push93=, 56
+	i32.add 	$push94=, $7, $pop93
+	i32.const	$push40=, 24
+	i32.add 	$push41=, $pop94, $pop40
+	i32.store	224($7), $pop41
+	i32.const	$push95=, 56
+	i32.add 	$push96=, $7, $pop95
+	i32.const	$push42=, 32
+	i32.add 	$push43=, $pop96, $pop42
+	i32.store	228($7), $pop43
+	i32.const	$push97=, 56
+	i32.add 	$push98=, $7, $pop97
+	i32.const	$push44=, 40
+	i32.add 	$push45=, $pop98, $pop44
+	i32.store	232($7), $pop45
+	i32.const	$push46=, 104
+	i32.add 	$push47=, $7, $pop46
+	i32.store	236($7), $pop47
+	i32.const	$push99=, 56
+	i32.add 	$push100=, $7, $pop99
+	i32.store	216($7), $pop100
+	i32.const	$push101=, 216
+	i32.add 	$push102=, $7, $pop101
+	i32.const	$push103=, 208
+	i32.add 	$push104=, $7, $pop103
+	call    	_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRxRNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEES5_S5_S5_RbEEEZN5eosiorsINSG_10datastreamIPcEENSG_4dice9roundinfoELPv0EEERT_SP_RT0_EUlSP_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSP_OSQ_NS6_16integer_sequenceIjJXspT1_EEEENS6_17integral_constantIbLb0EEE@FUNCTION, $pop102, $pop104
+	i64.load	$1=, 96($7)
+	i32.const	$push135=, 40
+	i32.add 	$push48=, $7, $pop135
+	i32.load8_u	$push49=, 104($7)
+	i32.store	0($pop48), $pop49
+	i64.load	$3=, 88($7)
+	i32.const	$push134=, 32
+	i32.add 	$push50=, $7, $pop134
+	i64.store	0($pop50), $1
+	i64.load	$1=, 80($7)
+	i32.const	$push133=, 24
+	i32.add 	$push51=, $7, $pop133
+	i64.store	0($pop51), $3
+	i32.load	$8=, 0($8)
+	i32.load8_u	$4=, 64($7)
+	i64.load	$3=, 56($7)
+	i32.const	$push132=, 16
+	i32.add 	$push52=, $7, $pop132
+	i64.store	0($pop52), $1
+	i64.store	0($7), $3
+	i32.const	$push54=, 65
+	i32.add 	$push55=, $7, $pop54
+	i32.const	$push131=, 1
+	i32.and 	$push53=, $4, $pop131
+	i32.select	$push56=, $8, $pop55, $pop53
+	i32.store	8($7), $pop56
+	i32.const	$push57=, .L.str.19
+	i32.call	$drop=, printf@FUNCTION, $pop57, $7
+	block   	
+	i32.const	$push58=, 513
+	i32.lt_u	$push59=, $5, $pop58
+	br_if   	0, $pop59
+	call    	free@FUNCTION, $6
+.LBB25_12:
+	end_block
+	block   	
+	i32.load8_u	$push60=, 0($2)
+	i32.const	$push149=, 1
+	i32.and 	$push61=, $pop60, $pop149
+	i32.eqz 	$push150=, $pop61
+	br_if   	0, $pop150
+	i32.const	$push62=, 72
+	i32.add 	$push63=, $7, $pop62
+	i32.load	$push64=, 0($pop63)
+	call    	_ZdlPv@FUNCTION, $pop64
+.LBB25_14:
+	end_block
+	block   	
+	i32.load8_u	$push66=, 128($7)
+	i32.const	$push65=, 1
+	i32.and 	$push67=, $pop66, $pop65
+	i32.eqz 	$push151=, $pop67
+	br_if   	0, $pop151
+	i32.load	$push68=, 136($7)
+	call    	_ZdlPv@FUNCTION, $pop68
+.LBB25_16:
+	end_block
+	i32.const	$push76=, 0
+	i32.const	$push74=, 240
+	i32.add 	$push75=, $7, $pop74
+	i32.store	__stack_pointer($pop76), $pop75
+	return
+.LBB25_17:
+	end_block
+	i32.const	$push85=, 128
+	i32.add 	$push86=, $7, $pop85
+	call    	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv@FUNCTION, $pop86
+	unreachable
+	.endfunc
+.Lfunc_end25:
+	.size	_ZN5eosio4dice12getroundinfoEx, .Lfunc_end25-_ZN5eosio4dice12getroundinfoEx
+
+	.section	.text._ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRxRNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEES5_S5_S5_RbEEEZN5eosiorsINSG_10datastreamIPcEENSG_4dice9roundinfoELPv0EEERT_SP_RT0_EUlSP_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSP_OSQ_NS6_16integer_sequenceIjJXspT1_EEEENS6_17integral_constantIbLb0EEE,"axG",@progbits,_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRxRNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEES5_S5_S5_RbEEEZN5eosiorsINSG_10datastreamIPcEENSG_4dice9roundinfoELPv0EEERT_SP_RT0_EUlSP_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSP_OSQ_NS6_16integer_sequenceIjJXspT1_EEEENS6_17integral_constantIbLb0EEE,comdat
+	.hidden	_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRxRNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEES5_S5_S5_RbEEEZN5eosiorsINSG_10datastreamIPcEENSG_4dice9roundinfoELPv0EEERT_SP_RT0_EUlSP_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSP_OSQ_NS6_16integer_sequenceIjJXspT1_EEEENS6_17integral_constantIbLb0EEE
+	.weak	_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRxRNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEES5_S5_S5_RbEEEZN5eosiorsINSG_10datastreamIPcEENSG_4dice9roundinfoELPv0EEERT_SP_RT0_EUlSP_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSP_OSQ_NS6_16integer_sequenceIjJXspT1_EEEENS6_17integral_constantIbLb0EEE
+	.type	_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRxRNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEES5_S5_S5_RbEEEZN5eosiorsINSG_10datastreamIPcEENSG_4dice9roundinfoELPv0EEERT_SP_RT0_EUlSP_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSP_OSQ_NS6_16integer_sequenceIjJXspT1_EEEENS6_17integral_constantIbLb0EEE,@function
+_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRxRNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEES5_S5_S5_RbEEEZN5eosiorsINSG_10datastreamIPcEENSG_4dice9roundinfoELPv0EEERT_SP_RT0_EUlSP_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSP_OSQ_NS6_16integer_sequenceIjJXspT1_EEEENS6_17integral_constantIbLb0EEE:
+	.param  	i32, i32
+	.local  	i32, i32, i32
+	i32.const	$push46=, 0
+	i32.const	$push43=, 0
+	i32.load	$push44=, __stack_pointer($pop43)
+	i32.const	$push45=, 16
+	i32.sub 	$push78=, $pop44, $pop45
+	tee_local	$push77=, $4=, $pop78
+	i32.store	__stack_pointer($pop46), $pop77
+	i32.load	$3=, 0($0)
+	i32.load	$push76=, 0($1)
+	tee_local	$push75=, $2=, $pop76
+	i32.load	$push1=, 8($pop75)
+	i32.load	$push0=, 4($2)
+	i32.sub 	$push2=, $pop1, $pop0
+	i32.const	$push3=, 7
+	i32.gt_u	$push4=, $pop2, $pop3
+	i32.const	$push5=, .L.str.24
+	call    	eosio_assert@FUNCTION, $pop4, $pop5
+	i32.load	$push6=, 4($2)
+	i32.const	$push7=, 8
+	i32.call	$drop=, memcpy@FUNCTION, $3, $pop6, $pop7
+	i32.load	$push8=, 4($2)
+	i32.const	$push74=, 8
+	i32.add 	$push9=, $pop8, $pop74
+	i32.store	4($2), $pop9
+	i32.load	$push10=, 0($1)
+	i32.load	$push11=, 4($0)
+	i32.call	$drop=, _ZN5eosiorsINS_10datastreamIPcEEEERT_S5_RNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEE@FUNCTION, $pop10, $pop11
+	i32.load	$3=, 8($0)
+	i32.load	$push73=, 0($1)
+	tee_local	$push72=, $2=, $pop73
+	i32.load	$push13=, 8($pop72)
+	i32.load	$push12=, 4($2)
+	i32.sub 	$push14=, $pop13, $pop12
+	i32.const	$push71=, 7
+	i32.gt_u	$push15=, $pop14, $pop71
+	i32.const	$push70=, .L.str.24
+	call    	eosio_assert@FUNCTION, $pop15, $pop70
+	i32.load	$push16=, 4($2)
+	i32.const	$push69=, 8
+	i32.call	$drop=, memcpy@FUNCTION, $3, $pop16, $pop69
+	i32.load	$push17=, 4($2)
+	i32.const	$push68=, 8
+	i32.add 	$push18=, $pop17, $pop68
+	i32.store	4($2), $pop18
+	i32.load	$3=, 12($0)
+	i32.load	$push67=, 0($1)
+	tee_local	$push66=, $2=, $pop67
+	i32.load	$push20=, 8($pop66)
+	i32.load	$push19=, 4($2)
+	i32.sub 	$push21=, $pop20, $pop19
+	i32.const	$push65=, 7
+	i32.gt_u	$push22=, $pop21, $pop65
+	i32.const	$push64=, .L.str.24
+	call    	eosio_assert@FUNCTION, $pop22, $pop64
+	i32.load	$push23=, 4($2)
+	i32.const	$push63=, 8
+	i32.call	$drop=, memcpy@FUNCTION, $3, $pop23, $pop63
+	i32.load	$push24=, 4($2)
+	i32.const	$push62=, 8
+	i32.add 	$push25=, $pop24, $pop62
+	i32.store	4($2), $pop25
+	i32.load	$3=, 16($0)
+	i32.load	$push61=, 0($1)
+	tee_local	$push60=, $2=, $pop61
+	i32.load	$push27=, 8($pop60)
+	i32.load	$push26=, 4($2)
+	i32.sub 	$push28=, $pop27, $pop26
+	i32.const	$push59=, 7
+	i32.gt_u	$push29=, $pop28, $pop59
+	i32.const	$push58=, .L.str.24
+	call    	eosio_assert@FUNCTION, $pop29, $pop58
+	i32.load	$push30=, 4($2)
+	i32.const	$push57=, 8
+	i32.call	$drop=, memcpy@FUNCTION, $3, $pop30, $pop57
+	i32.load	$push31=, 4($2)
+	i32.const	$push56=, 8
+	i32.add 	$push32=, $pop31, $pop56
+	i32.store	4($2), $pop32
+	i32.load	$2=, 20($0)
+	i32.load	$push55=, 0($1)
+	tee_local	$push54=, $0=, $pop55
+	i32.load	$push34=, 8($pop54)
+	i32.load	$push33=, 4($0)
+	i32.ne  	$push35=, $pop34, $pop33
+	i32.const	$push53=, .L.str.24
+	call    	eosio_assert@FUNCTION, $pop35, $pop53
+	i32.const	$push50=, 15
+	i32.add 	$push51=, $4, $pop50
+	i32.load	$push36=, 4($0)
+	i32.const	$push37=, 1
+	i32.call	$drop=, memcpy@FUNCTION, $pop51, $pop36, $pop37
+	i32.load	$push38=, 4($0)
+	i32.const	$push52=, 1
+	i32.add 	$push39=, $pop38, $pop52
+	i32.store	4($0), $pop39
+	i32.load8_u	$push41=, 15($4)
+	i32.const	$push40=, 0
+	i32.ne  	$push42=, $pop41, $pop40
+	i32.store8	0($2), $pop42
+	i32.const	$push49=, 0
+	i32.const	$push47=, 16
+	i32.add 	$push48=, $4, $pop47
+	i32.store	__stack_pointer($pop49), $pop48
+	.endfunc
+.Lfunc_end26:
+	.size	_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRxRNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEES5_S5_S5_RbEEEZN5eosiorsINSG_10datastreamIPcEENSG_4dice9roundinfoELPv0EEERT_SP_RT0_EUlSP_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSP_OSQ_NS6_16integer_sequenceIjJXspT1_EEEENS6_17integral_constantIbLb0EEE, .Lfunc_end26-_ZN5boost3pfr6detail19for_each_field_implINS1_14sequence_tuple5tupleIJRxRNSt3__112basic_stringIcNS6_11char_traitsIcEENS6_9allocatorIcEEEES5_S5_S5_RbEEEZN5eosiorsINSG_10datastreamIPcEENSG_4dice9roundinfoELPv0EEERT_SP_RT0_EUlSP_E_JLj0ELj1ELj2ELj3ELj4ELj5EEEEvSP_OSQ_NS6_16integer_sequenceIjJXspT1_EEEENS6_17integral_constantIbLb0EEE
+
+	.text
+	.hidden	apply
+	.globl	apply
+	.type	apply,@function
+apply:
+	.param  	i64, i64, i64
+	.local  	i32, i32, i64, i64, i64, i64, i32
+	i32.const	$push74=, 0
+	i32.const	$push71=, 0
+	i32.load	$push72=, __stack_pointer($pop71)
+	i32.const	$push73=, 80
+	i32.sub 	$push91=, $pop72, $pop73
+	tee_local	$push90=, $9=, $pop91
+	i32.store	__stack_pointer($pop74), $pop90
+	i64.const	$6=, 0
+	i64.const	$5=, 59
+	i32.const	$4=, .L.str.20
+	i64.const	$7=, 0
+.LBB27_1:
+	loop    	
+	block   	
+	block   	
+	block   	
+	block   	
+	block   	
+	i64.const	$push92=, 6
+	i64.gt_u	$push0=, $6, $pop92
+	br_if   	0, $pop0
+	i32.load8_s	$push97=, 0($4)
+	tee_local	$push96=, $3=, $pop97
+	i32.const	$push95=, -97
+	i32.add 	$push2=, $pop96, $pop95
+	i32.const	$push94=, 255
+	i32.and 	$push3=, $pop2, $pop94
+	i32.const	$push93=, 25
+	i32.gt_u	$push4=, $pop3, $pop93
+	br_if   	1, $pop4
+	i32.const	$push98=, 165
+	i32.add 	$3=, $3, $pop98
+	br      	2
+.LBB27_4:
+	end_block
+	i64.const	$8=, 0
+	i64.const	$push99=, 11
+	i64.le_u	$push1=, $6, $pop99
+	br_if   	2, $pop1
+	br      	3
+.LBB27_5:
+	end_block
+	i32.const	$push104=, 208
+	i32.add 	$push5=, $3, $pop104
+	i32.const	$push103=, 0
+	i32.const	$push102=, -49
+	i32.add 	$push6=, $3, $pop102
+	i32.const	$push101=, 255
+	i32.and 	$push7=, $pop6, $pop101
+	i32.const	$push100=, 5
+	i32.lt_u	$push8=, $pop7, $pop100
+	i32.select	$3=, $pop5, $pop103, $pop8
+.LBB27_6:
+	end_block
+	i64.extend_u/i32	$push9=, $3
+	i64.const	$push106=, 56
+	i64.shl 	$push10=, $pop9, $pop106
+	i64.const	$push105=, 56
+	i64.shr_s	$8=, $pop10, $pop105
+.LBB27_7:
+	end_block
+	i64.const	$push108=, 31
+	i64.and 	$push12=, $8, $pop108
+	i64.const	$push107=, 4294967295
+	i64.and 	$push11=, $5, $pop107
+	i64.shl 	$8=, $pop12, $pop11
+.LBB27_8:
+	end_block
+	i32.const	$push114=, 1
+	i32.add 	$4=, $4, $pop114
+	i64.const	$push113=, 1
+	i64.add 	$6=, $6, $pop113
+	i64.or  	$7=, $8, $7
+	i64.const	$push112=, -5
+	i64.add 	$push111=, $5, $pop112
+	tee_local	$push110=, $5=, $pop111
+	i64.const	$push109=, -6
+	i64.ne  	$push13=, $pop110, $pop109
+	br_if   	0, $pop13
+	end_loop
+	block   	
+	i64.ne  	$push14=, $7, $2
+	br_if   	0, $pop14
+	i64.const	$6=, 0
+	i64.const	$5=, 59
+	i32.const	$4=, .L.str.21
+	i64.const	$7=, 0
+.LBB27_11:
+	loop    	
+	block   	
+	block   	
+	block   	
+	block   	
+	block   	
+	i64.const	$push115=, 4
+	i64.gt_u	$push15=, $6, $pop115
+	br_if   	0, $pop15
+	i32.load8_s	$push120=, 0($4)
+	tee_local	$push119=, $3=, $pop120
+	i32.const	$push118=, -97
+	i32.add 	$push17=, $pop119, $pop118
+	i32.const	$push117=, 255
+	i32.and 	$push18=, $pop17, $pop117
+	i32.const	$push116=, 25
+	i32.gt_u	$push19=, $pop18, $pop116
+	br_if   	1, $pop19
+	i32.const	$push121=, 165
+	i32.add 	$3=, $3, $pop121
+	br      	2
+.LBB27_14:
+	end_block
+	i64.const	$8=, 0
+	i64.const	$push122=, 11
+	i64.le_u	$push16=, $6, $pop122
+	br_if   	2, $pop16
+	br      	3
+.LBB27_15:
+	end_block
+	i32.const	$push127=, 208
+	i32.add 	$push20=, $3, $pop127
+	i32.const	$push126=, 0
+	i32.const	$push125=, -49
+	i32.add 	$push21=, $3, $pop125
+	i32.const	$push124=, 255
+	i32.and 	$push22=, $pop21, $pop124
+	i32.const	$push123=, 5
+	i32.lt_u	$push23=, $pop22, $pop123
+	i32.select	$3=, $pop20, $pop126, $pop23
+.LBB27_16:
+	end_block
+	i64.extend_u/i32	$push24=, $3
+	i64.const	$push129=, 56
+	i64.shl 	$push25=, $pop24, $pop129
+	i64.const	$push128=, 56
+	i64.shr_s	$8=, $pop25, $pop128
+.LBB27_17:
+	end_block
+	i64.const	$push131=, 31
+	i64.and 	$push27=, $8, $pop131
+	i64.const	$push130=, 4294967295
+	i64.and 	$push26=, $5, $pop130
+	i64.shl 	$8=, $pop27, $pop26
+.LBB27_18:
+	end_block
+	i32.const	$push137=, 1
+	i32.add 	$4=, $4, $pop137
+	i64.const	$push136=, 1
+	i64.add 	$6=, $6, $pop136
+	i64.or  	$7=, $8, $7
+	i64.const	$push135=, -5
+	i64.add 	$push134=, $5, $pop135
+	tee_local	$push133=, $5=, $pop134
+	i64.const	$push132=, -6
+	i64.ne  	$push28=, $pop133, $pop132
+	br_if   	0, $pop28
+	end_loop
+	i64.eq  	$push29=, $7, $1
+	i32.const	$push30=, .L.str.22
+	call    	eosio_assert@FUNCTION, $pop29, $pop30
+.LBB27_20:
+	end_block
+	block   	
+	block   	
+	i64.eq  	$push31=, $1, $0
+	br_if   	0, $pop31
+	i64.const	$6=, 0
+	i64.const	$5=, 59
+	i32.const	$4=, .L.str.20
+	i64.const	$7=, 0
+.LBB27_22:
+	loop    	
+	block   	
+	block   	
+	block   	
+	block   	
+	block   	
+	i64.const	$push138=, 6
+	i64.gt_u	$push32=, $6, $pop138
+	br_if   	0, $pop32
+	i32.load8_s	$push143=, 0($4)
+	tee_local	$push142=, $3=, $pop143
+	i32.const	$push141=, -97
+	i32.add 	$push34=, $pop142, $pop141
+	i32.const	$push140=, 255
+	i32.and 	$push35=, $pop34, $pop140
+	i32.const	$push139=, 25
+	i32.gt_u	$push36=, $pop35, $pop139
+	br_if   	1, $pop36
+	i32.const	$push144=, 165
+	i32.add 	$3=, $3, $pop144
+	br      	2
+.LBB27_25:
+	end_block
+	i64.const	$8=, 0
+	i64.const	$push145=, 11
+	i64.le_u	$push33=, $6, $pop145
+	br_if   	2, $pop33
+	br      	3
+.LBB27_26:
+	end_block
+	i32.const	$push150=, 208
+	i32.add 	$push37=, $3, $pop150
+	i32.const	$push149=, 0
+	i32.const	$push148=, -49
+	i32.add 	$push38=, $3, $pop148
+	i32.const	$push147=, 255
+	i32.and 	$push39=, $pop38, $pop147
+	i32.const	$push146=, 5
+	i32.lt_u	$push40=, $pop39, $pop146
+	i32.select	$3=, $pop37, $pop149, $pop40
+.LBB27_27:
+	end_block
+	i64.extend_u/i32	$push41=, $3
+	i64.const	$push152=, 56
+	i64.shl 	$push42=, $pop41, $pop152
+	i64.const	$push151=, 56
+	i64.shr_s	$8=, $pop42, $pop151
+.LBB27_28:
+	end_block
+	i64.const	$push154=, 31
+	i64.and 	$push44=, $8, $pop154
+	i64.const	$push153=, 4294967295
+	i64.and 	$push43=, $5, $pop153
+	i64.shl 	$8=, $pop44, $pop43
+.LBB27_29:
+	end_block
+	i32.const	$push160=, 1
+	i32.add 	$4=, $4, $pop160
+	i64.const	$push159=, 1
+	i64.add 	$6=, $6, $pop159
+	i64.or  	$7=, $8, $7
+	i64.const	$push158=, -5
+	i64.add 	$push157=, $5, $pop158
+	tee_local	$push156=, $5=, $pop157
+	i64.const	$push155=, -6
+	i64.ne  	$push45=, $pop156, $pop155
+	br_if   	0, $pop45
+	end_loop
+	i64.ne  	$push46=, $7, $2
+	br_if   	1, $pop46
+.LBB27_31:
+	end_block
+	i32.const	$push47=, 72
+	i32.add 	$push48=, $9, $pop47
+	i64.const	$push49=, 0
+	i64.store	0($pop48), $pop49
+	i64.store	56($9), $0
+	i64.const	$push161=, 0
+	i64.store	64($9), $pop161
+	block   	
+	block   	
+	block   	
+	i64.const	$push50=, -6030918035374604288
+	i64.eq  	$push51=, $2, $pop50
+	br_if   	0, $pop51
+	i64.const	$push52=, -4149690910734548992
+	i64.eq  	$push53=, $2, $pop52
+	br_if   	1, $pop53
+	i64.const	$push54=, -4157529782108553216
+	i64.ne  	$push55=, $2, $pop54
+	br_if   	2, $pop55
+	i32.const	$push62=, 0
+	i32.store	52($9), $pop62
+	i32.const	$push63=, _ZN5eosio4dice9startgameEx@FUNCTION
+	i32.store	48($9), $pop63
+	i64.load	$push64=, 48($9)
+	i64.store	8($9):p2align=2, $pop64
+	i32.const	$push86=, 56
+	i32.add 	$push87=, $9, $pop86
+	i32.const	$push88=, 8
+	i32.add 	$push89=, $9, $pop88
+	i32.call	$drop=, _ZN5eosio14execute_actionINS_4diceES1_JxEEEbPT_MT0_FvDpT1_E@FUNCTION, $pop87, $pop89
+	br      	2
+.LBB27_35:
+	end_block
+	i32.const	$push59=, 0
+	i32.store	44($9), $pop59
+	i32.const	$push60=, _ZN5eosio4dice4playExxx@FUNCTION
+	i32.store	40($9), $pop60
+	i64.load	$push61=, 40($9)
+	i64.store	16($9):p2align=2, $pop61
+	i32.const	$push78=, 56
+	i32.add 	$push79=, $9, $pop78
+	i32.const	$push80=, 16
+	i32.add 	$push81=, $9, $pop80
+	i32.call	$drop=, _ZN5eosio14execute_actionINS_4diceES1_JxxxEEEbPT_MT0_FvDpT1_E@FUNCTION, $pop79, $pop81
+	br      	1
+.LBB27_36:
+	end_block
+	i32.const	$push56=, 0
+	i32.store	36($9), $pop56
+	i32.const	$push57=, _ZN5eosio4dice8stopgameEv@FUNCTION
+	i32.store	32($9), $pop57
+	i64.load	$push58=, 32($9)
+	i64.store	24($9):p2align=2, $pop58
+	i32.const	$push82=, 56
+	i32.add 	$push83=, $9, $pop82
+	i32.const	$push84=, 24
+	i32.add 	$push85=, $9, $pop84
+	i32.call	$drop=, _ZN5eosio14execute_actionINS_4diceES1_JEEEbPT_MT0_FvDpT1_E@FUNCTION, $pop83, $pop85
+.LBB27_37:
+	end_block
+	i32.load8_u	$push66=, 68($9)
+	i32.const	$push65=, 1
+	i32.and 	$push67=, $pop66, $pop65
+	i32.eqz 	$push162=, $pop67
+	br_if   	0, $pop162
+	i32.const	$push68=, 76
+	i32.add 	$push69=, $9, $pop68
+	i32.load	$push70=, 0($pop69)
+	call    	_ZdlPv@FUNCTION, $pop70
+.LBB27_39:
+	end_block
+	i32.const	$push77=, 0
+	i32.const	$push75=, 80
+	i32.add 	$push76=, $9, $pop75
+	i32.store	__stack_pointer($pop77), $pop76
+	.endfunc
+.Lfunc_end27:
+	.size	apply, .Lfunc_end27-apply
+
+	.section	.text._ZN5eosio14execute_actionINS_4diceES1_JxEEEbPT_MT0_FvDpT1_E,"axG",@progbits,_ZN5eosio14execute_actionINS_4diceES1_JxEEEbPT_MT0_FvDpT1_E,comdat
+	.hidden	_ZN5eosio14execute_actionINS_4diceES1_JxEEEbPT_MT0_FvDpT1_E
+	.weak	_ZN5eosio14execute_actionINS_4diceES1_JxEEEbPT_MT0_FvDpT1_E
+	.type	_ZN5eosio14execute_actionINS_4diceES1_JxEEEbPT_MT0_FvDpT1_E,@function
+_ZN5eosio14execute_actionINS_4diceES1_JxEEEbPT_MT0_FvDpT1_E:
+	.param  	i32, i32
+	.result 	i32
+	.local  	i32, i64, i32, i32, i32
+	i32.const	$push20=, 0
+	i32.load	$push21=, __stack_pointer($pop20)
+	i32.const	$push22=, 16
+	i32.sub 	$push33=, $pop21, $pop22
+	tee_local	$push32=, $4=, $pop33
+	copy_local	$6=, $pop32
+	i32.const	$push23=, 0
+	i32.store	__stack_pointer($pop23), $4
+	i32.load	$2=, 4($1)
+	i32.load	$5=, 0($1)
+	block   	
+	block   	
+	block   	
+	block   	
+	i32.call	$push31=, action_data_size@FUNCTION
+	tee_local	$push30=, $1=, $pop31
+	i32.eqz 	$push37=, $pop30
+	br_if   	0, $pop37
+	i32.const	$push0=, 513
+	i32.lt_u	$push1=, $1, $pop0
+	br_if   	1, $pop1
+	i32.call	$4=, malloc@FUNCTION, $1
+	br      	2
+.LBB28_3:
+	end_block
+	i32.const	$4=, 0
+	br      	2
+.LBB28_4:
+	end_block
+	i32.const	$push19=, 0
+	i32.const	$push2=, 15
+	i32.add 	$push3=, $1, $pop2
+	i32.const	$push4=, -16
+	i32.and 	$push5=, $pop3, $pop4
+	i32.sub 	$push35=, $4, $pop5
+	tee_local	$push34=, $4=, $pop35
+	copy_local	$push29=, $pop34
+	i32.store	__stack_pointer($pop19), $pop29
+.LBB28_5:
+	end_block
+	i32.call	$drop=, read_action_data@FUNCTION, $4, $1
+.LBB28_6:
+	end_block
+	i64.const	$push6=, 0
+	i64.store	8($6), $pop6
+	i32.const	$push7=, 7
+	i32.gt_u	$push8=, $1, $pop7
+	i32.const	$push9=, .L.str.24
+	call    	eosio_assert@FUNCTION, $pop8, $pop9
+	i32.const	$push27=, 8
+	i32.add 	$push28=, $6, $pop27
+	i32.const	$push10=, 8
+	i32.call	$drop=, memcpy@FUNCTION, $pop28, $4, $pop10
+	i64.load	$3=, 8($6)
+	block   	
+	i32.const	$push11=, 513
+	i32.lt_u	$push12=, $1, $pop11
+	br_if   	0, $pop12
+	call    	free@FUNCTION, $4
+.LBB28_8:
+	end_block
+	i32.const	$push13=, 1
+	i32.shr_s	$push14=, $2, $pop13
+	i32.add 	$1=, $0, $pop14
+	block   	
+	i32.const	$push36=, 1
+	i32.and 	$push15=, $2, $pop36
+	i32.eqz 	$push38=, $pop15
+	br_if   	0, $pop38
+	i32.load	$push16=, 0($1)
+	i32.add 	$push17=, $pop16, $5
+	i32.load	$5=, 0($pop17)
+.LBB28_10:
+	end_block
+	call_indirect	$1, $3, $5
+	i32.const	$push26=, 0
+	i32.const	$push24=, 16
+	i32.add 	$push25=, $6, $pop24
+	i32.store	__stack_pointer($pop26), $pop25
+	i32.const	$push18=, 1
+	.endfunc
+.Lfunc_end28:
+	.size	_ZN5eosio14execute_actionINS_4diceES1_JxEEEbPT_MT0_FvDpT1_E, .Lfunc_end28-_ZN5eosio14execute_actionINS_4diceES1_JxEEEbPT_MT0_FvDpT1_E
+
+	.section	.text._ZN5eosio14execute_actionINS_4diceES1_JxxxEEEbPT_MT0_FvDpT1_E,"axG",@progbits,_ZN5eosio14execute_actionINS_4diceES1_JxxxEEEbPT_MT0_FvDpT1_E,comdat
+	.hidden	_ZN5eosio14execute_actionINS_4diceES1_JxxxEEEbPT_MT0_FvDpT1_E
+	.weak	_ZN5eosio14execute_actionINS_4diceES1_JxxxEEEbPT_MT0_FvDpT1_E
+	.type	_ZN5eosio14execute_actionINS_4diceES1_JxxxEEEbPT_MT0_FvDpT1_E,@function
+_ZN5eosio14execute_actionINS_4diceES1_JxxxEEEbPT_MT0_FvDpT1_E:
+	.param  	i32, i32
+	.result 	i32
+	.local  	i32, i64, i64, i64, i32, i32, i32, i32, i32
+	i32.const	$push26=, 0
+	i32.load	$push27=, __stack_pointer($pop26)
+	i32.const	$push28=, 32
+	i32.sub 	$push43=, $pop27, $pop28
+	tee_local	$push42=, $8=, $pop43
+	copy_local	$10=, $pop42
+	i32.const	$push29=, 0
+	i32.store	__stack_pointer($pop29), $8
+	i32.load	$2=, 4($1)
+	i32.load	$9=, 0($1)
+	block   	
+	block   	
+	block   	
+	block   	
+	i32.call	$push41=, action_data_size@FUNCTION
+	tee_local	$push40=, $1=, $pop41
+	i32.eqz 	$push64=, $pop40
+	br_if   	0, $pop64
+	i32.const	$push0=, 513
+	i32.lt_u	$push1=, $1, $pop0
+	br_if   	1, $pop1
+	i32.call	$8=, malloc@FUNCTION, $1
+	br      	2
+.LBB29_3:
+	end_block
+	i32.const	$8=, 0
+	br      	2
+.LBB29_4:
+	end_block
+	i32.const	$push25=, 0
+	i32.const	$push2=, 15
+	i32.add 	$push3=, $1, $pop2
+	i32.const	$push4=, -16
+	i32.and 	$push5=, $pop3, $pop4
+	i32.sub 	$push45=, $8, $pop5
+	tee_local	$push44=, $8=, $pop45
+	copy_local	$push39=, $pop44
+	i32.store	__stack_pointer($pop25), $pop39
+.LBB29_5:
+	end_block
+	i32.call	$drop=, read_action_data@FUNCTION, $8, $1
+.LBB29_6:
+	end_block
+	i64.const	$push6=, 0
+	i64.store	16($10), $pop6
+	i64.const	$push62=, 0
+	i64.store	8($10), $pop62
+	i64.const	$push61=, 0
+	i64.store	24($10), $pop61
+	i32.const	$push7=, 7
+	i32.gt_u	$push8=, $1, $pop7
+	i32.const	$push9=, .L.str.24
+	call    	eosio_assert@FUNCTION, $pop8, $pop9
+	i32.const	$push33=, 8
+	i32.add 	$push34=, $10, $pop33
+	i32.const	$push10=, 8
+	i32.call	$drop=, memcpy@FUNCTION, $pop34, $8, $pop10
+	i32.const	$push11=, -8
+	i32.and 	$push60=, $1, $pop11
+	tee_local	$push59=, $6=, $pop60
+	i32.const	$push58=, 8
+	i32.ne  	$push12=, $pop59, $pop58
+	i32.const	$push57=, .L.str.24
+	call    	eosio_assert@FUNCTION, $pop12, $pop57
+	i32.const	$push35=, 8
+	i32.add 	$push36=, $10, $pop35
+	i32.const	$push56=, 8
+	i32.add 	$push55=, $pop36, $pop56
+	tee_local	$push54=, $7=, $pop55
+	i32.const	$push53=, 8
+	i32.add 	$push13=, $8, $pop53
+	i32.const	$push52=, 8
+	i32.call	$drop=, memcpy@FUNCTION, $pop54, $pop13, $pop52
+	i32.const	$push14=, 16
+	i32.ne  	$push15=, $6, $pop14
+	i32.const	$push51=, .L.str.24
+	call    	eosio_assert@FUNCTION, $pop15, $pop51
+	i32.const	$push37=, 8
+	i32.add 	$push38=, $10, $pop37
+	i32.const	$push50=, 16
+	i32.add 	$push49=, $pop38, $pop50
+	tee_local	$push48=, $6=, $pop49
+	i32.const	$push47=, 16
+	i32.add 	$push16=, $8, $pop47
+	i32.const	$push46=, 8
+	i32.call	$drop=, memcpy@FUNCTION, $pop48, $pop16, $pop46
+	block   	
+	i32.const	$push17=, 513
+	i32.lt_u	$push18=, $1, $pop17
+	br_if   	0, $pop18
+	call    	free@FUNCTION, $8
+.LBB29_8:
+	end_block
+	i32.const	$push19=, 1
+	i32.shr_s	$push20=, $2, $pop19
+	i32.add 	$1=, $0, $pop20
+	i64.load	$5=, 0($6)
+	i64.load	$4=, 0($7)
+	i64.load	$3=, 8($10)
+	block   	
+	i32.const	$push63=, 1
+	i32.and 	$push21=, $2, $pop63
+	i32.eqz 	$push65=, $pop21
+	br_if   	0, $pop65
+	i32.load	$push22=, 0($1)
+	i32.add 	$push23=, $pop22, $9
+	i32.load	$9=, 0($pop23)
+.LBB29_10:
+	end_block
+	call_indirect	$1, $3, $4, $5, $9
+	i32.const	$push32=, 0
+	i32.const	$push30=, 32
+	i32.add 	$push31=, $10, $pop30
+	i32.store	__stack_pointer($pop32), $pop31
+	i32.const	$push24=, 1
+	.endfunc
+.Lfunc_end29:
+	.size	_ZN5eosio14execute_actionINS_4diceES1_JxxxEEEbPT_MT0_FvDpT1_E, .Lfunc_end29-_ZN5eosio14execute_actionINS_4diceES1_JxxxEEEbPT_MT0_FvDpT1_E
+
+	.section	.text._ZN5eosio14execute_actionINS_4diceES1_JEEEbPT_MT0_FvDpT1_E,"axG",@progbits,_ZN5eosio14execute_actionINS_4diceES1_JEEEbPT_MT0_FvDpT1_E,comdat
+	.hidden	_ZN5eosio14execute_actionINS_4diceES1_JEEEbPT_MT0_FvDpT1_E
+	.weak	_ZN5eosio14execute_actionINS_4diceES1_JEEEbPT_MT0_FvDpT1_E
+	.type	_ZN5eosio14execute_actionINS_4diceES1_JEEEbPT_MT0_FvDpT1_E,@function
+_ZN5eosio14execute_actionINS_4diceES1_JEEEbPT_MT0_FvDpT1_E:
+	.param  	i32, i32
+	.result 	i32
+	.local  	i32, i32, i32, i32
+	i32.const	$push13=, 0
+	i32.load	$push19=, __stack_pointer($pop13)
+	tee_local	$push18=, $5=, $pop19
+	copy_local	$4=, $pop18
+	i32.load	$2=, 4($1)
+	i32.load	$1=, 0($1)
+	block   	
+	i32.call	$push17=, action_data_size@FUNCTION
+	tee_local	$push16=, $3=, $pop17
+	i32.eqz 	$push25=, $pop16
+	br_if   	0, $pop25
+	block   	
+	i32.const	$push0=, 512
+	i32.le_u	$push1=, $3, $pop0
+	br_if   	0, $pop1
+	i32.call	$push21=, malloc@FUNCTION, $3
+	tee_local	$push20=, $5=, $pop21
+	i32.call	$drop=, read_action_data@FUNCTION, $pop20, $3
+	call    	free@FUNCTION, $5
+	br      	1
+.LBB30_3:
+	end_block
+	i32.const	$push12=, 0
+	i32.const	$push2=, 15
+	i32.add 	$push3=, $3, $pop2
+	i32.const	$push4=, -16
+	i32.and 	$push5=, $pop3, $pop4
+	i32.sub 	$push23=, $5, $pop5
+	tee_local	$push22=, $5=, $pop23
+	copy_local	$push15=, $pop22
+	i32.store	__stack_pointer($pop12), $pop15
+	i32.call	$drop=, read_action_data@FUNCTION, $5, $3
+.LBB30_4:
+	end_block
+	i32.const	$push6=, 1
+	i32.shr_s	$push7=, $2, $pop6
+	i32.add 	$3=, $0, $pop7
+	block   	
+	i32.const	$push24=, 1
+	i32.and 	$push8=, $2, $pop24
+	i32.eqz 	$push26=, $pop8
+	br_if   	0, $pop26
+	i32.load	$push9=, 0($3)
+	i32.add 	$push10=, $pop9, $1
+	i32.load	$1=, 0($pop10)
+.LBB30_6:
+	end_block
+	call_indirect	$3, $1
+	i32.const	$push14=, 0
+	i32.store	__stack_pointer($pop14), $4
+	i32.const	$push11=, 1
+	.endfunc
+.Lfunc_end30:
+	.size	_ZN5eosio14execute_actionINS_4diceES1_JEEEbPT_MT0_FvDpT1_E, .Lfunc_end30-_ZN5eosio14execute_actionINS_4diceES1_JEEEbPT_MT0_FvDpT1_E
+
+	.text
 	.hidden	malloc
 	.globl	malloc
 	.type	malloc,@function
@@ -2714,8 +3777,8 @@ malloc:
 	i32.const	$push0=, _ZN5eosio11memory_heapE
 	i32.call	$push1=, _ZN5eosio14memory_manager6mallocEm@FUNCTION, $pop0, $0
 	.endfunc
-.Lfunc_end25:
-	.size	malloc, .Lfunc_end25-malloc
+.Lfunc_end31:
+	.size	malloc, .Lfunc_end31-malloc
 
 	.section	.text._ZN5eosio14memory_manager6mallocEm,"axG",@progbits,_ZN5eosio14memory_manager6mallocEm,comdat
 	.hidden	_ZN5eosio14memory_manager6mallocEm
@@ -2737,7 +3800,7 @@ _ZN5eosio14memory_manager6mallocEm:
 	i32.add 	$push1=, $0, $pop0
 	i32.const	$push64=, 16
 	i32.store	0($pop1), $pop64
-.LBB26_3:
+.LBB32_3:
 	end_block
 	i32.const	$push2=, 8
 	i32.add 	$push3=, $1, $pop2
@@ -2770,11 +3833,11 @@ _ZN5eosio14memory_manager6mallocEm:
 	i32.const	$push14=, 8192
 	i32.store	0($1), $pop14
 	i32.store	0($13), $0
-.LBB26_7:
+.LBB32_7:
 	end_block
 	i32.const	$push72=, 4
 	i32.add 	$10=, $2, $pop72
-.LBB26_8:
+.LBB32_8:
 	loop    	
 	block   	
 	i32.load	$push74=, 8($1)
@@ -2805,12 +3868,12 @@ _ZN5eosio14memory_manager6mallocEm:
 	i32.add 	$push76=, $13, $pop77
 	tee_local	$push75=, $1=, $pop76
 	br_if   	3, $pop75
-.LBB26_10:
+.LBB32_10:
 	end_block
 	i32.call	$push86=, _ZN5eosio14memory_manager16next_active_heapEv@FUNCTION, $0
 	tee_local	$push85=, $1=, $pop86
 	br_if   	0, $pop85
-.LBB26_11:
+.LBB32_11:
 	end_loop
 	end_block
 	i32.const	$push26=, 2147483644
@@ -2822,7 +3885,7 @@ _ZN5eosio14memory_manager6mallocEm:
 	i32.load	$push88=, 8392($0)
 	tee_local	$push87=, $3=, $pop88
 	copy_local	$13=, $pop87
-.LBB26_12:
+.LBB32_12:
 	loop    	
 	i32.const	$push100=, 12
 	i32.mul 	$push27=, $13, $pop100
@@ -2844,7 +3907,7 @@ _ZN5eosio14memory_manager6mallocEm:
 	tee_local	$push90=, $6=, $pop91
 	i32.const	$push89=, 4
 	i32.add 	$13=, $pop90, $pop89
-.LBB26_13:
+.LBB32_13:
 	loop    	
 	i32.load	$push33=, 0($5)
 	i32.add 	$7=, $6, $pop33
@@ -2862,7 +3925,7 @@ _ZN5eosio14memory_manager6mallocEm:
 	block   	
 	i32.ge_u	$push35=, $1, $2
 	br_if   	0, $pop35
-.LBB26_15:
+.LBB32_15:
 	loop    	
 	i32.add 	$push109=, $13, $1
 	tee_local	$push108=, $10=, $pop109
@@ -2881,7 +3944,7 @@ _ZN5eosio14memory_manager6mallocEm:
 	tee_local	$push113=, $1=, $pop114
 	i32.lt_u	$push40=, $pop113, $2
 	br_if   	0, $pop40
-.LBB26_18:
+.LBB32_18:
 	end_loop
 	end_block
 	i32.lt_u	$push41=, $1, $2
@@ -2898,11 +3961,11 @@ _ZN5eosio14memory_manager6mallocEm:
 	i32.const	$push118=, 2147483647
 	i32.and 	$push48=, $pop47, $pop118
 	i32.store	0($pop46), $pop48
-.LBB26_20:
+.LBB32_20:
 	end_block
 	i32.ge_u	$push49=, $1, $2
 	br_if   	4, $pop49
-.LBB26_21:
+.LBB32_21:
 	end_block
 	i32.add 	$push53=, $13, $1
 	i32.const	$push121=, 4
@@ -2924,23 +3987,23 @@ _ZN5eosio14memory_manager6mallocEm:
 	i32.store	0($11), $pop122
 	i32.ne  	$push60=, $13, $3
 	br_if   	0, $pop60
-.LBB26_23:
+.LBB32_23:
 	end_loop
 	end_block
 	return  	$1
-.LBB26_24:
+.LBB32_24:
 	end_block
 	i32.load	$push50=, 0($8)
 	i32.const	$push51=, -2147483648
 	i32.or  	$push52=, $pop50, $pop51
 	i32.store	0($8), $pop52
 	return  	$13
-.LBB26_25:
+.LBB32_25:
 	end_block
 	i32.const	$push61=, 0
 	.endfunc
-.Lfunc_end26:
-	.size	_ZN5eosio14memory_manager6mallocEm, .Lfunc_end26-_ZN5eosio14memory_manager6mallocEm
+.Lfunc_end32:
+	.size	_ZN5eosio14memory_manager6mallocEm, .Lfunc_end32-_ZN5eosio14memory_manager6mallocEm
 
 	.section	.text._ZN5eosio14memory_manager16next_active_heapEv,"axG",@progbits,_ZN5eosio14memory_manager16next_active_heapEv,comdat
 	.hidden	_ZN5eosio14memory_manager16next_active_heapEv
@@ -2960,7 +4023,7 @@ _ZN5eosio14memory_manager16next_active_heapEv:
 	i32.const	$push95=, 0
 	i32.load	$7=, _ZZ4sbrkjE10sbrk_bytes($pop95)
 	br      	1
-.LBB27_2:
+.LBB33_2:
 	end_block
 	current_memory	$7=
 	i32.const	$push99=, 0
@@ -2971,7 +4034,7 @@ _ZN5eosio14memory_manager16next_active_heapEv:
 	i32.shl 	$push97=, $7, $pop4
 	tee_local	$push96=, $7=, $pop97
 	i32.store	_ZZ4sbrkjE10sbrk_bytes($pop98), $pop96
-.LBB27_3:
+.LBB33_3:
 	end_block
 	copy_local	$3=, $7
 	block   	
@@ -2995,7 +4058,7 @@ _ZN5eosio14memory_manager16next_active_heapEv:
 	br_if   	1, $pop11
 	i32.const	$push12=, 0
 	i32.load	$3=, _ZZ4sbrkjE10sbrk_bytes($pop12)
-.LBB27_6:
+.LBB33_6:
 	end_block
 	i32.const	$8=, 0
 	i32.const	$push105=, 0
@@ -3034,7 +4097,7 @@ _ZN5eosio14memory_manager16next_active_heapEv:
 	i32.shl 	$push112=, $3, $pop26
 	tee_local	$push111=, $3=, $pop112
 	i32.store	_ZZ4sbrkjE10sbrk_bytes($pop113), $pop111
-.LBB27_9:
+.LBB33_9:
 	end_block
 	i32.const	$push116=, 8192
 	i32.add 	$2=, $2, $pop116
@@ -3065,7 +4128,7 @@ _ZN5eosio14memory_manager16next_active_heapEv:
 	br_if   	2, $pop38
 	i32.const	$push39=, 0
 	i32.load	$6=, _ZZ4sbrkjE10sbrk_bytes($pop39)
-.LBB27_13:
+.LBB33_13:
 	end_block
 	i32.const	$push41=, 0
 	i32.add 	$push40=, $6, $5
@@ -3110,7 +4173,7 @@ _ZN5eosio14memory_manager16next_active_heapEv:
 	i32.const	$push61=, 2147483647
 	i32.and 	$push62=, $pop60, $pop61
 	i32.store	0($6), $pop62
-.LBB27_17:
+.LBB33_17:
 	end_block
 	i32.const	$push63=, 8388
 	i32.add 	$push142=, $0, $pop63
@@ -3131,10 +4194,10 @@ _ZN5eosio14memory_manager16next_active_heapEv:
 	i32.add 	$push136=, $0, $pop70
 	tee_local	$push135=, $8=, $pop136
 	i32.store	0($pop135), $7
-.LBB27_18:
+.LBB33_18:
 	end_block
 	return  	$8
-.LBB27_19:
+.LBB33_19:
 	end_block
 	block   	
 	i32.load	$push150=, 0($2)
@@ -3169,7 +4232,7 @@ _ZN5eosio14memory_manager16next_active_heapEv:
 	i32.const	$push88=, 2147483647
 	i32.and 	$push89=, $pop87, $pop88
 	i32.store	0($3), $pop89
-.LBB27_21:
+.LBB33_21:
 	end_block
 	i32.const	$push90=, 8388
 	i32.add 	$push156=, $0, $pop90
@@ -3182,14 +4245,14 @@ _ZN5eosio14memory_manager16next_active_heapEv:
 	i32.store	0($7), $3
 	i32.const	$push93=, 0
 	return  	$pop93
-.LBB27_22:
+.LBB33_22:
 	end_block
 	i32.add 	$push71=, $8, $7
 	i32.store	0($2), $pop71
 	copy_local	$push158=, $2
 	.endfunc
-.Lfunc_end27:
-	.size	_ZN5eosio14memory_manager16next_active_heapEv, .Lfunc_end27-_ZN5eosio14memory_manager16next_active_heapEv
+.Lfunc_end33:
+	.size	_ZN5eosio14memory_manager16next_active_heapEv, .Lfunc_end33-_ZN5eosio14memory_manager16next_active_heapEv
 
 	.text
 	.hidden	free
@@ -3213,7 +4276,7 @@ free:
 	i32.mul 	$push3=, $2, $pop18
 	i32.const	$push17=, _ZN5eosio11memory_heapE+8192
 	i32.add 	$1=, $pop3, $pop17
-.LBB28_3:
+.LBB34_3:
 	loop    	
 	i32.const	$push21=, 4
 	i32.add 	$push4=, $3, $pop21
@@ -3230,18 +4293,18 @@ free:
 	i32.add 	$push8=, $2, $pop7
 	i32.gt_u	$push9=, $pop8, $0
 	br_if   	3, $pop9
-.LBB28_6:
+.LBB34_6:
 	end_block
 	i32.const	$push25=, 12
 	i32.add 	$push24=, $3, $pop25
 	tee_local	$push23=, $3=, $pop24
 	i32.lt_u	$push14=, $pop23, $1
 	br_if   	0, $pop14
-.LBB28_7:
+.LBB34_7:
 	end_loop
 	end_block
 	return
-.LBB28_8:
+.LBB34_8:
 	end_block
 	i32.const	$push10=, -4
 	i32.add 	$push27=, $0, $pop10
@@ -3251,8 +4314,8 @@ free:
 	i32.and 	$push13=, $pop11, $pop12
 	i32.store	0($pop26), $pop13
 	.endfunc
-.Lfunc_end28:
-	.size	free, .Lfunc_end28-free
+.Lfunc_end34:
+	.size	free, .Lfunc_end34-free
 
 	.weak	_Znwj
 	.type	_Znwj,@function
@@ -3267,7 +4330,7 @@ _Znwj:
 	i32.call	$push2=, malloc@FUNCTION, $pop3
 	tee_local	$push1=, $0=, $pop2
 	br_if   	0, $pop1
-.LBB29_1:
+.LBB35_1:
 	loop    	
 	i32.const	$0=, 0
 	i32.const	$push9=, 0
@@ -3280,13 +4343,13 @@ _Znwj:
 	tee_local	$push5=, $0=, $pop6
 	i32.eqz 	$push11=, $pop5
 	br_if   	0, $pop11
-.LBB29_3:
+.LBB35_3:
 	end_loop
 	end_block
 	copy_local	$push12=, $0
 	.endfunc
-.Lfunc_end29:
-	.size	_Znwj, .Lfunc_end29-_Znwj
+.Lfunc_end35:
+	.size	_Znwj, .Lfunc_end35-_Znwj
 
 	.weak	_ZdlPv
 	.type	_ZdlPv,@function
@@ -3296,11 +4359,11 @@ _ZdlPv:
 	i32.eqz 	$push0=, $0
 	br_if   	0, $pop0
 	call    	free@FUNCTION, $0
-.LBB30_2:
+.LBB36_2:
 	end_block
 	.endfunc
-.Lfunc_end30:
-	.size	_ZdlPv, .Lfunc_end30-_ZdlPv
+.Lfunc_end36:
+	.size	_ZdlPv, .Lfunc_end36-_ZdlPv
 
 	.section	.text._ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv,"axG",@progbits,_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv,comdat
 	.hidden	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv
@@ -3311,8 +4374,8 @@ _ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv:
 	call    	abort@FUNCTION
 	unreachable
 	.endfunc
-.Lfunc_end31:
-	.size	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv, .Lfunc_end31-_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv
+.Lfunc_end37:
+	.size	_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv, .Lfunc_end37-_ZNKSt3__121__basic_string_commonILb1EE20__throw_length_errorEv
 
 	.section	.text._ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_,"axG",@progbits,_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_,comdat
 	.hidden	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_
@@ -3354,7 +4417,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_:
 	i32.and 	$push5=, $pop29, $pop4
 	i32.const	$push6=, -1
 	i32.add 	$1=, $pop5, $pop6
-.LBB32_3:
+.LBB38_3:
 	end_block
 	i32.select	$5=, $6, $5, $4
 	i32.const	$push31=, 1
@@ -3370,33 +4433,33 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_:
 	i32.const	$push16=, 1
 	i32.shr_u	$3=, $pop15, $pop16
 	br      	2
-.LBB32_6:
+.LBB38_6:
 	end_block
 	br_if   	3, $4
 	i32.const	$push8=, 1
 	i32.add 	$1=, $0, $pop8
 	br_if   	4, $2
 	br      	5
-.LBB32_8:
+.LBB38_8:
 	end_block
 	i32.load	$3=, 4($0)
-.LBB32_9:
+.LBB38_9:
 	end_block
 	i32.sub 	$push17=, $2, $1
 	i32.const	$push18=, 0
 	call    	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceEjjjjjjPKc@FUNCTION, $0, $1, $pop17, $3, $pop18, $3, $2, $5
-.LBB32_10:
+.LBB38_10:
 	end_block
 	return  	$0
-.LBB32_11:
+.LBB38_11:
 	end_block
 	i32.load	$1=, 8($0)
 	i32.eqz 	$push35=, $2
 	br_if   	1, $pop35
-.LBB32_12:
+.LBB38_12:
 	end_block
 	i32.call	$drop=, memmove@FUNCTION, $1, $5, $2
-.LBB32_13:
+.LBB38_13:
 	end_block
 	i32.add 	$push9=, $1, $2
 	i32.const	$push10=, 0
@@ -3410,13 +4473,13 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_:
 	i32.shl 	$push13=, $2, $pop33
 	i32.store8	0($0), $pop13
 	return  	$0
-.LBB32_15:
+.LBB38_15:
 	end_block
 	i32.store	4($0), $2
 	copy_local	$push36=, $0
 	.endfunc
-.Lfunc_end32:
-	.size	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_, .Lfunc_end32-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_
+.Lfunc_end38:
+	.size	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_, .Lfunc_end38-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEaSERKS5_
 
 	.section	.text._ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceEjjjjjjPKc,"axG",@progbits,_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceEjjjjjjPKc,comdat
 	.hidden	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceEjjjjjjPKc
@@ -3439,10 +4502,10 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_r
 	i32.const	$push25=, 1
 	i32.add 	$9=, $0, $pop25
 	br      	1
-.LBB33_3:
+.LBB39_3:
 	end_block
 	i32.load	$9=, 8($0)
-.LBB33_4:
+.LBB39_4:
 	end_block
 	i32.const	$10=, -17
 	block   	
@@ -3465,21 +4528,21 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_r
 	i32.add 	$push11=, $2, $pop10
 	i32.const	$push12=, -16
 	i32.and 	$10=, $pop11, $pop12
-.LBB33_7:
+.LBB39_7:
 	end_block
 	i32.call	$2=, _Znwj@FUNCTION, $10
 	block   	
 	i32.eqz 	$push39=, $4
 	br_if   	0, $pop39
 	i32.call	$drop=, memcpy@FUNCTION, $2, $9, $4
-.LBB33_9:
+.LBB39_9:
 	end_block
 	block   	
 	i32.eqz 	$push40=, $6
 	br_if   	0, $pop40
 	i32.add 	$push13=, $2, $4
 	i32.call	$drop=, memcpy@FUNCTION, $pop13, $7, $6
-.LBB33_11:
+.LBB39_11:
 	end_block
 	block   	
 	i32.sub 	$push36=, $3, $5
@@ -3493,14 +4556,14 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_r
 	i32.add 	$push14=, $9, $4
 	i32.add 	$push15=, $pop14, $5
 	i32.call	$drop=, memcpy@FUNCTION, $pop17, $pop15, $7
-.LBB33_13:
+.LBB39_13:
 	end_block
 	block   	
 	i32.const	$push18=, 10
 	i32.eq  	$push19=, $1, $pop18
 	br_if   	0, $pop19
 	call    	_ZdlPv@FUNCTION, $9
-.LBB33_15:
+.LBB39_15:
 	end_block
 	i32.store	8($0), $2
 	i32.const	$push20=, 1
@@ -3513,13 +4576,13 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_r
 	i32.const	$push23=, 0
 	i32.store8	0($pop22), $pop23
 	return
-.LBB33_16:
+.LBB39_16:
 	end_block
 	call    	abort@FUNCTION
 	unreachable
 	.endfunc
-.Lfunc_end33:
-	.size	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceEjjjjjjPKc, .Lfunc_end33-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceEjjjjjjPKc
+.Lfunc_end39:
+	.size	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceEjjjjjjPKc, .Lfunc_end39-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE21__grow_by_and_replaceEjjjjjjPKc
 
 	.section	.text._ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj,"axG",@progbits,_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj,comdat
 	.hidden	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj
@@ -3546,7 +4609,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj:
 	i32.and 	$push4=, $pop36, $pop3
 	i32.const	$push5=, -1
 	i32.add 	$2=, $pop4, $pop5
-.LBB34_3:
+.LBB40_3:
 	end_block
 	block   	
 	block   	
@@ -3558,10 +4621,10 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj:
 	i32.const	$push9=, 1
 	i32.shr_u	$3=, $pop8, $pop9
 	br      	1
-.LBB34_5:
+.LBB40_5:
 	end_block
 	i32.load	$3=, 4($0)
-.LBB34_6:
+.LBB40_6:
 	end_block
 	i32.const	$4=, 10
 	block   	
@@ -3577,7 +4640,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj:
 	i32.and 	$push16=, $pop14, $pop15
 	i32.const	$push17=, -1
 	i32.add 	$4=, $pop16, $pop17
-.LBB34_8:
+.LBB40_8:
 	end_block
 	block   	
 	i32.eq  	$push18=, $4, $2
@@ -3593,7 +4656,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj:
 	i32.load	$2=, 8($0)
 	i32.const	$7=, 0
 	br      	1
-.LBB34_11:
+.LBB40_11:
 	end_block
 	i32.const	$push42=, 1
 	i32.add 	$push22=, $4, $pop42
@@ -3603,7 +4666,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj:
 	br_if   	0, $pop21
 	i32.eqz 	$push53=, $1
 	br_if   	2, $pop53
-.LBB34_13:
+.LBB40_13:
 	end_block
 	block   	
 	i32.load8_u	$push45=, 0($0)
@@ -3616,12 +4679,12 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj:
 	i32.add 	$2=, $0, $pop46
 	i32.const	$6=, 0
 	br      	1
-.LBB34_15:
+.LBB40_15:
 	end_block
 	i32.load	$2=, 8($0)
 	i32.const	$6=, 1
 	i32.const	$7=, 1
-.LBB34_16:
+.LBB40_16:
 	end_block
 	block   	
 	block   	
@@ -3633,10 +4696,10 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj:
 	i32.const	$push48=, 1
 	i32.shr_u	$5=, $pop26, $pop48
 	br      	1
-.LBB34_18:
+.LBB40_18:
 	end_block
 	i32.load	$5=, 4($0)
-.LBB34_19:
+.LBB40_19:
 	end_block
 	block   	
 	i32.const	$push27=, 1
@@ -3645,13 +4708,13 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj:
 	i32.eqz 	$push54=, $pop49
 	br_if   	0, $pop54
 	i32.call	$drop=, memcpy@FUNCTION, $1, $2, $5
-.LBB34_21:
+.LBB40_21:
 	end_block
 	block   	
 	i32.eqz 	$push55=, $6
 	br_if   	0, $pop55
 	call    	_ZdlPv@FUNCTION, $2
-.LBB34_23:
+.LBB40_23:
 	end_block
 	block   	
 	i32.eqz 	$push56=, $7
@@ -3664,21 +4727,21 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj:
 	i32.or  	$push32=, $pop31, $pop51
 	i32.store	0($0), $pop32
 	return
-.LBB34_25:
+.LBB40_25:
 	end_block
 	i32.const	$push28=, 1
 	i32.shl 	$push29=, $3, $pop28
 	i32.store8	0($0), $pop29
-.LBB34_26:
+.LBB40_26:
 	end_block
 	return
-.LBB34_27:
+.LBB40_27:
 	end_block
 	call    	abort@FUNCTION
 	unreachable
 	.endfunc
-.Lfunc_end34:
-	.size	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj, .Lfunc_end34-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj
+.Lfunc_end40:
+	.size	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj, .Lfunc_end40-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEE7reserveEj
 
 	.section	.text._ZNKSt3__120__vector_base_commonILb1EE20__throw_length_errorEv,"axG",@progbits,_ZNKSt3__120__vector_base_commonILb1EE20__throw_length_errorEv,comdat
 	.hidden	_ZNKSt3__120__vector_base_commonILb1EE20__throw_length_errorEv
@@ -3689,8 +4752,8 @@ _ZNKSt3__120__vector_base_commonILb1EE20__throw_length_errorEv:
 	call    	abort@FUNCTION
 	unreachable
 	.endfunc
-.Lfunc_end35:
-	.size	_ZNKSt3__120__vector_base_commonILb1EE20__throw_length_errorEv, .Lfunc_end35-_ZNKSt3__120__vector_base_commonILb1EE20__throw_length_errorEv
+.Lfunc_end41:
+	.size	_ZNKSt3__120__vector_base_commonILb1EE20__throw_length_errorEv, .Lfunc_end41-_ZNKSt3__120__vector_base_commonILb1EE20__throw_length_errorEv
 
 	.section	.text._ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_,"axG",@progbits,_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC5ERKS5_,comdat
 	.hidden	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_
@@ -3719,7 +4782,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_:
 	i32.load	$push20=, 0($pop19)
 	i32.store	0($3), $pop20
 	return  	$0
-.LBB36_2:
+.LBB42_2:
 	end_block
 	block   	
 	i32.load	$push26=, 4($1)
@@ -3741,7 +4804,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_:
 	i32.add 	$1=, $0, $pop27
 	br_if   	1, $3
 	br      	2
-.LBB36_5:
+.LBB42_5:
 	end_block
 	i32.const	$push9=, 16
 	i32.add 	$push10=, $3, $pop9
@@ -3754,22 +4817,22 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_:
 	i32.store	0($0), $pop13
 	i32.store	8($0), $1
 	i32.store	4($0), $3
-.LBB36_6:
+.LBB42_6:
 	end_block
 	i32.call	$drop=, memcpy@FUNCTION, $1, $2, $3
-.LBB36_7:
+.LBB42_7:
 	end_block
 	i32.add 	$push16=, $1, $3
 	i32.const	$push17=, 0
 	i32.store8	0($pop16), $pop17
 	return  	$0
-.LBB36_8:
+.LBB42_8:
 	end_block
 	call    	abort@FUNCTION
 	unreachable
 	.endfunc
-.Lfunc_end36:
-	.size	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_, .Lfunc_end36-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_
+.Lfunc_end42:
+	.size	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_, .Lfunc_end42-_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_
 
 	.text
 	.hidden	__cxa_atexit
@@ -3790,7 +4853,7 @@ __cxa_atexit:
 	i32.const	$push22=, 0
 	i32.const	$push21=, builtin
 	i32.store	head($pop22), $pop21
-.LBB37_2:
+.LBB43_2:
 	end_block
 	block   	
 	block   	
@@ -3815,7 +4878,7 @@ __cxa_atexit:
 	i32.const	$push29=, 0
 	i32.const	$push28=, 0
 	i32.store	slot($pop29), $pop28
-.LBB37_5:
+.LBB43_5:
 	end_block
 	i32.const	$push17=, 0
 	i32.const	$push6=, 1
@@ -3835,14 +4898,14 @@ __cxa_atexit:
 	call    	__unlock@FUNCTION, $pop14
 	i32.const	$push32=, 0
 	return  	$pop32
-.LBB37_6:
+.LBB43_6:
 	end_block
 	i32.const	$push15=, lock
 	call    	__unlock@FUNCTION, $pop15
 	i32.const	$push16=, -1
 	.endfunc
-.Lfunc_end37:
-	.size	__cxa_atexit, .Lfunc_end37-__cxa_atexit
+.Lfunc_end43:
+	.size	__cxa_atexit, .Lfunc_end43-__cxa_atexit
 
 	.hidden	__lock
 	.globl	__lock
@@ -3852,8 +4915,8 @@ __lock:
 	i32.const	$push0=, 1
 	i32.store	0($0), $pop0
 	.endfunc
-.Lfunc_end38:
-	.size	__lock, .Lfunc_end38-__lock
+.Lfunc_end44:
+	.size	__lock, .Lfunc_end44-__lock
 
 	.hidden	__unlock
 	.globl	__unlock
@@ -3863,8 +4926,8 @@ __unlock:
 	i32.const	$push0=, 0
 	i32.store	0($0), $pop0
 	.endfunc
-.Lfunc_end39:
-	.size	__unlock, .Lfunc_end39-__unlock
+.Lfunc_end45:
+	.size	__unlock, .Lfunc_end45-__unlock
 
 	.hidden	sprintf
 	.globl	sprintf
@@ -3888,8 +4951,8 @@ sprintf:
 	i32.store	__stack_pointer($pop6), $pop5
 	copy_local	$push9=, $2
 	.endfunc
-.Lfunc_end40:
-	.size	sprintf, .Lfunc_end40-sprintf
+.Lfunc_end46:
+	.size	sprintf, .Lfunc_end46-sprintf
 
 	.hidden	vsprintf
 	.globl	vsprintf
@@ -3900,8 +4963,8 @@ vsprintf:
 	i32.const	$push0=, 2147483647
 	i32.call	$push1=, vsnprintf@FUNCTION, $0, $pop0, $1, $2
 	.endfunc
-.Lfunc_end41:
-	.size	vsprintf, .Lfunc_end41-vsprintf
+.Lfunc_end47:
+	.size	vsprintf, .Lfunc_end47-vsprintf
 
 	.hidden	vsnprintf
 	.globl	vsnprintf
@@ -3953,12 +5016,12 @@ vsnprintf:
 	i32.store8	0($0), $pop32
 	i32.call	$5=, vfprintf@FUNCTION, $4, $2, $3
 	br      	1
-.LBB42_2:
+.LBB48_2:
 	end_block
 	i32.call	$push6=, __errno_location@FUNCTION
 	i32.const	$push7=, 75
 	i32.store	0($pop6), $pop7
-.LBB42_3:
+.LBB48_3:
 	end_block
 	i32.const	$push14=, 0
 	i32.const	$push12=, 160
@@ -3966,8 +5029,8 @@ vsnprintf:
 	i32.store	__stack_pointer($pop14), $pop13
 	copy_local	$push33=, $5
 	.endfunc
-.Lfunc_end42:
-	.size	vsnprintf, .Lfunc_end42-vsnprintf
+.Lfunc_end48:
+	.size	vsnprintf, .Lfunc_end48-vsnprintf
 
 	.type	sn_write,@function
 sn_write:
@@ -4001,7 +5064,7 @@ sn_write:
 	i32.sub 	$push28=, $pop6, $6
 	tee_local	$push27=, $5=, $pop28
 	i32.store	0($pop29), $pop27
-.LBB43_2:
+.LBB49_2:
 	end_block
 	i32.load	$6=, 0($3)
 	block   	
@@ -4021,7 +5084,7 @@ sn_write:
 	i32.load	$push10=, 0($3)
 	i32.sub 	$push11=, $pop10, $5
 	i32.store	0($pop33), $pop11
-.LBB43_4:
+.LBB49_4:
 	end_block
 	i32.const	$push12=, 0
 	i32.store8	0($6), $pop12
@@ -4035,8 +5098,8 @@ sn_write:
 	i32.store	0($pop16), $3
 	copy_local	$push41=, $2
 	.endfunc
-.Lfunc_end43:
-	.size	sn_write, .Lfunc_end43-sn_write
+.Lfunc_end49:
+	.size	sn_write, .Lfunc_end49-sn_write
 
 	.hidden	__errno_location
 	.globl	__errno_location
@@ -4045,8 +5108,8 @@ __errno_location:
 	.result 	i32
 	i32.const	$push0=, __pthread_self.self
 	.endfunc
-.Lfunc_end44:
-	.size	__errno_location, .Lfunc_end44-__errno_location
+.Lfunc_end50:
+	.size	__errno_location, .Lfunc_end50-__errno_location
 
 	.hidden	vfprintf
 	.globl	vfprintf
@@ -4090,7 +5153,7 @@ vfprintf:
 	i32.lt_s	$push5=, $pop4, $pop59
 	br_if   	0, $pop5
 	i32.call	$6=, __lockfile@FUNCTION, $0
-.LBB45_3:
+.LBB51_3:
 	end_block
 	i32.load	$2=, 0($0)
 	block   	
@@ -4101,7 +5164,7 @@ vfprintf:
 	i32.const	$push9=, -33
 	i32.and 	$push10=, $2, $pop9
 	i32.store	0($0), $pop10
-.LBB45_5:
+.LBB51_5:
 	end_block
 	i32.const	$push60=, 32
 	i32.and 	$3=, $2, $pop60
@@ -4118,7 +5181,7 @@ vfprintf:
 	i32.add 	$push53=, $7, $pop52
 	i32.call	$2=, printf_core@FUNCTION, $0, $1, $pop49, $pop51, $pop53
 	br      	1
-.LBB45_7:
+.LBB51_7:
 	end_block
 	i32.const	$push12=, 48
 	i32.add 	$push63=, $0, $pop12
@@ -4166,7 +5229,7 @@ vfprintf:
 	i32.store	0($1), $pop64
 	i32.const	$push24=, -1
 	i32.select	$2=, $2, $pop24, $4
-.LBB45_9:
+.LBB51_9:
 	end_block
 	i32.load	$push72=, 0($0)
 	tee_local	$push71=, $1=, $pop72
@@ -4178,11 +5241,11 @@ vfprintf:
 	i32.eqz 	$push76=, $6
 	br_if   	0, $pop76
 	call    	__unlockfile@FUNCTION, $0
-.LBB45_11:
+.LBB51_11:
 	end_block
 	i32.const	$push73=, -1
 	i32.select	$2=, $pop73, $2, $1
-.LBB45_12:
+.LBB51_12:
 	end_block
 	i32.const	$push33=, 0
 	i32.const	$push31=, 288
@@ -4190,8 +5253,8 @@ vfprintf:
 	i32.store	__stack_pointer($pop33), $pop32
 	copy_local	$push77=, $2
 	.endfunc
-.Lfunc_end45:
-	.size	vfprintf, .Lfunc_end45-vfprintf
+.Lfunc_end51:
+	.size	vfprintf, .Lfunc_end51-vfprintf
 
 	.type	printf_core,@function
 printf_core:
@@ -4238,7 +5301,7 @@ printf_core:
 	i32.const	$30=, 0
 	i32.const	$38=, 0
 	i32.const	$32=, 0
-.LBB46_1:
+.LBB52_1:
 	block   	
 	block   	
 	block   	
@@ -4272,7 +5335,7 @@ printf_core:
 	tee_local	$push891=, $30=, $pop892
 	i32.eqz 	$push2156=, $pop891
 	br_if   	0, $pop2156
-.LBB46_3:
+.LBB52_3:
 	loop    	
 	i32.const	$push894=, 37
 	i32.eq  	$push12=, $30, $pop894
@@ -4285,15 +5348,15 @@ printf_core:
 	i32.and 	$push896=, $pop614, $pop897
 	tee_local	$push895=, $30=, $pop896
 	br_if   	0, $pop895
-.LBB46_5:
+.LBB52_5:
 	end_loop
 	end_block
 	copy_local	$30=, $1
 	br      	1
-.LBB46_6:
+.LBB52_6:
 	end_block
 	copy_local	$30=, $1
-.LBB46_7:
+.LBB52_7:
 	loop    	
 	i32.const	$push902=, 1
 	i32.add 	$push13=, $1, $pop902
@@ -4310,7 +5373,7 @@ printf_core:
 	i32.const	$push903=, 37
 	i32.eq  	$push17=, $pop16, $pop903
 	br_if   	0, $pop17
-.LBB46_9:
+.LBB52_9:
 	end_loop
 	end_block
 	i32.sub 	$push912=, $30, $37
@@ -4328,7 +5391,7 @@ printf_core:
 	i32.and 	$push20=, $pop19, $pop913
 	br_if   	0, $pop20
 	i32.call	$drop=, __fwritex@FUNCTION, $37, $30, $0
-.LBB46_13:
+.LBB52_13:
 	end_block
 	block   	
 	br_if   	0, $30
@@ -4357,7 +5420,7 @@ printf_core:
 	i32.select	$27=, $17, $pop922, $1
 	i32.const	$push921=, 1
 	i32.select	$32=, $pop921, $32, $1
-.LBB46_16:
+.LBB52_16:
 	end_block
 	i32.const	$14=, 0
 	block   	
@@ -4372,7 +5435,7 @@ printf_core:
 	i32.gt_u	$push26=, $pop930, $pop929
 	br_if   	0, $pop26
 	i32.const	$14=, 0
-.LBB46_18:
+.LBB52_18:
 	loop    	
 	i32.const	$push936=, 1
 	i32.shl 	$push27=, $pop936, $1
@@ -4400,7 +5463,7 @@ printf_core:
 	i32.const	$push937=, 32
 	i32.lt_u	$push33=, $pop938, $pop937
 	br_if   	0, $pop33
-.LBB46_20:
+.LBB52_20:
 	end_loop
 	end_block
 	block   	
@@ -4447,7 +5510,7 @@ printf_core:
 	i32.gt_s	$push58=, $pop958, $pop957
 	br_if   	5, $pop58
 	br      	2
-.LBB46_24:
+.LBB52_24:
 	end_block
 	i32.const	$15=, 0
 	i32.const	$push971=, 24
@@ -4462,7 +5525,7 @@ printf_core:
 	br_if   	2, $pop38
 	i32.const	$1=, 0
 	copy_local	$17=, $36
-.LBB46_26:
+.LBB52_26:
 	loop    	
 	i32.const	$15=, -1
 	block   	
@@ -4478,7 +5541,7 @@ printf_core:
 	i32.sub 	$push41=, $pop973, $1
 	i32.gt_s	$push42=, $30, $pop41
 	i32.select	$15=, $pop977, $pop40, $pop42
-.LBB46_28:
+.LBB52_28:
 	end_block
 	copy_local	$1=, $15
 	i32.const	$push984=, 1
@@ -4496,7 +5559,7 @@ printf_core:
 	i32.ge_s	$push45=, $15, $pop985
 	br_if   	4, $pop45
 	br      	8
-.LBB46_30:
+.LBB52_30:
 	end_block
 	br_if   	19, $32
 	i32.const	$push986=, 1
@@ -4514,22 +5577,22 @@ printf_core:
 	i32.const	$push987=, -1
 	i32.gt_s	$push59=, $pop988, $pop987
 	br_if   	3, $pop59
-.LBB46_33:
+.LBB52_33:
 	end_block
 	i32.const	$push994=, 0
 	i32.sub 	$15=, $pop994, $15
 	i32.const	$push993=, 8192
 	i32.or  	$14=, $14, $pop993
 	br      	2
-.LBB46_34:
+.LBB52_34:
 	end_block
 	copy_local	$17=, $36
 	br      	1
-.LBB46_35:
+.LBB52_35:
 	end_block
 	i32.const	$32=, 0
 	i32.const	$15=, 0
-.LBB46_36:
+.LBB52_36:
 	end_block
 	i32.const	$30=, 0
 	i32.const	$36=, -1
@@ -4577,12 +5640,12 @@ printf_core:
 	i32.add 	$push81=, $pop80, $pop1004
 	i32.load	$36=, 0($pop81)
 	br      	5
-.LBB46_41:
+.LBB52_41:
 	end_block
 	copy_local	$1=, $17
 	i32.const	$16=, 0
 	br      	5
-.LBB46_42:
+.LBB52_42:
 	end_block
 	i32.const	$push1014=, 1
 	i32.add 	$1=, $17, $pop1014
@@ -4593,7 +5656,7 @@ printf_core:
 	i32.gt_u	$push63=, $pop1011, $pop1010
 	br_if   	1, $pop63
 	i32.const	$17=, 0
-.LBB46_44:
+.LBB52_44:
 	loop    	
 	i32.const	$36=, -1
 	block   	
@@ -4609,7 +5672,7 @@ printf_core:
 	i32.sub 	$push66=, $pop1016, $17
 	i32.gt_s	$push67=, $31, $pop66
 	i32.select	$36=, $pop1020, $pop65, $pop67
-.LBB46_46:
+.LBB52_46:
 	end_block
 	i32.const	$16=, 1
 	copy_local	$17=, $36
@@ -4624,7 +5687,7 @@ printf_core:
 	i32.lt_u	$push69=, $pop1022, $pop1021
 	br_if   	0, $pop69
 	br      	5
-.LBB46_47:
+.LBB52_47:
 	end_loop
 	end_block
 	br_if   	19, $32
@@ -4639,21 +5702,21 @@ printf_core:
 	i32.store	0($2), $pop74
 	i32.load	$36=, 0($17)
 	br      	2
-.LBB46_50:
+.LBB52_50:
 	end_block
 	i32.const	$16=, 1
 	i32.const	$36=, 0
 	br      	2
-.LBB46_51:
+.LBB52_51:
 	end_block
 	i32.const	$36=, 0
-.LBB46_52:
+.LBB52_52:
 	end_block
 	i32.const	$push1033=, 31
 	i32.shr_u	$push82=, $36, $pop1033
 	i32.const	$push1032=, 1
 	i32.xor 	$16=, $pop82, $pop1032
-.LBB46_53:
+.LBB52_53:
 	end_block
 	loop    	
 	copy_local	$17=, $30
@@ -4692,7 +5755,7 @@ printf_core:
 	i32.le_s	$push102=, $27, $pop1046
 	br_if   	1, $pop102
 	br      	19
-.LBB46_58:
+.LBB52_58:
 	end_block
 	i32.const	$push1047=, 0
 	i32.lt_s	$push91=, $27, $pop1047
@@ -4719,19 +5782,19 @@ printf_core:
 	i32.store	420($39), $pop100
 	i32.load	$push101=, 0($30)
 	i32.store	416($39), $pop101
-.LBB46_60:
+.LBB52_60:
 	end_block
 	br_if   	1, $0
 	i32.const	$30=, 0
 	br      	2
-.LBB46_62:
+.LBB52_62:
 	end_block
 	i32.eqz 	$push2162=, $0
 	br_if   	8, $pop2162
 	i32.const	$push880=, 416
 	i32.add 	$push881=, $39, $pop880
 	call    	pop_arg@FUNCTION, $pop881, $30, $2
-.LBB46_64:
+.LBB52_64:
 	end_block
 	i32.const	$push1070=, -65537
 	i32.and 	$push1069=, $14, $pop1070
@@ -4824,14 +5887,14 @@ printf_core:
 	block   	
 	block   	
 	br_table 	$30, 0, 32, 4, 32, 0, 0, 0, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 5, 32, 32, 32, 32, 12, 32, 32, 32, 32, 32, 32, 32, 32, 0, 32, 7, 1, 0, 0, 0, 32, 1, 32, 32, 32, 8, 9, 10, 11, 32, 32, 13, 32, 15, 32, 32, 12, 0
-.LBB46_66:
+.LBB52_66:
 	end_block
 	block   	
 	i32.const	$push1071=, -1
 	i32.gt_s	$push109=, $36, $pop1071
 	br_if   	0, $pop109
 	br_if   	65, $16
-.LBB46_68:
+.LBB52_68:
 	end_block
 	i64.load	$35=, 424($39)
 	i64.load	$23=, 416($39)
@@ -4846,7 +5909,7 @@ printf_core:
 	i32.const	$20=, 1
 	i32.const	$19=, .L.str.2.295
 	br      	3
-.LBB46_70:
+.LBB52_70:
 	end_block
 	i32.const	$push1074=, 2048
 	i32.and 	$push111=, $18, $pop1074
@@ -4858,7 +5921,7 @@ printf_core:
 	tee_local	$push1075=, $20=, $pop1076
 	i32.select	$19=, $pop1079, $pop1078, $pop1075
 	br      	2
-.LBB46_72:
+.LBB52_72:
 	end_block
 	i64.load	$push1082=, 416($39)
 	tee_local	$push1081=, $35=, $pop1082
@@ -4878,11 +5941,11 @@ printf_core:
 	i64.ge_u	$push518=, $35, $pop1084
 	br_if   	22, $pop518
 	br      	23
-.LBB46_75:
+.LBB52_75:
 	end_block
 	i32.const	$20=, 1
 	i32.const	$19=, .L.str.2.295+3
-.LBB46_76:
+.LBB52_76:
 	end_block
 	block   	
 	block   	
@@ -4920,7 +5983,7 @@ printf_core:
 	i32.const	$push1102=, -1
 	i32.add 	$push134=, $pop133, $pop1102
 	i32.store	748($39), $pop134
-.LBB46_79:
+.LBB52_79:
 	end_block
 	i32.const	$push1106=, 32
 	i32.or  	$push1105=, $29, $pop1106
@@ -4945,7 +6008,7 @@ printf_core:
 	i32.add 	$30=, $36, $pop1113
 	i64.const	$34=, 4612248968380809216
 	i64.const	$33=, 0
-.LBB46_83:
+.LBB52_83:
 	loop    	
 	i32.const	$push744=, 208
 	i32.add 	$push745=, $39, $pop744
@@ -4990,7 +6053,7 @@ printf_core:
 	i64.xor 	$23=, $pop392, $pop1121
 	i64.load	$35=, 144($39)
 	br      	32
-.LBB46_86:
+.LBB52_86:
 	end_block
 	i32.call	$16=, __unordtf2@FUNCTION, $23, $35, $23, $35
 	i32.const	$push1126=, 3
@@ -5018,7 +6081,7 @@ printf_core:
 	br_if   	13, $30
 	i32.eqz 	$30=, $17
 	copy_local	$17=, $31
-.LBB46_90:
+.LBB52_90:
 	loop    	
 	block   	
 	i32.const	$push1137=, 1
@@ -5030,7 +6093,7 @@ printf_core:
 	i32.const	$push1138=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop845, $pop1138, $0
 	i32.load	$36=, 0($0)
-.LBB46_92:
+.LBB52_92:
 	end_block
 	i32.const	$push1145=, 32
 	i32.and 	$push1144=, $36, $pop1145
@@ -5047,7 +6110,7 @@ printf_core:
 	i32.const	$push1146=, 255
 	i32.and 	$31=, $31, $pop1146
 	br      	14
-.LBB46_95:
+.LBB52_95:
 	end_block
 	i32.const	$push1149=, 0
 	i32.lt_s	$30=, $36, $pop1149
@@ -5073,7 +6136,7 @@ printf_core:
 	i64.load	$23=, 0($pop138)
 	i64.load	$35=, 288($39)
 	br      	18
-.LBB46_97:
+.LBB52_97:
 	end_block
 	i64.load	$35=, 416($39)
 	i32.const	$push854=, 344
@@ -5091,17 +6154,17 @@ printf_core:
 	i32.add 	$push859=, $39, $pop858
 	copy_local	$37=, $pop859
 	br      	1
-.LBB46_98:
+.LBB52_98:
 	end_block
 	i32.load	$37=, 416($39)
 	i32.eqz 	$push2168=, $36
 	br_if   	31, $pop2168
-.LBB46_99:
+.LBB52_99:
 	end_block
 	i32.const	$30=, 0
 	copy_local	$14=, $37
 	i32.const	$17=, 0
-.LBB46_100:
+.LBB52_100:
 	block   	
 	loop    	
 	i32.load	$push1159=, 0($14)
@@ -5124,7 +6187,7 @@ printf_core:
 	tee_local	$push1163=, $30=, $pop1164
 	i32.gt_u	$push490=, $36, $pop1163
 	br_if   	0, $pop490
-.LBB46_104:
+.LBB52_104:
 	end_loop
 	end_block
 	i32.const	$push1166=, 0
@@ -5138,7 +6201,7 @@ printf_core:
 	tee_local	$push1168=, $16=, $pop1169
 	br_if   	32, $pop1168
 	br      	31
-.LBB46_107:
+.LBB52_107:
 	end_block
 	i32.const	$push878=, 352
 	i32.add 	$push879=, $39, $pop878
@@ -5151,13 +6214,13 @@ printf_core:
 	copy_local	$14=, $5
 	copy_local	$18=, $31
 	br      	24
-.LBB46_108:
+.LBB52_108:
 	end_block
 	i32.call	$push507=, __errno_location@FUNCTION
 	i32.load	$push508=, 0($pop507)
 	i32.call	$37=, strerror@FUNCTION, $pop508
 	br      	5
-.LBB46_109:
+.LBB52_109:
 	end_block
 	i32.const	$push1195=, 255
 	i32.and 	$push1194=, $17, $pop1195
@@ -5167,13 +6230,13 @@ printf_core:
 	br_if   	45, $pop550
 	block   	
 	br_table 	$30, 0, 42, 43, 44, 45, 46, 47, 48, 0
-.LBB46_111:
+.LBB52_111:
 	end_block
 	i32.load	$push559=, 416($39)
 	i32.store	0($pop559), $38
 	i32.const	$30=, 0
 	br      	52
-.LBB46_112:
+.LBB52_112:
 	end_block
 	copy_local	$37=, $5
 	block   	
@@ -5182,7 +6245,7 @@ printf_core:
 	i64.eqz 	$push525=, $pop1196
 	br_if   	0, $pop525
 	copy_local	$37=, $5
-.LBB46_114:
+.LBB52_114:
 	loop    	
 	i32.const	$push1206=, -1
 	i32.add 	$push1205=, $37, $pop1206
@@ -5198,7 +6261,7 @@ printf_core:
 	i64.const	$push1198=, 0
 	i64.ne  	$push528=, $pop1199, $pop1198
 	br_if   	0, $pop528
-.LBB46_115:
+.LBB52_115:
 	end_loop
 	end_block
 	i32.const	$push1207=, 8
@@ -5208,7 +6271,7 @@ printf_core:
 	i32.const	$24=, .L.str.293
 	br_if   	18, $16
 	br      	19
-.LBB46_117:
+.LBB52_117:
 	end_block
 	i32.const	$push1210=, 8
 	i32.const	$push1209=, 8
@@ -5217,7 +6280,7 @@ printf_core:
 	i32.const	$push1208=, 8
 	i32.or  	$18=, $18, $pop1208
 	i32.const	$29=, 120
-.LBB46_118:
+.LBB52_118:
 	end_block
 	i32.const	$26=, 0
 	i32.const	$24=, .L.str.293
@@ -5229,7 +6292,7 @@ printf_core:
 	i32.const	$push1213=, 32
 	i32.and 	$30=, $29, $pop1213
 	copy_local	$37=, $5
-.LBB46_120:
+.LBB52_120:
 	loop    	
 	i32.const	$push1222=, -1
 	i32.add 	$push1221=, $37, $pop1222
@@ -5263,18 +6326,18 @@ printf_core:
 	i32.const	$26=, 2
 	br_if   	17, $16
 	br      	18
-.LBB46_124:
+.LBB52_124:
 	end_block
 	copy_local	$37=, $5
 	br_if   	16, $16
 	br      	17
-.LBB46_125:
+.LBB52_125:
 	end_block
 	i32.load	$push1228=, 416($39)
 	tee_local	$push1227=, $30=, $pop1228
 	i32.const	$push1226=, .L.str.1.294
 	i32.select	$37=, $pop1227, $pop1226, $30
-.LBB46_126:
+.LBB52_126:
 	end_block
 	i32.const	$26=, 0
 	i32.const	$push1233=, 2147483647
@@ -5290,7 +6353,7 @@ printf_core:
 	copy_local	$18=, $31
 	copy_local	$36=, $30
 	br      	17
-.LBB46_128:
+.LBB52_128:
 	end_block
 	i32.const	$26=, 0
 	i32.const	$24=, .L.str.293
@@ -5300,15 +6363,15 @@ printf_core:
 	i64.ge_u	$push519=, $pop1235, $pop1234
 	br_if   	8, $pop519
 	br      	9
-.LBB46_129:
+.LBB52_129:
 	end_block
 	br_if   	1, $17
-.LBB46_130:
+.LBB52_130:
 	end_block
 	i32.const	$push846=, 432
 	i32.add 	$push847=, $39, $pop846
 	i32.call	$drop=, __fwritex@FUNCTION, $pop847, $31, $0
-.LBB46_131:
+.LBB52_131:
 	end_block
 	block   	
 	i32.load	$push1239=, 0($0)
@@ -5318,7 +6381,7 @@ printf_core:
 	br_if   	0, $pop122
 	i32.call	$drop=, __fwritex@FUNCTION, $19, $20, $0
 	i32.load	$30=, 0($0)
-.LBB46_133:
+.LBB52_133:
 	end_block
 	block   	
 	i32.const	$push1240=, 32
@@ -5338,7 +6401,7 @@ printf_core:
 	i32.select	$push2=, $pop116, $pop115, $16
 	i32.const	$push1241=, 3
 	i32.call	$drop=, __fwritex@FUNCTION, $pop2, $pop1241, $0
-.LBB46_135:
+.LBB52_135:
 	end_block
 	block   	
 	i32.const	$push1251=, 73728
@@ -5368,7 +6431,7 @@ printf_core:
 	br_if   	0, $30
 	i32.eqz 	$30=, $17
 	copy_local	$17=, $31
-.LBB46_139:
+.LBB52_139:
 	loop    	
 	block   	
 	i32.const	$push1262=, 1
@@ -5380,7 +6443,7 @@ printf_core:
 	i32.const	$push1263=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop851, $pop1263, $0
 	i32.load	$36=, 0($0)
-.LBB46_141:
+.LBB52_141:
 	end_block
 	i32.const	$push1270=, 32
 	i32.and 	$push1269=, $36, $pop1270
@@ -5397,20 +6460,20 @@ printf_core:
 	i32.const	$push1271=, 255
 	i32.and 	$31=, $31, $pop1271
 	br      	1
-.LBB46_144:
+.LBB52_144:
 	end_block
 	br_if   	1, $17
-.LBB46_145:
+.LBB52_145:
 	end_block
 	i32.const	$push852=, 432
 	i32.add 	$push853=, $39, $pop852
 	i32.call	$drop=, __fwritex@FUNCTION, $pop853, $31, $0
-.LBB46_146:
+.LBB52_146:
 	end_block
 	i32.gt_s	$push130=, $15, $37
 	i32.select	$30=, $15, $37, $pop130
 	br      	42
-.LBB46_147:
+.LBB52_147:
 	end_block
 	i64.const	$push1276=, 0
 	i64.sub 	$push1275=, $pop1276, $35
@@ -5422,7 +6485,7 @@ printf_core:
 	i64.ge_u	$push517=, $35, $pop1273
 	br_if   	4, $pop517
 	br      	5
-.LBB46_148:
+.LBB52_148:
 	end_block
 	copy_local	$18=, $31
 	copy_local	$36=, $30
@@ -5430,10 +6493,10 @@ printf_core:
 	i32.eqz 	$push2172=, $pop512
 	br_if   	11, $pop2172
 	br      	44
-.LBB46_149:
+.LBB52_149:
 	end_block
 	i32.load	$31=, 748($39)
-.LBB46_150:
+.LBB52_150:
 	end_block
 	i32.const	$push1280=, 6
 	i32.select	$28=, $pop1280, $36, $30
@@ -5444,7 +6507,7 @@ printf_core:
 	i32.select	$push1278=, $pop769, $9, $pop139
 	tee_local	$push1277=, $22=, $pop1278
 	copy_local	$36=, $pop1277
-.LBB46_151:
+.LBB52_151:
 	loop    	
 	i32.const	$push770=, 272
 	i32.add 	$push771=, $39, $pop770
@@ -5494,7 +6557,7 @@ printf_core:
 	i32.lt_s	$push148=, $31, $pop1295
 	br_if   	0, $pop148
 	copy_local	$17=, $22
-.LBB46_154:
+.LBB52_154:
 	loop    	
 	i32.const	$push1300=, 29
 	i32.const	$push1299=, 29
@@ -5508,7 +6571,7 @@ printf_core:
 	br_if   	0, $pop150
 	i64.extend_u/i32	$23=, $14
 	i64.const	$35=, 0
-.LBB46_156:
+.LBB52_156:
 	loop    	
 	i64.load32_u	$push152=, 0($30)
 	i64.shl 	$push153=, $pop152, $23
@@ -5535,7 +6598,7 @@ printf_core:
 	i32.add 	$push1312=, $17, $pop1313
 	tee_local	$push1311=, $17=, $pop1312
 	i32.store	0($pop1311), $30
-.LBB46_159:
+.LBB52_159:
 	end_block
 	block   	
 	loop    	
@@ -5549,7 +6612,7 @@ printf_core:
 	i32.load	$push157=, 0($pop1316)
 	i32.eqz 	$push2174=, $pop157
 	br_if   	0, $pop2174
-.LBB46_161:
+.LBB52_161:
 	end_loop
 	end_block
 	copy_local	$36=, $30
@@ -5564,14 +6627,14 @@ printf_core:
 	i32.gt_s	$push159=, $31, $pop1322
 	br_if   	2, $pop159
 	br      	1
-.LBB46_163:
+.LBB52_163:
 	end_block
 	copy_local	$30=, $36
 	copy_local	$17=, $22
 	i32.const	$push1323=, -1
 	i32.gt_s	$push160=, $31, $pop1323
 	br_if   	1, $pop160
-.LBB46_164:
+.LBB52_164:
 	end_block
 	i32.const	$push1327=, 45
 	i32.add 	$push161=, $28, $pop1327
@@ -5587,7 +6650,7 @@ printf_core:
 	i32.const	$push1328=, 2
 	i32.shl 	$push181=, $24, $pop1328
 	i32.add 	$25=, $22, $pop181
-.LBB46_166:
+.LBB52_166:
 	loop    	
 	i32.const	$push1333=, 0
 	i32.sub 	$push1332=, $pop1333, $31
@@ -5608,7 +6671,7 @@ printf_core:
 	i32.add 	$26=, $pop186, $pop1334
 	i32.const	$14=, 0
 	copy_local	$36=, $17
-.LBB46_168:
+.LBB52_168:
 	loop    	
 	i32.load	$push1341=, 0($36)
 	tee_local	$push1340=, $37=, $pop1341
@@ -5633,13 +6696,13 @@ printf_core:
 	i32.const	$push1343=, 4
 	i32.add 	$30=, $30, $pop1343
 	br      	1
-.LBB46_171:
+.LBB52_171:
 	end_block
 	i32.const	$push1344=, 4
 	i32.add 	$push184=, $17, $pop1344
 	i32.load	$push185=, 0($17)
 	i32.select	$17=, $17, $pop184, $pop185
-.LBB46_172:
+.LBB52_172:
 	end_block
 	i32.sub 	$push193=, $30, $22
 	i32.const	$push1348=, 2
@@ -5652,7 +6715,7 @@ printf_core:
 	i32.lt_s	$push196=, $pop1346, $pop1345
 	br_if   	0, $pop196
 	br      	2
-.LBB46_173:
+.LBB52_173:
 	end_loop
 	end_block
 	loop    	
@@ -5675,7 +6738,7 @@ printf_core:
 	i32.add 	$26=, $pop168, $pop1354
 	i32.const	$14=, 0
 	copy_local	$36=, $17
-.LBB46_175:
+.LBB52_175:
 	loop    	
 	i32.load	$push1361=, 0($36)
 	tee_local	$push1360=, $37=, $pop1361
@@ -5700,13 +6763,13 @@ printf_core:
 	i32.const	$push1363=, 4
 	i32.add 	$30=, $30, $pop1363
 	br      	1
-.LBB46_178:
+.LBB52_178:
 	end_block
 	i32.const	$push1364=, 4
 	i32.add 	$push166=, $17, $pop1364
 	i32.load	$push167=, 0($17)
 	i32.select	$17=, $17, $pop166, $pop167
-.LBB46_179:
+.LBB52_179:
 	end_block
 	i32.const	$push1369=, 2
 	i32.shl 	$push175=, $24, $pop1369
@@ -5721,11 +6784,11 @@ printf_core:
 	i32.const	$push1365=, 0
 	i32.lt_s	$push180=, $pop1366, $pop1365
 	br_if   	0, $pop180
-.LBB46_180:
+.LBB52_180:
 	end_loop
 	end_block
 	i32.store	748($39), $31
-.LBB46_181:
+.LBB52_181:
 	end_block
 	i32.const	$36=, 0
 	block   	
@@ -5742,7 +6805,7 @@ printf_core:
 	i32.lt_u	$push200=, $pop1371, $pop1370
 	br_if   	0, $pop200
 	i32.const	$14=, 10
-.LBB46_184:
+.LBB52_184:
 	loop    	
 	i32.const	$push1378=, 1
 	i32.add 	$36=, $36, $pop1378
@@ -5751,7 +6814,7 @@ printf_core:
 	tee_local	$push1375=, $14=, $pop1376
 	i32.ge_u	$push201=, $37, $pop1375
 	br_if   	0, $pop201
-.LBB46_185:
+.LBB52_185:
 	end_loop
 	end_block
 	block   	
@@ -5801,7 +6864,7 @@ printf_core:
 	i32.const	$push1403=, 8
 	i32.sub 	$37=, $pop1403, $37
 	i32.const	$14=, 10
-.LBB46_188:
+.LBB52_188:
 	loop    	
 	i32.const	$push1407=, 10
 	i32.mul 	$14=, $14, $pop1407
@@ -5809,7 +6872,7 @@ printf_core:
 	i32.add 	$push1405=, $37, $pop1406
 	tee_local	$push1404=, $37=, $pop1405
 	br_if   	0, $pop1404
-.LBB46_189:
+.LBB52_189:
 	end_loop
 	end_block
 	i32.load	$push1412=, 0($31)
@@ -5824,7 +6887,7 @@ printf_core:
 	br_if   	0, $pop215
 	i32.eqz 	$push2177=, $37
 	br_if   	1, $pop2177
-.LBB46_191:
+.LBB52_191:
 	end_block
 	block   	
 	block   	
@@ -5846,11 +6909,11 @@ printf_core:
 	i32.and 	$push222=, $pop221, $pop1415
 	i32.eqz 	$push2178=, $pop222
 	br_if   	1, $pop2178
-.LBB46_195:
+.LBB52_195:
 	end_block
 	i64.const	$35=, 4643211215818981376
 	i64.const	$23=, 1
-.LBB46_196:
+.LBB52_196:
 	end_block
 	i64.const	$34=, 4611123068473966592
 	block   	
@@ -5866,7 +6929,7 @@ printf_core:
 	i64.const	$push1420=, 4611545280939032576
 	i32.eq  	$push226=, $26, $30
 	i64.select	$34=, $pop225, $pop1420, $pop226
-.LBB46_198:
+.LBB52_198:
 	end_block
 	block   	
 	i32.eqz 	$push2179=, $20
@@ -5879,7 +6942,7 @@ printf_core:
 	i64.xor 	$34=, $34, $pop1425
 	i64.const	$push1424=, -9223372036854775808
 	i64.xor 	$35=, $35, $pop1424
-.LBB46_201:
+.LBB52_201:
 	end_block
 	i32.const	$push838=, 224
 	i32.add 	$push839=, $39, $pop838
@@ -5906,7 +6969,7 @@ printf_core:
 	br_if   	0, $pop233
 	i32.const	$push1433=, -65536
 	i32.add 	$36=, $24, $pop1433
-.LBB46_204:
+.LBB52_204:
 	loop    	
 	i32.const	$push1435=, 4
 	i32.add 	$push234=, $36, $pop1435
@@ -5920,7 +6983,7 @@ printf_core:
 	tee_local	$push1437=, $17=, $pop1438
 	i32.const	$push1436=, 0
 	i32.store	0($pop1437), $pop1436
-.LBB46_206:
+.LBB52_206:
 	end_block
 	i32.load	$push236=, 0($36)
 	i32.const	$push1444=, 1
@@ -5935,7 +6998,7 @@ printf_core:
 	end_loop
 	i32.const	$push1445=, 4
 	i32.add 	$31=, $36, $pop1445
-.LBB46_208:
+.LBB52_208:
 	end_block
 	i32.sub 	$push238=, $22, $17
 	i32.const	$push1450=, 2
@@ -5948,7 +7011,7 @@ printf_core:
 	i32.lt_u	$push240=, $pop1447, $pop1446
 	br_if   	0, $pop240
 	i32.const	$14=, 10
-.LBB46_210:
+.LBB52_210:
 	loop    	
 	i32.const	$push1454=, 1
 	i32.add 	$36=, $36, $pop1454
@@ -5957,7 +7020,7 @@ printf_core:
 	tee_local	$push1451=, $14=, $pop1452
 	i32.ge_u	$push241=, $37, $pop1451
 	br_if   	0, $pop241
-.LBB46_211:
+.LBB52_211:
 	end_loop
 	end_block
 	i32.const	$push1457=, 4
@@ -5965,11 +7028,11 @@ printf_core:
 	tee_local	$push1455=, $14=, $pop1456
 	i32.gt_u	$push242=, $30, $14
 	i32.select	$30=, $pop1455, $30, $pop242
-.LBB46_212:
+.LBB52_212:
 	end_block
 	i32.const	$push1458=, 0
 	i32.sub 	$31=, $pop1458, $36
-.LBB46_213:
+.LBB52_213:
 	block   	
 	block   	
 	block   	
@@ -5988,12 +7051,12 @@ printf_core:
 	i32.const	$27=, 1
 	br_if   	1, $16
 	br      	2
-.LBB46_216:
+.LBB52_216:
 	end_block
 	i32.const	$27=, 0
 	i32.eqz 	$push2182=, $16
 	br_if   	1, $pop2182
-.LBB46_217:
+.LBB52_217:
 	end_block
 	i32.eqz 	$push245=, $28
 	i32.add 	$push1465=, $pop245, $28
@@ -6014,22 +7077,22 @@ printf_core:
 	i32.eqz 	$push2183=, $pop1467
 	br_if   	14, $pop2183
 	br      	21
-.LBB46_220:
+.LBB52_220:
 	end_block
 	i32.const	$push1472=, 8
 	i32.and 	$16=, $18, $pop1472
 	br      	20
-.LBB46_221:
+.LBB52_221:
 	end_block
 	i32.const	$26=, 1
 	i32.const	$24=, .L.str.293+1
 	i64.const	$push1487=, 4294967296
 	i64.lt_u	$push520=, $35, $pop1487
 	br_if   	1, $pop520
-.LBB46_222:
+.LBB52_222:
 	end_block
 	copy_local	$37=, $5
-.LBB46_223:
+.LBB52_223:
 	loop    	
 	i32.const	$push1496=, -1
 	i32.add 	$push1495=, $37, $pop1496
@@ -6047,18 +7110,18 @@ printf_core:
 	copy_local	$35=, $pop1488
 	br_if   	0, $30
 	br      	2
-.LBB46_224:
+.LBB52_224:
 	end_loop
 	end_block
 	copy_local	$23=, $35
 	copy_local	$37=, $5
-.LBB46_225:
+.LBB52_225:
 	end_block
 	i32.wrap/i64	$push1498=, $23
 	tee_local	$push1497=, $30=, $pop1498
 	i32.eqz 	$push2184=, $pop1497
 	br_if   	1, $pop2184
-.LBB46_226:
+.LBB52_226:
 	loop    	
 	i32.const	$push1505=, -1
 	i32.add 	$push1504=, $37, $pop1505
@@ -6075,7 +7138,7 @@ printf_core:
 	copy_local	$30=, $pop1
 	br_if   	0, $17
 	br      	2
-.LBB46_227:
+.LBB52_227:
 	end_loop
 	end_block
 	i32.const	$push1509=, .L.str.293
@@ -6085,16 +7148,16 @@ printf_core:
 	i32.gt_s	$push530=, $36, $pop1506
 	i32.select	$24=, $pop1509, $pop1508, $pop530
 	i32.le_s	$26=, $36, $30
-.LBB46_228:
+.LBB52_228:
 	end_block
 	i32.eqz 	$push2185=, $16
 	br_if   	1, $pop2185
-.LBB46_229:
+.LBB52_229:
 	end_block
 	i32.const	$push1510=, 0
 	i32.lt_s	$push543=, $36, $pop1510
 	br_if   	35, $pop543
-.LBB46_230:
+.LBB52_230:
 	end_block
 	i32.const	$push1512=, -65537
 	i32.and 	$push545=, $18, $pop1512
@@ -6111,7 +7174,7 @@ printf_core:
 	copy_local	$14=, $5
 	i32.const	$36=, 0
 	br      	2
-.LBB46_233:
+.LBB52_233:
 	end_block
 	i64.eqz 	$push548=, $35
 	i32.sub 	$push547=, $5, $37
@@ -6119,10 +7182,10 @@ printf_core:
 	tee_local	$push1513=, $30=, $pop1514
 	i32.gt_s	$push549=, $36, $30
 	i32.select	$36=, $36, $pop1513, $pop549
-.LBB46_234:
+.LBB52_234:
 	end_block
 	copy_local	$14=, $5
-.LBB46_235:
+.LBB52_235:
 	end_block
 	i32.sub 	$push1519=, $14, $37
 	tee_local	$push1518=, $29=, $pop1519
@@ -6167,7 +7230,7 @@ printf_core:
 	br_if   	0, $17
 	i32.eqz 	$17=, $14
 	copy_local	$14=, $22
-.LBB46_241:
+.LBB52_241:
 	loop    	
 	block   	
 	i32.const	$push1537=, 1
@@ -6179,7 +7242,7 @@ printf_core:
 	i32.const	$push1538=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop641, $pop1538, $0
 	i32.load	$31=, 0($0)
-.LBB46_243:
+.LBB52_243:
 	end_block
 	i32.const	$push1545=, 32
 	i32.and 	$push1544=, $31, $pop1545
@@ -6196,15 +7259,15 @@ printf_core:
 	i32.const	$push1546=, 255
 	i32.and 	$22=, $22, $pop1546
 	br      	1
-.LBB46_246:
+.LBB52_246:
 	end_block
 	br_if   	1, $14
-.LBB46_247:
+.LBB52_247:
 	end_block
 	i32.const	$push642=, 432
 	i32.add 	$push643=, $39, $pop642
 	i32.call	$drop=, __fwritex@FUNCTION, $pop643, $22, $0
-.LBB46_248:
+.LBB52_248:
 	end_block
 	block   	
 	i32.load8_u	$push569=, 0($0)
@@ -6212,7 +7275,7 @@ printf_core:
 	i32.and 	$push570=, $pop569, $pop1547
 	br_if   	0, $pop570
 	i32.call	$drop=, __fwritex@FUNCTION, $24, $26, $0
-.LBB46_250:
+.LBB52_250:
 	end_block
 	block   	
 	i32.const	$push1548=, 65536
@@ -6240,7 +7303,7 @@ printf_core:
 	br_if   	0, $17
 	i32.eqz 	$17=, $14
 	copy_local	$14=, $26
-.LBB46_254:
+.LBB52_254:
 	loop    	
 	block   	
 	i32.const	$push1559=, 1
@@ -6252,7 +7315,7 @@ printf_core:
 	i32.const	$push1560=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop647, $pop1560, $0
 	i32.load	$31=, 0($0)
-.LBB46_256:
+.LBB52_256:
 	end_block
 	i32.const	$push1567=, 32
 	i32.and 	$push1566=, $31, $pop1567
@@ -6269,15 +7332,15 @@ printf_core:
 	i32.const	$push1568=, 255
 	i32.and 	$26=, $26, $pop1568
 	br      	1
-.LBB46_259:
+.LBB52_259:
 	end_block
 	br_if   	1, $14
-.LBB46_260:
+.LBB52_260:
 	end_block
 	i32.const	$push648=, 432
 	i32.add 	$push649=, $39, $pop648
 	i32.call	$drop=, __fwritex@FUNCTION, $pop649, $26, $0
-.LBB46_261:
+.LBB52_261:
 	end_block
 	block   	
 	i32.ge_s	$push576=, $29, $36
@@ -6302,7 +7365,7 @@ printf_core:
 	br_if   	0, $17
 	i32.eqz 	$17=, $36
 	copy_local	$36=, $16
-.LBB46_264:
+.LBB52_264:
 	loop    	
 	block   	
 	i32.const	$push1579=, 1
@@ -6314,7 +7377,7 @@ printf_core:
 	i32.const	$push1580=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop653, $pop1580, $0
 	i32.load	$14=, 0($0)
-.LBB46_266:
+.LBB52_266:
 	end_block
 	i32.const	$push1587=, 32
 	i32.and 	$push1586=, $14, $pop1587
@@ -6331,15 +7394,15 @@ printf_core:
 	i32.const	$push1588=, 255
 	i32.and 	$16=, $16, $pop1588
 	br      	1
-.LBB46_269:
+.LBB52_269:
 	end_block
 	br_if   	1, $36
-.LBB46_270:
+.LBB52_270:
 	end_block
 	i32.const	$push654=, 432
 	i32.add 	$push655=, $39, $pop654
 	i32.call	$drop=, __fwritex@FUNCTION, $pop655, $16, $0
-.LBB46_271:
+.LBB52_271:
 	end_block
 	block   	
 	i32.load8_u	$push580=, 0($0)
@@ -6347,7 +7410,7 @@ printf_core:
 	i32.and 	$push581=, $pop580, $pop1589
 	br_if   	0, $pop581
 	i32.call	$drop=, __fwritex@FUNCTION, $37, $29, $0
-.LBB46_273:
+.LBB52_273:
 	end_block
 	i32.const	$push1590=, 8192
 	i32.ne  	$push582=, $18, $pop1590
@@ -6374,7 +7437,7 @@ printf_core:
 	br_if   	0, $17
 	i32.eqz 	$17=, $15
 	copy_local	$15=, $37
-.LBB46_277:
+.LBB52_277:
 	loop    	
 	block   	
 	i32.const	$push1601=, 1
@@ -6386,7 +7449,7 @@ printf_core:
 	i32.const	$push1602=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop659, $pop1602, $0
 	i32.load	$36=, 0($0)
-.LBB46_279:
+.LBB52_279:
 	end_block
 	i32.const	$push1609=, 32
 	i32.and 	$push1608=, $36, $pop1609
@@ -6403,16 +7466,16 @@ printf_core:
 	i32.const	$push1610=, 255
 	i32.and 	$37=, $37, $pop1610
 	br      	1
-.LBB46_282:
+.LBB52_282:
 	end_block
 	br_if   	30, $15
-.LBB46_283:
+.LBB52_283:
 	end_block
 	i32.const	$push660=, 432
 	i32.add 	$push661=, $39, $pop660
 	i32.call	$drop=, __fwritex@FUNCTION, $pop661, $37, $0
 	br      	29
-.LBB46_284:
+.LBB52_284:
 	end_block
 	i32.const	$push756=, 192
 	i32.add 	$push757=, $39, $pop756
@@ -6432,7 +7495,7 @@ printf_core:
 	i32.add 	$push386=, $pop763, $pop1611
 	i64.load	$23=, 0($pop386)
 	i64.load	$35=, 176($39)
-.LBB46_285:
+.LBB52_285:
 	end_block
 	i32.load	$push1620=, 748($39)
 	tee_local	$push1619=, $31=, $pop1620
@@ -6455,10 +7518,10 @@ printf_core:
 	tee_local	$push1621=, $17=, $pop1622
 	br_if   	1, $pop1621
 	br      	2
-.LBB46_287:
+.LBB52_287:
 	end_block
 	i32.const	$30=, 0
-.LBB46_288:
+.LBB52_288:
 	loop    	
 	i32.add 	$push395=, $12, $30
 	i64.const	$push1629=, 10
@@ -6480,7 +7543,7 @@ printf_core:
 	tee_local	$push1630=, $17=, $pop1631
 	i32.eqz 	$push2191=, $pop1630
 	br_if   	1, $pop2191
-.LBB46_290:
+.LBB52_290:
 	end_block
 	loop    	
 	i32.const	$push742=, 692
@@ -6501,7 +7564,7 @@ printf_core:
 	i32.div_u	$push3=, $17, $pop1632
 	copy_local	$17=, $pop3
 	br_if   	0, $14
-.LBB46_291:
+.LBB52_291:
 	end_loop
 	end_block
 	i32.add 	$17=, $7, $30
@@ -6512,7 +7575,7 @@ printf_core:
 	tee_local	$push1639=, $17=, $pop1640
 	i32.const	$push1638=, 48
 	i32.store8	0($pop1639), $pop1638
-.LBB46_293:
+.LBB52_293:
 	end_block
 	i32.const	$push1651=, 2
 	i32.or  	$16=, $20, $pop1651
@@ -6541,7 +7604,7 @@ printf_core:
 	i32.const	$push710=, 704
 	i32.add 	$push711=, $39, $pop710
 	copy_local	$30=, $pop711
-.LBB46_296:
+.LBB52_296:
 	loop    	
 	i32.const	$push712=, 80
 	i32.add 	$push713=, $39, $pop712
@@ -6595,7 +7658,7 @@ printf_core:
 	i32.store8	0($pop435), $pop1666
 	i32.const	$push1665=, 2
 	i32.add 	$17=, $30, $pop1665
-.LBB46_298:
+.LBB52_298:
 	end_block
 	copy_local	$30=, $17
 	i64.const	$push1669=, 0
@@ -6603,13 +7666,13 @@ printf_core:
 	i32.call	$push436=, __netf2@FUNCTION, $35, $23, $pop1669, $pop1668
 	br_if   	0, $pop436
 	br      	8
-.LBB46_299:
+.LBB52_299:
 	end_loop
 	end_block
 	i32.const	$push726=, 704
 	i32.add 	$push727=, $39, $pop726
 	copy_local	$30=, $pop727
-.LBB46_300:
+.LBB52_300:
 	loop    	
 	i32.const	$push728=, 128
 	i32.add 	$push729=, $39, $pop728
@@ -6663,7 +7726,7 @@ printf_core:
 	i32.store8	0($pop420), $pop1683
 	i32.const	$push1682=, 2
 	i32.add 	$17=, $30, $pop1682
-.LBB46_302:
+.LBB52_302:
 	end_block
 	copy_local	$30=, $17
 	i64.const	$push1686=, 0
@@ -6671,7 +7734,7 @@ printf_core:
 	i32.call	$push421=, __netf2@FUNCTION, $35, $23, $pop1686, $pop1685
 	br_if   	0, $pop421
 	br      	7
-.LBB46_303:
+.LBB52_303:
 	end_loop
 	end_block
 	i32.const	$push1691=, -1
@@ -6682,7 +7745,7 @@ printf_core:
 	i32.and 	$push1688=, $18, $pop1689
 	tee_local	$push1687=, $16=, $pop1688
 	br_if   	7, $pop1687
-.LBB46_304:
+.LBB52_304:
 	end_block
 	i32.const	$30=, 9
 	block   	
@@ -6700,7 +7763,7 @@ printf_core:
 	br_if   	0, $pop250
 	i32.const	$37=, 10
 	i32.const	$30=, 0
-.LBB46_308:
+.LBB52_308:
 	loop    	
 	i32.const	$push1699=, 1
 	i32.add 	$30=, $30, $pop1699
@@ -6710,7 +7773,7 @@ printf_core:
 	i32.rem_u	$push251=, $16, $pop1696
 	i32.eqz 	$push2194=, $pop251
 	br_if   	0, $pop2194
-.LBB46_309:
+.LBB52_309:
 	end_loop
 	end_block
 	i32.sub 	$push252=, $14, $22
@@ -6736,14 +7799,14 @@ printf_core:
 	i32.lt_s	$push261=, $28, $30
 	i32.select	$28=, $28, $pop1705, $pop261
 	br      	6
-.LBB46_311:
+.LBB52_311:
 	end_block
 	i32.const	$30=, 0
 	i32.const	$push1748=, 73728
 	i32.and 	$push1747=, $18, $pop1748
 	tee_local	$push1746=, $16=, $pop1747
 	br_if   	1, $pop1746
-.LBB46_312:
+.LBB52_312:
 	end_block
 	i32.le_s	$push493=, $15, $30
 	br_if   	0, $pop493
@@ -6767,7 +7830,7 @@ printf_core:
 	br_if   	0, $17
 	i32.eqz 	$17=, $36
 	copy_local	$36=, $27
-.LBB46_315:
+.LBB52_315:
 	loop    	
 	block   	
 	i32.const	$push1181=, 1
@@ -6779,7 +7842,7 @@ printf_core:
 	i32.const	$push1182=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop863, $pop1182, $0
 	i32.load	$14=, 0($0)
-.LBB46_317:
+.LBB52_317:
 	end_block
 	i32.const	$push1189=, 32
 	i32.and 	$push1188=, $14, $pop1189
@@ -6796,21 +7859,21 @@ printf_core:
 	i32.const	$push1190=, 255
 	i32.and 	$27=, $27, $pop1190
 	br      	1
-.LBB46_320:
+.LBB52_320:
 	end_block
 	br_if   	1, $36
-.LBB46_321:
+.LBB52_321:
 	end_block
 	i32.const	$push864=, 432
 	i32.add 	$push865=, $39, $pop864
 	i32.call	$drop=, __fwritex@FUNCTION, $pop865, $27, $0
-.LBB46_322:
+.LBB52_322:
 	end_block
 	block   	
 	i32.eqz 	$push2196=, $30
 	br_if   	0, $pop2196
 	i32.const	$17=, 0
-.LBB46_324:
+.LBB52_324:
 	loop    	
 	i32.load	$push1718=, 0($37)
 	tee_local	$push1717=, $36=, $pop1718
@@ -6832,13 +7895,13 @@ printf_core:
 	i32.const	$push874=, 340
 	i32.add 	$push875=, $39, $pop874
 	i32.call	$drop=, __fwritex@FUNCTION, $pop875, $36, $0
-.LBB46_328:
+.LBB52_328:
 	end_block
 	i32.const	$push1724=, 4
 	i32.add 	$37=, $37, $pop1724
 	i32.lt_u	$push500=, $17, $30
 	br_if   	0, $pop500
-.LBB46_329:
+.LBB52_329:
 	end_loop
 	end_block
 	block   	
@@ -6867,7 +7930,7 @@ printf_core:
 	br_if   	0, $17
 	i32.eqz 	$17=, $36
 	copy_local	$36=, $31
-.LBB46_333:
+.LBB52_333:
 	loop    	
 	block   	
 	i32.const	$push1736=, 1
@@ -6879,7 +7942,7 @@ printf_core:
 	i32.const	$push1737=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop869, $pop1737, $0
 	i32.load	$14=, 0($0)
-.LBB46_335:
+.LBB52_335:
 	end_block
 	i32.const	$push1744=, 32
 	i32.and 	$push1743=, $14, $pop1744
@@ -6896,25 +7959,25 @@ printf_core:
 	i32.const	$push1745=, 255
 	i32.and 	$31=, $31, $pop1745
 	br      	1
-.LBB46_338:
+.LBB52_338:
 	end_block
 	br_if   	1, $36
-.LBB46_339:
+.LBB52_339:
 	end_block
 	i32.const	$push870=, 432
 	i32.add 	$push871=, $39, $pop870
 	i32.call	$drop=, __fwritex@FUNCTION, $pop871, $31, $0
-.LBB46_340:
+.LBB52_340:
 	end_block
 	i32.gt_s	$push506=, $15, $30
 	i32.select	$30=, $15, $30, $pop506
 	br      	22
-.LBB46_341:
+.LBB52_341:
 	end_block
 	i32.const	$push670=, 704
 	i32.add 	$push671=, $39, $pop670
 	copy_local	$17=, $pop671
-.LBB46_342:
+.LBB52_342:
 	loop    	
 	i32.const	$push672=, 32
 	i32.add 	$push673=, $39, $pop672
@@ -6971,13 +8034,13 @@ printf_core:
 	i32.store8	0($pop450), $pop1766
 	i32.const	$push1765=, 2
 	i32.add 	$17=, $30, $pop1765
-.LBB46_345:
+.LBB52_345:
 	end_block
 	i64.const	$push1769=, 0
 	i64.const	$push1768=, 0
 	i32.call	$push451=, __netf2@FUNCTION, $35, $23, $pop1769, $pop1768
 	br_if   	0, $pop451
-.LBB46_346:
+.LBB52_346:
 	end_loop
 	end_block
 	i32.const	$30=, -1
@@ -7025,7 +8088,7 @@ printf_core:
 	br_if   	2, $30
 	i32.eqz 	$30=, $17
 	copy_local	$17=, $28
-.LBB46_351:
+.LBB52_351:
 	loop    	
 	block   	
 	i32.const	$push1791=, 1
@@ -7037,7 +8100,7 @@ printf_core:
 	i32.const	$push1792=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop687, $pop1792, $0
 	i32.load	$36=, 0($0)
-.LBB46_353:
+.LBB52_353:
 	end_block
 	i32.const	$push1799=, 32
 	i32.and 	$push1798=, $36, $pop1799
@@ -7054,7 +8117,7 @@ printf_core:
 	i32.const	$push1800=, 255
 	i32.and 	$28=, $28, $pop1800
 	br      	3
-.LBB46_356:
+.LBB52_356:
 	end_block
 	i32.const	$16=, 0
 	i32.add 	$push257=, $37, $36
@@ -7067,7 +8130,7 @@ printf_core:
 	tee_local	$push1801=, $30=, $pop1802
 	i32.lt_s	$push259=, $28, $30
 	i32.select	$28=, $28, $pop1801, $pop259
-.LBB46_357:
+.LBB52_357:
 	end_block
 	i32.const	$30=, -1
 	i32.const	$push1478=, 2147483646
@@ -7098,7 +8161,7 @@ printf_core:
 	i32.gt_s	$push282=, $36, $pop1485
 	i32.select	$36=, $36, $pop1486, $pop282
 	br      	7
-.LBB46_361:
+.LBB52_361:
 	end_block
 	i32.const	$push1714=, 0
 	i32.lt_s	$push265=, $36, $pop1714
@@ -7114,15 +8177,15 @@ printf_core:
 	tee_local	$push1715=, $30=, $pop1716
 	br_if   	4, $pop1715
 	br      	5
-.LBB46_363:
+.LBB52_363:
 	end_block
 	br_if   	1, $17
-.LBB46_364:
+.LBB52_364:
 	end_block
 	i32.const	$push688=, 432
 	i32.add 	$push689=, $39, $pop688
 	i32.call	$drop=, __fwritex@FUNCTION, $pop689, $28, $0
-.LBB46_365:
+.LBB52_365:
 	end_block
 	block   	
 	i32.load8_u	$push464=, 0($0)
@@ -7130,7 +8193,7 @@ printf_core:
 	i32.and 	$push465=, $pop464, $pop1807
 	br_if   	0, $pop465
 	i32.call	$drop=, __fwritex@FUNCTION, $24, $16, $0
-.LBB46_367:
+.LBB52_367:
 	end_block
 	block   	
 	i32.const	$push1808=, 65536
@@ -7158,7 +8221,7 @@ printf_core:
 	br_if   	0, $30
 	i32.eqz 	$30=, $17
 	copy_local	$17=, $16
-.LBB46_371:
+.LBB52_371:
 	loop    	
 	block   	
 	i32.const	$push1819=, 1
@@ -7170,7 +8233,7 @@ printf_core:
 	i32.const	$push1820=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop693, $pop1820, $0
 	i32.load	$36=, 0($0)
-.LBB46_373:
+.LBB52_373:
 	end_block
 	i32.const	$push1827=, 32
 	i32.and 	$push1826=, $36, $pop1827
@@ -7187,15 +8250,15 @@ printf_core:
 	i32.const	$push1828=, 255
 	i32.and 	$16=, $16, $pop1828
 	br      	1
-.LBB46_376:
+.LBB52_376:
 	end_block
 	br_if   	1, $17
-.LBB46_377:
+.LBB52_377:
 	end_block
 	i32.const	$push694=, 432
 	i32.add 	$push695=, $39, $pop694
 	i32.call	$drop=, __fwritex@FUNCTION, $pop695, $16, $0
-.LBB46_378:
+.LBB52_378:
 	end_block
 	block   	
 	i32.load8_u	$push471=, 0($0)
@@ -7205,7 +8268,7 @@ printf_core:
 	i32.const	$push696=, 704
 	i32.add 	$push697=, $39, $pop696
 	i32.call	$drop=, __fwritex@FUNCTION, $pop697, $26, $0
-.LBB46_380:
+.LBB52_380:
 	end_block
 	block   	
 	i32.sub 	$push1832=, $29, $26
@@ -7231,7 +8294,7 @@ printf_core:
 	br_if   	0, $30
 	i32.eqz 	$30=, $17
 	copy_local	$17=, $16
-.LBB46_383:
+.LBB52_383:
 	loop    	
 	block   	
 	i32.const	$push1841=, 1
@@ -7243,7 +8306,7 @@ printf_core:
 	i32.const	$push1842=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop701, $pop1842, $0
 	i32.load	$36=, 0($0)
-.LBB46_385:
+.LBB52_385:
 	end_block
 	i32.const	$push1849=, 32
 	i32.and 	$push1848=, $36, $pop1849
@@ -7260,15 +8323,15 @@ printf_core:
 	i32.const	$push1850=, 255
 	i32.and 	$16=, $16, $pop1850
 	br      	1
-.LBB46_388:
+.LBB52_388:
 	end_block
 	br_if   	1, $17
-.LBB46_389:
+.LBB52_389:
 	end_block
 	i32.const	$push702=, 432
 	i32.add 	$push703=, $39, $pop702
 	i32.call	$drop=, __fwritex@FUNCTION, $pop703, $16, $0
-.LBB46_390:
+.LBB52_390:
 	end_block
 	block   	
 	i32.load8_u	$push477=, 0($0)
@@ -7276,7 +8339,7 @@ printf_core:
 	i32.and 	$push478=, $pop477, $pop1851
 	br_if   	0, $pop478
 	i32.call	$drop=, __fwritex@FUNCTION, $27, $31, $0
-.LBB46_392:
+.LBB52_392:
 	end_block
 	block   	
 	i32.const	$push1852=, 8192
@@ -7304,7 +8367,7 @@ printf_core:
 	br_if   	0, $30
 	i32.eqz 	$30=, $17
 	copy_local	$17=, $31
-.LBB46_396:
+.LBB52_396:
 	loop    	
 	block   	
 	i32.const	$push1863=, 1
@@ -7316,7 +8379,7 @@ printf_core:
 	i32.const	$push1864=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop707, $pop1864, $0
 	i32.load	$36=, 0($0)
-.LBB46_398:
+.LBB52_398:
 	end_block
 	i32.const	$push1871=, 32
 	i32.and 	$push1870=, $36, $pop1871
@@ -7333,23 +8396,23 @@ printf_core:
 	i32.const	$push1872=, 255
 	i32.and 	$31=, $31, $pop1872
 	br      	1
-.LBB46_401:
+.LBB52_401:
 	end_block
 	br_if   	1, $17
-.LBB46_402:
+.LBB52_402:
 	end_block
 	i32.const	$push708=, 432
 	i32.add 	$push709=, $39, $pop708
 	i32.call	$drop=, __fwritex@FUNCTION, $pop709, $31, $0
-.LBB46_403:
+.LBB52_403:
 	end_block
 	i32.gt_s	$push484=, $15, $37
 	i32.select	$30=, $15, $37, $pop484
 	br      	14
-.LBB46_404:
+.LBB52_404:
 	end_block
 	copy_local	$37=, $7
-.LBB46_405:
+.LBB52_405:
 	loop    	
 	i32.const	$push1881=, -1
 	i32.add 	$push1880=, $37, $pop1881
@@ -7371,7 +8434,7 @@ printf_core:
 	tee_local	$push1882=, $30=, $pop1883
 	i32.eqz 	$push2204=, $pop1882
 	br_if   	1, $pop2204
-.LBB46_407:
+.LBB52_407:
 	end_block
 	loop    	
 	i32.const	$push1890=, -1
@@ -7388,7 +8451,7 @@ printf_core:
 	i32.div_u	$push6=, $30, $pop1884
 	copy_local	$30=, $pop6
 	br_if   	0, $31
-.LBB46_408:
+.LBB52_408:
 	end_loop
 	end_block
 	block   	
@@ -7398,7 +8461,7 @@ printf_core:
 	br_if   	0, $pop272
 	i32.const	$push1892=, -1
 	i32.add 	$30=, $37, $pop1892
-.LBB46_410:
+.LBB52_410:
 	loop    	
 	i32.const	$push1897=, 48
 	i32.store8	0($30), $pop1897
@@ -7413,7 +8476,7 @@ printf_core:
 	end_loop
 	i32.const	$push1898=, 1
 	i32.add 	$37=, $31, $pop1898
-.LBB46_412:
+.LBB52_412:
 	end_block
 	i32.const	$push1908=, -2
 	i32.add 	$push1907=, $37, $pop1908
@@ -7435,7 +8498,7 @@ printf_core:
 	i32.sub 	$push278=, $pop1899, $26
 	i32.gt_s	$push279=, $pop1900, $pop278
 	br_if   	11, $pop279
-.LBB46_413:
+.LBB52_413:
 	end_block
 	i32.const	$30=, -1
 	i32.add 	$push1911=, $36, $26
@@ -7469,7 +8532,7 @@ printf_core:
 	br_if   	7, $30
 	i32.eqz 	$30=, $36
 	copy_local	$36=, $29
-.LBB46_418:
+.LBB52_418:
 	loop    	
 	block   	
 	i32.const	$push1925=, 1
@@ -7481,7 +8544,7 @@ printf_core:
 	i32.const	$push1926=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop785, $pop1926, $0
 	i32.load	$37=, 0($0)
-.LBB46_420:
+.LBB52_420:
 	end_block
 	i32.const	$push1933=, 32
 	i32.and 	$push1932=, $37, $pop1933
@@ -7498,55 +8561,55 @@ printf_core:
 	i32.const	$push1934=, 255
 	i32.and 	$29=, $29, $pop1934
 	br      	8
-.LBB46_423:
+.LBB52_423:
 	end_block
 	i32.load	$push558=, 416($39)
 	i32.store	0($pop558), $38
 	i32.const	$30=, 0
 	br      	10
-.LBB46_424:
+.LBB52_424:
 	end_block
 	i32.load	$push557=, 416($39)
 	i64.extend_s/i32	$push556=, $38
 	i64.store	0($pop557), $pop556
 	i32.const	$30=, 0
 	br      	9
-.LBB46_425:
+.LBB52_425:
 	end_block
 	i32.load	$push555=, 416($39)
 	i32.store16	0($pop555), $38
 	i32.const	$30=, 0
 	br      	8
-.LBB46_426:
+.LBB52_426:
 	end_block
 	i32.load	$push554=, 416($39)
 	i32.store8	0($pop554), $38
-.LBB46_427:
+.LBB52_427:
 	end_block
 	i32.const	$30=, 0
 	br      	6
-.LBB46_428:
+.LBB52_428:
 	end_block
 	i32.load	$push553=, 416($39)
 	i32.store	0($pop553), $38
 	i32.const	$30=, 0
 	br      	5
-.LBB46_429:
+.LBB52_429:
 	end_block
 	i32.load	$push552=, 416($39)
 	i64.extend_s/i32	$push551=, $38
 	i64.store	0($pop552), $pop551
 	i32.const	$30=, 0
 	br      	4
-.LBB46_430:
+.LBB52_430:
 	end_block
 	br_if   	1, $36
-.LBB46_431:
+.LBB52_431:
 	end_block
 	i32.const	$push786=, 432
 	i32.add 	$push787=, $39, $pop786
 	i32.call	$drop=, __fwritex@FUNCTION, $pop787, $29, $0
-.LBB46_432:
+.LBB52_432:
 	end_block
 	block   	
 	i32.load8_u	$push289=, 0($0)
@@ -7554,7 +8617,7 @@ printf_core:
 	i32.and 	$push290=, $pop289, $pop1935
 	br_if   	0, $pop290
 	i32.call	$drop=, __fwritex@FUNCTION, $19, $20, $0
-.LBB46_434:
+.LBB52_434:
 	end_block
 	block   	
 	i32.const	$push1936=, 65536
@@ -7582,7 +8645,7 @@ printf_core:
 	br_if   	0, $30
 	i32.eqz 	$30=, $36
 	copy_local	$36=, $29
-.LBB46_438:
+.LBB52_438:
 	loop    	
 	block   	
 	i32.const	$push1947=, 1
@@ -7594,7 +8657,7 @@ printf_core:
 	i32.const	$push1948=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop791, $pop1948, $0
 	i32.load	$37=, 0($0)
-.LBB46_440:
+.LBB52_440:
 	end_block
 	i32.const	$push1955=, 32
 	i32.and 	$push1954=, $37, $pop1955
@@ -7611,15 +8674,15 @@ printf_core:
 	i32.const	$push1956=, 255
 	i32.and 	$29=, $29, $pop1956
 	br      	1
-.LBB46_443:
+.LBB52_443:
 	end_block
 	br_if   	1, $36
-.LBB46_444:
+.LBB52_444:
 	end_block
 	i32.const	$push792=, 432
 	i32.add 	$push793=, $39, $pop792
 	i32.call	$drop=, __fwritex@FUNCTION, $pop793, $29, $0
-.LBB46_445:
+.LBB52_445:
 	end_block
 	block   	
 	block   	
@@ -7637,7 +8700,7 @@ printf_core:
 	i32.select	$push1958=, $22, $17, $pop340
 	tee_local	$push1957=, $31=, $pop1958
 	copy_local	$37=, $pop1957
-.LBB46_447:
+.LBB52_447:
 	loop    	
 	block   	
 	block   	
@@ -7646,7 +8709,7 @@ printf_core:
 	i32.eqz 	$push2207=, $pop1959
 	br_if   	0, $pop2207
 	i32.const	$17=, 0
-.LBB46_449:
+.LBB52_449:
 	loop    	
 	i32.add 	$push341=, $11, $17
 	i32.const	$push1965=, 10
@@ -7663,11 +8726,11 @@ printf_core:
 	copy_local	$30=, $pop7
 	br_if   	0, $36
 	br      	2
-.LBB46_450:
+.LBB52_450:
 	end_loop
 	end_block
 	i32.const	$17=, 0
-.LBB46_451:
+.LBB52_451:
 	end_block
 	i32.add 	$30=, $10, $17
 	block   	
@@ -7678,7 +8741,7 @@ printf_core:
 	i32.add 	$push811=, $39, $pop810
 	i32.le_u	$push345=, $30, $pop811
 	br_if   	1, $pop345
-.LBB46_453:
+.LBB52_453:
 	loop    	
 	i32.const	$push1969=, -1
 	i32.add 	$push1968=, $30, $pop1969
@@ -7694,7 +8757,7 @@ printf_core:
 	i32.add 	$push815=, $39, $pop814
 	copy_local	$30=, $pop815
 	br      	1
-.LBB46_455:
+.LBB52_455:
 	end_block
 	br_if   	0, $17
 	i32.const	$push1973=, -1
@@ -7702,7 +8765,7 @@ printf_core:
 	tee_local	$push1971=, $30=, $pop1972
 	i32.const	$push1970=, 48
 	i32.store8	0($pop1971), $pop1970
-.LBB46_457:
+.LBB52_457:
 	end_block
 	block   	
 	i32.load8_u	$push347=, 0($0)
@@ -7711,7 +8774,7 @@ printf_core:
 	br_if   	0, $pop348
 	i32.sub 	$push349=, $10, $30
 	i32.call	$drop=, __fwritex@FUNCTION, $30, $pop349, $0
-.LBB46_459:
+.LBB52_459:
 	end_block
 	i32.const	$push1977=, 4
 	i32.add 	$push1976=, $37, $pop1977
@@ -7729,14 +8792,14 @@ printf_core:
 	i32.const	$push1980=, .L.str.7.26
 	i32.const	$push1979=, 1
 	i32.call	$drop=, __fwritex@FUNCTION, $pop1980, $pop1979, $0
-.LBB46_463:
+.LBB52_463:
 	end_block
 	i32.const	$push1981=, 1
 	i32.lt_s	$push353=, $28, $pop1981
 	br_if   	1, $pop353
 	i32.ge_u	$push354=, $37, $14
 	br_if   	2, $pop354
-.LBB46_465:
+.LBB52_465:
 	loop    	
 	copy_local	$30=, $10
 	block   	
@@ -7746,7 +8809,7 @@ printf_core:
 	i32.eqz 	$push2209=, $pop1982
 	br_if   	0, $pop2209
 	copy_local	$30=, $10
-.LBB46_467:
+.LBB52_467:
 	loop    	
 	i32.const	$push1990=, -1
 	i32.add 	$push1989=, $30, $pop1990
@@ -7767,7 +8830,7 @@ printf_core:
 	i32.add 	$push809=, $39, $pop808
 	i32.le_u	$push357=, $30, $pop809
 	br_if   	1, $pop357
-.LBB46_469:
+.LBB52_469:
 	end_block
 	loop    	
 	i32.const	$push1994=, -1
@@ -7779,7 +8842,7 @@ printf_core:
 	i32.add 	$push795=, $39, $pop794
 	i32.gt_u	$push358=, $30, $pop795
 	br_if   	0, $pop358
-.LBB46_470:
+.LBB52_470:
 	end_loop
 	end_block
 	block   	
@@ -7792,7 +8855,7 @@ printf_core:
 	i32.lt_s	$push361=, $28, $pop1996
 	i32.select	$push362=, $28, $pop1997, $pop361
 	i32.call	$drop=, __fwritex@FUNCTION, $30, $pop362, $0
-.LBB46_472:
+.LBB52_472:
 	end_block
 	i32.const	$push1999=, -9
 	i32.add 	$30=, $28, $pop1999
@@ -7806,7 +8869,7 @@ printf_core:
 	i32.lt_u	$push364=, $pop2000, $14
 	br_if   	0, $pop364
 	br      	4
-.LBB46_474:
+.LBB52_474:
 	end_loop
 	end_block
 	i32.const	$push2003=, -1
@@ -7818,7 +8881,7 @@ printf_core:
 	i32.eqz 	$push2210=, $16
 	br_if   	4, $pop2210
 	copy_local	$37=, $17
-.LBB46_477:
+.LBB52_477:
 	loop    	
 	copy_local	$14=, $10
 	block   	
@@ -7828,7 +8891,7 @@ printf_core:
 	i32.eqz 	$push2211=, $pop2005
 	br_if   	0, $pop2211
 	i32.const	$36=, 0
-.LBB46_479:
+.LBB52_479:
 	loop    	
 	i32.const	$push834=, 704
 	i32.add 	$push835=, $39, $pop834
@@ -7855,14 +8918,14 @@ printf_core:
 	i32.const	$push2013=, 9
 	i32.add 	$14=, $pop302, $pop2013
 	br_if   	1, $36
-.LBB46_481:
+.LBB52_481:
 	end_block
 	i32.const	$push2017=, -1
 	i32.add 	$push2016=, $14, $pop2017
 	tee_local	$push2015=, $14=, $pop2016
 	i32.const	$push2014=, 48
 	i32.store8	0($pop2015), $pop2014
-.LBB46_482:
+.LBB52_482:
 	end_block
 	block   	
 	block   	
@@ -7872,7 +8935,7 @@ printf_core:
 	i32.add 	$push831=, $39, $pop830
 	i32.le_u	$push304=, $14, $pop831
 	br_if   	1, $pop304
-.LBB46_484:
+.LBB52_484:
 	loop    	
 	i32.const	$push2021=, -1
 	i32.add 	$push2020=, $14, $pop2021
@@ -7884,7 +8947,7 @@ printf_core:
 	i32.gt_u	$push305=, $14, $pop833
 	br_if   	0, $pop305
 	br      	2
-.LBB46_485:
+.LBB52_485:
 	end_loop
 	end_block
 	block   	
@@ -7896,7 +8959,7 @@ printf_core:
 	i32.const	$push2025=, 1
 	i32.call	$drop=, __fwritex@FUNCTION, $14, $pop2025, $0
 	i32.load	$30=, 0($0)
-.LBB46_487:
+.LBB52_487:
 	end_block
 	i32.const	$push2027=, 1
 	i32.add 	$14=, $14, $pop2027
@@ -7906,7 +8969,7 @@ printf_core:
 	i32.const	$push2029=, .L.str.7.26
 	i32.const	$push2028=, 1
 	i32.call	$drop=, __fwritex@FUNCTION, $pop2029, $pop2028, $0
-.LBB46_489:
+.LBB52_489:
 	end_block
 	i32.sub 	$30=, $10, $14
 	block   	
@@ -7917,7 +8980,7 @@ printf_core:
 	i32.gt_s	$push310=, $28, $30
 	i32.select	$push311=, $30, $28, $pop310
 	i32.call	$drop=, __fwritex@FUNCTION, $14, $pop311, $0
-.LBB46_491:
+.LBB52_491:
 	end_block
 	i32.sub 	$28=, $28, $30
 	i32.const	$push2033=, 4
@@ -7929,7 +8992,7 @@ printf_core:
 	i32.gt_s	$push313=, $28, $pop2034
 	br_if   	0, $pop313
 	br      	6
-.LBB46_493:
+.LBB52_493:
 	end_loop
 	end_block
 	copy_local	$push2037=, $28
@@ -7938,15 +9001,15 @@ printf_core:
 	i32.ge_s	$push365=, $pop2036, $pop2035
 	br_if   	2, $pop365
 	br      	6
-.LBB46_494:
+.LBB52_494:
 	end_block
 	copy_local	$30=, $28
-.LBB46_495:
+.LBB52_495:
 	end_block
 	i32.const	$push2038=, 1
 	i32.lt_s	$push366=, $30, $pop2038
 	br_if   	4, $pop366
-.LBB46_496:
+.LBB52_496:
 	end_block
 	i32.const	$push796=, 432
 	i32.add 	$push797=, $39, $pop796
@@ -7966,7 +9029,7 @@ printf_core:
 	br_if   	0, $17
 	i32.eqz 	$17=, $36
 	copy_local	$36=, $30
-.LBB46_498:
+.LBB52_498:
 	loop    	
 	block   	
 	i32.const	$push2047=, 1
@@ -7978,7 +9041,7 @@ printf_core:
 	i32.const	$push2048=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop799, $pop2048, $0
 	i32.load	$14=, 0($0)
-.LBB46_500:
+.LBB52_500:
 	end_block
 	i32.const	$push2055=, 32
 	i32.and 	$push2054=, $14, $pop2055
@@ -7995,10 +9058,10 @@ printf_core:
 	i32.const	$push2056=, 255
 	i32.and 	$30=, $30, $pop2056
 	br      	1
-.LBB46_503:
+.LBB52_503:
 	end_block
 	br_if   	4, $36
-.LBB46_504:
+.LBB52_504:
 	end_block
 	i32.const	$push800=, 432
 	i32.add 	$push801=, $39, $pop800
@@ -8007,10 +9070,10 @@ printf_core:
 	i32.eq  	$push370=, $18, $pop2057
 	br_if   	4, $pop370
 	br      	5
-.LBB46_505:
+.LBB52_505:
 	end_block
 	copy_local	$37=, $17
-.LBB46_506:
+.LBB52_506:
 	loop    	
 	copy_local	$14=, $10
 	block   	
@@ -8020,7 +9083,7 @@ printf_core:
 	i32.eqz 	$push2213=, $pop2058
 	br_if   	0, $pop2213
 	i32.const	$36=, 0
-.LBB46_508:
+.LBB52_508:
 	loop    	
 	i32.const	$push826=, 704
 	i32.add 	$push827=, $39, $pop826
@@ -8047,14 +9110,14 @@ printf_core:
 	i32.const	$push2066=, 9
 	i32.add 	$14=, $pop318, $pop2066
 	br_if   	1, $36
-.LBB46_510:
+.LBB52_510:
 	end_block
 	i32.const	$push2070=, -1
 	i32.add 	$push2069=, $14, $pop2070
 	tee_local	$push2068=, $14=, $pop2069
 	i32.const	$push2067=, 48
 	i32.store8	0($pop2068), $pop2067
-.LBB46_511:
+.LBB52_511:
 	end_block
 	block   	
 	block   	
@@ -8064,7 +9127,7 @@ printf_core:
 	i32.add 	$push823=, $39, $pop822
 	i32.le_u	$push320=, $14, $pop823
 	br_if   	1, $pop320
-.LBB46_513:
+.LBB52_513:
 	loop    	
 	i32.const	$push2074=, -1
 	i32.add 	$push2073=, $14, $pop2074
@@ -8076,7 +9139,7 @@ printf_core:
 	i32.gt_u	$push321=, $14, $pop825
 	br_if   	0, $pop321
 	br      	2
-.LBB46_514:
+.LBB52_514:
 	end_loop
 	end_block
 	block   	
@@ -8086,7 +9149,7 @@ printf_core:
 	br_if   	0, $pop323
 	i32.const	$push2076=, 1
 	i32.call	$drop=, __fwritex@FUNCTION, $14, $pop2076, $0
-.LBB46_516:
+.LBB52_516:
 	end_block
 	i32.const	$push2078=, 1
 	i32.add 	$14=, $14, $pop2078
@@ -8100,7 +9163,7 @@ printf_core:
 	i32.const	$push2081=, .L.str.7.26
 	i32.const	$push2080=, 1
 	i32.call	$drop=, __fwritex@FUNCTION, $pop2081, $pop2080, $0
-.LBB46_519:
+.LBB52_519:
 	end_block
 	i32.sub 	$30=, $10, $14
 	block   	
@@ -8111,7 +9174,7 @@ printf_core:
 	i32.gt_s	$push329=, $28, $30
 	i32.select	$push330=, $30, $28, $pop329
 	i32.call	$drop=, __fwritex@FUNCTION, $14, $pop330, $0
-.LBB46_521:
+.LBB52_521:
 	end_block
 	i32.sub 	$28=, $28, $30
 	i32.const	$push2085=, 4
@@ -8122,7 +9185,7 @@ printf_core:
 	i32.const	$push2086=, -1
 	i32.gt_s	$push332=, $28, $pop2086
 	br_if   	0, $pop332
-.LBB46_523:
+.LBB52_523:
 	end_loop
 	end_block
 	i32.const	$push2087=, 1
@@ -8146,7 +9209,7 @@ printf_core:
 	br_if   	0, $30
 	i32.eqz 	$30=, $17
 	copy_local	$17=, $28
-.LBB46_526:
+.LBB52_526:
 	loop    	
 	block   	
 	i32.const	$push2096=, 1
@@ -8158,7 +9221,7 @@ printf_core:
 	i32.const	$push2097=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop819, $pop2097, $0
 	i32.load	$36=, 0($0)
-.LBB46_528:
+.LBB52_528:
 	end_block
 	i32.const	$push2104=, 32
 	i32.and 	$push2103=, $36, $pop2104
@@ -8175,15 +9238,15 @@ printf_core:
 	i32.const	$push2105=, 255
 	i32.and 	$28=, $28, $pop2105
 	br      	1
-.LBB46_531:
+.LBB52_531:
 	end_block
 	br_if   	1, $17
-.LBB46_532:
+.LBB52_532:
 	end_block
 	i32.const	$push820=, 432
 	i32.add 	$push821=, $39, $pop820
 	i32.call	$drop=, __fwritex@FUNCTION, $pop821, $28, $0
-.LBB46_533:
+.LBB52_533:
 	end_block
 	i32.load8_u	$push337=, 0($0)
 	i32.const	$push2106=, 32
@@ -8191,12 +9254,12 @@ printf_core:
 	br_if   	0, $pop338
 	i32.sub 	$push339=, $7, $25
 	i32.call	$drop=, __fwritex@FUNCTION, $25, $pop339, $0
-.LBB46_535:
+.LBB52_535:
 	end_block
 	i32.const	$push2107=, 8192
 	i32.ne  	$push371=, $18, $pop2107
 	br_if   	1, $pop371
-.LBB46_536:
+.LBB52_536:
 	end_block
 	i32.le_s	$push372=, $15, $26
 	br_if   	0, $pop372
@@ -8220,7 +9283,7 @@ printf_core:
 	br_if   	0, $30
 	i32.eqz 	$30=, $17
 	copy_local	$17=, $37
-.LBB46_539:
+.LBB52_539:
 	loop    	
 	block   	
 	i32.const	$push2118=, 1
@@ -8232,7 +9295,7 @@ printf_core:
 	i32.const	$push2119=, 256
 	i32.call	$drop=, __fwritex@FUNCTION, $pop805, $pop2119, $0
 	i32.load	$36=, 0($0)
-.LBB46_541:
+.LBB52_541:
 	end_block
 	i32.const	$push2126=, 32
 	i32.and 	$push2125=, $36, $pop2126
@@ -8249,29 +9312,29 @@ printf_core:
 	i32.const	$push2127=, 255
 	i32.and 	$37=, $37, $pop2127
 	br      	1
-.LBB46_544:
+.LBB52_544:
 	end_block
 	br_if   	1, $17
-.LBB46_545:
+.LBB52_545:
 	end_block
 	i32.const	$push806=, 432
 	i32.add 	$push807=, $39, $pop806
 	i32.call	$drop=, __fwritex@FUNCTION, $pop807, $37, $0
-.LBB46_546:
+.LBB52_546:
 	end_block
 	i32.gt_s	$push376=, $15, $26
 	i32.select	$30=, $15, $26, $pop376
-.LBB46_547:
+.LBB52_547:
 	end_block
 	i32.const	$push1272=, 0
 	i32.lt_s	$push485=, $30, $pop1272
 	br_if   	3, $pop485
-.LBB46_548:
+.LBB52_548:
 	end_block
 	i32.le_s	$push587=, $30, $13
 	br_if   	0, $pop587
 	br      	2
-.LBB46_549:
+.LBB52_549:
 	end_loop
 	end_block
 	br_if   	14, $0
@@ -8343,57 +9406,57 @@ printf_core:
 	call    	pop_arg@FUNCTION, $pop607, $1, $2
 	i32.const	$38=, 1
 	br      	14
-.LBB46_561:
+.LBB52_561:
 	end_block
 	i32.call	$push588=, __errno_location@FUNCTION
 	i32.const	$push589=, 75
 	i32.store	0($pop588), $pop589
 	br      	12
-.LBB46_562:
+.LBB52_562:
 	end_block
 	i32.const	$38=, 0
 	br      	12
-.LBB46_563:
+.LBB52_563:
 	end_block
 	i32.const	$30=, 2
 	br      	8
-.LBB46_564:
+.LBB52_564:
 	end_block
 	i32.const	$30=, 3
 	br      	7
-.LBB46_565:
+.LBB52_565:
 	end_block
 	i32.const	$38=, 0
 	br      	9
-.LBB46_566:
+.LBB52_566:
 	end_block
 	i32.const	$30=, 4
 	br      	5
-.LBB46_567:
+.LBB52_567:
 	end_block
 	i32.const	$30=, 5
 	br      	4
-.LBB46_568:
+.LBB52_568:
 	end_block
 	i32.const	$30=, 6
 	br      	3
-.LBB46_569:
+.LBB52_569:
 	end_block
 	i32.const	$30=, 7
 	br      	2
-.LBB46_570:
+.LBB52_570:
 	end_block
 	i32.const	$30=, 8
 	br      	1
-.LBB46_571:
+.LBB52_571:
 	end_block
 	i32.const	$30=, 9
-.LBB46_572:
+.LBB52_572:
 	end_block
 	i32.const	$push608=, 2
 	i32.shl 	$push609=, $30, $pop608
 	i32.add 	$1=, $4, $pop609
-.LBB46_573:
+.LBB52_573:
 	loop    	
 	i32.load	$push610=, 0($1)
 	br_if   	1, $pop610
@@ -8407,16 +9470,16 @@ printf_core:
 	i32.le_u	$push613=, $pop2151, $pop2150
 	br_if   	0, $pop613
 	br      	3
-.LBB46_575:
+.LBB52_575:
 	end_loop
 	end_block
 	i32.call	$push611=, __errno_location@FUNCTION
 	i32.const	$push612=, 22
 	i32.store	0($pop611), $pop612
-.LBB46_576:
+.LBB52_576:
 	end_block
 	i32.const	$38=, -1
-.LBB46_577:
+.LBB52_577:
 	end_block
 	i32.const	$push623=, 0
 	i32.const	$push621=, 8128
@@ -8424,8 +9487,8 @@ printf_core:
 	i32.store	__stack_pointer($pop623), $pop622
 	copy_local	$push2226=, $38
 	.endfunc
-.Lfunc_end46:
-	.size	printf_core, .Lfunc_end46-printf_core
+.Lfunc_end52:
+	.size	printf_core, .Lfunc_end52-printf_core
 
 	.hidden	__lockfile
 	.globl	__lockfile
@@ -8436,8 +9499,8 @@ __lockfile:
 	.local  	i32
 	copy_local	$push0=, $1
 	.endfunc
-.Lfunc_end47:
-	.size	__lockfile, .Lfunc_end47-__lockfile
+.Lfunc_end53:
+	.size	__lockfile, .Lfunc_end53-__lockfile
 
 	.hidden	__unlockfile
 	.globl	__unlockfile
@@ -8445,8 +9508,8 @@ __lockfile:
 __unlockfile:
 	.param  	i32
 	.endfunc
-.Lfunc_end48:
-	.size	__unlockfile, .Lfunc_end48-__unlockfile
+.Lfunc_end54:
+	.size	__unlockfile, .Lfunc_end54-__unlockfile
 
 	.hidden	__fwritex
 	.globl	__fwritex
@@ -8466,7 +9529,7 @@ __fwritex:
 	i32.const	$push1=, 16
 	i32.add 	$push2=, $2, $pop1
 	i32.load	$6=, 0($pop2)
-.LBB49_3:
+.LBB55_3:
 	end_block
 	block   	
 	i32.load	$push27=, 20($2)
@@ -8477,7 +9540,7 @@ __fwritex:
 	i32.load	$push21=, 36($2)
 	i32.call_indirect	$push22=, $2, $0, $1, $pop21
 	return  	$pop22
-.LBB49_5:
+.LBB55_5:
 	end_block
 	i32.const	$8=, 0
 	block   	
@@ -8488,7 +9551,7 @@ __fwritex:
 	i32.add 	$3=, $0, $1
 	i32.const	$8=, 0
 	i32.const	$6=, 0
-.LBB49_7:
+.LBB55_7:
 	loop    	
 	i32.add 	$push7=, $1, $6
 	i32.eqz 	$push42=, $pop7
@@ -8522,7 +9585,7 @@ __fwritex:
 	i32.const	$push16=, 20
 	i32.add 	$push17=, $2, $pop16
 	i32.load	$7=, 0($pop17)
-.LBB49_11:
+.LBB55_11:
 	end_block
 	i32.call	$drop=, memcpy@FUNCTION, $7, $0, $1
 	i32.const	$push18=, 20
@@ -8533,12 +9596,12 @@ __fwritex:
 	i32.store	0($pop40), $pop20
 	i32.add 	$push23=, $8, $1
 	return  	$pop23
-.LBB49_12:
+.LBB55_12:
 	end_block
 	copy_local	$push43=, $6
 	.endfunc
-.Lfunc_end49:
-	.size	__fwritex, .Lfunc_end49-__fwritex
+.Lfunc_end55:
+	.size	__fwritex, .Lfunc_end55-__fwritex
 
 	.type	pop_arg,@function
 pop_arg:
@@ -8577,7 +9640,7 @@ pop_arg:
 	block   	
 	block   	
 	br_table 	$1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 0
-.LBB50_2:
+.LBB56_2:
 	end_block
 	i32.load	$push99=, 0($2)
 	tee_local	$push98=, $1=, $pop99
@@ -8587,7 +9650,7 @@ pop_arg:
 	i32.load	$push86=, 0($1)
 	i32.store	0($0), $pop86
 	br      	17
-.LBB50_3:
+.LBB56_3:
 	end_block
 	i32.load	$push101=, 0($2)
 	tee_local	$push100=, $1=, $pop101
@@ -8597,7 +9660,7 @@ pop_arg:
 	i64.load32_s	$push83=, 0($1)
 	i64.store	0($0), $pop83
 	br      	16
-.LBB50_4:
+.LBB56_4:
 	end_block
 	i32.load	$push103=, 0($2)
 	tee_local	$push102=, $1=, $pop103
@@ -8607,7 +9670,7 @@ pop_arg:
 	i64.load32_u	$push80=, 0($1)
 	i64.store	0($0), $pop80
 	br      	15
-.LBB50_5:
+.LBB56_5:
 	end_block
 	i32.load	$push65=, 0($2)
 	i32.const	$push66=, 7
@@ -8621,7 +9684,7 @@ pop_arg:
 	i64.load	$push71=, 0($1)
 	i64.store	0($0), $pop71
 	br      	14
-.LBB50_6:
+.LBB56_6:
 	end_block
 	i32.load	$push107=, 0($2)
 	tee_local	$push106=, $1=, $pop107
@@ -8631,7 +9694,7 @@ pop_arg:
 	i64.load32_s	$push77=, 0($1)
 	i64.store	0($0), $pop77
 	br      	13
-.LBB50_7:
+.LBB56_7:
 	end_block
 	i32.load	$push109=, 0($2)
 	tee_local	$push108=, $1=, $pop109
@@ -8641,7 +9704,7 @@ pop_arg:
 	i64.load32_u	$push74=, 0($1)
 	i64.store	0($0), $pop74
 	br      	12
-.LBB50_8:
+.LBB56_8:
 	end_block
 	i32.load	$push111=, 0($2)
 	tee_local	$push110=, $1=, $pop111
@@ -8651,7 +9714,7 @@ pop_arg:
 	i64.load16_s	$push64=, 0($1)
 	i64.store	0($0), $pop64
 	br      	11
-.LBB50_9:
+.LBB56_9:
 	end_block
 	i32.load	$push113=, 0($2)
 	tee_local	$push112=, $1=, $pop113
@@ -8661,7 +9724,7 @@ pop_arg:
 	i64.load16_u	$push61=, 0($1)
 	i64.store	0($0), $pop61
 	br      	10
-.LBB50_10:
+.LBB56_10:
 	end_block
 	i32.load	$push115=, 0($2)
 	tee_local	$push114=, $1=, $pop115
@@ -8671,7 +9734,7 @@ pop_arg:
 	i64.load8_s	$push58=, 0($1)
 	i64.store	0($0), $pop58
 	br      	9
-.LBB50_11:
+.LBB56_11:
 	end_block
 	i32.load	$push117=, 0($2)
 	tee_local	$push116=, $1=, $pop117
@@ -8681,7 +9744,7 @@ pop_arg:
 	i64.load8_u	$push55=, 0($1)
 	i64.store	0($0), $pop55
 	br      	8
-.LBB50_12:
+.LBB56_12:
 	end_block
 	i32.load	$push46=, 0($2)
 	i32.const	$push47=, 7
@@ -8695,7 +9758,7 @@ pop_arg:
 	i64.load	$push52=, 0($1)
 	i64.store	0($0), $pop52
 	br      	7
-.LBB50_13:
+.LBB56_13:
 	end_block
 	i32.load	$push121=, 0($2)
 	tee_local	$push120=, $1=, $pop121
@@ -8705,7 +9768,7 @@ pop_arg:
 	i64.load32_u	$push45=, 0($1)
 	i64.store	0($0), $pop45
 	br      	6
-.LBB50_14:
+.LBB56_14:
 	end_block
 	i32.load	$push36=, 0($2)
 	i32.const	$push37=, 7
@@ -8719,7 +9782,7 @@ pop_arg:
 	i64.load	$push42=, 0($1)
 	i64.store	0($0), $pop42
 	br      	5
-.LBB50_15:
+.LBB56_15:
 	end_block
 	i32.load	$push29=, 0($2)
 	i32.const	$push30=, 7
@@ -8733,7 +9796,7 @@ pop_arg:
 	i64.load	$push35=, 0($1)
 	i64.store	0($0), $pop35
 	br      	4
-.LBB50_16:
+.LBB56_16:
 	end_block
 	i32.load	$push127=, 0($2)
 	tee_local	$push126=, $1=, $pop127
@@ -8743,7 +9806,7 @@ pop_arg:
 	i64.load32_s	$push28=, 0($1)
 	i64.store	0($0), $pop28
 	br      	3
-.LBB50_17:
+.LBB56_17:
 	end_block
 	i32.load	$push129=, 0($2)
 	tee_local	$push128=, $1=, $pop129
@@ -8753,7 +9816,7 @@ pop_arg:
 	i64.load32_u	$push25=, 0($1)
 	i64.store	0($0), $pop25
 	br      	2
-.LBB50_18:
+.LBB56_18:
 	end_block
 	i32.load	$push12=, 0($2)
 	i32.const	$push13=, 7
@@ -8775,7 +9838,7 @@ pop_arg:
 	i64.load	$push22=, 0($4)
 	i64.store	0($0), $pop22
 	br      	1
-.LBB50_19:
+.LBB56_19:
 	end_block
 	i32.load	$push3=, 0($2)
 	i32.const	$push4=, 15
@@ -8792,15 +9855,15 @@ pop_arg:
 	i64.load	$push11=, 8($1)
 	i64.store	0($pop10), $pop11
 	i64.store	0($0), $3
-.LBB50_20:
+.LBB56_20:
 	end_block
 	i32.const	$push93=, 0
 	i32.const	$push91=, 16
 	i32.add 	$push92=, $4, $pop91
 	i32.store	__stack_pointer($pop93), $pop92
 	.endfunc
-.Lfunc_end50:
-	.size	pop_arg, .Lfunc_end50-pop_arg
+.Lfunc_end56:
+	.size	pop_arg, .Lfunc_end56-pop_arg
 
 	.hidden	strerror
 	.globl	strerror
@@ -8810,7 +9873,7 @@ strerror:
 	.result 	i32
 	.local  	i32, i32, i32
 	i32.const	$2=, 0
-.LBB51_1:
+.LBB57_1:
 	block   	
 	block   	
 	block   	
@@ -8829,16 +9892,16 @@ strerror:
 	i32.ne  	$push3=, $pop9, $pop8
 	br_if   	0, $pop3
 	br      	2
-.LBB51_3:
+.LBB57_3:
 	end_loop
 	end_block
 	copy_local	$1=, $2
 	i32.eqz 	$push18=, $2
 	br_if   	1, $pop18
-.LBB51_4:
+.LBB57_4:
 	end_block
 	i32.const	$2=, errmsg
-.LBB51_5:
+.LBB57_5:
 	loop    	
 	i32.load8_u	$0=, 0($2)
 	i32.const	$push14=, 1
@@ -8852,18 +9915,18 @@ strerror:
 	tee_local	$push15=, $1=, $pop16
 	br_if   	0, $pop15
 	br      	2
-.LBB51_7:
+.LBB57_7:
 	end_loop
 	end_block
 	i32.const	$3=, errmsg
-.LBB51_8:
+.LBB57_8:
 	end_block
 	i32.const	$push4=, 0
 	i32.load	$push5=, 20($pop4)
 	i32.call	$push6=, __lctrans@FUNCTION, $3, $pop5
 	.endfunc
-.Lfunc_end51:
-	.size	strerror, .Lfunc_end51-strerror
+.Lfunc_end57:
+	.size	strerror, .Lfunc_end57-strerror
 
 	.hidden	strnlen
 	.globl	strnlen
@@ -8878,8 +9941,8 @@ strnlen:
 	i32.sub 	$push1=, $pop3, $0
 	i32.select	$push2=, $pop1, $1, $2
 	.endfunc
-.Lfunc_end52:
-	.size	strnlen, .Lfunc_end52-strnlen
+.Lfunc_end58:
+	.size	strnlen, .Lfunc_end58-strnlen
 
 	.hidden	wctomb
 	.globl	wctomb
@@ -8893,12 +9956,12 @@ wctomb:
 	i32.const	$push0=, 0
 	i32.call	$push1=, wcrtomb@FUNCTION, $0, $1, $pop0
 	return  	$pop1
-.LBB53_2:
+.LBB59_2:
 	end_block
 	i32.const	$push2=, 0
 	.endfunc
-.Lfunc_end53:
-	.size	wctomb, .Lfunc_end53-wctomb
+.Lfunc_end59:
+	.size	wctomb, .Lfunc_end59-wctomb
 
 	.hidden	__signbitl
 	.globl	__signbitl
@@ -8910,8 +9973,8 @@ __signbitl:
 	i64.shr_u	$push1=, $1, $pop0
 	i32.wrap/i64	$push2=, $pop1
 	.endfunc
-.Lfunc_end54:
-	.size	__signbitl, .Lfunc_end54-__signbitl
+.Lfunc_end60:
+	.size	__signbitl, .Lfunc_end60-__signbitl
 
 	.hidden	__fpclassifyl
 	.globl	__fpclassifyl
@@ -8942,16 +10005,16 @@ __fpclassifyl:
 	i64.ne  	$push9=, $pop7, $pop8
 	i32.select	$push12=, $pop11, $pop10, $pop9
 	return  	$pop12
-.LBB55_3:
+.LBB61_3:
 	end_block
 	i64.or  	$push6=, $2, $0
 	i64.eqz 	$4=, $pop6
-.LBB55_4:
+.LBB61_4:
 	end_block
 	copy_local	$push16=, $4
 	.endfunc
-.Lfunc_end55:
-	.size	__fpclassifyl, .Lfunc_end55-__fpclassifyl
+.Lfunc_end61:
+	.size	__fpclassifyl, .Lfunc_end61-__fpclassifyl
 
 	.hidden	frexpl
 	.globl	frexpl
@@ -9002,7 +10065,7 @@ frexpl:
 	i64.load	$2=, 24($6)
 	i64.load	$1=, 16($6)
 	br      	2
-.LBB56_4:
+.LBB62_4:
 	end_block
 	i32.const	$push12=, 32767
 	i32.and 	$push13=, $4, $pop12
@@ -9020,13 +10083,13 @@ frexpl:
 	i64.and 	$push17=, $2, $pop16
 	i64.or  	$2=, $pop24, $pop17
 	br      	2
-.LBB56_5:
+.LBB62_5:
 	end_block
 	i32.const	$4=, 0
-.LBB56_6:
+.LBB62_6:
 	end_block
 	i32.store	0($3), $4
-.LBB56_7:
+.LBB62_7:
 	end_block
 	i64.store	0($0), $1
 	i32.const	$push25=, 8
@@ -9037,8 +10100,8 @@ frexpl:
 	i32.add 	$push32=, $6, $pop31
 	i32.store	__stack_pointer($pop33), $pop32
 	.endfunc
-.Lfunc_end56:
-	.size	frexpl, .Lfunc_end56-frexpl
+.Lfunc_end62:
+	.size	frexpl, .Lfunc_end62-frexpl
 
 	.hidden	wcrtomb
 	.globl	wcrtomb
@@ -9058,7 +10121,7 @@ wcrtomb:
 	i32.store8	0($0), $1
 	i32.const	$push63=, 1
 	return  	$pop63
-.LBB57_3:
+.LBB63_3:
 	end_block
 	block   	
 	block   	
@@ -9085,7 +10148,7 @@ wcrtomb:
 	i32.store8	0($0), $pop53
 	i32.const	$push61=, 2
 	return  	$pop61
-.LBB57_6:
+.LBB63_6:
 	end_block
 	i32.const	$push54=, -128
 	i32.and 	$push55=, $1, $pop54
@@ -9095,7 +10158,7 @@ wcrtomb:
 	i32.store8	0($0), $1
 	i32.const	$push64=, 1
 	return  	$pop64
-.LBB57_8:
+.LBB63_8:
 	end_block
 	i32.const	$push8=, 55296
 	i32.lt_u	$push9=, $1, $pop8
@@ -9136,13 +10199,13 @@ wcrtomb:
 	i32.store8	2($0), $pop33
 	i32.const	$push60=, 4
 	return  	$pop60
-.LBB57_12:
+.LBB63_12:
 	end_block
 	i32.call	$push58=, __errno_location@FUNCTION
 	i32.const	$push59=, 84
 	i32.store	0($pop58), $pop59
 	br      	2
-.LBB57_13:
+.LBB63_13:
 	end_block
 	i32.const	$push34=, 12
 	i32.shr_u	$push35=, $1, $pop34
@@ -9163,20 +10226,20 @@ wcrtomb:
 	i32.store8	1($0), $pop45
 	i32.const	$push62=, 3
 	return  	$pop62
-.LBB57_14:
+.LBB63_14:
 	end_block
 	i32.call	$push16=, __errno_location@FUNCTION
 	i32.const	$push17=, 84
 	i32.store	0($pop16), $pop17
-.LBB57_15:
+.LBB63_15:
 	end_block
 	i32.const	$3=, -1
-.LBB57_16:
+.LBB63_16:
 	end_block
 	copy_local	$push73=, $3
 	.endfunc
-.Lfunc_end57:
-	.size	wcrtomb, .Lfunc_end57-wcrtomb
+.Lfunc_end63:
+	.size	wcrtomb, .Lfunc_end63-wcrtomb
 
 	.hidden	memchr
 	.globl	memchr
@@ -9202,7 +10265,7 @@ memchr:
 	br_if   	1, $pop48
 	i32.const	$push4=, 255
 	i32.and 	$3=, $1, $pop4
-.LBB58_3:
+.LBB64_3:
 	loop    	
 	i32.load8_u	$push5=, 0($0)
 	i32.eq  	$push6=, $pop5, $3
@@ -9221,23 +10284,23 @@ memchr:
 	i32.and 	$push7=, $0, $pop31
 	br_if   	0, $pop7
 	br      	3
-.LBB58_6:
+.LBB64_6:
 	end_loop
 	end_block
 	copy_local	$5=, $2
 	br_if   	3, $4
 	br      	4
-.LBB58_7:
+.LBB64_7:
 	end_block
 	copy_local	$5=, $2
-.LBB58_8:
+.LBB64_8:
 	end_block
 	br_if   	1, $4
 	br      	2
-.LBB58_9:
+.LBB64_9:
 	end_block
 	copy_local	$5=, $2
-.LBB58_10:
+.LBB64_10:
 	end_block
 	block   	
 	i32.load8_u	$push11=, 0($0)
@@ -9254,7 +10317,7 @@ memchr:
 	i32.and 	$push0=, $1, $pop3
 	i32.const	$push13=, 16843009
 	i32.mul 	$4=, $pop0, $pop13
-.LBB58_13:
+.LBB64_13:
 	loop    	
 	i32.load	$push15=, 0($0)
 	i32.xor 	$push37=, $pop15, $4
@@ -9275,16 +10338,16 @@ memchr:
 	i32.const	$push38=, 3
 	i32.gt_u	$push20=, $pop39, $pop38
 	br_if   	0, $pop20
-.LBB58_15:
+.LBB64_15:
 	end_loop
 	end_block
 	i32.eqz 	$push49=, $5
 	br_if   	2, $pop49
-.LBB58_16:
+.LBB64_16:
 	end_block
 	i32.const	$push21=, 255
 	i32.and 	$2=, $1, $pop21
-.LBB58_17:
+.LBB64_17:
 	loop    	
 	i32.load8_u	$push22=, 0($0)
 	i32.eq  	$push23=, $pop22, $2
@@ -9296,17 +10359,17 @@ memchr:
 	tee_local	$push43=, $5=, $pop44
 	br_if   	0, $pop43
 	br      	2
-.LBB58_19:
+.LBB64_19:
 	end_loop
 	end_block
 	copy_local	$6=, $5
-.LBB58_20:
+.LBB64_20:
 	end_block
 	i32.const	$push24=, 0
 	i32.select	$push25=, $0, $pop24, $6
 	.endfunc
-.Lfunc_end58:
-	.size	memchr, .Lfunc_end58-memchr
+.Lfunc_end64:
+	.size	memchr, .Lfunc_end64-memchr
 
 	.hidden	__lctrans
 	.globl	__lctrans
@@ -9316,8 +10379,8 @@ __lctrans:
 	.result 	i32
 	i32.call	$push0=, __lctrans_impl@FUNCTION, $0, $1
 	.endfunc
-.Lfunc_end59:
-	.size	__lctrans, .Lfunc_end59-__lctrans
+.Lfunc_end65:
+	.size	__lctrans, .Lfunc_end65-__lctrans
 
 	.hidden	__lctrans_impl
 	.globl	__lctrans_impl
@@ -9334,14 +10397,14 @@ __lctrans_impl:
 	tee_local	$push5=, $1=, $pop6
 	i32.select	$push3=, $pop5, $0, $1
 	return  	$pop3
-.LBB60_2:
+.LBB66_2:
 	end_block
 	i32.const	$push4=, 0
 	i32.const	$push7=, 0
 	i32.select	$push2=, $pop4, $0, $pop7
 	.endfunc
-.Lfunc_end60:
-	.size	__lctrans_impl, .Lfunc_end60-__lctrans_impl
+.Lfunc_end66:
+	.size	__lctrans_impl, .Lfunc_end66-__lctrans_impl
 
 	.hidden	__mo_lookup
 	.globl	__mo_lookup
@@ -9436,19 +10499,19 @@ __mo_lookup:
 	br_if   	3, $pop330
 	i32.const	$push151=, 0
 	return  	$pop151
-.LBB61_5:
+.LBB67_5:
 	end_block
 	i32.const	$push154=, 0
 	return  	$pop154
-.LBB61_6:
+.LBB67_6:
 	end_block
 	i32.const	$push153=, 0
 	return  	$pop153
-.LBB61_7:
+.LBB67_7:
 	end_block
 	i32.const	$push152=, 0
 	return  	$pop152
-.LBB61_8:
+.LBB67_8:
 	end_block
 	i32.const	$push196=, 2
 	i32.shr_u	$12=, $6, $pop196
@@ -9491,7 +10554,7 @@ __mo_lookup:
 	br_if   	2, $pop97
 	copy_local	$9=, $5
 	i32.const	$7=, 0
-.LBB61_12:
+.LBB67_12:
 	loop    	
 	i32.add 	$push98=, $11, $8
 	i32.add 	$push99=, $0, $pop98
@@ -9539,7 +10602,7 @@ __mo_lookup:
 	i32.lt_u	$push109=, $pop233, $pop103
 	br_if   	0, $pop109
 	br      	7
-.LBB61_17:
+.LBB67_17:
 	end_loop
 	end_block
 	i32.const	$push39=, 1
@@ -9598,7 +10661,7 @@ __mo_lookup:
 	br_if   	3, $pop61
 	copy_local	$5=, $8
 	i32.const	$7=, 0
-.LBB61_20:
+.LBB67_20:
 	loop    	
 	i32.add 	$push62=, $4, $11
 	i32.add 	$push63=, $0, $pop62
@@ -9678,24 +10741,24 @@ __mo_lookup:
 	i32.lt_u	$push89=, $pop295, $pop67
 	br_if   	0, $pop89
 	br      	6
-.LBB61_25:
+.LBB67_25:
 	end_loop
 	end_block
 	i32.const	$push146=, 0
 	return  	$pop146
-.LBB61_26:
+.LBB67_26:
 	end_block
 	i32.const	$push145=, 0
 	return  	$pop145
-.LBB61_27:
+.LBB67_27:
 	end_block
 	i32.const	$push150=, 0
 	return  	$pop150
-.LBB61_28:
+.LBB67_28:
 	end_block
 	i32.const	$push149=, 0
 	return  	$pop149
-.LBB61_29:
+.LBB67_29:
 	end_block
 	i32.const	$push319=, 2
 	i32.shr_u	$push0=, $10, $pop319
@@ -9760,31 +10823,31 @@ __mo_lookup:
 	i32.load8_u	$push140=, 0($pop139)
 	i32.select	$push155=, $pop141, $pop137, $pop140
 	return  	$pop155
-.LBB61_32:
+.LBB67_32:
 	end_block
 	return  	$13
-.LBB61_33:
+.LBB67_33:
 	end_block
 	i32.const	$push144=, 0
 	return  	$pop144
-.LBB61_34:
+.LBB67_34:
 	end_block
 	i32.const	$push148=, 0
 	return  	$pop148
-.LBB61_35:
+.LBB67_35:
 	end_block
 	i32.const	$push143=, 0
 	return  	$pop143
-.LBB61_36:
+.LBB67_36:
 	end_block
 	i32.const	$push147=, 0
 	return  	$pop147
-.LBB61_37:
+.LBB67_37:
 	end_block
 	i32.const	$push142=, 0
 	.endfunc
-.Lfunc_end61:
-	.size	__mo_lookup, .Lfunc_end61-__mo_lookup
+.Lfunc_end67:
+	.size	__mo_lookup, .Lfunc_end67-__mo_lookup
 
 	.hidden	strcmp
 	.globl	strcmp
@@ -9807,7 +10870,7 @@ strcmp:
 	i32.add 	$0=, $0, $pop11
 	i32.const	$push10=, 1
 	i32.add 	$1=, $1, $pop10
-.LBB62_3:
+.LBB68_3:
 	loop    	
 	i32.load8_u	$3=, 0($1)
 	i32.load8_u	$push13=, 0($0)
@@ -9822,15 +10885,15 @@ strcmp:
 	i32.and 	$push2=, $3, $pop14
 	i32.eq  	$push3=, $2, $pop2
 	br_if   	0, $pop3
-.LBB62_5:
+.LBB68_5:
 	end_loop
 	end_block
 	i32.const	$push4=, 255
 	i32.and 	$push5=, $3, $pop4
 	i32.sub 	$push6=, $2, $pop5
 	.endfunc
-.Lfunc_end62:
-	.size	strcmp, .Lfunc_end62-strcmp
+.Lfunc_end68:
+	.size	strcmp, .Lfunc_end68-strcmp
 
 	.hidden	__towrite
 	.globl	__towrite
@@ -9862,15 +10925,15 @@ __towrite:
 	i32.store	16($0), $pop9
 	i32.const	$push10=, 0
 	return  	$pop10
-.LBB63_2:
+.LBB69_2:
 	end_block
 	i32.const	$push5=, 32
 	i32.or  	$push6=, $1, $pop5
 	i32.store	0($0), $pop6
 	i32.const	$push11=, -1
 	.endfunc
-.Lfunc_end63:
-	.size	__towrite, .Lfunc_end63-__towrite
+.Lfunc_end69:
+	.size	__towrite, .Lfunc_end69-__towrite
 
 	.hidden	printf
 	.globl	printf
@@ -9896,8 +10959,8 @@ printf:
 	i32.store	__stack_pointer($pop8), $pop7
 	copy_local	$push11=, $1
 	.endfunc
-.Lfunc_end64:
-	.size	printf, .Lfunc_end64-printf
+.Lfunc_end70:
+	.size	printf, .Lfunc_end70-printf
 
 	.hidden	__stdio_close
 	.globl	__stdio_close
@@ -9907,8 +10970,8 @@ __stdio_close:
 	.result 	i32
 	i32.const	$push0=, 0
 	.endfunc
-.Lfunc_end65:
-	.size	__stdio_close, .Lfunc_end65-__stdio_close
+.Lfunc_end71:
+	.size	__stdio_close, .Lfunc_end71-__stdio_close
 
 	.hidden	__stdout_write
 	.globl	__stdout_write
@@ -9918,8 +10981,8 @@ __stdout_write:
 	.result 	i32
 	i32.call	$push0=, __stdio_write@FUNCTION, $0, $1, $2
 	.endfunc
-.Lfunc_end66:
-	.size	__stdout_write, .Lfunc_end66-__stdout_write
+.Lfunc_end72:
+	.size	__stdout_write, .Lfunc_end72-__stdout_write
 
 	.hidden	__stdio_seek
 	.globl	__stdio_seek
@@ -9929,8 +10992,8 @@ __stdio_seek:
 	.result 	i64
 	i64.const	$push0=, -1
 	.endfunc
-.Lfunc_end67:
-	.size	__stdio_seek, .Lfunc_end67-__stdio_seek
+.Lfunc_end73:
+	.size	__stdio_seek, .Lfunc_end73-__stdio_seek
 
 	.hidden	__stdio_write
 	.globl	__stdio_write
@@ -9950,8 +11013,8 @@ __stdio_write:
 	i32.load	$push4=, 28($0)
 	i32.sub 	$push5=, $pop3, $pop4
 	.endfunc
-.Lfunc_end68:
-	.size	__stdio_write, .Lfunc_end68-__stdio_write
+.Lfunc_end74:
+	.size	__stdio_write, .Lfunc_end74-__stdio_write
 
 	.hidden	strlen
 	.globl	strlen
@@ -9968,7 +11031,7 @@ strlen:
 	i32.eqz 	$push28=, $pop0
 	br_if   	0, $pop28
 	copy_local	$2=, $0
-.LBB69_2:
+.LBB75_2:
 	loop    	
 	i32.load8_u	$push1=, 0($2)
 	i32.eqz 	$push29=, $pop1
@@ -9979,12 +11042,12 @@ strlen:
 	i32.const	$push13=, 3
 	i32.and 	$push2=, $pop14, $pop13
 	br_if   	0, $pop2
-.LBB69_4:
+.LBB75_4:
 	end_loop
 	end_block
 	i32.const	$push3=, -4
 	i32.add 	$2=, $2, $pop3
-.LBB69_5:
+.LBB75_5:
 	loop    	
 	i32.const	$push24=, 4
 	i32.add 	$push23=, $2, $pop24
@@ -10005,20 +11068,20 @@ strlen:
 	i32.and 	$push9=, $1, $pop8
 	i32.eqz 	$push31=, $pop9
 	br_if   	0, $pop31
-.LBB69_8:
+.LBB75_8:
 	loop    	
 	i32.const	$push27=, 1
 	i32.add 	$push26=, $2, $pop27
 	tee_local	$push25=, $2=, $pop26
 	i32.load8_u	$push10=, 0($pop25)
 	br_if   	0, $pop10
-.LBB69_9:
+.LBB75_9:
 	end_loop
 	end_block
 	i32.sub 	$push11=, $2, $0
 	.endfunc
-.Lfunc_end69:
-	.size	strlen, .Lfunc_end69-strlen
+.Lfunc_end75:
+	.size	strlen, .Lfunc_end75-strlen
 
 	.hidden	memcmp
 	.globl	memcmp
@@ -10031,7 +11094,7 @@ memcmp:
 	block   	
 	i32.eqz 	$push10=, $2
 	br_if   	0, $pop10
-.LBB70_2:
+.LBB76_2:
 	block   	
 	loop    	
 	i32.load8_u	$push4=, 0($0)
@@ -10049,16 +11112,16 @@ memcmp:
 	tee_local	$push5=, $2=, $pop6
 	br_if   	0, $pop5
 	br      	2
-.LBB70_4:
+.LBB76_4:
 	end_loop
 	end_block
 	i32.sub 	$5=, $3, $4
-.LBB70_5:
+.LBB76_5:
 	end_block
 	copy_local	$push11=, $5
 	.endfunc
-.Lfunc_end70:
-	.size	memcmp, .Lfunc_end70-memcmp
+.Lfunc_end76:
+	.size	memcmp, .Lfunc_end76-memcmp
 
 	.section	.init_array,"aw",@init_array
 	.p2align	2
@@ -10086,10 +11149,10 @@ memcmp:
 	.asciz	"fail to frozen coins"
 	.size	.L.str.3, 21
 
-	.type	.L.str.22,@object
-.L.str.22:
+	.type	.L.str.26,@object
+.L.str.26:
 	.asciz	"write"
-	.size	.L.str.22, 6
+	.size	.L.str.26, 6
 
 	.type	.L.str.4,@object
 .L.str.4:
@@ -10103,7 +11166,7 @@ memcmp:
 
 	.type	.L.str.6,@object
 .L.str.6:
-	.asciz	"number must be within range of 0~99"
+	.asciz	"number must be within range of 2~97"
 	.size	.L.str.6, 36
 
 	.type	.L.str.7,@object
@@ -10148,18 +11211,18 @@ memcmp:
 
 	.type	.L.str.18,@object
 .L.str.18:
-	.asciz	"round:%lld,player:%s,amount:%lld,guess_num:%lld"
-	.size	.L.str.18, 48
+	.asciz	"round:%lld"
+	.size	.L.str.18, 11
 
-	.type	.L.str.20,@object
-.L.str.20:
+	.type	.L.str.24,@object
+.L.str.24:
 	.asciz	"read"
-	.size	.L.str.20, 5
+	.size	.L.str.24, 5
 
-	.type	.L.str.21,@object
-.L.str.21:
+	.type	.L.str.25,@object
+.L.str.25:
 	.asciz	"get"
-	.size	.L.str.21, 4
+	.size	.L.str.25, 4
 
 	.type	.L.str.15,@object
 .L.str.15:
@@ -10175,6 +11238,26 @@ memcmp:
 .L.str.17:
 	.asciz	"stop game\n"
 	.size	.L.str.17, 11
+
+	.type	.L.str.19,@object
+.L.str.19:
+	.asciz	"round;%lld,player:%s,amount:%lld,guess_num:%lld,result_num:%lld,is_player_win:%d,"
+	.size	.L.str.19, 82
+
+	.type	.L.str.20,@object
+.L.str.20:
+	.asciz	"onerror"
+	.size	.L.str.20, 8
+
+	.type	.L.str.21,@object
+.L.str.21:
+	.asciz	"eosio"
+	.size	.L.str.21, 6
+
+	.type	.L.str.22,@object
+.L.str.22:
+	.asciz	"onerror action's are only valid from the \"eosio\" system account"
+	.size	.L.str.22, 64
 
 	.hidden	__dso_handle
 	.type	__dso_handle,@object
@@ -10348,7 +11431,7 @@ f.398:
 	.type	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_,@function
 	.hidden	_ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_
 _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_ = _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC2ERKS5_@FUNCTION
-	.ident	"clang version 4.0.1-10~deb9u2 (tags/RELEASE_401/final)"
+	.ident	"clang version 4.0.1 (https://github.com/llvm-mirror/clang.git 3c8961bedc65c9a15cbe67a2ef385a0938f7cfef) (https://github.com/llvm-mirror/llvm.git c8fccc53ed66d505898f8850bcc690c977a7c9a7)"
 	.ident	"clang version 4.0.1 (https://github.com/llvm-mirror/clang.git 3c8961bedc65c9a15cbe67a2ef385a0938f7cfef) (https://github.com/llvm-mirror/llvm.git c8fccc53ed66d505898f8850bcc690c977a7c9a7)"
 	.ident	"clang version 4.0.1 (https://github.com/llvm-mirror/clang.git 3c8961bedc65c9a15cbe67a2ef385a0938f7cfef) (https://github.com/llvm-mirror/llvm.git c8fccc53ed66d505898f8850bcc690c977a7c9a7)"
 	.ident	"clang version 4.0.1 (https://github.com/llvm-mirror/clang.git 3c8961bedc65c9a15cbe67a2ef385a0938f7cfef) (https://github.com/llvm-mirror/llvm.git c8fccc53ed66d505898f8850bcc690c977a7c9a7)"
@@ -10908,6 +11991,7 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_ = _ZNSt3
 	.functype	memcpy, i32, i32, i32, i32
 	.functype	get_valueSize, i32, i32, i32
 	.functype	eosio_assert, void, i32, i32
+	.functype	get_from, i32, i32, i32
 	.functype	execFrozenCoin, i32, i32, i64
 	.functype	pass_key, void, i32, i32
 	.functype	set_value, void, i32, i32
@@ -10915,7 +11999,8 @@ _ZNSt3__112basic_stringIcNS_11char_traitsIcEENS_9allocatorIcEEEC1ERKS5_ = _ZNSt3
 	.functype	execTransferFrozenCoin, i32, i32, i32, i64
 	.functype	execActiveCoin, i32, i32, i64
 	.functype	get_value, i32, i32, i32
-	.functype	get_from, i32, i32, i32
+	.functype	action_data_size, i32
+	.functype	read_action_data, i32, i32, i32
 	.functype	abort, void
 	.functype	memmove, i32, i32, i32, i32
 	.functype	calloc, i32, i32, i32

@@ -13,12 +13,7 @@ namespace eosio {
 
     class dice : public contract{
     public:
-        dice(account_name self):contract(self){};
-
-        void startgame(string creator, int64_t deposit);
-        void play(string player, int64_t amount, int64_t number, int64_t direction);
-        void stopgame();
-        // @abi table roundinfo i64
+         // @abi table roundinfo i64
         struct roundinfo {
             int64_t round;
             string account;
@@ -36,6 +31,13 @@ namespace eosio {
             int64_t current_round;
         };
 
+        dice(account_name self):contract(self){};
+        void startgame(int64_t deposit);
+        void play(int64_t amount, int64_t number, int64_t direction);
+        void getroundinfo(int64_t round);
+        void stopgame();
+       
+
     private:
         size_t status_size = 0;
         string game_creator;
@@ -50,8 +52,3 @@ namespace eosio {
         bool is_active();
     };
 }
-
-int execFrozenCoin(const char *addr, int64_t amount);
-int execActiveCoin(const char *addr, int64_t amount);
-int execTransferCoin(const char *from, const char *to, int64_t amount);
-int execTransferFrozenCoin(const char *from, const char *to, int64_t amount);
