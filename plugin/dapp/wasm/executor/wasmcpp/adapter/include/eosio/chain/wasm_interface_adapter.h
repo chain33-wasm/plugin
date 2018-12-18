@@ -9,7 +9,10 @@ extern "C" {
 #endif
 
 #define Success (0L)
-#define Fail    (0x12345678L)
+#define Validate_fail (-1)
+#define Fail_exception (1)
+#define OUT_GAS       (2)
+
 typedef int Result;	
 
 typedef struct Apply_context_para {
@@ -33,7 +36,7 @@ typedef struct Apply_context_para {
 	extern void create_apply_context(Apply_context_para *pApply_context);
 
     //call contract with specified code and context
-	extern int64_t callContract4go(int vm, 
+	extern int callContract4go(int vm, 
 				                          const char *pcode,
 				                          int code_size,
 				                          Apply_context_para *pApply_context);

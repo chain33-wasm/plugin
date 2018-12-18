@@ -24,7 +24,7 @@ var (
 	ErrWrongContractAddr             = errors.New("wasm: wrong contract addr")
 	ErrWASMValidationFail            = errors.New("wasm: fail to validate byte code")
 	ErrWASMWavmNotSupported          = errors.New("wasm: vm wavm is not supported now")
-	ErrWasmContractExecFailed        = errors.New("wasm: contract exec failed")
+	ErrWasmContractExecFailed        = errors.New("wasm: contract executing failed")
 	ErrAddrNotExists                 = errors.New("wasm: contract addr not exists")
 	ErrContractNotExists             = errors.New("wasm: contract not exists")
 	ErrNoCreator                     = errors.New("wasm: no creator for contract")

@@ -8,7 +8,6 @@
 
 namespace eosio {
     using std::string;
-    const string status_key = "creator status";
     constexpr size_t max_stack_buffer_size = 512;
 
     class dice : public contract{
@@ -31,15 +30,12 @@ namespace eosio {
         struct gamestatus {
             bool is_active;
             string game_creator;
-            //string game_addr;
             int64_t game_balance;
             int64_t current_round;
         };
 
     private:
-        size_t status_size = 0;
-        string game_creator;
-        void withdraw();
+        void withdraw(string game_creator);
         gamestatus get_status();
         void set_status(gamestatus status);
         int64_t get_game_balance();

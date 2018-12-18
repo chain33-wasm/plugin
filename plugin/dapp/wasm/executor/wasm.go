@@ -36,7 +36,7 @@ var (
 	wasmAddress    = address.ExecAddress(types.ExecName(wasmtypes.WasmX))
 	pMemoryStateDB *state.MemoryStateDB
 	pWasm          *WASMExecutor
-	log            = log15.New("module", "execs.token")
+	log            = log15.New("module", "execs.wasm")
     cfg subConfig
 )
 
@@ -114,6 +114,7 @@ func StateDBGetStateCallback(contractAddr *C.char, key *C.char, keyLen C.int, va
 	}
 
 	actualSize := len(value)
+	//不超出需要获取的数据的空间，以免导致内存越界
 	if actualSize > int(valLen) {
 		actualSize = int(valLen)
 	}
@@ -160,7 +161,7 @@ func ExecFrozen(addr *C.char, amount C.longlong) C.int {
 		log.Error("ExecFrozen failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
 		return C.int(wasmtypes.AccountOpFail)
 	}
-	return C.int(pWasm.mStateDB.ExecFrozen(pWasm.tx, C.GoString(addr), int64(amount)))
+	return C.int(pWasm.mStateDB.ExecFrozen(pWasm.tx, C.GoString(addr), int64(int64(amount) * types.Coin)))
 }
 
 //激活user.wasm.xxx合约addr上的部分余额
@@ -170,7 +171,7 @@ func ExecActive(addr *C.char, amount C.longlong) C.int {
 		log.Error("ExecActive failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
 		return C.int(wasmtypes.AccountOpFail)
 	}
-	return C.int(pWasm.mStateDB.ExecActive(pWasm.tx, C.GoString(addr), int64(amount)))
+	return C.int(pWasm.mStateDB.ExecActive(pWasm.tx, C.GoString(addr), int64(int64(amount) * types.Coin)))
 }
 
 //export ExecTransfer
@@ -179,7 +180,7 @@ func ExecTransfer(from, to *C.char, amount C.longlong) C.int {
 		log.Error("ExecTransfer failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
 		return C.int(wasmtypes.AccountOpFail)
 	}
-	return C.int(pWasm.mStateDB.ExecTransfer(pWasm.tx, C.GoString(from), C.GoString(to), int64(amount)))
+	return C.int(pWasm.mStateDB.ExecTransfer(pWasm.tx, C.GoString(from), C.GoString(to), int64(int64(amount) * types.Coin)))
 }
 
 //export ExecTransferFrozen
@@ -188,7 +189,7 @@ func ExecTransferFrozen(from, to *C.char, amount C.longlong) C.int {
 		log.Error("ExecTransferFrozen failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
 		return C.int(wasmtypes.AccountOpFail)
 	}
-	return C.int(pWasm.mStateDB.ExecTransferFrozen(pWasm.tx, C.GoString(from), C.GoString(to), int64(amount)))
+	return C.int(pWasm.mStateDB.ExecTransferFrozen(pWasm.tx, C.GoString(from), C.GoString(to), int64(int64(amount) * types.Coin)))
 }
 
 //为wasm用户自定义合约提供随机数，该随机数是64位hash值,返回值为实际返回的长度
