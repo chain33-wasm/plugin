@@ -1,7 +1,7 @@
 package executor
 
 //#cgo CFLAGS: -I./../../../../wasmcpp/adapter/include
-//#cgo LDFLAGS: -L./../../../../wasmcpp/lib -lwasm_adapter -ldl -lpthread -lz -ltinfo -lc  -lssl -lcrypto -lsecp256k1 -lchainbase -lWAST -lWASM -lRuntime -lIR -lLogging -lPlatform  -lwasm -lasmjs -lpasses -lcfg -last -lemscripten-optimizer -lsupport -lsoftfloat -lbuiltins -lfc -lm -lstdc++
+//#cgo LDFLAGS: -L./../../../../wasmcpp/lib -lwasm_adapter -ldl -lpthread -lz -ltinfo -lc -lssl -lcrypto -lsecp256k1 -lchainbase -lWAST -lWASM -lRuntime -lIR -lLogging -lPlatform  -lwasm -lasmjs -lpasses -lcfg -last -lemscripten-optimizer -lsupport -lsoftfloat -lbuiltins -lfc -lm -lstdc++
 //#cgo LDFLAGS: -L/usr/local/lib -lboost_filesystem -lboost_system -lboost_chrono -lboost_date_time
 //#cgo LDFLAGS: -L/usr/lib/llvm-4.0/lib -lLLVMPasses -lLLVMipo -lLLVMInstrumentation -lLLVMVectorize -lLLVMIRReader -lLLVMAsmParser -lLLVMLinker -lLLVMMCJIT -lLLVMExecutionEngine -lLLVMRuntimeDyld -lLLVMDebugInfoDWARF -lLLVMX86CodeGen -lLLVMAsmPrinter -lLLVMDebugInfoCodeView -lLLVMDebugInfoMSF -lLLVMGlobalISel -lLLVMSelectionDAG -lLLVMCodeGen -lLLVMScalarOpts -lLLVMInstCombine -lLLVMBitWriter -lLLVMTransformUtils -lLLVMTarget -lLLVMAnalysis -lLLVMProfileData -lLLVMX86AsmParser -lLLVMX86Desc -lLLVMX86AsmPrinter -lLLVMX86Utils -lLLVMObject -lLLVMMCParser -lLLVMBitReader -lLLVMCore -lLLVMX86Disassembler -lLLVMX86Info -lLLVMMCDisassembler -lLLVMMC -lLLVMSupport -lLLVMDemangle
 //#include <stdio.h>
@@ -46,8 +46,8 @@ func init() {
 }
 
 func Init(name string, sub []byte) {
-	drivers.Register(GetName(), newWASMDriver, 0)
-	wasmAddress = address.ExecAddress(GetName())
+	drivers.Register(wasmtypes.WasmX, newWASMDriver, 0)
+	wasmAddress = address.ExecAddress(wasmtypes.WasmX)
 
 	if sub != nil {
 		types.MustDecode(sub, &cfg)
@@ -247,7 +247,7 @@ func (wasm *WASMExecutor) GetMainHeightByTxHash(txHash []byte) int64 {
 }
 
 func (wasm *WASMExecutor) GetName() string {
-	return types.ExecName(wasmtypes.WasmX)
+	return newWASMDriver().GetName()
 }
 
 func (wasm *WASMExecutor) GetDriverName() string {
@@ -272,7 +272,7 @@ func (wasm *WASMExecutor) Allow(tx *types.Transaction, index int) error {
 
 func (wasm *WASMExecutor) prepareExecContext(tx *types.Transaction, index int) {
 	if wasm.mStateDB == nil {
-		wasm.mStateDB = state.NewMemoryStateDB(types.ExecName(string(tx.Execer)), wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
+		wasm.mStateDB = state.NewMemoryStateDB(string(types.GetParaExec(tx.Execer)), wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
 	}
 
 	wasm.tx = tx
@@ -292,9 +292,9 @@ func (wasm *WASMExecutor) prepareExecContext(tx *types.Transaction, index int) {
 	}
 }
 
-func (wasm *WASMExecutor) prepareQueryContext(executorName string) {
+func (wasm *WASMExecutor) prepareQueryContext(executorName []byte) {
 	if wasm.mStateDB == nil {
-		wasm.mStateDB = state.NewMemoryStateDB(executorName, wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
+		wasm.mStateDB = state.NewMemoryStateDB(string(types.GetParaExec(executorName)), wasm.GetStateDB(), wasm.GetLocalDB(), wasm.GetCoinsAccount(), wasm.GetHeight())
 	}
 }
 
@@ -462,13 +462,13 @@ func (wasm *WASMExecutor) ExecDelLocal(tx *types.Transaction, receipt *types.Rec
 func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableReq) (types.Message, error) {
 	resp := &wasmtypes.WasmQueryResponse{}
 	contractAddr := address.ExecAddress(types.ExecName(in.ContractName))
-	wasm.prepareQueryContext(types.ExecName(wasmtypes.WasmX))
+	wasm.prepareQueryContext([]byte(wasmtypes.WasmX))
 	abi := wasm.mStateDB.GetAbi(contractAddr)
 	if nil == abi {
 		log.Error("getContractTable", "Failed to get abi for wasm contract", in.ContractName)
 		return nil, wasmtypes.ErrAddrNotExists
 	}
-	wasm.mStateDB.SetCurrentExecutorName(types.ExecName(in.ContractName))
+	wasm.mStateDB.SetCurrentExecutorName(string(types.GetParaExec([]byte(in.ContractName))))
 	abi4CStr := C.CString(string(abi))
 	defer C.free(unsafe.Pointer(abi4CStr))
 
