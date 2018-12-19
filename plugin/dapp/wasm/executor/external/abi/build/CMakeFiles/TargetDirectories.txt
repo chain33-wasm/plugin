@@ -1,0 +1,3 @@
+/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build/CMakeFiles/rebuild_cache.dir
+/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build/CMakeFiles/abiconv.dir
+/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build/CMakeFiles/edit_cache.dir

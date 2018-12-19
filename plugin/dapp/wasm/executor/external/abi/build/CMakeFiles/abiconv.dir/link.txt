@@ -1,0 +1,2 @@
+/usr/bin/ar qc libabiconv.a  CMakeFiles/abiconv.dir/src/abieos.cpp.o
+/usr/bin/ranlib libabiconv.a
