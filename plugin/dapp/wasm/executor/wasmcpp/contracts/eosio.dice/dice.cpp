@@ -1,15 +1,19 @@
-
 #include "dice.hpp"
+#define GAME_PRECISION 100
+#define COIN_PRECISION 10000
+#define STATUS "creator status"
 
 namespace eosio {
 
 using namespace std;
-using eosio::dice;
-using eosio::max_stack_buffer_size;
 
-void dice::startgame(string creator, int64_t deposit)
+void dice::startgame(int64_t deposit)
 { 
-  string status_key("creator status");
+  char fromBuf[64] = {0};
+  int fromsize = getFrom4chain33(fromBuf, 64);
+  string creator(fromBuf);
+
+  string status_key(STATUS);
   char debugInfo[512] = {0};
   sprintf(debugInfo, "Begin to startgame and creator:%s, deposit:%lld.\n"
   	"status_key:%s, with len:%d.\n", creator.c_str(), deposit,
@@ -19,12 +23,12 @@ void dice::startgame(string creator, int64_t deposit)
   int valueSize = dbGetValueSize4chain33(status_key.c_str(), status_key.length());
   eosio_assert( valueSize == 0, "game already exists" );
   eosio_assert(deposit > 0, "deposit must be positive");
-  eosio_assert(OK == execFrozenCoin(creator.c_str(), deposit), "fail to frozen coins");
+  eosio_assert(OK == execFrozenCoin(creator.c_str(), COIN_PRECISION * deposit), "fail to frozen coins");
   prints("Succeed to frozen coin\n");
   gamestatus status;
   status.is_active = true;
   status.game_creator = creator;
-  status.game_balance = deposit;
+  status.game_balance = GAME_PRECISION * deposit;
   status.current_round = 0;
 
   size_t size = pack_size( status );
@@ -32,34 +36,27 @@ void dice::startgame(string creator, int64_t deposit)
 }
 
 //-x play -r "{\"player\":\"14cM9mnZ5JvbpFQTF4nwTCmix31VgmpweL\",\"amount\":\"2\",\"number\":\"40\",\"direction\":\"0\"}" 
-void dice::play(string player, int64_t amount, int64_t number, int64_t direction)
+void dice::play(int64_t amount, int64_t number)
 { 
-  eosio_assert(this->is_active(), "game is not active");
+  char fromBuf[64] = {0};
+  int fromsize = getFrom4chain33(fromBuf, 64);
+  string player(fromBuf);
+  gamestatus status = this->get_status();
+  eosio_assert(status.is_active, "game is not active");
   eosio_assert(amount > 0, "amount must be positive");
   eosio_assert(number>=2 && number<= 97, "number must be within range of 2~97");
-  eosio_assert(direction==0 || direction==1, "direction must be 0 or 1");
   
   int64_t game_balance = get_game_balance();
-  eosio_assert(50 * amount < game_balance, "amount is too big");
-  eosio_assert(OK == execFrozenCoin(player.c_str(), amount), "fail to frozen coins");
-  int64_t probability = 0; //赢的概率
-  //guess small
-  if (direction == 0)
-  {
-    probability = number;
-  }
-  //guess big
-  else
-  {
-    probability = 100 - number;
-  }
+  eosio_assert(GAME_PRECISION * 50 * amount < game_balance, "amount is too big");
+  eosio_assert(OK == execFrozenCoin(player.c_str(), COIN_PRECISION * amount), "fail to frozen coins");
+  int64_t probability = number;
     
-  int64_t payout = amount * (100 - probability) / probability;
-  char temp[32] = {0};
-  int length = get_random(temp, 32);
+  int64_t payout = GAME_PRECISION * amount * (100 - probability) / probability;
+  char arr[32] = {0};
+  int length = get_random(arr, 32);
   eosio_assert(length > 0, "get_random error");
-  int64_t rand_num = int64_t(temp[length - 1]);
-  rand_num = (rand_num * 100) >> 4; // *100/16
+  char temp = arr[length - 1] & 0x0f;
+  int64_t rand_num = (int64_t(temp) * 100) >> 4; // *100/16
   print_f("rand num:%lld\n",rand_num);
   roundinfo info;
   info.round = this->get_status_round() + 1;
@@ -67,14 +64,13 @@ void dice::play(string player, int64_t amount, int64_t number, int64_t direction
   info.amount = amount;
   info.guess_num = number;
   info.result_num = rand_num;
-  gamestatus status = this->get_status();
-  if ((direction==0 && rand_num < number) || (direction==1 && rand_num > number))
+  if (rand_num < number)
   {
     //TODO
     //保证原子操作？
-    eosio_assert(OK == execTransferFrozenCoin(status.game_creator.c_str(), player.c_str(), payout), "fail to transfer frozen coins");
-    this->change_game_balance(-payout);
-    eosio_assert(OK == execActiveCoin(player.c_str(), amount), "fail to active coins");
+    eosio_assert(OK == execTransferFrozenCoin(status.game_creator.c_str(), player.c_str(), COIN_PRECISION * payout), "fail to transfer frozen coins");
+    this->change_game_balance(- GAME_PRECISION * payout);
+    eosio_assert(OK == execActiveCoin(player.c_str(), COIN_PRECISION * amount), "fail to active coins");
     info.player_win = true;
     printf("you win\n");
   }
@@ -82,9 +78,9 @@ void dice::play(string player, int64_t amount, int64_t number, int64_t direction
   {
     //TODO
     //保证原子操作？
-    eosio_assert(OK == execTransferFrozenCoin(player.c_str(), status.game_creator.c_str(), amount), "fail to transfer frozen coins");
-    eosio_assert(OK == execFrozenCoin(status.game_creator.c_str(), amount), "fail to frozen coins");
-	this->change_game_balance(amount);
+    eosio_assert(OK == execTransferFrozenCoin(player.c_str(), status.game_creator.c_str(), COIN_PRECISION * amount), "fail to transfer frozen coins");
+    eosio_assert(OK == execFrozenCoin(status.game_creator.c_str(), COIN_PRECISION * amount), "fail to frozen coins");
+	this->change_game_balance(GAME_PRECISION * amount);
     info.player_win = false;
     printf("you lose\n");
   }
@@ -96,11 +92,11 @@ void dice::stopgame()
 {
   char fromBuf[64] = {0};
   int fromsize = getFrom4chain33(fromBuf, 64);
-	string from(fromBuf);
+  string from(fromBuf);
   gamestatus status = this->get_status();
   string creator = status.game_creator;
   eosio_assert( from == creator, "game can only be stopped by creator" );
-  eosio_assert(this->is_active(), "game is not active");
+  eosio_assert(status.is_active, "game is not active");
   this->withdraw(creator);
   printf("withdraw\n");
 
@@ -112,7 +108,7 @@ void dice::stopgame()
 
 eosio::dice::gamestatus dice::get_status()
 {
-  string status_key("creator status");
+  string status_key(STATUS);
   int size = dbGetValueSize4chain33(status_key.c_str(), status_key.length());
   eosio_assert( size > 0, "Failed to get_status" );
   void* buffer = max_stack_buffer_size < size ? malloc(size) : alloca(size);
@@ -129,7 +125,7 @@ eosio::dice::gamestatus dice::get_status()
 
 void dice::set_status(gamestatus status)
 {
-  string status_key("creator status");
+  string status_key(STATUS);
   size_t size = pack_size(status);
   void* buffer = max_stack_buffer_size < size ? calloc(1, size) : alloca(size);
   datastream<char*> ds( (char*)buffer, size );
@@ -194,12 +190,12 @@ void dice::add_status_round()
 void dice::withdraw(string game_creator)
 {
   int64_t balance = this->get_game_balance();
-  eosio_assert(OK == execActiveCoin(game_creator.c_str(), balance), "fail to active coins");
+  eosio_assert(OK == execActiveCoin(game_creator.c_str(), balance/GAME_PRECISION*COIN_PRECISION), "fail to active coins");
 }
 
 bool dice::is_active()
 {
-  string status_key("creator status");
+  string status_key(STATUS);
   int valueSize = dbGetValueSize4chain33(status_key.c_str(), status_key.length());
   if (valueSize == 0)
   {

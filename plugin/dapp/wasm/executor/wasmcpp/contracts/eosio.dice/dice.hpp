@@ -14,8 +14,8 @@ namespace eosio {
     public:
         dice(account_name self):contract(self){};
 
-        void startgame(string creator, int64_t deposit);
-        void play(string player, int64_t amount, int64_t number, int64_t direction);
+        void startgame(int64_t deposit);
+        void play(int64_t amount, int64_t number);
         void stopgame();
         // @abi table roundinfo i64
         struct roundinfo {
