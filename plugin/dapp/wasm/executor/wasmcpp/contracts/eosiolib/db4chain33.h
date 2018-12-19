@@ -22,10 +22,27 @@ int get_random(char* randomDataOutput , int maxLen);
 //otherwise, the latter info will be ignored
 void output2user(const char *type, const char* data, uint32_t len);
 //////////interface for coin operation////////
+#define Coin_Precision (10000)
+//all the coin interface is operated with the 0.0001 precision,
+//10000 denote 1, so 1 denote 0.0001
 int execFrozenCoin(const char *addr, int64_t amount);
 int execActiveCoin(const char *addr, int64_t amount);
 int execTransferCoin(const char *from, const char *to, int64_t amount);
 int execTransferFrozenCoin(const char *from, const char *to, int64_t amount);
+
+//low precision interface
+inline int execFrozenCoinLP(const char *addr, int64_t amount) {
+	return execFrozenCoin(addr, Coin_Precision * amount);
+}
+inline int execActiveCoinLP(const char *addr, int64_t amount) {
+	return execActiveCoin(addr, Coin_Precision * amount);
+}
+inline int execTransferCoinLP(const char *from, const char *to, int64_t amount) {
+	return execTransferCoin(from, to, Coin_Precision * amount);
+}
+inline int execTransferFrozenCoinLP(const char *from, const char *to, int64_t amount) {
+	return execTransferFrozenCoin(from, to, Coin_Precision * amount);
+}
 
 
 #ifdef __cplusplus
