@@ -71,7 +71,7 @@ function build_contract {
     ($PRINT_CMDS; ${EOSIO_INSTALL_DIR}/bin/eosio-s2wasm -o $outname -s 16384 $workdir/assembly.s)
     ($PRINT_CMDS; ${EOSIO_INSTALL_DIR}/bin/eosio-wast2wasm $outname ${outname%.*}.wasm -n)
 
-    ($PRINT_CMDS; cp $workdir/assembly.s ${filePath}/${outname%.*}.s)
+#    ($PRINT_CMDS; cp $workdir/assembly.s ${filePath}/${outname%.*}.s)
 
     ($PRINT_CMDS; rm -rf $workdir)
     set +e

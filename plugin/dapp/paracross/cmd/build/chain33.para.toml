@@ -73,7 +73,7 @@ genesisBlockTime=1514533394
 genesis="14KEKbYtKKQm4wMthSK9J4La4nAiidGozt"
 ParaRemoteGrpcClient = "localhost:8802"
 #主链指定高度的区块开始同步
-startHeight=345850
+startHeight=0
 #打包时间间隔，单位秒
 writeBlockSeconds=2
 #主链每隔几个没有相关交易的区块，平行链上打包空区块

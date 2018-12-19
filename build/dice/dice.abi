@@ -58,9 +58,6 @@
         },{
           "name": "number",
           "type": "int64"
-        },{
-          "name": "direction",
-          "type": "int64"
         }
       ]
     },{
