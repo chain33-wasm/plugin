@@ -33,7 +33,7 @@ if [ ! -d "${BUILD_DIR}" ]; then
       exit 1;
 fi  
 echo "sleep 3 seconds and clean build"
-rm * -fr
+#rm * -fr
 
 COUNTER=0
 while [[ ${COUNTER} -lt 3 ]]
