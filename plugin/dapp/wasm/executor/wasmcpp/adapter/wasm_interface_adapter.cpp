@@ -35,7 +35,7 @@ Result wasm_validate_contract(const char *pcode, int len) {
 			("a", e.to_detail_string()));
 	    
 		fc::writewasmRunLog(excpInfo.c_str());
-	    return Fail;
+	    return Validate_fail;
 	}
 }
 
@@ -62,7 +62,7 @@ void create_apply_context(Apply_context_para *pApply_context) {
 }
 
 //call contract with specified code and context
-int64_t callContract4go(int vm, const char *pcode, int code_size, Apply_context_para *pApply_context){
+int callContract4go(int vm, const char *pcode, int code_size, Apply_context_para *pApply_context){
 	std::unique_ptr<class eosio::chain::apply_context> pcontext(new eosio::chain::apply_context(pApply_context));
 	try {
 		fc::writewasmRunLog("Begin to do callContract4go\n");
@@ -70,7 +70,9 @@ int64_t callContract4go(int vm, const char *pcode, int code_size, Apply_context_
 		eosio::chain::wasm_interface *wasmIntInstance = new eosio::chain::wasm_interface(eosio::chain::wasm_interface::vm_type(vm));
 		wasmIntInstance->apply(code_id, pcode, code_size, *pcontext);
 		fc::writewasmRunLog("Successfully finished doing callContract4go\n");
-		return pcontext->gasAvailable;
+		pApply_context->gasAvailable = pcontext->gasAvailable;
+
+		return Success;
 	} catch (const fc::exception& e){
 	    //throw;
 	    //FC_CAPTURE_AND_RETHROW((trace))
@@ -79,10 +81,11 @@ int64_t callContract4go(int vm, const char *pcode, int code_size, Apply_context_
 			("a", e.to_detail_string()));
 	    
 		fc::writewasmRunLog(excpInfo.c_str());
+		pApply_context->gasAvailable = pcontext->gasAvailable;
 	    if (pcontext->gasAvailable < 0) {
-			return pcontext->gasAvailable;
+			return OUT_GAS;
 		}
-	    return Fail;
+	    return Fail_exception;
     }		
 }
 

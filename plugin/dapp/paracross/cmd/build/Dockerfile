@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM wasmtest:1.0
 
 WORKDIR /root
 COPY chain33 chain33

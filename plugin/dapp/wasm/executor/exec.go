@@ -130,22 +130,23 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 
 	//2nd step: just call contract
 	codePtr := C.CBytes(code)
-	leftGas := C.callContract4go(C.VMTypeBinaryen, (*C.char)(codePtr), C.int(len(code)), context)
+	result_cint := C.callContract4go(C.VMTypeBinaryen, (*C.char)(codePtr), C.int(len(code)), context)
 	defer C.free(codePtr)
+	leftGas := uint64(context.gasAvailable)
 	log.Debug("wasm call", "call back from callContract4go with leftGas", leftGas)
+	result := int(result_cint)
 
 	//合约执行失败
-	if leftGas < 0 && leftGas == wasmtypes.GAS_EXHAUSTED_ERR_CODE {
+	if result != wasmtypes.Success {
 		wasm.mStateDB.RevertToSnapshot(snapshot)
-		log.Error("call wasm contract ", "failed to call contract due to", wasmtypes.ErrWasmContractExecFailed)
-		return nil, wasmtypes.ErrWasmContractExecFailed
-	} else if leftGas < 0 {
-		//合约购买的gas不够
-		wasm.mStateDB.RevertToSnapshot(snapshot)
+		if result == wasmtypes.Exception_Fail {
+			log.Error("call wasm contract ", "failed to call contract due to", wasmtypes.ErrWasmContractExecFailed)
+			return nil, wasmtypes.ErrWasmContractExecFailed
+		}
 		log.Error("call wasm contract ", "failed to call contract due to", wasmtypes.ErrOutOfGasWASM)
 		return nil, wasmtypes.ErrOutOfGasWASM
 	}
-	usedGas := callWasmContract.GasLimit - uint64(leftGas)
+	usedGas := callWasmContract.GasLimit - leftGas
 
 	contractAccount := wasm.mStateDB.GetAccount(userWasmAddr)
 	caller := tx.From()

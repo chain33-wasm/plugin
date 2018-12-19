@@ -12,7 +12,10 @@ const (
 	WasmGetAbi             = "WasmGetAbi"
 	ConvertJson2Abi        = "ConvertJson2Abi"
 	WasmGetContractTable   = "WasmGetContractTable"
-	GAS_EXHAUSTED_ERR_CODE = 0x81234567
+	GAS_EXHAUSTED_ERR_CODE = (-int64(0x12345678<<6))
+	Success                = int(0)
+	OUT_GAS                = int(2)
+	Exception_Fail         = int(1)
 	WasmX                  = "wasm"
 	UserWasmX              = "user.wasm."
 	CreateWasmContractStr  = "CreateWasmContract"

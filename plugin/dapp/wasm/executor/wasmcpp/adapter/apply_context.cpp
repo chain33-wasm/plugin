@@ -94,6 +94,9 @@ void apply_context::setKey(const char *data, int len) {
 	key4DB.resize(len, 0x00);
 	memset(key4DB.data(), 0x00, len);
 	memcpy(key4DB.data(), data, len);
+	fc::writewasmRunLog("SetKey:");
+	fc::writewasmRunLog(data);
+	fc::writewasmRunLog("\n");
 }
 void apply_context::setValue(const char *data, int len) {
 	value4DB.resize(len, 0x00);

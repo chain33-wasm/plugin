@@ -9,10 +9,6 @@
 
 #include <string>
 
-namespace eosiosystem {
-   class system_contract;
-}
-
 namespace eosio {
 
    using std::string;

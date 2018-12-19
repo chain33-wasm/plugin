@@ -32,6 +32,7 @@ wasmlib: ### Build for wasm libraries
 	@cp $(WASMCPP)/build/wasm/binaryen/lib/libwasm.a $(WASMCPP)/lib/libwasm.a
 	@cp $(WASMCPP)/build/wasm-jit/Source/WASM/libWASM.a $(WASMCPP)/lib/libWASM.a
 	@cp $(WASMCPP)/build/wasm-jit/Source/WAST/libWAST.a $(WASMCPP)/lib/libWAST.a
+	@cp $(WASMCPP)/build/fc/libfc.a $(WASMCPP)/lib/libfc.a
 	@cp $(WASMCPP)/build/serialize/libwasm_serialize.a $(WASMCPP)/lib/libwasm_serialize.a
 
 
