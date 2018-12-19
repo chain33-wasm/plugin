@@ -161,7 +161,7 @@ func ExecFrozen(addr *C.char, amount C.longlong) C.int {
 		log.Error("ExecFrozen failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
 		return C.int(wasmtypes.AccountOpFail)
 	}
-	return C.int(pWasm.mStateDB.ExecFrozen(pWasm.tx, C.GoString(addr), int64(int64(amount) * types.Coin)))
+	return C.int(pWasm.mStateDB.ExecFrozen(pWasm.tx, C.GoString(addr), int64(int64(amount) * wasmtypes.Coin_Precision)))
 }
 
 //激活user.wasm.xxx合约addr上的部分余额
@@ -171,7 +171,7 @@ func ExecActive(addr *C.char, amount C.longlong) C.int {
 		log.Error("ExecActive failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
 		return C.int(wasmtypes.AccountOpFail)
 	}
-	return C.int(pWasm.mStateDB.ExecActive(pWasm.tx, C.GoString(addr), int64(int64(amount) * types.Coin)))
+	return C.int(pWasm.mStateDB.ExecActive(pWasm.tx, C.GoString(addr), int64(int64(amount) * wasmtypes.Coin_Precision)))
 }
 
 //export ExecTransfer
@@ -180,7 +180,7 @@ func ExecTransfer(from, to *C.char, amount C.longlong) C.int {
 		log.Error("ExecTransfer failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
 		return C.int(wasmtypes.AccountOpFail)
 	}
-	return C.int(pWasm.mStateDB.ExecTransfer(pWasm.tx, C.GoString(from), C.GoString(to), int64(int64(amount) * types.Coin)))
+	return C.int(pWasm.mStateDB.ExecTransfer(pWasm.tx, C.GoString(from), C.GoString(to), int64(int64(amount) * wasmtypes.Coin_Precision)))
 }
 
 //export ExecTransferFrozen
@@ -189,7 +189,7 @@ func ExecTransferFrozen(from, to *C.char, amount C.longlong) C.int {
 		log.Error("ExecTransferFrozen failed due to nil handle", "pWasm", pWasm, "pWasm.mStateDB", pWasm.mStateDB)
 		return C.int(wasmtypes.AccountOpFail)
 	}
-	return C.int(pWasm.mStateDB.ExecTransferFrozen(pWasm.tx, C.GoString(from), C.GoString(to), int64(int64(amount) * types.Coin)))
+	return C.int(pWasm.mStateDB.ExecTransferFrozen(pWasm.tx, C.GoString(from), C.GoString(to), int64(int64(amount) * wasmtypes.Coin_Precision)))
 }
 
 //为wasm用户自定义合约提供随机数，该随机数是64位hash值,返回值为实际返回的长度
