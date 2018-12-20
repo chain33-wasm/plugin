@@ -34,11 +34,11 @@ class apply_context {
    public:
       apply_context(Apply_context_para *pApply_context, uint32_t depth=0)
       :contractAddr(std::string(pApply_context->contractAddr)),
+      recurse_depth(depth),
       gasAvailable(pApply_context->gasAvailable),
       currentBlockTime(pApply_context->blocktime),
-      from(std::string(pApply_context->from)),
       height(pApply_context->height),
-      recurse_depth(depth)
+      from(std::string(pApply_context->from))
       {
          bytes data(pApply_context->datalen);
 	     for(bytes::iterator iter = data.begin(); iter != data.end(); iter++) {
