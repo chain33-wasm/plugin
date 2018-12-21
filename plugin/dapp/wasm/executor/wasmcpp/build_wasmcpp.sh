@@ -16,5 +16,10 @@ cp wasm-jit/Source/WASM/libWASM.a ../lib
 cp wasm-jit/Source/WAST/libWAST.a ../lib
 cp fc/libfc.a ../lib
 cp serialize/libwasm_serialize.a ../lib
+cp softfloat/libsoftfloat.a ../lib
+cp wasm-jit/Source/IR/libIR.a ../lib
+cp wasm-jit/Source/Platform/libPlatform.a ../lib
+cp wasm-jit/Source/Logging/libLogging.a ../lib
+cp wasm-jit/Source/Runtime/libRuntime.a ../lib
 
 

@@ -34,19 +34,19 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/bin/cmake
+CMAKE_COMMAND = /opt/cmake-3.13.2/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/bin/cmake -E remove -f
+RM = /opt/cmake-3.13.2/bin/cmake -E remove -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi
+CMAKE_SOURCE_DIR = /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build
+CMAKE_BINARY_DIR = /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/abiconv.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/abiconv.dir/flags.make
 
 CMakeFiles/abiconv.dir/src/abieos.cpp.o: CMakeFiles/abiconv.dir/flags.make
 CMakeFiles/abiconv.dir/src/abieos.cpp.o: ../src/abieos.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/abiconv.dir/src/abieos.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/abiconv.dir/src/abieos.cpp.o -c /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/src/abieos.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/abiconv.dir/src/abieos.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/abiconv.dir/src/abieos.cpp.o -c /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/src/abieos.cpp
 
 CMakeFiles/abiconv.dir/src/abieos.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/abiconv.dir/src/abieos.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/src/abieos.cpp > CMakeFiles/abiconv.dir/src/abieos.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/src/abieos.cpp > CMakeFiles/abiconv.dir/src/abieos.cpp.i
 
 CMakeFiles/abiconv.dir/src/abieos.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/abiconv.dir/src/abieos.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/src/abieos.cpp -o CMakeFiles/abiconv.dir/src/abieos.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/src/abieos.cpp -o CMakeFiles/abiconv.dir/src/abieos.cpp.s
 
 # Object files for target abiconv
 abiconv_OBJECTS = \
@@ -80,7 +80,7 @@ abiconv_EXTERNAL_OBJECTS =
 libabiconv.a: CMakeFiles/abiconv.dir/src/abieos.cpp.o
 libabiconv.a: CMakeFiles/abiconv.dir/build.make
 libabiconv.a: CMakeFiles/abiconv.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libabiconv.a"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX static library libabiconv.a"
 	$(CMAKE_COMMAND) -P CMakeFiles/abiconv.dir/cmake_clean_target.cmake
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/abiconv.dir/link.txt --verbose=$(VERBOSE)
 
@@ -94,6 +94,6 @@ CMakeFiles/abiconv.dir/clean:
 .PHONY : CMakeFiles/abiconv.dir/clean
 
 CMakeFiles/abiconv.dir/depend:
-	cd /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build /home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build/CMakeFiles/abiconv.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build /home/kinghao/workspace/Go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/external/abi/build/CMakeFiles/abiconv.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/abiconv.dir/depend
 

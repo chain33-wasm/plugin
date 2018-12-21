@@ -333,7 +333,7 @@ func (wasm *WASMExecutor) GenerateExecReceipt(usedGas, gasPrice uint64, snapshot
 	}
 	// 从状态机中获取数据变更和变更日志
 	data, logs := wasm.mStateDB.GetChangedData(curVer.GetId(), opType)
-	contractReceipt := &wasmtypes.ReceiptWASMContract{caller, execName, contractAddr, usedGas}
+	contractReceipt := &wasmtypes.ReceiptWASMContract{Caller:caller, ContractName:execName,ContractAddr: contractAddr, UsedGas:usedGas}
 
 	runLog := &types.ReceiptLog{
 		Ty:  wasmtypes.TyLogCallContractWasm,

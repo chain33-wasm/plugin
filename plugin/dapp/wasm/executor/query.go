@@ -8,11 +8,15 @@ package executor
 import "C"
 
 import (
-	"github.com/33cn/chain33/types"
-	"github.com/33cn/chain33/common/address"
-	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
-	"unsafe"
 	"bytes"
+	"fmt"
+	"github.com/33cn/chain33/common/address"
+	"github.com/33cn/chain33/types"
+	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
+	"github.com/golang/protobuf/proto"
+	"os"
+	"regexp"
+	"unsafe"
 )
 
 
@@ -88,6 +92,77 @@ func (wasm *WASMExecutor) Query_WasmGetContractTable(in *wasmtypes.WasmQueryCont
 	return wasm.getContractTable(&incp)
 }
 
+// Query_CreateTx 创建交易对象
+func (wasm *WASMExecutor) Query_CreateWasmContract(in *wasmtypes.CreateContrantReq) (types.Message, error) {
+	if in == nil {
+		return nil, types.ErrInvalidParam
+	}
+
+	execer := types.GetRealExecName([]byte(in.Name))
+	if bytes.HasPrefix(execer, []byte(wasmtypes.UserWasmX)) {
+		execer = execer[len(wasmtypes.UserWasmX):]
+	}
+
+	execerStr := string(execer)
+	nameReg, err := regexp.Compile(wasmtypes.NameRegExp)
+	if !nameReg.MatchString(execerStr) {
+		fmt.Fprintln(os.Stderr, err, "Wrong wasm contract name format, which should be a-z and 0-9 ")
+		return nil, wasmtypes.ErrWrongContracName
+	}
+
+	if len(execerStr) > 16 || len(execerStr) < 4 {
+		fmt.Fprintln(os.Stderr, "wasm contract name's length should be within range [4-16]")
+		return nil, wasmtypes.ErrWrongContracNameLen
+	}
+	action := &wasmtypes.WasmContractAction{
+		Value: &wasmtypes.WasmContractAction_CreateWasmContract{
+			CreateWasmContract: &wasmtypes.CreateWasmContract{
+				GasLimit: uint64(in.Fee),
+				GasPrice: 1,
+				Code:     in.Code,
+				Abi:      in.Abi,
+				Name:     types.ExecName(wasmtypes.UserWasmX + execerStr),
+				Note:     in.Note,
+			},
+		},
+		Ty: wasmtypes.CreateWasmContractAction,
+	}
+
+	return createRawWasmTx(action, wasmtypes.WasmX, in.Fee)
+
+}
+
+// Query_CreateTx 创建交易对象
+func (wasm *WASMExecutor) Query_CallWasmContract(in *wasmtypes.CallContractReq) (types.Message, error) {
+	if in == nil {
+		return nil, types.ErrInvalidParam
+	}
+
+	wasm.prepareQueryContext([]byte(wasmtypes.WasmX))
+
+	//resp := &wasmtypes.Json2AbiResponse{}
+	contractAddr := address.ExecAddress(types.ExecName(in.Name))
+	abi := wasm.mStateDB.GetAbi(contractAddr)
+
+	AbiData := genAbiData(string(abi), in.Name, in.ActionName, in.DataInJson)
+
+	action := &wasmtypes.WasmContractAction{
+		Value: &wasmtypes.WasmContractAction_CallWasmContract{
+			CallWasmContract: &wasmtypes.CallWasmContract{
+				GasLimit:   uint64(in.Fee),
+				GasPrice:   1,
+				Note:       in.Note,
+				VmType:     wasmtypes.VMBinaryen, //当前只支持binaryen解释执行的方式
+				ActionName: in.ActionName,
+				ActionData: AbiData,
+			},
+		},
+		Ty: wasmtypes.CallWasmContractAction,
+	}
+
+	return createRawWasmTx(action, in.Name, in.Fee)
+}
+
 func genAbiData(contractAbi, contractName, actionName, abiJson string) []byte {
 	contract := C.CString(contractName)
 	defer C.free(unsafe.Pointer(contract))
@@ -108,4 +183,20 @@ func genAbiData(contractAbi, contractName, actionName, abiJson string) []byte {
 
 	abislice := C.GoBytes(unsafe.Pointer(abidata), abisize)
 	return abislice
+}
+
+func createRawWasmTx(action proto.Message, wasmName string, fee int64) (*types.Transaction, error) {
+	tx := &types.Transaction{
+		Execer:  []byte(types.ExecName(wasmName)),
+		Payload: types.Encode(action),
+		To:      address.ExecAddress(types.ExecName(wasmName)),
+	}
+	tx, err := types.FormatTx(string(tx.Execer), tx)
+	if err != nil {
+		return nil, err
+	}
+	if tx.Fee < fee {
+		tx.Fee = fee
+	}
+	return tx, nil
 }
