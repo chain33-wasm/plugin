@@ -493,7 +493,7 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableR
 		if nil == wasmOutItem.Data {
 			result := &wasmtypes.QueryResultItem{
 				ItemType:   wasmOutItem.ItemType,
-				ResultJSON: "Error:can't find this kind of table",
+				ResultJSON: "Error:NO data saved in DB with such a key",
 				Found:      false,
 			}
 			resp.QueryResultItems = append(resp.QueryResultItems, result)
@@ -505,9 +505,16 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableR
 
 		log.Debug("wasm query", "structure", wasmOutItem.ItemType)
 
-		if 0 != C.convertData2Json(abi4CStr, (*C.char)(serializedData), (C.int)(len(wasmOutItem.Data)), structName, &jsonResult) {
+		if C.int(wasmtypes.Success) != C.convertData2Json(abi4CStr, (*C.char)(serializedData), (C.int)(len(wasmOutItem.Data)), structName, &jsonResult) {
 			log.Error("wasm query", "structure", wasmOutItem.ItemType)
-			return nil, wasmtypes.ErrUnserialize
+
+			result := &wasmtypes.QueryResultItem{
+				ItemType:   wasmOutItem.ItemType,
+				ResultJSON: "Error:Correct key value but with wrong Table name",
+				Found:      false,
+			}
+			resp.QueryResultItems = append(resp.QueryResultItems, result)
+			continue
 		}
 
 		result := &wasmtypes.QueryResultItem{

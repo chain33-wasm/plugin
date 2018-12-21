@@ -22,18 +22,10 @@ DAPP := ""
 PROJ := "build"
 .PHONY: default dep all build release cli linter race test fmt vet bench msan coverage coverhtml docker docker-compose protobuf clean help autotest
 
-default: wasmlib build depends
+default: updateWasmlib build depends
 
-wasmlib: ### Build for wasm libraries
-	@cp $(WASMCPP)/adapter/libwasm_adapter.a $(WASMCPP)/lib
-	@cp $(WASMCPP)/wasm/binaryen/lib/libasmjs.a $(WASMCPP)/lib/libasmjs.a
-	@cp $(WASMCPP)/wasm/binaryen/lib/libast.a $(WASMCPP)/lib/libast.a
-	@cp $(WASMCPP)/wasm/binaryen/lib/libwasm.a $(WASMCPP)/lib/libwasm.a
-	@cp $(WASMCPP)/wasm-jit/Source/WASM/libWASM.a $(WASMCPP)/lib/libWASM.a
-	@cp $(WASMCPP)/wasm-jit/Source/WAST/libWAST.a $(WASMCPP)/lib/libWAST.a
-	@cp $(WASMCPP)/fc/libfc.a $(WASMCPP)/lib/libfc.a
-	@cp $(WASMCPP)/serialize/libwasm_serialize.a $(WASMCPP)/lib/libwasm_serialize.a
-
+updateWasmlib:
+	@bash $(WASMCPP)/build_wasmcpp.sh
 
 build:
 	@go build $(BUILD_FLAGS) -v -i -o $(APP)

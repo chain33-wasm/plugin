@@ -12,6 +12,10 @@ extern "C" {
 #define Validate_fail (-1)
 #define Fail_exception (1)
 #define OUT_GAS       (2)
+#define WRONG_PARA    (3)
+#define Malloc_Fail   (4)
+
+
 
 typedef int Result;	
 

@@ -34,7 +34,7 @@ apply_context::~apply_context() {
     temp += _pending_console_output.str(); 
 	fc::writewasmRunLog(temp.c_str());
 	char buf[512] = {0};
-	sprintf(buf, "There are total %d element need to write back", out2user.size());
+	sprintf(buf, "There are total %zu element need to write back", out2user.size());
 	fc::writewasmRunLog(buf);
 	for (vector<Out2UserElement>::iterator it = out2user.begin();
 	     it != out2user.end();
@@ -69,7 +69,7 @@ void apply_context::output2user(const char *type, const char *data, int len) {
 	out2user.emplace_back(out2UserElement);
 	//////////////////debug code////////////////////////
 	char temp[512] = {0};
-	sprintf(temp, "structure:%s is added with size:%d", type, out2user.size());
+	sprintf(temp, "structure:%s is added with size:%zu", type, out2user.size());
 	fc::writewasmRunLog(temp);
 #if 0
 	if (0 == out2user.size()) {

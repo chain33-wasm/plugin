@@ -15,6 +15,9 @@ int VMTypeBinaryen = int(eosio::chain::wasm_interface::vm_type::binaryen);
 
 //contract code must be validated before deployed
 Result wasm_validate_contract(const char *pcode, int len) {
+    if ((NULL == pcode) || (0 == len)) {
+        return WRONG_PARA;
+	}
     std::string begin = fc::format_string("Begin to do wasm_validate_contract with len:${a}.\n",
 		fc::mutable_variant_object()("a", len));
 	
@@ -63,6 +66,10 @@ void create_apply_context(Apply_context_para *pApply_context) {
 
 //call contract with specified code and context
 int callContract4go(int vm, const char *pcode, int code_size, Apply_context_para *pApply_context){
+    if ((NULL == pcode) || (NULL == pApply_context)) {
+        return WRONG_PARA;
+	}
+
 	std::unique_ptr<class eosio::chain::apply_context> pcontext(new eosio::chain::apply_context(pApply_context));
 	try {
 		fc::writewasmRunLog("Begin to do callContract4go\n");
@@ -93,40 +100,58 @@ int convertData2Json(const char *abiStr,
 	                        const char *pvalue, int value_size,
 	                        const char *table,
 	                        char **ppJsonResult) {
-	std::string abiString(abiStr);
-	eosio::chain::abi_def abi = fc::json::from_string(abiString).as<eosio::chain::abi_def>();
+	if ((NULL == abiStr) || (NULL == pvalue) || 
+		(NULL == table) || (NULL == ppJsonResult) || (0 == value_size)) {
+        return WRONG_PARA;
+	}
+	try {
+	    std::string abiString(abiStr);
+		eosio::chain::abi_def abi = fc::json::from_string(abiString).as<eosio::chain::abi_def>();
 
-    /////////////////////////////////////////////////////////////////
-    //TODO: Consider using std::vector<char> packabi_string as input parameter
-    //to generate abi_def
+	    /////////////////////////////////////////////////////////////////
+	    //TODO: Consider using std::vector<char> packabi_string as input parameter
+	    //to generate abi_def
 #if 0
-	std::vector<char> packabi_string       = fc::raw::pack(abi);
-	eosio::chain::abi_serializer::to_abi(packabi_string, abi);
+		std::vector<char> packabi_string       = fc::raw::pack(abi);
+		eosio::chain::abi_serializer::to_abi(packabi_string, abi);
 #endif
-	////////////////////////////////////////////////////////////////
-	const fc::microseconds abi_serializer_max_time(1000 * 10);
-	eosio::chain::abi_serializer abis;
-	abis.set_abi(abi, abi_serializer_max_time);
+		////////////////////////////////////////////////////////////////
+		const fc::microseconds abi_serializer_max_time(1000 * 10);
+		eosio::chain::abi_serializer abis;
+		abis.set_abi(abi, abi_serializer_max_time);
 
-	eosio::chain::bytes data;
-	for(int i = 0; i < value_size; i++) {
-		data.emplace_back(*pvalue++);
-	}
+		eosio::chain::bytes data;
+		for(int i = 0; i < value_size; i++) {
+			data.emplace_back(*pvalue++);
+		}
 
-	eosio::chain::type_name table_name = abis.get_table_type(eosio::chain::string_to_name(table));
-	fc::variant result = abis.binary_to_variant(table_name, data, abi_serializer_max_time);
-	std::string result_in_json = fc::json::to_pretty_string(result);
+		eosio::chain::type_name table_name = abis.get_table_type(eosio::chain::string_to_name(table));
+		if (table_name == eosio::chain::type_name()) {
+			fc::writewasmRunLog("Failed to do convertData2Json due to wrong table name");
+	        return Fail_exception;
+		}
+		fc::variant result = abis.binary_to_variant(table_name, data, abi_serializer_max_time);
+		std::string result_in_json = fc::json::to_pretty_string(result);
 
-	int size = result_in_json.size();
-	*ppJsonResult = (char *)malloc(size + 1);
-	if (nullptr == *ppJsonResult) {
-		return -1;
-	}
-	//make sure the string end with '\0'
-	((char *)(*ppJsonResult))[size] = 0;
-	memcpy(*ppJsonResult, result_in_json.c_str(), result_in_json.size());
+		int size = result_in_json.size();
+		*ppJsonResult = (char *)malloc(size + 1);
+		if (NULL == *ppJsonResult) {
+			return Malloc_Fail;
+		}
+		//make sure the string end with '\0'
+		((char *)(*ppJsonResult))[size] = 0;
+		memcpy(*ppJsonResult, result_in_json.c_str(), result_in_json.size());
 
-	return 0;
+		return Success;
+	}catch (const fc::exception& e){
+		std::string excpInfo = fc::format_string("Failed to do convertData2Json due to "
+			"friendly exception info :${a}\n",fc::mutable_variant_object()
+			("a", e.to_detail_string()));
+	    
+		fc::writewasmRunLog(excpInfo.c_str());
+	    return Fail_exception;
+    }		
+	
 }
 
 
