@@ -8,17 +8,20 @@
           "name": "round",
           "type": "int64"
         },{
-          "name": "account",
+          "name": "player",
           "type": "string"
         },{
           "name": "amount",
           "type": "int64"
         },{
-          "name": "guess_num",
+          "name": "height",
           "type": "int64"
         },{
-          "name": "result_num",
-          "type": "int64"
+          "name": "guess_num",
+          "type": "uint8"
+        },{
+          "name": "rand_num",
+          "type": "uint8"
         },{
           "name": "player_win",
           "type": "bool"
@@ -33,6 +36,9 @@
         },{
           "name": "game_creator",
           "type": "string"
+        },{
+          "name": "height",
+          "type": "int64"
         },{
           "name": "game_balance",
           "type": "int64"
@@ -57,7 +63,7 @@
           "type": "int64"
         },{
           "name": "number",
-          "type": "int64"
+          "type": "uint8"
         }
       ]
     },{

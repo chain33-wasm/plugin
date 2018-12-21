@@ -30,6 +30,9 @@ inline int getFrom4chain33(char *from, int fromLen) {
     return get_from(from, fromLen);
 }
 
+inline int64_t getHeight4chain33() {
+    return get_height();
+}
 
 }
 

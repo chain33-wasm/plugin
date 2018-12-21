@@ -147,6 +147,11 @@ int64_t apply_context::getBlockTime()const {
 	return currentBlockTime;
 }
 
+int64_t apply_context::get_height() {
+
+    return height;
+}
+
 int apply_context::get_from(char *fromAddr, size_t from_size) {
 	int min = std::min(from_size, from.size());
 	memcpy(fromAddr, from.c_str(), from.size());

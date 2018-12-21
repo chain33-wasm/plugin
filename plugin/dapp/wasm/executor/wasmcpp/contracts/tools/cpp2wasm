@@ -6,7 +6,7 @@ if [ "${EOSIO_BIN_INSTALL_DIR}" == "." ]; then
 fi
 EOSIO_INSTALL_DIR=`dirname ${EOSIO_BIN_INSTALL_DIR}`
 ABIGEN=${EOSIO_INSTALL_DIR}/bin/eosio-abigen
-BOOST_INCLUDE_DIR=/usr/include
+BOOST_INCLUDE_DIR=/home/yann/opt/boost/include
 echo "EOSIO_INSTALL_DIR is:" ${EOSIO_INSTALL_DIR}
 function copy_skeleton {
     set -e

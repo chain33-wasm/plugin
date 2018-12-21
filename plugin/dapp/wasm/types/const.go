@@ -26,6 +26,7 @@ const (
 	AccountOpSuccess       = int(0)
     RetryNum               = int(10)
 	GRPCRecSize            = 5 * 30 * 1024 * 1024
+	Coin_Precision   int64 = (1e4)
 )
 
 //wasm contract action
