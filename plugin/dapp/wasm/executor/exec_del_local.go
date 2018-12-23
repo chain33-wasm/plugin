@@ -19,14 +19,14 @@ func (wasm *WASMExecutor) execDelLocal(tx *types.Transaction, receipt *types.Rec
 	set := &types.LocalDBSet{}
 	// 需要将Exec中生成的合约状态变更信息从localdb中恢复
 	for _, logItem := range receipt.Logs {
-		if wasmtypes.TyLogStateChangeItemWasm == logItem.Ty {
+		if wasmtypes.TyLogLocalDataWasm == logItem.Ty {
 			data := logItem.Log
-			var changeItem wasmtypes.WASMStateChangeItem
-			err := types.Decode(data, &changeItem)
+			var localData wasmtypes.ReceiptLocalData
+			err := types.Decode(data, &localData)
 			if err != nil {
 				return set, err
 			}
-			set.KV = append(set.KV, &types.KeyValue{Key: []byte(changeItem.Key), Value: changeItem.PreValue})
+			set.KV = append(set.KV, &types.KeyValue{Key: []byte(localData.Key), Value: localData.PreValue})
 		}
 	}
 

@@ -27,6 +27,11 @@ typedef struct {
 	vector<char> data;
 } Out2UserElement;
 
+typedef enum {
+	LocalDb_operation = 0,
+	StateDb_operation,
+}DBOpetation_type;
+
 
 class apply_context {
 
@@ -72,11 +77,17 @@ class apply_context {
          console_append(fc::format_string(fmt, vo));
       }
 
-	  gas_check_res check_and_spend_gas(int gascost);
+	  gas_check_res check_and_spend_gas(int gascost);	  
 	  void setKey(const char *data, int len);
+	  //state db interface
 	  void setValue(const char *data, int len);
 	  int getValue(char *data, int len);	
 	  int getValueSize(const char *data, int len);
+	  //local db interface
+	  //void setLocalKey(const char *data, int len);
+	  void setLocalValue(const char *data, int len);
+	  int getLocalValue(char *data, int len);	
+	  int getLocalValueSize(const char *data, int len);
 	  int64_t getBlockTime()const;
 	  int get_from(char *from, size_t from_size);
 	  void output2user(const char *type, const char *data, int len);
@@ -104,7 +115,7 @@ class apply_context {
 	  int64_t                       currentBlockTime;
 	  int64_t                       height;
 	  string                        from;
-	  void flushKV2DB(void);
+	  void flushKV2DB(DBOpetation_type operType);
 };
 
 } } // namespace eosio::chain

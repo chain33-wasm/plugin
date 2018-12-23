@@ -72,6 +72,22 @@ func (wasm *WASMExecutor) Query_WasmGetAbi(in *types.ReqAddr) (types.Message, er
 	return resp, nil
 }
 
+// Query_WasmFuzzyGetContractTable 模糊查询某个wasm合约的指定表的结果
+func (wasm *WASMExecutor) Query_WasmFuzzyGetContractTable(in *wasmtypes.WasmFuzzyQueryTableReq) (types.Message, error) {
+	if in == nil {
+		return nil, types.ErrInvalidParam
+	}
+	contractName := in.ContractName
+	if !bytes.Contains([]byte(in.ContractName), []byte(wasmtypes.UserWasmX)) {
+		contractName = wasmtypes.UserWasmX + contractName
+	}
+
+	incp := *in
+	incp.ContractName = contractName
+
+	return wasm.fuzzyGetContractTable(&incp)
+}
+
 // Query_WasmGetContractTable 查询某个wasm合约的指定表的结果
 func (wasm *WASMExecutor) Query_WasmGetContractTable(in *wasmtypes.WasmQueryContractTableReq) (types.Message, error) {
 	if in == nil {

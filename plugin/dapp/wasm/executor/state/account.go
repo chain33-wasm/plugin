@@ -72,6 +72,17 @@ func (self *ContractAccount) GetState(key string) []byte {
 	return val
 }
 
+// 设置本地数据，用于帮助辅助查找
+func (self *ContractAccount) SetValue2Local(key string, value []byte) {
+	self.mdb.addChange(localStorageChange{
+		baseChange: baseChange{},
+		account:    self.Addr,
+		key:        []byte(key),
+	})
+	keyStr := self.GetLocalDataKey(self.Addr, key)
+	self.mdb.LocalDB.Set([]byte(keyStr), value)
+}
+
 // 设置状态数据
 func (self *ContractAccount) SetState(key string, value []byte) {
 	self.mdb.addChange(storageChange{
@@ -81,7 +92,6 @@ func (self *ContractAccount) SetState(key string, value []byte) {
 		prevalue:   self.GetState(key),
 	})
 	self.stateCache[key] = value
-	//需要设置到localdb中，以免同一个区块中同一个合约多次调用时，状态数据丢失
 	keyStr := self.GetStateItemKey(self.Addr, key)
 	self.mdb.StateDB.Set([]byte(keyStr), value)
 }
@@ -249,6 +259,10 @@ func (self *ContractAccount) GetStateKey() []byte {
 
 func (self *ContractAccount) GetStateItemKey(addr, key string) string {
 	return fmt.Sprintf("mavl-" + self.mdb.ExecutorName + "-state:%v:%v", addr, key)
+}
+
+func (self *ContractAccount) GetLocalDataKey(addr, key string) string {
+	return fmt.Sprintf(string(chain33Types.LocalPrefix) + self.mdb.ExecutorName + "-data:%v:%v", addr, key)
 }
 
 func (self *ContractAccount) Suicide() bool {

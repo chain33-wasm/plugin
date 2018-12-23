@@ -241,6 +241,40 @@ func (self *MemoryStateDB) GetAccount(addr string) *ContractAccount {
 	}
 }
 
+func (self *MemoryStateDB) List(prefix []byte) [][]byte {
+	count := self.LocalDB.PrefixCount(prefix)
+	log15.Debug("PrefixCount", "prefix", string(prefix), "count", count)
+
+	values, err := self.LocalDB.List(prefix, nil, 0, 0)
+	if err != nil {
+		return nil
+	}
+	return values
+}
+
+// GetValueFromLocal : 从本地数据库获取值
+func (self *MemoryStateDB) GetValueFromLocal(addr string, key string) []byte {
+	// 先从合约缓存中获取
+	acc := self.GetAccount(addr)
+	if acc == nil {
+		return nil
+	}
+	localkey := acc.GetLocalDataKey(addr, key)
+	value, err := self.LocalDB.Get([]byte(localkey))
+	if err != nil {
+		log15.Debug("GetValueFromLocal failed", "key", string(key), "err", err)
+		return nil
+	}
+	return value
+}
+
+func (self *MemoryStateDB) SetValue2Local(addr, key string, value []byte) {
+	acc := self.GetAccount(addr)
+	if acc != nil {
+		acc.SetValue2Local(key, value)
+	}
+}
+
 // SLOAD 指令加载合约状态数据
 func (self *MemoryStateDB) GetState(addr string, key string) []byte {
 	// 先从合约缓存中获取

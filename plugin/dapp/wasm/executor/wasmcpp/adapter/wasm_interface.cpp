@@ -922,6 +922,19 @@ class database_api : public context_aware_api {
 		int get_valueSize(array_ptr<const char> key, size_t keyLen) {
 			return context.getValueSize(key, keyLen);
 		}
+		
+		void set_LocalValue(array_ptr<const char> value, size_t buffer_size) {
+			context.setLocalValue(value, buffer_size);
+			return;
+		}
+		
+	    int get_LocalValue(array_ptr<char> value, size_t buffer_size) {
+            return context.getLocalValue(value,buffer_size);
+		}
+		
+	    int get_LocalValueSize(array_ptr<const char> key, size_t keyLen) {
+			return context.getLocalValueSize(key, keyLen);
+		}
 
 		int execFrozenCoin(null_terminated_ptr addr, int64_t amount) {
 			return context.execFrozenCoin(addr, (long long)amount);
@@ -1346,13 +1359,16 @@ REGISTER_INTRINSICS(crypto_api,
 REGISTER_INTRINSICS(system_api,
    (current_time, int64_t()       )
    (publication_time,   int64_t() )
-);
+);	
 
 REGISTER_INTRINSICS(database_api,
    (pass_key, void(int, int))
    (set_value, void(int, int))
    (get_value, int(int, int))
-   (get_valueSize, int(int, int))
+   (get_valueSize, int(int, int))   
+   (set_LocalValue, void(int, int))
+   (get_LocalValue, int(int, int))
+   (get_LocalValueSize, int(int, int))
    (execFrozenCoin, int(int, int64_t))
    (execActiveCoin, int(int, int64_t))
    (execTransferCoin, int(int, int, int64_t))

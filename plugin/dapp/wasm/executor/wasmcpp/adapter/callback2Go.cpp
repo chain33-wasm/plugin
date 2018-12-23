@@ -29,7 +29,6 @@ int execActive (char* addr, long long int p1) {
 
 int execTransfer (char* from, char* to, long long int p2) {
 	return ExecTransfer(from, to, p2);
-
 }
 
 int execTransferFrozen (char* from, char* to, long long int p2) {
@@ -39,6 +38,18 @@ int execTransferFrozen (char* from, char* to, long long int p2) {
 int getRandom(char* randomDataOutput , int maxLen) {
     return GetRandom(randomDataOutput , maxLen);
 }
+
+int getValueSizeFromLocal (char* p0, char* p1, int p2) {
+	return GetValueSizeFromLocal(p0, p1, p2);
+}
+
+int getValueFromLocal (char* p0, char* p1, int p2, char* p3, int p4) {
+    return GetValueFromLocal(p0, p1, p2, p3, p4);
+}
+void setValue2Local (char* p0, char* p1, int p2, char* p3, int p4) {
+	return SetValue2Local(p0, p1, p2, p3, p4);
+}
+
 
 
 

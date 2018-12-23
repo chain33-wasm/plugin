@@ -6,25 +6,25 @@ package types
 
 const (
 	// EVM本执行器支持的查询方法
-	CheckNameExistsFunc    = "CheckContractNameExist"
-	EstimateGasWasm        = "EstimateGasWasm"
-	WasmDebug              = "WasmDebug"
-	WasmGetAbi             = "WasmGetAbi"
-	ConvertJson2Abi        = "ConvertJson2Abi"
-	WasmGetContractTable   = "WasmGetContractTable"
-	GAS_EXHAUSTED_ERR_CODE = (-int64(0x12345678<<6))
-	Success                = int(0)
-	OUT_GAS                = int(2)
-	Exception_Fail         = int(1)
-	WasmX                  = "wasm"
-	UserWasmX              = "user.wasm."
-	CreateWasmContractStr  = "CreateWasmContract"
-	CallWasmContractStr    = "CallWasmContract"
+	CheckNameExistsFunc       = "CheckContractNameExist"
+	EstimateGasWasm           = "EstimateGasWasm"
+	WasmDebug                 = "WasmDebug"
+	WasmGetAbi                = "WasmGetAbi"
+	ConvertJson2Abi           = "ConvertJson2Abi"
+	WasmGetContractTable      = "WasmGetContractTable"
+	WasmFuzzyGetContractTable = "WasmFuzzyGetContractTable"
+	Success                   = int(0)
+	OUT_GAS                   = int(2)
+	Exception_Fail            = int(1)
+	WasmX                     = "wasm"
+	UserWasmX                 = "user.wasm."
+	CreateWasmContractStr     = "CreateWasmContract"
+	CallWasmContractStr       = "CallWasmContract"
 	//NameRegExp             = "[a-z0-9]"^[a-z]+\[[0-9]+\]$
 	NameRegExp             = "^[a-z0-9]+$"
 	AccountOpFail          = int(-1)
 	AccountOpSuccess       = int(0)
-    RetryNum               = int(10)
+	RetryNum               = int(10)
 	GRPCRecSize            = 5 * 30 * 1024 * 1024
 	Coin_Precision   int64 = (1e4)
 )
@@ -47,6 +47,8 @@ const (
 	TyLogStateChangeItemWasm
 	//
 	TyLogCreateUserWasmContract
+    //
+	TyLogLocalDataWasm
 
 	//用于wasm合约输出可读信息的日志记录，尤其是query的相关信息
 	//为什么不将该种信息类型的获取不放置在query中呢，因为query的操作

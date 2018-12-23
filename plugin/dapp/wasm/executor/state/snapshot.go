@@ -6,7 +6,7 @@ import (
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/types"
 	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
-	//wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
+	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
 )
 
 // 数据状态变更接口
@@ -147,6 +147,15 @@ type (
 		baseChange
 		account  string
 		key      []byte
+		prevalue []byte
+	}
+
+	// 本地存储状态变更事件
+	localStorageChange struct {
+		baseChange
+		account  string
+		key      []byte
+		data     []byte
 		prevalue []byte
 	}
 
@@ -328,4 +337,30 @@ func (ch balanceChange) getData(mdb *MemoryStateDB) []*types.KeyValue {
 }
 func (ch balanceChange) getLog(mdb *MemoryStateDB) []*types.ReceiptLog {
 	return ch.logs
+}
+
+func (ch localStorageChange) revert(mdb *MemoryStateDB) {
+	acc := mdb.accounts[ch.account]
+	if acc != nil {
+		mdb.LocalDB.Set(ch.key, ch.prevalue)
+	}
+}
+
+func (ch localStorageChange) getData(mdb *MemoryStateDB) []*types.KeyValue {
+	return nil
+}
+
+func (ch localStorageChange) getLog(mdb *MemoryStateDB) []*types.ReceiptLog {
+	localData := &wasmtypes.ReceiptLocalData{
+		Key:ch.key,
+		CurValue:ch.data,
+		PreValue:ch.prevalue,
+	}
+
+	log := &types.ReceiptLog{
+		Ty:wasmtypes.TyLogLocalDataWasm,
+		Log:types.Encode(localData),
+	}
+
+	return []*types.ReceiptLog{log}
 }

@@ -102,7 +102,7 @@ void apply_context::setValue(const char *data, int len) {
 	value4DB.resize(len, 0x00);
 	memset(value4DB.data(), 0x00, len);
 	memcpy(value4DB.data(), data, len);
-	flushKV2DB();
+	flushKV2DB(StateDb_operation);
 }
 
 int apply_context::getValueSize(const char *data, int len) {
@@ -116,12 +116,15 @@ int apply_context::getValue(char *data, int len) {
 	return StateDBGetState(&contractAddr[0], (char *)key4DB.data(), key4DB.size(), data, len);
 }
 
-void apply_context::flushKV2DB(void) {
-    char *ppvalue = NULL;
+void apply_context::flushKV2DB(DBOpetation_type operType) {
 	int vallenNow = 0;
 	int vallen = value4DB.size();
-	
-    vallenNow = StateDBGetValueSize(&contractAddr[0], (char *)key4DB.data(), key4DB.size());
+
+	if (StateDb_operation == operType) {
+		vallenNow = StateDBGetValueSize(&contractAddr[0], (char *)key4DB.data(), key4DB.size());
+	} else {
+	    vallenNow = getValueSizeFromLocal(&contractAddr[0], (char *)key4DB.data(), key4DB.size());
+	}    
 		
 	int64_t gas_need = 0;
 	//set
@@ -137,10 +140,33 @@ void apply_context::flushKV2DB(void) {
 	} else if (vallen == 0) { //clear
 		gas_need = SstoreClearGas;
 	}
-	check_and_spend_gas(gas_need);			
-	
-	StateDBSetState(&contractAddr[0], (char *)key4DB.data(), key4DB.size(), value4DB.data(), value4DB.size());
-	free(ppvalue);
+	check_and_spend_gas(gas_need);
+
+	if (StateDb_operation == operType) {
+		StateDBSetState(&contractAddr[0], (char *)key4DB.data(), key4DB.size(), value4DB.data(), value4DB.size());
+	} else {
+	    setValue2Local(&contractAddr[0], (char *)key4DB.data(), key4DB.size(), value4DB.data(), value4DB.size());
+	}
+
+	return;
+}
+
+int apply_context::getLocalValueSize(const char *data, int len) {
+	key4DB.resize(len, 0x00);
+	memset(key4DB.data(), 0x00, len);
+	memcpy(key4DB.data(), data, len);
+	return getValueSizeFromLocal(&contractAddr[0], key4DB.data(), len);
+}
+
+void apply_context::setLocalValue(const char *data, int len) {
+    value4DB.resize(len, 0x00);
+	memset(value4DB.data(), 0x00, len);
+	memcpy(value4DB.data(), data, len);
+	flushKV2DB(LocalDb_operation);
+}
+
+int apply_context::getLocalValue(char *data, int len) {
+	return getValueFromLocal(&contractAddr[0], (char *)key4DB.data(), key4DB.size(), data, len);
 }
 
 int64_t apply_context::getBlockTime()const {

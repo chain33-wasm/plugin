@@ -31,6 +31,7 @@ func WasmCmd() *cobra.Command {
 		wasmGenAbiCmd(),
 		wasmCallContractCmd(),
 		wasmQueryContractCmd(),
+		wasmFuzzyQueryContractCmd(),
 		wasmEstimateContractCmd(),
 		wasmDebugCmd(),
 	)
@@ -157,6 +158,16 @@ func wasmGenAbiData(cmd *cobra.Command, args []string) {
 	}
 }
 
+func wasmFuzzyQueryContractCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "fuzzy query",
+		Short: "fuzzy query the WASM contract for table's info within range",
+		Run:   wasmFuzzyQueryContract,
+	}
+	wasmAddFuzzyQueryContractFlags(cmd)
+	return cmd
+}
+
 //运行wasm合约的查询请求
 func wasmQueryContractCmd() *cobra.Command {
 	cmd := &cobra.Command{
@@ -190,6 +201,56 @@ func wasmQueryContract(cmd *cobra.Command, args []string) {
 		fmt.Fprintln(os.Stderr, "get wasm query error")
 		return
 	}
+}
+
+func wasmFuzzyQueryContract(cmd *cobra.Command, args []string) {
+	contractName, _ := cmd.Flags().GetString("exec")
+	tableName, _ := cmd.Flags().GetString("table")
+	format, _ := cmd.Flags().GetString("format")
+	start, _ := cmd.Flags().GetInt64("start")
+	stop, _ := cmd.Flags().GetInt64("stop")
+	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
+
+	queryReq := wasmtypes.WasmFuzzyQueryTableReq{
+		ContractName: contractName,
+		TableName:tableName,
+		Format:format,
+		Start:start,
+		Stop:stop,
+	}
+
+	var WasmQueryResponse wasmtypes.WasmFuzzyQueryResponse
+	query := sendQuery4wasm(rpcLaddr, wasmtypes.WasmFuzzyGetContractTable, &queryReq, &WasmQueryResponse)
+	if query {
+		fmt.Println(WasmQueryResponse.ContractName)
+		fmt.Println(WasmQueryResponse.TableName)
+		for _, WasmOutItem := range WasmQueryResponse.QueryResultItems {
+			fmt.Println(WasmOutItem.Index)
+			for _, fuzzyQueryResultItem := range WasmOutItem.ResultJSON {
+				fmt.Println(fuzzyQueryResultItem)
+			}
+		}
+	} else {
+		fmt.Fprintln(os.Stderr, "get wasm query error")
+		return
+	}
+}
+
+func wasmAddFuzzyQueryContractFlags(cmd *cobra.Command) {
+	cmd.Flags().StringP("exec", "e", "", "wasm contract name")
+	cmd.MarkFlagRequired("exec")
+
+	cmd.Flags().StringP("table", "n", "", "one of wasm contract's table name")
+	cmd.MarkFlagRequired("table")
+
+	cmd.Flags().StringP("format", "f", "", "format of key's prefix for the table info")
+	cmd.MarkFlagRequired("format")
+
+	cmd.Flags().StringP("start", "s", "", "start value for the foramt")
+	cmd.MarkFlagRequired("start")
+
+	cmd.Flags().StringP("stop", "p", "", "stop value for the foramt")
+	cmd.MarkFlagRequired("stop")
 }
 
 func wasmAddQueryContractFlags(cmd *cobra.Command) {

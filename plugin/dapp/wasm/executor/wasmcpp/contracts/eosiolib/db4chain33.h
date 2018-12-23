@@ -16,7 +16,9 @@ void set_value(const void *value, int buffer_size);
 int get_value(void *value, int buffer_size);
 int get_from(void *value, int buffer_size);
 int get_random(char* randomDataOutput , int maxLen);
-
+int get_LocalValueSize(const void *key, int keyLen);
+void set_LocalValue(const void *value, int buffer_size);
+int get_LocalValue(void *value, int buffer_size);
 
 //The total accumlated size within one tx can't exceed 1M bytes,
 //otherwise, the latter info will be ignored

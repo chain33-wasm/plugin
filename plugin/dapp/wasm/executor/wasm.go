@@ -92,6 +92,53 @@ func setWasm4Callback(wasm *WASMExecutor) {
 	setStateDB4Callback(wasm.mStateDB)
 }
 
+/////////////////////////LocalDB interface//////////////////////////////////////////
+//export GetValueSizeFromLocal
+func GetValueSizeFromLocal(contractAddr *C.char, key *C.char, keyLen C.int) C.int {
+	log.Debug("Entering GetValueSizeFromLocal")
+	contractAddrgo := C.GoString(contractAddr)
+	keySlice := C.GoBytes(unsafe.Pointer(key), keyLen)
+	value := pMemoryStateDB.GetValueFromLocal(contractAddrgo, string(keySlice))
+	return C.int(len(value))
+}
+
+//export GetValueFromLocal
+func GetValueFromLocal(contractAddr *C.char, key *C.char, keyLen C.int, val *C.char, valLen C.int) C.int {
+	log.Debug("Entering GetValueFromLocal")
+	contractAddrgo := C.GoString(contractAddr)
+	keySlice := C.GoBytes(unsafe.Pointer(key), keyLen)
+	value := pMemoryStateDB.GetValueFromLocal(contractAddrgo, string(keySlice))
+	if 0 == len(value) {
+		log.Debug("Entering Get StateDBGetStateCallback", "get null value for key", string(keySlice))
+		return 0
+	}
+
+	actualSize := len(value)
+	//不超出需要获取的数据的空间，以免导致内存越界
+	if actualSize > int(valLen) {
+		actualSize = int(valLen)
+	}
+
+	C.memcpy(unsafe.Pointer(val), unsafe.Pointer(&value[0]), C.size_t(actualSize))
+	log.Debug("StateDBGetStateCallback", "key", string(keySlice), "value", value)
+
+	return C.int(actualSize)
+}
+
+//export SetValue2Local
+func SetValue2Local(contractAddr *C.char, key *C.char, keyLen C.int, val *C.char, valLen C.int) {
+	log.Debug("Entering SetValue2Local")
+	contractAddrgo := C.GoString(contractAddr)
+	keySlice := C.GoBytes(unsafe.Pointer(key), keyLen)
+	valueSlice := C.GoBytes(unsafe.Pointer(val), valLen)
+
+	pMemoryStateDB.SetValue2Local(contractAddrgo, string(keySlice), valueSlice)
+
+	log.Debug("StateDBSetStateCallback", "key", string(keySlice), "value in string:",
+		"value in slice:", valueSlice)
+}
+
+
 //在获取key对应的value之前，需要先获取下value的size，为了避免传递的内存太小
 //export StateDBGetValueSizeCallback
 func StateDBGetValueSizeCallback(contractAddr *C.char, key *C.char, keyLen C.int) C.int {
@@ -363,8 +410,6 @@ func (wasm *WASMExecutor) queryFromExec(contractAddr string,
 	}
 	AliasStr := wasm.mStateDB.GetName(contractAddr)
 
-	setWasm4Callback(wasm)
-
 	actiondata4C := C.CBytes(actionData)
 	ContractAddr := C.CString(contractAddr)
 	Alias := C.CString(AliasStr)
@@ -523,6 +568,66 @@ func (wasm *WASMExecutor) getContractTable(in *wasmtypes.WasmQueryContractTableR
 		C.free(unsafe.Pointer(structName))
 		C.free(unsafe.Pointer(serializedData))
 		C.free(unsafe.Pointer(jsonResult))
+	}
+
+	return resp, nil
+}
+
+type fuzzyDataItem struct {
+	index int64
+	Data  [][]byte
+}
+
+func (wasm *WASMExecutor) fuzzyGetContractTable(in *wasmtypes.WasmFuzzyQueryTableReq) (types.Message, error) {
+	log.Debug("wasm fuzzy query", "WasmFuzzyQueryTableReq", in)
+
+	resp := &wasmtypes.WasmFuzzyQueryResponse{}
+	contractAddr := address.ExecAddress(types.ExecName(in.ContractName))
+	wasm.prepareQueryContext([]byte(wasmtypes.WasmX))
+	abi := wasm.mStateDB.GetAbi(contractAddr)
+	if nil == abi {
+		log.Error("getContractTable", "Failed to get abi for wasm contract", in.ContractName)
+		return nil, wasmtypes.ErrAddrNotExists
+	}
+	wasm.mStateDB.SetCurrentExecutorName(string(types.GetParaExec([]byte(in.ContractName))))
+	abi4CStr := C.CString(string(abi))
+	defer C.free(unsafe.Pointer(abi4CStr))
+
+	var fuzzyDataItems []*fuzzyDataItem
+	for i := in.Start; i <= in.Stop; i++  {
+		prefix := []byte(fmt.Sprint(in.Format, i))
+		data := wasm.mStateDB.List(prefix)
+		if nil == data {
+			continue
+		}
+
+		dataItem := &fuzzyDataItem{
+			index:    i,
+			Data:     data,
+		}
+		fuzzyDataItems = append(fuzzyDataItems, dataItem)
+	}
+
+	structName := C.CString(in.TableName)
+	defer C.free(unsafe.Pointer(structName))
+	for _, dataItemHeight := range fuzzyDataItems {
+		fuzzyQueryResultItem := &wasmtypes.FuzzyQueryResultItem{
+			Index:dataItemHeight.index,
+		}
+		for _, data := range dataItemHeight.Data {
+			var jsonResult *C.char
+
+			serializedData := C.CBytes(data)
+			defer C.free(unsafe.Pointer(serializedData))
+
+			if C.int(wasmtypes.Success) != C.convertData2Json(abi4CStr, (*C.char)(serializedData), (C.int)(len(data)), structName, &jsonResult) {
+				log.Error("wasm query", "structure", in.TableName)
+				continue
+			}
+
+			fuzzyQueryResultItem.ResultJSON = append(fuzzyQueryResultItem.ResultJSON, C.GoString(jsonResult))
+			C.free(unsafe.Pointer(jsonResult))
+		}
 	}
 
 	return resp, nil

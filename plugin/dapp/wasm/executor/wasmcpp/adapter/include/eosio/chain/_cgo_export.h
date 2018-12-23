@@ -69,6 +69,12 @@ extern int StateDBGetValueSizeCallback (char* p0, char* p1, int p2);
 extern int StateDBGetStateCallback (char* p0, char* p1, int p2, char* p3, int p4);
 extern void StateDBSetStateCallback (char* p0, char* p1, int p2, char* p3, int p4);
 
+//local db 操作
+extern int GetValueSizeFromLocal (char* p0, char* p1, int p2);
+extern int GetValueFromLocal (char* p0, char* p1, int p2, char* p3, int p4);
+extern void SetValue2Local (char* p0, char* p1, int p2, char* p3, int p4);
+
+
 //该接口用于返回查询结果的返回
 extern void Output2UserCallback (char* p0, char* p1, int p2);
 

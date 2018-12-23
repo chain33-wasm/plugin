@@ -23,6 +23,11 @@ int execTransferFrozen(char* from, char* to, long long int p2);
 
 int getRandom(char* randomDataOutput , int maxLen);
 
+//interface corresponding to local db operation
+int getValueSizeFromLocal (char* p0, char* p1, int p2);
+int getValueFromLocal (char* p0, char* p1, int p2, char* p3, int p4);
+void setValue2Local (char* p0, char* p1, int p2, char* p3, int p4);
+
 //#ifdef __cplusplus
 //}
 //#endif

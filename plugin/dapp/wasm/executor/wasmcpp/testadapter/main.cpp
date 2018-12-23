@@ -48,6 +48,17 @@ int GetRandom(char* randomDataOutput , int maxLen) {
     return 0;
 }
 
+int GetValueSizeFromLocal (char* p0, char* p1, int p2) {
+    return 0;
+}
+int GetValueFromLocal (char* p0, char* p1, int p2, char* p3, int p4) {
+    return 0;
+}
+void SetValue2Local (char* p0, char* p1, int p2, char* p3, int p4) {
+    return;
+}
+
+
 
 #endif
 

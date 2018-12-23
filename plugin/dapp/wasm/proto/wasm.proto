@@ -74,6 +74,14 @@ message CallWasmContract {
     bytes actionData   = 6;
 }
 
+// 存放本地数据库的数据
+message ReceiptLocalData {
+    bytes key      = 1;
+    bytes curValue    = 2;
+    bytes preValue = 3;
+
+}
+
 // 合约创建/调用日志
 message ReceiptWASMContract {
     string caller       = 1;
@@ -87,34 +95,6 @@ message WASMStateChangeItem {
     string key          = 1;
     bytes  preValue     = 2;
     bytes  currentValue = 3;
-}
-
-// 存放合约固定数据
-message WASMContractDataCmd {
-    string creator  = 1;
-    string name     = 2;
-    string addr     = 3;
-    string code     = 4;
-    string codeHash = 5;
-}
-
-// 存放合约变化数据
-message WASMContractStateCmd {
-    uint64              nonce       = 1;
-    bool                suicided    = 2;
-    string              storageHash = 3;
-    map<string, string> storage     = 4;
-}
-
-// 合约创建/调用日志
-message ReceiptWASMContractCmd {
-    string caller = 1;
-    // 合约创建时才会返回此内容
-    string contractName = 2;
-    string contractAddr = 3;
-    uint64 usedGas      = 4;
-    // 创建合约返回的代码
-    string ret = 5;
 }
 
 message CheckWASMContractNameReq {
@@ -180,6 +160,26 @@ message ConvertJson2AbiReq {
 
 message Json2AbiResponse {
     bytes AbiData      = 1;
+}
+//模糊查找请求
+message WasmFuzzyQueryTableReq {
+    string contractName = 1;
+    string tableName    = 2;
+    string format       = 3;
+    int64  start        = 4;
+    int64  stop         = 5;
+}
+
+message FuzzyQueryResultItem {
+    //模糊查找索引
+    int64 index                  = 1;
+    repeated string resultJSON   = 2;
+}
+
+message WasmFuzzyQueryResponse {
+    string contractName = 1;
+    string tableName    = 2;
+    repeated FuzzyQueryResultItem queryResultItems  = 3;
 }
 
 
