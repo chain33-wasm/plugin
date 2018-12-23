@@ -1,4 +1,4 @@
-FROM wasmtest:1.0
+FROM wasmtest:1.1
 
 WORKDIR /root
 COPY chain33 chain33

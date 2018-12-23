@@ -35,3 +35,9 @@ plugin/store/mpt/cpu.pprof
 plugin/store/mpt/mpt.test
 plugin/consensus/raft/tools/scripts/grpc33.log
 plugin/consensus/raft/tools/scripts/logs/
+
+**/*.o
+build/paradatadir/
+build/parawallet/
+build/wasmRunlog.txt
+build/wasm_debug

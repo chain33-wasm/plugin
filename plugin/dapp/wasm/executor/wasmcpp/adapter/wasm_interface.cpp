@@ -740,6 +740,10 @@ class action_api : public context_aware_api {
          return context.receiver;
       }
 
+      int64_t get_height() {
+         return context.get_height();
+      }
+
 	  int get_from(array_ptr<char> from, size_t from_size) {
 	      return context.get_from(from, from_size);
 	  }
@@ -1387,6 +1391,7 @@ REGISTER_INTRINSICS(action_api,
    (read_action_data,       int(int, int)  )
    (action_data_size,       int()          )
    (current_receiver,       int64_t()      )
+   (get_height,             int64_t()      )
    (get_from,               int(int, int)  )
    (get_random,             int(int, int)  )
 );

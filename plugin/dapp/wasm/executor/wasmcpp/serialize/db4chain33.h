@@ -15,6 +15,7 @@ int get_valueSize(const void *key, int keyLen);
 void pass_key(const void *key, int buffer_size);
 void set_value(const void *value, int buffer_size);
 int get_value(void *value, int buffer_size);
+int64_t get_height();
 int get_from(void *value, int buffer_size);
 
 //The total accumlated size within one tx can't exceed 1M bytes,

@@ -1,12 +1,14 @@
 #!/bin/bash
 
+HOMEDIR=`echo ~`
 EOSIO_BIN_INSTALL_DIR=`dirname $0`
 if [ "${EOSIO_BIN_INSTALL_DIR}" == "." ]; then
   EOSIO_BIN_INSTALL_DIR=`pwd`
 fi
 EOSIO_INSTALL_DIR=`dirname ${EOSIO_BIN_INSTALL_DIR}`
 ABIGEN=${EOSIO_INSTALL_DIR}/bin/eosio-abigen
-BOOST_INCLUDE_DIR=/home/hezhengjun/opt/boost/include
+
+BOOST_INCLUDE_DIR=${HOMEDIR}/opt/boost/include
 echo "EOSIO_INSTALL_DIR is:" ${EOSIO_INSTALL_DIR}
 function copy_skeleton {
     set -e
@@ -41,7 +43,7 @@ function build_contract {
         name=`basename $file`
         filePath=`dirname $file`
 
-        ($PRINT_CMDS; /home/hezhengjun/opt/wasm/bin/clang -emit-llvm -O3 --std=c++14 --target=wasm32 -nostdinc \
+        ($PRINT_CMDS; ${HOMEDIR}/opt/wasm/bin/clang -emit-llvm -O3 --std=c++14 --target=wasm32 -nostdinc \
                                    -DBOOST_DISABLE_ASSERTS -DBOOST_EXCEPTION_DISABLE \
                                    -nostdlib -nostdlibinc -ffreestanding -nostdlib -fno-threadsafe-statics -fno-rtti \
                                    -fno-exceptions -I ${EOSIO_INSTALL_DIR}/include \
@@ -60,14 +62,14 @@ function build_contract {
 
     done
 
-    ($PRINT_CMDS; /home/hezhengjun/opt/wasm/bin/llvm-link -only-needed -o $workdir/linked.bc $workdir/built/* \
+    ($PRINT_CMDS; ${HOMEDIR}/opt/wasm/bin/llvm-link -only-needed -o $workdir/linked.bc $workdir/built/* \
                                    ${EOSIO_INSTALL_DIR}/usr/share/eosio/contractsdk/lib/eosiolib.bc \
                                    ${EOSIO_INSTALL_DIR}/usr/share/eosio/contractsdk/lib/libc++.bc \
                                    ${EOSIO_INSTALL_DIR}/usr/share/eosio/contractsdk/lib/libc.bc
 
 
     )
-    ($PRINT_CMDS; /home/hezhengjun/opt/wasm/bin/llc -thread-model=single --asm-verbose=false -o $workdir/assembly.s $workdir/linked.bc)
+    ($PRINT_CMDS; ${HOMEDIR}/opt/wasm/bin/llc -thread-model=single --asm-verbose=false -o $workdir/assembly.s $workdir/linked.bc)
     ($PRINT_CMDS; ${EOSIO_INSTALL_DIR}/bin/eosio-s2wasm -o $outname -s 16384 $workdir/assembly.s)
     ($PRINT_CMDS; ${EOSIO_INSTALL_DIR}/bin/eosio-wast2wasm $outname ${outname%.*}.wasm -n)
 

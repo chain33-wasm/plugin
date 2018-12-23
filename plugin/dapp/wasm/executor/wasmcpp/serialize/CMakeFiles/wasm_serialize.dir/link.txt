@@ -1,0 +1,2 @@
+/usr/bin/ar qc libwasm_serialize.a  CMakeFiles/wasm_serialize.dir/token.cpp.o CMakeFiles/wasm_serialize.dir/system.cpp.o
+/usr/bin/ranlib libwasm_serialize.a

@@ -89,6 +89,7 @@ class apply_context {
 	  int getLocalValue(char *data, int len);	
 	  int getLocalValueSize(const char *data, int len);
 	  int64_t getBlockTime()const;
+	  int64_t get_height();
 	  int get_from(char *from, size_t from_size);
 	  void output2user(const char *type, const char *data, int len);
 	  int execFrozenCoin(char* addr, long long int p1);

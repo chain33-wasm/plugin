@@ -27,7 +27,6 @@ default: updateWasmlib build depends
 updateWasmlib:
 	@bash $(WASMCPP)/build_wasmcpp.sh
 
-
 build:
 	@go build $(BUILD_FLAGS) -v -i -o $(APP)
 	@go build -v -i -o $(CLI) $(SRC_CLI)

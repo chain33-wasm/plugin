@@ -275,9 +275,15 @@ func GetRandom(randomDataOutput *C.char, maxLen C.int) C.int {
 		}
 		hash = reply.Hash
 	}
-	random := C.GoBytes(unsafe.Pointer(randomDataOutput), maxLen)
+	randLen := C.int(len(hash))
+	if randLen > maxLen {
+		randLen = maxLen
+	}
+	//random := C.GoBytes(unsafe.Pointer(randomDataOutput), maxLen)
+	C.memcpy(unsafe.Pointer(randomDataOutput), unsafe.Pointer(&hash[0]), C.size_t(randLen))
+	//temp := C.int(copy(random, hash))
 
-	return  C.int(copy(random, hash))
+	return C.int(randLen)
 }
 
 func (wasm *WASMExecutor) GetMainHeightByTxHash(txHash []byte) int64 {

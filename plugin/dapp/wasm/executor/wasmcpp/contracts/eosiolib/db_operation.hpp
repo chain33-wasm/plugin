@@ -44,7 +44,9 @@ inline int localdbGetValueSize4chain33(const char *key, int keyLen) {
     return get_LocalValueSize(key, keyLen);
 }
 
-
+inline int64_t getHeight4chain33() {
+    return get_height();
+}
 
 }
 

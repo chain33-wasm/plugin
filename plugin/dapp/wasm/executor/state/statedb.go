@@ -731,10 +731,10 @@ func (self *MemoryStateDB) SetCurrentExecutorName(executorName string) {
 }
 
 func (self *MemoryStateDB) ExecFrozen(tx *types.Transaction, addr string, amount int64) int {
-	if tx.From() != addr {
-		log15.Error("ExecFrozen not form own address", "tx.From()", tx.From(), "addr", addr)
-		return wasmtypes.AccountOpFail
-	}
+	//if tx.From() != addr {
+	//	log15.Error("ExecFrozen not form own address", "tx.From()", tx.From(), "addr", addr)
+	//	return wasmtypes.AccountOpFail
+	//}
 
 	execaddr := address.ExecAddress(string(tx.Execer))
 	ret, err := self.CoinsAccount.ExecFrozen(addr, execaddr, amount)
@@ -776,10 +776,10 @@ func (self *MemoryStateDB) ExecActive(tx *types.Transaction, addr string, amount
 
 //export ExecTransfer
 func (self *MemoryStateDB) ExecTransfer(tx *types.Transaction, from, to string, amount int64) int {
-	if tx.From() != from {
-		log15.Error("ExecTransfer not from own address", "tx.From()", tx.From(), "to", to)
-		return wasmtypes.AccountOpFail
-	}
+	//if tx.From() != from {
+	//	log15.Error("ExecTransfer not from own address", "tx.From()", tx.From(), "to", to)
+	//	return wasmtypes.AccountOpFail
+	//}
 
 	execaddr := address.ExecAddress(string(tx.Execer))
 	ret, err := self.CoinsAccount.ExecTransfer(from, to, execaddr, amount)

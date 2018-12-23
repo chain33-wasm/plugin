@@ -1,11 +1,11 @@
 #include "dice.hpp"
 #define GAME_PRECISION 100
 #define COIN_PRECISION 10000
-#define STATUS "creator status"
+#define STATUS "dice_statics"
 
 namespace eosio {
 
-using namespace std;
+using std::string;
 
 void dice::startgame(int64_t deposit)
 { 
@@ -26,6 +26,7 @@ void dice::startgame(int64_t deposit)
   eosio_assert(OK == execFrozenCoin(creator.c_str(), COIN_PRECISION * deposit), "fail to frozen coins");
   prints("Succeed to frozen coin\n");
   gamestatus status;
+  status.height = getHeight4chain33();
   status.is_active = true;
   status.game_creator = creator;
   status.game_balance = GAME_PRECISION * deposit;
@@ -35,8 +36,8 @@ void dice::startgame(int64_t deposit)
   this->set_status(status);
 }
 
-//-x play -r "{\"player\":\"14cM9mnZ5JvbpFQTF4nwTCmix31VgmpweL\",\"amount\":\"2\",\"number\":\"40\",\"direction\":\"0\"}" 
-void dice::play(int64_t amount, int64_t number)
+//-x play -r "{\"player\":\"14cM9mnZ5JvbpFQTF4nwTCmix31VgmpweL\",\"amount\":\"2\",\"number\":\"40\"}" 
+void dice::play(int64_t amount, uint8_t number)
 { 
   char fromBuf[64] = {0};
   int fromsize = getFrom4chain33(fromBuf, 64);
@@ -46,46 +47,46 @@ void dice::play(int64_t amount, int64_t number)
   eosio_assert(amount > 0, "amount must be positive");
   eosio_assert(number>=2 && number<= 97, "number must be within range of 2~97");
   
-  int64_t game_balance = get_game_balance();
+  int64_t game_balance = status.game_balance;
   eosio_assert(GAME_PRECISION * 50 * amount < game_balance, "amount is too big");
   eosio_assert(OK == execFrozenCoin(player.c_str(), COIN_PRECISION * amount), "fail to frozen coins");
   int64_t probability = number;
     
   int64_t payout = GAME_PRECISION * amount * (100 - probability) / probability;
+  printf("payout:%lld\n", payout);
   char arr[32] = {0};
   int length = get_random(arr, 32);
   eosio_assert(length > 0, "get_random error");
   char temp = arr[length - 1] & 0x0f;
-  int64_t rand_num = (int64_t(temp) * 100) >> 4; // *100/16
-  print_f("rand num:%lld\n",rand_num);
+  uint8_t rand_num = uint8_t((int64_t(temp) * 100) >> 4); // *100/16
+  printf("rand num:%d\n",rand_num);
+
   roundinfo info;
-  info.round = this->get_status_round() + 1;
-  info.account = player;
+  info.round = status.current_round++;
+  info.height = getHeight4chain33();
+  info.player = player;
   info.amount = amount;
   info.guess_num = number;
-  info.result_num = rand_num;
+  info.rand_num = rand_num;
   if (rand_num < number)
   {
-    //TODO
-    //保证原子操作？
-    eosio_assert(OK == execTransferFrozenCoin(status.game_creator.c_str(), player.c_str(), COIN_PRECISION * payout), "fail to transfer frozen coins");
-    this->change_game_balance(- GAME_PRECISION * payout);
-    eosio_assert(OK == execActiveCoin(player.c_str(), COIN_PRECISION * amount), "fail to active coins");
+    eosio_assert(OK == execTransferFrozenCoin(status.game_creator.c_str(), player.c_str(), COIN_PRECISION/GAME_PRECISION * payout), "fail to transfer frozen coins to player");
+    status.game_balance -= payout;
+    eosio_assert(OK == execActiveCoin(player.c_str(), COIN_PRECISION * amount), "fail to active coins of player");
     info.player_win = true;
     printf("you win\n");
-  }
-  else
+  } 
+  else 
   {
-    //TODO
-    //保证原子操作？
-    eosio_assert(OK == execTransferFrozenCoin(player.c_str(), status.game_creator.c_str(), COIN_PRECISION * amount), "fail to transfer frozen coins");
-    eosio_assert(OK == execFrozenCoin(status.game_creator.c_str(), COIN_PRECISION * amount), "fail to frozen coins");
-	this->change_game_balance(GAME_PRECISION * amount);
+    eosio_assert(OK == execTransferFrozenCoin(player.c_str(), status.game_creator.c_str(), COIN_PRECISION * amount), "fail to transfer frozen coins to creator");
+    eosio_assert(OK == execFrozenCoin(status.game_creator.c_str(), COIN_PRECISION * amount), "fail to frozen coins of creator");
+	  status.game_balance += GAME_PRECISION * amount;
     info.player_win = false;
     printf("you lose\n");
   }
-  this->add_status_round();
   this->add_roundinfo(info);
+  status.height = info.height;
+  this->set_status(status);
 }
 
 void dice::stopgame()
@@ -144,23 +145,30 @@ void dice::set_status(gamestatus status)
   }
 }
 
-int64_t dice::get_game_balance()
-{
-  gamestatus status = this->get_status();
-  return status.game_balance;
-}
+// int64_t dice::get_game_balance()
+// {
+//   gamestatus status = this->get_status();
+//   return status.game_balance;
+// }
 
-void dice::change_game_balance(int64_t change)
-{
-  gamestatus status = this->get_status();
-  status.game_balance += change;
-  this->set_status(status);
-}
+// void dice::change_game_balance(int64_t change)
+// {
+//   gamestatus status = this->get_status();
+//   status.game_balance += change;
+//   this->set_status(status);
+// }
+
+// void dice::change_game_height(int64_t height)
+// {
+//   gamestatus status = this->get_status();
+//   status.height = height;
+//   this->set_status(status);
+// }
 
 void dice::add_roundinfo(roundinfo info)
 {
   char temp[64] = {0};
-  sprintf(temp, "round:%lld", info.round);
+  sprintf(temp, "-height:%lld-round:%lld", info.height, info.round);
   string key(temp);
   size_t size = pack_size( info );
   void* buffer = max_stack_buffer_size < size ? malloc(size) : alloca(size);
@@ -174,22 +182,22 @@ void dice::add_roundinfo(roundinfo info)
   }
 }
 
-int64_t dice::get_status_round()
-{
-  gamestatus status = this->get_status();
-  return  status.current_round;
-}
+// int64_t dice::get_status_round()
+// {
+//   gamestatus status = this->get_status();
+//   return  status.current_round;
+// }
 
-void dice::add_status_round()
-{
-  gamestatus status = this->get_status();
-  status.current_round++;
-  this->set_status(status);
-}
+// void dice::add_status_round()
+// {
+//   gamestatus status = this->get_status();
+//   status.current_round++;
+//   this->set_status(status);
+// }
 
 void dice::withdraw(string game_creator)
 {
-  int64_t balance = this->get_game_balance();
+  int64_t balance = this->get_status().game_balance;
   eosio_assert(OK == execActiveCoin(game_creator.c_str(), balance/GAME_PRECISION*COIN_PRECISION), "fail to active coins");
 }
 

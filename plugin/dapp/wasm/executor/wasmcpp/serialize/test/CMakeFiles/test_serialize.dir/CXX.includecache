@@ -1,0 +1,40 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/wasmcpp/serialize/serialize_api.h
+token.h
+-
+
+/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/wasmcpp/serialize/test/main.cpp
+stdio.h
+-
+stdlib.h
+-
+string
+-
+iostream
+-
+../token.hpp
+/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/wasmcpp/serialize/token.hpp
+../serialize_api.h
+/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/wasmcpp/serialize/serialize_api.h
+
+/home/yann/go/src/github.com/33cn/plugin/plugin/dapp/wasm/executor/wasmcpp/serialize/token.hpp
+string
+-
+
+serialize/test/../token.h
+types.h
+-
+
+serialize/test/../types.h
+stdint.h
+-
+wchar.h
+-
+
