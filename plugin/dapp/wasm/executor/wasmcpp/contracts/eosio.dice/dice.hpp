@@ -15,7 +15,7 @@ namespace eosio {
         dice(account_name self):contract(self){};
 
         void startgame(int64_t deposit);
-        void play(int64_t amount, uint8_t number);
+        void play(int64_t amount, uint8_t number, uint8_t direction);
         void stopgame();
         // @abi table roundinfo i64
         struct roundinfo {
@@ -36,16 +36,18 @@ namespace eosio {
             int64_t current_round;
         };
 
+        struct heightinfo {
+            int64_t start_round;
+            int64_t end_round;
+        };
+
     private:
         void withdraw(string game_creator);
         gamestatus get_status();
         void set_status(gamestatus status);
-        //int64_t get_game_balance();
-        //void change_game_balance(int64_t amount);
-        //void dice::change_game_height(int64_t height);
         void add_roundinfo(roundinfo round);
-        //int64_t get_status_round();
-        //void add_status_round();
+        heightinfo get_localdb_for_height(string key);
+        void set_localdb_for_height(int64_t height, int64_t round);
         bool is_active();
     };
 }

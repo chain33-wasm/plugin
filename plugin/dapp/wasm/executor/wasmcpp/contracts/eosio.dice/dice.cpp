@@ -14,12 +14,13 @@ void dice::startgame(int64_t deposit)
   string creator(fromBuf);
 
   string status_key(STATUS);
+  //debug
   char debugInfo[512] = {0};
   sprintf(debugInfo, "Begin to startgame and creator:%s, deposit:%lld.\n"
   	"status_key:%s, with len:%d.\n", creator.c_str(), deposit,
   	status_key.c_str(), status_key.length());
   prints((const char *)debugInfo);
-  
+  //end debug
   int valueSize = dbGetValueSize4chain33(status_key.c_str(), status_key.length());
   eosio_assert( valueSize == 0, "game already exists" );
   eosio_assert(deposit > 0, "deposit must be positive");
@@ -37,7 +38,7 @@ void dice::startgame(int64_t deposit)
 }
 
 //-x play -r "{\"player\":\"14cM9mnZ5JvbpFQTF4nwTCmix31VgmpweL\",\"amount\":\"2\",\"number\":\"40\"}" 
-void dice::play(int64_t amount, uint8_t number)
+void dice::play(int64_t amount, uint8_t number, uint8_t direction)
 { 
   char fromBuf[64] = {0};
   int fromsize = getFrom4chain33(fromBuf, 64);
@@ -46,6 +47,7 @@ void dice::play(int64_t amount, uint8_t number)
   eosio_assert(status.is_active, "game is not active");
   eosio_assert(amount > 0, "amount must be positive");
   eosio_assert(number>=2 && number<= 97, "number must be within range of 2~97");
+  eosio_assert(direction<=1, "direction must be 0 or 1");
   
   int64_t game_balance = status.game_balance;
   eosio_assert(GAME_PRECISION * 50 * amount < game_balance, "amount is too big");
@@ -56,13 +58,16 @@ void dice::play(int64_t amount, uint8_t number)
   printf("payout:%lld\n", payout);
   char arr[32] = {0};
   int length = get_random(arr, 32);
-  eosio_assert(length > 0, "get_random error");
-  char temp = arr[length - 1] & 0x0f;
-  uint8_t rand_num = uint8_t((int64_t(temp) * 100) >> 4); // *100/16
+  eosio_assert(length >= 4, "get_random error");
+  uint64_t a1 = uint64_t(arr[length - 1]);
+  uint64_t a2 = uint64_t(arr[length - 2]) << 8;
+  uint64_t a3 = uint64_t(arr[length - 3]) << 16;
+  uint64_t a4 = uint64_t(arr[length - 4]) << 24;
+  uint8_t rand_num = uint8_t((a1 + a2 + a3 +a4)%100);
   printf("rand num:%d\n",rand_num);
 
   roundinfo info;
-  info.round = status.current_round++;
+  info.round = ++status.current_round;
   info.height = getHeight4chain33();
   info.player = player;
   info.amount = amount;
@@ -87,6 +92,7 @@ void dice::play(int64_t amount, uint8_t number)
   this->add_roundinfo(info);
   status.height = info.height;
   this->set_status(status);
+  this->set_localdb_for_height(info.height, info.round);
 }
 
 void dice::stopgame()
@@ -113,7 +119,7 @@ eosio::dice::gamestatus dice::get_status()
   int size = dbGetValueSize4chain33(status_key.c_str(), status_key.length());
   eosio_assert( size > 0, "Failed to get_status" );
   void* buffer = max_stack_buffer_size < size ? malloc(size) : alloca(size);
-  eosio::dbGet4chain33(status_key.c_str(), status_key.length(), (char *)buffer, size);
+  dbGet4chain33(status_key.c_str(), status_key.length(), (char *)buffer, size);
   datastream<char*> ds( (char*)buffer, size );
   gamestatus status;
   ds >> status;
@@ -132,38 +138,17 @@ void dice::set_status(gamestatus status)
   datastream<char*> ds( (char*)buffer, size );
   ds << status;
   dbSet4chain33(status_key.c_str(), status_key.length(), (const char *)buffer, size);
-  //debug/
+  //debug
   prints_l(status_key.c_str(), status_key.length());
   char bufferDebug[256] = {0};
   sprintf(bufferDebug, "\nset_status key:%s with length:%d\n", status_key.c_str(), status_key.length());
   prints((const char*)bufferDebug);
-  ///////////////
-		
+  //end debug
   if (size > max_stack_buffer_size)
   {
     free(buffer);
   }
 }
-
-// int64_t dice::get_game_balance()
-// {
-//   gamestatus status = this->get_status();
-//   return status.game_balance;
-// }
-
-// void dice::change_game_balance(int64_t change)
-// {
-//   gamestatus status = this->get_status();
-//   status.game_balance += change;
-//   this->set_status(status);
-// }
-
-// void dice::change_game_height(int64_t height)
-// {
-//   gamestatus status = this->get_status();
-//   status.height = height;
-//   this->set_status(status);
-// }
 
 void dice::add_roundinfo(roundinfo info)
 {
@@ -182,18 +167,49 @@ void dice::add_roundinfo(roundinfo info)
   }
 }
 
-// int64_t dice::get_status_round()
-// {
-//   gamestatus status = this->get_status();
-//   return  status.current_round;
-// }
+eosio::dice::heightinfo dice::get_localdb_for_height(string key)
+{
+  heightinfo info;
+  info.start_round = 0;
+  info.end_round = 0;
+  int size = dbGetValueSize4chain33(key.c_str(), key.length());
+  if (size > 0) {
+    void* buffer = max_stack_buffer_size < size ? malloc(size) : alloca(size);
+    dbGet4chain33(key.c_str(), key.length(), (char *)buffer, size);
+    datastream<char*> ds( (char*)buffer, size );
+    ds >> info;
+    if (size > max_stack_buffer_size)
+    {
+      free(buffer);
+    }
+  }
 
-// void dice::add_status_round()
-// {
-//   gamestatus status = this->get_status();
-//   status.current_round++;
-//   this->set_status(status);
-// }
+  return info;
+}
+
+void dice::set_localdb_for_height(int64_t height, int64_t round)
+{
+  char temp[64] = {0};
+  sprintf(temp, "height:%lld", height);
+  string key(temp);
+  heightinfo info = this->get_localdb_for_height(key);
+  if (info.start_round == 0) 
+  {
+    info.start_round = round;
+  }
+  info.end_round = round;
+
+  size_t size = pack_size( info );
+  void* buffer = max_stack_buffer_size < size ? malloc(size) : alloca(size);
+  datastream<char*> ds( (char*)buffer, size );
+  ds << info;
+  
+  localdbSet4chain33(key.c_str(), key.length(), (const char *)buffer, size);	
+  if (size > max_stack_buffer_size)
+  {
+    free(buffer);
+  }
+}
 
 void dice::withdraw(string game_creator)
 {
