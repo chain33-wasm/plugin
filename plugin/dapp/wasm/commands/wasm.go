@@ -1,7 +1,8 @@
 package commands
 
 import (
-	"encoding/json"
+	//"encoding/json"
+	"bytes"
 	"fmt"
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/common/address"
@@ -14,7 +15,6 @@ import (
 	"io/ioutil"
 	"os"
 	"regexp"
-	"bytes"
 )
 
 func WasmCmd() *cobra.Command {
@@ -95,29 +95,21 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 		return
 	}
 
-	value := wasmtypes.CreateWasmContractPara{
-		Code: code,
-		Abi:  string(abi),
+	var createReq = wasmtypes.CreateContrantReq{
 		Name: contractName,
 		Note: note,
+		Code: code,
+		Abi:  string(abi),
 		Fee:  int64(feeInt64),
 	}
-
-	paramJson, errInfo := json.Marshal(value)
-	if errInfo != nil {
-		fmt.Fprintln(os.Stderr, "json.Marshal error ", errInfo)
+	var createResp = types.ReplyString{}
+	query := sendQuery4wasm(rpcLaddr, wasmtypes.CreateWasmContractStr, &createReq, &createResp)
+	if query {
+		fmt.Println(createResp.Data)
+	} else {
+		fmt.Fprintln(os.Stderr, "get create to transaction error")
 		return
-
 	}
-
-	params := &rpctypes.CreateTxIn{
-		Execer:     wasmtypes.WasmX,
-		ActionName: wasmtypes.CreateWasmContractStr,
-		Payload:    paramJson,
-	}
-
-	ctx := jsonclient.NewRPCCtx(rpcLaddr, "Chain33.CreateTransaction", params, nil)
-	ctx.RunWithoutMarshal()
 }
 
 func wasmGenAbiCmd() *cobra.Command {
@@ -187,7 +179,7 @@ func wasmQueryContract(cmd *cobra.Command, args []string) {
 
 	queryReq := wasmtypes.WasmQueryContractTableReq{
 		ContractName: contractName,
-		Items:    []*wasmtypes.WasmQueryTableItem{{tableName, key}},
+		Items:        []*wasmtypes.WasmQueryTableItem{{TableName: tableName, Key: key}},
 	}
 
 	var WasmQueryResponse wasmtypes.WasmQueryResponse
@@ -285,43 +277,22 @@ func wasmCallContract(cmd *cobra.Command, args []string) {
 
 	feeInt64 := uint64(fee*1e4) * 1e4
 
-	req := wasmtypes.ConvertJson2AbiReq{
-		ContractName:  contractName,
-		ActionName:    actionName,
-		AbiDataInJson: abiPara,
+	var createReq = wasmtypes.CallContractReq{
+		Name:       contractName,
+		Note:       note,
+		ActionName: actionName,
+		DataInJson: abiPara,
+		Fee:        int64(feeInt64),
 	}
-	var json2AbiResponse wasmtypes.Json2AbiResponse
-	var actionData []byte
-	query := sendQuery4wasm(rpcLaddr, wasmtypes.ConvertJson2Abi, &req, &json2AbiResponse)
+	var createResp = types.ReplyString{}
+
+	query := sendQuery4wasm(rpcLaddr, wasmtypes.CallWasmContractStr, &createReq, &createResp)
 	if query {
-		actionData = json2AbiResponse.AbiData
+		fmt.Println(createResp.Data)
 	} else {
-		fmt.Fprintln(os.Stderr, "get abi data error")
+		fmt.Fprintln(os.Stderr, "get call wasm to transaction error")
 		return
 	}
-
-	value := wasmtypes.CallWasmContractPara{
-			Name:       contractName,
-			Note:       note,
-			ActionName: actionName,
-			ActionData: actionData,
-			Fee:        int64(feeInt64)}
-
-	paramJson, errInfo := json.Marshal(value)
-	if errInfo != nil {
-		fmt.Fprintln(os.Stderr, "json.Marshal error ", errInfo)
-		return
-
-	}
-
-	params := &rpctypes.CreateTxIn{
-		Execer:     types.ExecName(wasmtypes.WasmX),
-		ActionName: wasmtypes.CallWasmContractStr,
-		Payload:    paramJson,
-	}
-
-	ctx := jsonclient.NewRPCCtx(rpcLaddr, "Chain33.CreateTransaction", params, nil)
-	ctx.RunWithoutMarshal()
 }
 
 func wasmAddCallContractFlags(cmd *cobra.Command) {

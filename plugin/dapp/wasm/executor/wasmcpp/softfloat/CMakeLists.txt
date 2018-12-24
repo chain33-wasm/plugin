@@ -3,7 +3,7 @@ project (SoftFloat )
 
 # generate compile command database for external tools
 set (CMAKE_EXPORT_COMPILE_COMMANDS "ON")
-
+add_definitions(-fPIC)
 message ( STATUS "Configuring SoftFloat" )
 set( C_DEFINES "-DSOFTFLOAT_FAST_INT64 -DSOFTFLOAT_ROUND_EVEN -DINLINE_LEVEL=5 -DSOFTFLOAT_FAST_DIV32TO16 -DSOFTFLOAT_FAST_DIV64TO32" )
 set( CMAKE_C_FLAGS " -Wall -Werror-implicit-function-declaration -Wno-conversion ${CMAKE_C_FLAGS} ${C_DEFINES}" )

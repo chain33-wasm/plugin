@@ -182,5 +182,29 @@ message WasmFuzzyQueryResponse {
     repeated FuzzyQueryResultItem queryResultItems  = 3;
 }
 
+message CreateContrantReq{
+  	// abi字符串
+  	string Abi              =1;
+  	// 合约别名，方便识别
+  	string Name             =2;
+  	// 交易备注
+  	string Note             =3;
+  	// 合约字节码
+    bytes Code              =4;
+  	// Fee 交易手续费
+  	int64 Fee               =5;
+}
 
+message CallContractReq {
+    // 合约别名，方便识别
+    string Name               = 1;
+    // 交易备注
+    string Note               = 2;
+    // abi 数据
+    string DataInJson         = 3;
+    // 执行动作名称
+    string ActionName         = 4;
+    // Fee 交易手续费
+    int64 Fee                 = 5;
+}
 
