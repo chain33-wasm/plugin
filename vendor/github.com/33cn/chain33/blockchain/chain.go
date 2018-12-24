@@ -207,6 +207,9 @@ func (chain *BlockChain) SetQueueClient(client queue.Client) {
 	go chain.ProcRecvMsg()
 }
 
+//Wait for ready
+func (chain *BlockChain) Wait() {}
+
 //GetStore only used for test
 func (chain *BlockChain) GetStore() *BlockStore {
 	return chain.blockStore
@@ -399,9 +402,10 @@ func (chain *BlockChain) InitIndexAndBestView() {
 		height = 0
 	}
 	for ; height <= curheight; height++ {
-		header, _ := chain.blockStore.GetBlockHeaderByHeight(height)
+		header, err := chain.blockStore.GetBlockHeaderByHeight(height)
 		if header == nil {
-			return
+			chainlog.Error("InitIndexAndBestView GetBlockHeaderByHeight", "height", height, "err", err)
+			panic("InitIndexAndBestView fail!")
 		}
 
 		newNode := newBlockNodeByHeader(false, header, "self", -1)
