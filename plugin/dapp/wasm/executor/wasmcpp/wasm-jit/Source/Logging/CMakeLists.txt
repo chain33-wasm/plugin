@@ -3,7 +3,7 @@ set(Sources
 set(PublicHeaders
 	${WAVM_INCLUDE_DIR}/Logging/Logging.h)
 include_directories(${WAVM_INCLUDE_DIR}/Logging)
-
+add_definitions(-fPIC)
 add_definitions(-DLOGGING_API=DLL_EXPORT)
 
 add_library(Logging STATIC ${Sources} ${PublicHeaders})

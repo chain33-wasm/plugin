@@ -6,7 +6,7 @@ set(PublicHeaders
 include_directories(${WAVM_INCLUDE_DIR}/Platform)
 
 add_definitions(-DPLATFORM_API=DLL_EXPORT)
-
+add_definitions(-fPIC)
 add_library(Platform STATIC ${Sources} ${PublicHeaders})
 
 # Link with dl on Linux for dladdr.

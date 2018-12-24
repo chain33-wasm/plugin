@@ -204,7 +204,7 @@ if ("${EOSIO_ROOT_KEY}" STREQUAL "")
 endif()
 
 message( STATUS "Using '${EOSIO_ROOT_KEY}' as public key for 'eosio' account" )
-
+add_definitions(-fPIC)
 include(wasm)
 add_subdirectory( testadapter )
 add_subdirectory( adapter )

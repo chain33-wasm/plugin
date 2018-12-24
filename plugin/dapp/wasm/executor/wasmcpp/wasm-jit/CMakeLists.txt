@@ -63,7 +63,7 @@ if(ENABLE_THREADING_PROTOTYPE)
 else()
 	add_definitions("-DENABLE_THREADING_PROTOTYPE=0")
 endif()
-
+add_definitions(-fPIC)
 add_subdirectory(Include/Inline)
 
 add_subdirectory(Source/Emscripten)
