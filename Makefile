@@ -22,7 +22,7 @@ DAPP := ""
 PROJ := "build"
 .PHONY: default dep all build release cli linter race test fmt vet bench msan coverage coverhtml docker docker-compose protobuf clean help autotest
 
-default: updateWasmlib build depends
+default:  build depends
 
 updateWasmlib:
 	@bash $(WASMCPP)/build_wasmcpp.sh
