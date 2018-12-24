@@ -47,7 +47,40 @@ func (c *channelClient) CreateRawTransaction(param *types.CreateTx) ([]byte, err
 	if param.IsToken {
 		execer = types.ExecName("token")
 	}
+	if param.Execer != "" {
+		execer = param.Execer
+	}
 	return types.CallCreateTx(execer, "", param)
+}
+
+func (c *channelClient) ReWriteRawTx(param *types.ReWriteRawTx) ([]byte, error) {
+	if param == nil || param.Tx == "" {
+		log.Error("ReWriteRawTx", "Error", types.ErrInvalidParam)
+		return nil, types.ErrInvalidParam
+	}
+
+	tx, err := decodeTx(param.Tx)
+	if err != nil {
+		return nil, err
+	}
+	if param.Execer != nil {
+		tx.Execer = param.Execer
+	}
+	if param.To != "" {
+		tx.To = param.To
+	}
+	if param.Fee != 0 {
+		tx.Fee = param.Fee
+	}
+	if param.Expire != "" {
+		expire, err := types.ParseExpire(param.Expire)
+		if err != nil {
+			return nil, err
+		}
+		tx.Expire = expire
+	}
+
+	return types.FormatTxEncode(string(tx.Execer), tx)
 }
 
 // CreateRawTxGroup create rawtransaction for group
@@ -181,7 +214,9 @@ func (c *channelClient) GetAllExecBalance(in *types.ReqAddr) (*types.AllExecBala
 	addr := in.Addr
 	err := address.CheckAddress(addr)
 	if err != nil {
-		return nil, types.ErrInvalidAddress
+		if err = address.CheckMultiSignAddress(addr); err != nil {
+			return nil, types.ErrInvalidAddress
+		}
 	}
 	var addrs []string
 	addrs = append(addrs, addr)
