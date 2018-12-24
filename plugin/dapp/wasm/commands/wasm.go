@@ -31,6 +31,7 @@ func WasmCmd() *cobra.Command {
 		wasmGenAbiCmd(),
 		wasmCallContractCmd(),
 		wasmQueryContractCmd(),
+		wasmFuzzyQueryContractCmd(),
 		wasmEstimateContractCmd(),
 		wasmDebugCmd(),
 	)
