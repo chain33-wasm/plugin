@@ -3,7 +3,6 @@ package commands
 import (
 	//"encoding/json"
 	"bytes"
-	"encoding/hex"
 	"fmt"
 	"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/common/address"
@@ -102,11 +101,10 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 		Abi:  string(abi),
 		Fee:  int64(feeInt64),
 	}
-	var createResp = types.Transaction{}
+	var createResp = types.ReplyString{}
 	query := sendQuery4wasm(rpcLaddr, wasmtypes.CreateWasmContractStr, &createReq, &createResp)
 	if query {
-		result := hex.EncodeToString(types.Encode(&createResp))
-		fmt.Println(result)
+		fmt.Println(createResp.Data)
 	} else {
 		fmt.Fprintln(os.Stderr, "get create to transaction error")
 		return
@@ -225,12 +223,11 @@ func wasmCallContract(cmd *cobra.Command, args []string) {
 		DataInJson: abiPara,
 		Fee:        int64(feeInt64),
 	}
-	var createResp types.Transaction
+	var createResp = types.ReplyString{}
 
 	query := sendQuery4wasm(rpcLaddr, wasmtypes.CallWasmContractStr, &createReq, &createResp)
 	if query {
-		result := hex.EncodeToString(types.Encode(&createResp))
-		fmt.Println(result)
+		fmt.Println(createResp.Data)
 	} else {
 		fmt.Fprintln(os.Stderr, "get call wasm to transaction error")
 		return

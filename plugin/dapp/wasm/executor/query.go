@@ -17,6 +17,7 @@ import (
 	"os"
 	"regexp"
 	"unsafe"
+	"encoding/hex"
 )
 
 
@@ -127,8 +128,10 @@ func (wasm *WASMExecutor) Query_CreateWasmContract(in *wasmtypes.CreateContrantR
 		},
 		Ty: wasmtypes.CreateWasmContractAction,
 	}
-
-	return createRawWasmTx(action, wasmtypes.WasmX, in.Fee)
+	createRsp, err := createRawWasmTx(action, wasmtypes.WasmX, in.Fee)
+	result := hex.EncodeToString(types.Encode(createRsp))
+	relpydata := &types.ReplyString{Data:result}
+	return relpydata, err
 
 }
 
@@ -159,8 +162,10 @@ func (wasm *WASMExecutor) Query_CallWasmContract(in *wasmtypes.CallContractReq) 
 		},
 		Ty: wasmtypes.CallWasmContractAction,
 	}
-
-	return createRawWasmTx(action, in.Name, in.Fee)
+	createRsp, err := createRawWasmTx(action, in.Name, in.Fee)
+	result := hex.EncodeToString(types.Encode(createRsp))
+	replydata:= &types.ReplyString{Data:result}
+	return replydata, err
 }
 
 func genAbiData(contractAbi, contractName, actionName, abiJson string) []byte {
