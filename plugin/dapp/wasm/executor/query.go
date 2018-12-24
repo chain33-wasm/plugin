@@ -159,11 +159,16 @@ func (wasm *WASMExecutor) Query_CallWasmContract(in *wasmtypes.CallContractReq) 
 
 	wasm.prepareQueryContext([]byte(wasmtypes.WasmX))
 
+	contractName := in.Name
+	if !bytes.Contains([]byte(contractName), []byte(wasmtypes.UserWasmX)) {
+		contractName = wasmtypes.UserWasmX + contractName
+	}
+
 	//resp := &wasmtypes.Json2AbiResponse{}
-	contractAddr := address.ExecAddress(types.ExecName(in.Name))
+	contractAddr := address.ExecAddress(types.ExecName(contractName))
 	abi := wasm.mStateDB.GetAbi(contractAddr)
 
-	AbiData := genAbiData(string(abi), in.Name, in.ActionName, in.DataInJson)
+	AbiData := genAbiData(string(abi), contractName, in.ActionName, in.DataInJson)
 
 	action := &wasmtypes.WasmContractAction{
 		Value: &wasmtypes.WasmContractAction_CallWasmContract{
@@ -178,7 +183,7 @@ func (wasm *WASMExecutor) Query_CallWasmContract(in *wasmtypes.CallContractReq) 
 		},
 		Ty: wasmtypes.CallWasmContractAction,
 	}
-	createRsp, err := createRawWasmTx(action, in.Name, in.Fee)
+	createRsp, err := createRawWasmTx(action, contractName, in.Fee)
 	result := hex.EncodeToString(types.Encode(createRsp))
 	replydata:= &types.ReplyString{Data:result}
 	return replydata, err
