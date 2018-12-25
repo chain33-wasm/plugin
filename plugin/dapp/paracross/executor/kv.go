@@ -21,13 +21,17 @@ var (
 )
 
 func setPrefix() {
+	exec := "paracross"
+	if types.IsPara() {
+		exec = types.GetTitle() + exec
+	}
 	title = "mavl-paracross-title-"
 	titleHeight = "mavl-paracross-titleHeight-"
 	configNodes = "paracross-nodes-"
-	localTx = "LODB-paracross-titleHeightAddr-"
-	localTitle = "LODB-paracross-title-"
-	localTitleHeight = "LODB-paracross-titleHeight-"
-	localAssetKey = "LODB-paracross-asset-"
+	localTx = "LODB-" + exec + "-titleHeightAddr-"
+	localTitle = "LODB-" + exec + "-title-"
+	localTitleHeight = "LODB-" + exec + "-titleHeight-"
+	localAssetKey = "LODB-" + exec + "-asset-"
 }
 
 func calcTitleKey(t string) []byte {
