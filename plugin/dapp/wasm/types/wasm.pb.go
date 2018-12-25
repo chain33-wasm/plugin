@@ -3,11 +3,9 @@
 
 package types
 
-import (
-	fmt "fmt"
-	proto "github.com/golang/protobuf/proto"
-	math "math"
-)
+import proto "github.com/golang/protobuf/proto"
+import fmt "fmt"
+import math "math"
 
 // Reference imports to suppress errors if they are not otherwise used.
 var _ = proto.Marshal
@@ -20,7 +18,7 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.ProtoPackageIsVersion2 // please upgrade the proto package
 
-//合约对象信息
+// 合约对象信息
 type WASMContractObject struct {
 	Addr                 string             `protobuf:"bytes,1,opt,name=addr,proto3" json:"addr,omitempty"`
 	Data                 *WASMContractData  `protobuf:"bytes,2,opt,name=data,proto3" json:"data,omitempty"`
@@ -34,17 +32,16 @@ func (m *WASMContractObject) Reset()         { *m = WASMContractObject{} }
 func (m *WASMContractObject) String() string { return proto.CompactTextString(m) }
 func (*WASMContractObject) ProtoMessage()    {}
 func (*WASMContractObject) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{0}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{0}
 }
-
 func (m *WASMContractObject) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WASMContractObject.Unmarshal(m, b)
 }
 func (m *WASMContractObject) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WASMContractObject.Marshal(b, m, deterministic)
 }
-func (m *WASMContractObject) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WASMContractObject.Merge(m, src)
+func (dst *WASMContractObject) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WASMContractObject.Merge(dst, src)
 }
 func (m *WASMContractObject) XXX_Size() int {
 	return xxx_messageInfo_WASMContractObject.Size(m)
@@ -93,17 +90,16 @@ func (m *WASMContractData) Reset()         { *m = WASMContractData{} }
 func (m *WASMContractData) String() string { return proto.CompactTextString(m) }
 func (*WASMContractData) ProtoMessage()    {}
 func (*WASMContractData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{1}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{1}
 }
-
 func (m *WASMContractData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WASMContractData.Unmarshal(m, b)
 }
 func (m *WASMContractData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WASMContractData.Marshal(b, m, deterministic)
 }
-func (m *WASMContractData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WASMContractData.Merge(m, src)
+func (dst *WASMContractData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WASMContractData.Merge(dst, src)
 }
 func (m *WASMContractData) XXX_Size() int {
 	return xxx_messageInfo_WASMContractData.Size(m)
@@ -171,17 +167,16 @@ func (m *LogWASMContractData) Reset()         { *m = LogWASMContractData{} }
 func (m *LogWASMContractData) String() string { return proto.CompactTextString(m) }
 func (*LogWASMContractData) ProtoMessage()    {}
 func (*LogWASMContractData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{2}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{2}
 }
-
 func (m *LogWASMContractData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_LogWASMContractData.Unmarshal(m, b)
 }
 func (m *LogWASMContractData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_LogWASMContractData.Marshal(b, m, deterministic)
 }
-func (m *LogWASMContractData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_LogWASMContractData.Merge(m, src)
+func (dst *LogWASMContractData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_LogWASMContractData.Merge(dst, src)
 }
 func (m *LogWASMContractData) XXX_Size() int {
 	return xxx_messageInfo_LogWASMContractData.Size(m)
@@ -241,17 +236,16 @@ func (m *WASMContractState) Reset()         { *m = WASMContractState{} }
 func (m *WASMContractState) String() string { return proto.CompactTextString(m) }
 func (*WASMContractState) ProtoMessage()    {}
 func (*WASMContractState) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{3}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{3}
 }
-
 func (m *WASMContractState) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WASMContractState.Unmarshal(m, b)
 }
 func (m *WASMContractState) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WASMContractState.Marshal(b, m, deterministic)
 }
-func (m *WASMContractState) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WASMContractState.Merge(m, src)
+func (dst *WASMContractState) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WASMContractState.Merge(dst, src)
 }
 func (m *WASMContractState) XXX_Size() int {
 	return xxx_messageInfo_WASMContractState.Size(m)
@@ -298,17 +292,16 @@ func (m *WasmContractAction) Reset()         { *m = WasmContractAction{} }
 func (m *WasmContractAction) String() string { return proto.CompactTextString(m) }
 func (*WasmContractAction) ProtoMessage()    {}
 func (*WasmContractAction) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{4}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{4}
 }
-
 func (m *WasmContractAction) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmContractAction.Unmarshal(m, b)
 }
 func (m *WasmContractAction) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmContractAction.Marshal(b, m, deterministic)
 }
-func (m *WasmContractAction) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmContractAction.Merge(m, src)
+func (dst *WasmContractAction) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmContractAction.Merge(dst, src)
 }
 func (m *WasmContractAction) XXX_Size() int {
 	return xxx_messageInfo_WasmContractAction.Size(m)
@@ -445,7 +438,7 @@ type CreateWasmContract struct {
 	GasPrice uint32 `protobuf:"varint,2,opt,name=gasPrice,proto3" json:"gasPrice,omitempty"`
 	// 合约数据
 	Code []byte `protobuf:"bytes,3,opt,name=code,proto3" json:"code,omitempty"`
-	//abi数据
+	// abi数据
 	Abi string `protobuf:"bytes,4,opt,name=abi,proto3" json:"abi,omitempty"`
 	// 用户自定义wasm合约名字，必须是user.wasm.xxx的风格，且xxx由a-z，0-9组成的4-16字符长度组成
 	Name string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
@@ -460,17 +453,16 @@ func (m *CreateWasmContract) Reset()         { *m = CreateWasmContract{} }
 func (m *CreateWasmContract) String() string { return proto.CompactTextString(m) }
 func (*CreateWasmContract) ProtoMessage()    {}
 func (*CreateWasmContract) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{5}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{5}
 }
-
 func (m *CreateWasmContract) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateWasmContract.Unmarshal(m, b)
 }
 func (m *CreateWasmContract) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateWasmContract.Marshal(b, m, deterministic)
 }
-func (m *CreateWasmContract) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateWasmContract.Merge(m, src)
+func (dst *CreateWasmContract) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateWasmContract.Merge(dst, src)
 }
 func (m *CreateWasmContract) XXX_Size() int {
 	return xxx_messageInfo_CreateWasmContract.Size(m)
@@ -531,11 +523,11 @@ type CallWasmContract struct {
 	GasPrice uint32 `protobuf:"varint,2,opt,name=gasPrice,proto3" json:"gasPrice,omitempty"`
 	// 交易备注
 	Note string `protobuf:"bytes,3,opt,name=note,proto3" json:"note,omitempty"`
-	//虚拟机解释器类型
+	// 虚拟机解释器类型
 	VmType int32 `protobuf:"varint,4,opt,name=vmType,proto3" json:"vmType,omitempty"`
-	//执行动作名称
+	// 执行动作名称
 	ActionName string `protobuf:"bytes,5,opt,name=actionName,proto3" json:"actionName,omitempty"`
-	//执行参数
+	// 执行参数
 	ActionData           []byte   `protobuf:"bytes,6,opt,name=actionData,proto3" json:"actionData,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
@@ -546,17 +538,16 @@ func (m *CallWasmContract) Reset()         { *m = CallWasmContract{} }
 func (m *CallWasmContract) String() string { return proto.CompactTextString(m) }
 func (*CallWasmContract) ProtoMessage()    {}
 func (*CallWasmContract) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{6}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{6}
 }
-
 func (m *CallWasmContract) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CallWasmContract.Unmarshal(m, b)
 }
 func (m *CallWasmContract) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CallWasmContract.Marshal(b, m, deterministic)
 }
-func (m *CallWasmContract) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CallWasmContract.Merge(m, src)
+func (dst *CallWasmContract) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CallWasmContract.Merge(dst, src)
 }
 func (m *CallWasmContract) XXX_Size() int {
 	return xxx_messageInfo_CallWasmContract.Size(m)
@@ -623,17 +614,16 @@ func (m *ReceiptLocalData) Reset()         { *m = ReceiptLocalData{} }
 func (m *ReceiptLocalData) String() string { return proto.CompactTextString(m) }
 func (*ReceiptLocalData) ProtoMessage()    {}
 func (*ReceiptLocalData) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{7}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{7}
 }
-
 func (m *ReceiptLocalData) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReceiptLocalData.Unmarshal(m, b)
 }
 func (m *ReceiptLocalData) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReceiptLocalData.Marshal(b, m, deterministic)
 }
-func (m *ReceiptLocalData) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReceiptLocalData.Merge(m, src)
+func (dst *ReceiptLocalData) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReceiptLocalData.Merge(dst, src)
 }
 func (m *ReceiptLocalData) XXX_Size() int {
 	return xxx_messageInfo_ReceiptLocalData.Size(m)
@@ -680,17 +670,16 @@ func (m *ReceiptWASMContract) Reset()         { *m = ReceiptWASMContract{} }
 func (m *ReceiptWASMContract) String() string { return proto.CompactTextString(m) }
 func (*ReceiptWASMContract) ProtoMessage()    {}
 func (*ReceiptWASMContract) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{8}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{8}
 }
-
 func (m *ReceiptWASMContract) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ReceiptWASMContract.Unmarshal(m, b)
 }
 func (m *ReceiptWASMContract) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ReceiptWASMContract.Marshal(b, m, deterministic)
 }
-func (m *ReceiptWASMContract) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReceiptWASMContract.Merge(m, src)
+func (dst *ReceiptWASMContract) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ReceiptWASMContract.Merge(dst, src)
 }
 func (m *ReceiptWASMContract) XXX_Size() int {
 	return xxx_messageInfo_ReceiptWASMContract.Size(m)
@@ -743,17 +732,16 @@ func (m *WASMStateChangeItem) Reset()         { *m = WASMStateChangeItem{} }
 func (m *WASMStateChangeItem) String() string { return proto.CompactTextString(m) }
 func (*WASMStateChangeItem) ProtoMessage()    {}
 func (*WASMStateChangeItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{9}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{9}
 }
-
 func (m *WASMStateChangeItem) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WASMStateChangeItem.Unmarshal(m, b)
 }
 func (m *WASMStateChangeItem) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WASMStateChangeItem.Marshal(b, m, deterministic)
 }
-func (m *WASMStateChangeItem) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WASMStateChangeItem.Merge(m, src)
+func (dst *WASMStateChangeItem) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WASMStateChangeItem.Merge(dst, src)
 }
 func (m *WASMStateChangeItem) XXX_Size() int {
 	return xxx_messageInfo_WASMStateChangeItem.Size(m)
@@ -796,17 +784,16 @@ func (m *CheckWASMContractNameReq) Reset()         { *m = CheckWASMContractNameR
 func (m *CheckWASMContractNameReq) String() string { return proto.CompactTextString(m) }
 func (*CheckWASMContractNameReq) ProtoMessage()    {}
 func (*CheckWASMContractNameReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{10}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{10}
 }
-
 func (m *CheckWASMContractNameReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckWASMContractNameReq.Unmarshal(m, b)
 }
 func (m *CheckWASMContractNameReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CheckWASMContractNameReq.Marshal(b, m, deterministic)
 }
-func (m *CheckWASMContractNameReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CheckWASMContractNameReq.Merge(m, src)
+func (dst *CheckWASMContractNameReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CheckWASMContractNameReq.Merge(dst, src)
 }
 func (m *CheckWASMContractNameReq) XXX_Size() int {
 	return xxx_messageInfo_CheckWASMContractNameReq.Size(m)
@@ -835,17 +822,16 @@ func (m *CheckWASMAddrResp) Reset()         { *m = CheckWASMAddrResp{} }
 func (m *CheckWASMAddrResp) String() string { return proto.CompactTextString(m) }
 func (*CheckWASMAddrResp) ProtoMessage()    {}
 func (*CheckWASMAddrResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{11}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{11}
 }
-
 func (m *CheckWASMAddrResp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CheckWASMAddrResp.Unmarshal(m, b)
 }
 func (m *CheckWASMAddrResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CheckWASMAddrResp.Marshal(b, m, deterministic)
 }
-func (m *CheckWASMAddrResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CheckWASMAddrResp.Merge(m, src)
+func (dst *CheckWASMAddrResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CheckWASMAddrResp.Merge(dst, src)
 }
 func (m *CheckWASMAddrResp) XXX_Size() int {
 	return xxx_messageInfo_CheckWASMAddrResp.Size(m)
@@ -877,17 +863,16 @@ func (m *EstimateWASMGasReq) Reset()         { *m = EstimateWASMGasReq{} }
 func (m *EstimateWASMGasReq) String() string { return proto.CompactTextString(m) }
 func (*EstimateWASMGasReq) ProtoMessage()    {}
 func (*EstimateWASMGasReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{12}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{12}
 }
-
 func (m *EstimateWASMGasReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EstimateWASMGasReq.Unmarshal(m, b)
 }
 func (m *EstimateWASMGasReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EstimateWASMGasReq.Marshal(b, m, deterministic)
 }
-func (m *EstimateWASMGasReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EstimateWASMGasReq.Merge(m, src)
+func (dst *EstimateWASMGasReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EstimateWASMGasReq.Merge(dst, src)
 }
 func (m *EstimateWASMGasReq) XXX_Size() int {
 	return xxx_messageInfo_EstimateWASMGasReq.Size(m)
@@ -937,17 +922,16 @@ func (m *EstimateWASMGasResp) Reset()         { *m = EstimateWASMGasResp{} }
 func (m *EstimateWASMGasResp) String() string { return proto.CompactTextString(m) }
 func (*EstimateWASMGasResp) ProtoMessage()    {}
 func (*EstimateWASMGasResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{13}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{13}
 }
-
 func (m *EstimateWASMGasResp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_EstimateWASMGasResp.Unmarshal(m, b)
 }
 func (m *EstimateWASMGasResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_EstimateWASMGasResp.Marshal(b, m, deterministic)
 }
-func (m *EstimateWASMGasResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_EstimateWASMGasResp.Merge(m, src)
+func (dst *EstimateWASMGasResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_EstimateWASMGasResp.Merge(dst, src)
 }
 func (m *EstimateWASMGasResp) XXX_Size() int {
 	return xxx_messageInfo_EstimateWASMGasResp.Size(m)
@@ -977,17 +961,16 @@ func (m *WasmDebugReq) Reset()         { *m = WasmDebugReq{} }
 func (m *WasmDebugReq) String() string { return proto.CompactTextString(m) }
 func (*WasmDebugReq) ProtoMessage()    {}
 func (*WasmDebugReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{14}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{14}
 }
-
 func (m *WasmDebugReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmDebugReq.Unmarshal(m, b)
 }
 func (m *WasmDebugReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmDebugReq.Marshal(b, m, deterministic)
 }
-func (m *WasmDebugReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmDebugReq.Merge(m, src)
+func (dst *WasmDebugReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmDebugReq.Merge(dst, src)
 }
 func (m *WasmDebugReq) XXX_Size() int {
 	return xxx_messageInfo_WasmDebugReq.Size(m)
@@ -1016,17 +999,16 @@ func (m *WasmDebugResp) Reset()         { *m = WasmDebugResp{} }
 func (m *WasmDebugResp) String() string { return proto.CompactTextString(m) }
 func (*WasmDebugResp) ProtoMessage()    {}
 func (*WasmDebugResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{15}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{15}
 }
-
 func (m *WasmDebugResp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmDebugResp.Unmarshal(m, b)
 }
 func (m *WasmDebugResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmDebugResp.Marshal(b, m, deterministic)
 }
-func (m *WasmDebugResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmDebugResp.Merge(m, src)
+func (dst *WasmDebugResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmDebugResp.Merge(dst, src)
 }
 func (m *WasmDebugResp) XXX_Size() int {
 	return xxx_messageInfo_WasmDebugResp.Size(m)
@@ -1055,17 +1037,16 @@ func (m *WasmGetAbiResp) Reset()         { *m = WasmGetAbiResp{} }
 func (m *WasmGetAbiResp) String() string { return proto.CompactTextString(m) }
 func (*WasmGetAbiResp) ProtoMessage()    {}
 func (*WasmGetAbiResp) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{16}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{16}
 }
-
 func (m *WasmGetAbiResp) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmGetAbiResp.Unmarshal(m, b)
 }
 func (m *WasmGetAbiResp) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmGetAbiResp.Marshal(b, m, deterministic)
 }
-func (m *WasmGetAbiResp) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmGetAbiResp.Merge(m, src)
+func (dst *WasmGetAbiResp) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmGetAbiResp.Merge(dst, src)
 }
 func (m *WasmGetAbiResp) XXX_Size() int {
 	return xxx_messageInfo_WasmGetAbiResp.Size(m)
@@ -1095,17 +1076,16 @@ func (m *WasmQueryTableItem) Reset()         { *m = WasmQueryTableItem{} }
 func (m *WasmQueryTableItem) String() string { return proto.CompactTextString(m) }
 func (*WasmQueryTableItem) ProtoMessage()    {}
 func (*WasmQueryTableItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{17}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{17}
 }
-
 func (m *WasmQueryTableItem) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmQueryTableItem.Unmarshal(m, b)
 }
 func (m *WasmQueryTableItem) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmQueryTableItem.Marshal(b, m, deterministic)
 }
-func (m *WasmQueryTableItem) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmQueryTableItem.Merge(m, src)
+func (dst *WasmQueryTableItem) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmQueryTableItem.Merge(dst, src)
 }
 func (m *WasmQueryTableItem) XXX_Size() int {
 	return xxx_messageInfo_WasmQueryTableItem.Size(m)
@@ -1142,17 +1122,16 @@ func (m *WasmQueryContractTableReq) Reset()         { *m = WasmQueryContractTabl
 func (m *WasmQueryContractTableReq) String() string { return proto.CompactTextString(m) }
 func (*WasmQueryContractTableReq) ProtoMessage()    {}
 func (*WasmQueryContractTableReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{18}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{18}
 }
-
 func (m *WasmQueryContractTableReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmQueryContractTableReq.Unmarshal(m, b)
 }
 func (m *WasmQueryContractTableReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmQueryContractTableReq.Marshal(b, m, deterministic)
 }
-func (m *WasmQueryContractTableReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmQueryContractTableReq.Merge(m, src)
+func (dst *WasmQueryContractTableReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmQueryContractTableReq.Merge(dst, src)
 }
 func (m *WasmQueryContractTableReq) XXX_Size() int {
 	return xxx_messageInfo_WasmQueryContractTableReq.Size(m)
@@ -1189,17 +1168,16 @@ func (m *WasmOutItem) Reset()         { *m = WasmOutItem{} }
 func (m *WasmOutItem) String() string { return proto.CompactTextString(m) }
 func (*WasmOutItem) ProtoMessage()    {}
 func (*WasmOutItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{19}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{19}
 }
-
 func (m *WasmOutItem) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmOutItem.Unmarshal(m, b)
 }
 func (m *WasmOutItem) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmOutItem.Marshal(b, m, deterministic)
 }
-func (m *WasmOutItem) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmOutItem.Merge(m, src)
+func (dst *WasmOutItem) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmOutItem.Merge(dst, src)
 }
 func (m *WasmOutItem) XXX_Size() int {
 	return xxx_messageInfo_WasmOutItem.Size(m)
@@ -1237,17 +1215,16 @@ func (m *QueryResultItem) Reset()         { *m = QueryResultItem{} }
 func (m *QueryResultItem) String() string { return proto.CompactTextString(m) }
 func (*QueryResultItem) ProtoMessage()    {}
 func (*QueryResultItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{20}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{20}
 }
-
 func (m *QueryResultItem) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_QueryResultItem.Unmarshal(m, b)
 }
 func (m *QueryResultItem) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_QueryResultItem.Marshal(b, m, deterministic)
 }
-func (m *QueryResultItem) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_QueryResultItem.Merge(m, src)
+func (dst *QueryResultItem) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_QueryResultItem.Merge(dst, src)
 }
 func (m *QueryResultItem) XXX_Size() int {
 	return xxx_messageInfo_QueryResultItem.Size(m)
@@ -1290,17 +1267,16 @@ func (m *WasmQueryResponse) Reset()         { *m = WasmQueryResponse{} }
 func (m *WasmQueryResponse) String() string { return proto.CompactTextString(m) }
 func (*WasmQueryResponse) ProtoMessage()    {}
 func (*WasmQueryResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{21}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{21}
 }
-
 func (m *WasmQueryResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmQueryResponse.Unmarshal(m, b)
 }
 func (m *WasmQueryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmQueryResponse.Marshal(b, m, deterministic)
 }
-func (m *WasmQueryResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmQueryResponse.Merge(m, src)
+func (dst *WasmQueryResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmQueryResponse.Merge(dst, src)
 }
 func (m *WasmQueryResponse) XXX_Size() int {
 	return xxx_messageInfo_WasmQueryResponse.Size(m)
@@ -1331,17 +1307,16 @@ func (m *ConvertJson2AbiReq) Reset()         { *m = ConvertJson2AbiReq{} }
 func (m *ConvertJson2AbiReq) String() string { return proto.CompactTextString(m) }
 func (*ConvertJson2AbiReq) ProtoMessage()    {}
 func (*ConvertJson2AbiReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{22}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{22}
 }
-
 func (m *ConvertJson2AbiReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_ConvertJson2AbiReq.Unmarshal(m, b)
 }
 func (m *ConvertJson2AbiReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_ConvertJson2AbiReq.Marshal(b, m, deterministic)
 }
-func (m *ConvertJson2AbiReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ConvertJson2AbiReq.Merge(m, src)
+func (dst *ConvertJson2AbiReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_ConvertJson2AbiReq.Merge(dst, src)
 }
 func (m *ConvertJson2AbiReq) XXX_Size() int {
 	return xxx_messageInfo_ConvertJson2AbiReq.Size(m)
@@ -1384,17 +1359,16 @@ func (m *Json2AbiResponse) Reset()         { *m = Json2AbiResponse{} }
 func (m *Json2AbiResponse) String() string { return proto.CompactTextString(m) }
 func (*Json2AbiResponse) ProtoMessage()    {}
 func (*Json2AbiResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{23}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{23}
 }
-
 func (m *Json2AbiResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_Json2AbiResponse.Unmarshal(m, b)
 }
 func (m *Json2AbiResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_Json2AbiResponse.Marshal(b, m, deterministic)
 }
-func (m *Json2AbiResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Json2AbiResponse.Merge(m, src)
+func (dst *Json2AbiResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_Json2AbiResponse.Merge(dst, src)
 }
 func (m *Json2AbiResponse) XXX_Size() int {
 	return xxx_messageInfo_Json2AbiResponse.Size(m)
@@ -1412,7 +1386,7 @@ func (m *Json2AbiResponse) GetAbiData() []byte {
 	return nil
 }
 
-//模糊查找请求
+// 模糊查找请求
 type WasmFuzzyQueryTableReq struct {
 	ContractName         string   `protobuf:"bytes,1,opt,name=contractName,proto3" json:"contractName,omitempty"`
 	TableName            string   `protobuf:"bytes,2,opt,name=tableName,proto3" json:"tableName,omitempty"`
@@ -1428,17 +1402,16 @@ func (m *WasmFuzzyQueryTableReq) Reset()         { *m = WasmFuzzyQueryTableReq{}
 func (m *WasmFuzzyQueryTableReq) String() string { return proto.CompactTextString(m) }
 func (*WasmFuzzyQueryTableReq) ProtoMessage()    {}
 func (*WasmFuzzyQueryTableReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{24}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{24}
 }
-
 func (m *WasmFuzzyQueryTableReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmFuzzyQueryTableReq.Unmarshal(m, b)
 }
 func (m *WasmFuzzyQueryTableReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmFuzzyQueryTableReq.Marshal(b, m, deterministic)
 }
-func (m *WasmFuzzyQueryTableReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmFuzzyQueryTableReq.Merge(m, src)
+func (dst *WasmFuzzyQueryTableReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmFuzzyQueryTableReq.Merge(dst, src)
 }
 func (m *WasmFuzzyQueryTableReq) XXX_Size() int {
 	return xxx_messageInfo_WasmFuzzyQueryTableReq.Size(m)
@@ -1485,7 +1458,7 @@ func (m *WasmFuzzyQueryTableReq) GetStop() int64 {
 }
 
 type FuzzyQueryResultItem struct {
-	//模糊查找索引
+	// 模糊查找索引
 	Index                int64    `protobuf:"varint,1,opt,name=index,proto3" json:"index,omitempty"`
 	ResultJSON           []string `protobuf:"bytes,2,rep,name=resultJSON,proto3" json:"resultJSON,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
@@ -1497,17 +1470,16 @@ func (m *FuzzyQueryResultItem) Reset()         { *m = FuzzyQueryResultItem{} }
 func (m *FuzzyQueryResultItem) String() string { return proto.CompactTextString(m) }
 func (*FuzzyQueryResultItem) ProtoMessage()    {}
 func (*FuzzyQueryResultItem) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{25}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{25}
 }
-
 func (m *FuzzyQueryResultItem) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_FuzzyQueryResultItem.Unmarshal(m, b)
 }
 func (m *FuzzyQueryResultItem) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_FuzzyQueryResultItem.Marshal(b, m, deterministic)
 }
-func (m *FuzzyQueryResultItem) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_FuzzyQueryResultItem.Merge(m, src)
+func (dst *FuzzyQueryResultItem) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_FuzzyQueryResultItem.Merge(dst, src)
 }
 func (m *FuzzyQueryResultItem) XXX_Size() int {
 	return xxx_messageInfo_FuzzyQueryResultItem.Size(m)
@@ -1545,17 +1517,16 @@ func (m *WasmFuzzyQueryResponse) Reset()         { *m = WasmFuzzyQueryResponse{}
 func (m *WasmFuzzyQueryResponse) String() string { return proto.CompactTextString(m) }
 func (*WasmFuzzyQueryResponse) ProtoMessage()    {}
 func (*WasmFuzzyQueryResponse) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{26}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{26}
 }
-
 func (m *WasmFuzzyQueryResponse) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_WasmFuzzyQueryResponse.Unmarshal(m, b)
 }
 func (m *WasmFuzzyQueryResponse) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_WasmFuzzyQueryResponse.Marshal(b, m, deterministic)
 }
-func (m *WasmFuzzyQueryResponse) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_WasmFuzzyQueryResponse.Merge(m, src)
+func (dst *WasmFuzzyQueryResponse) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_WasmFuzzyQueryResponse.Merge(dst, src)
 }
 func (m *WasmFuzzyQueryResponse) XXX_Size() int {
 	return xxx_messageInfo_WasmFuzzyQueryResponse.Size(m)
@@ -1607,17 +1578,16 @@ func (m *CreateContrantReq) Reset()         { *m = CreateContrantReq{} }
 func (m *CreateContrantReq) String() string { return proto.CompactTextString(m) }
 func (*CreateContrantReq) ProtoMessage()    {}
 func (*CreateContrantReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{27}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{27}
 }
-
 func (m *CreateContrantReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CreateContrantReq.Unmarshal(m, b)
 }
 func (m *CreateContrantReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CreateContrantReq.Marshal(b, m, deterministic)
 }
-func (m *CreateContrantReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CreateContrantReq.Merge(m, src)
+func (dst *CreateContrantReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CreateContrantReq.Merge(dst, src)
 }
 func (m *CreateContrantReq) XXX_Size() int {
 	return xxx_messageInfo_CreateContrantReq.Size(m)
@@ -1683,17 +1653,16 @@ func (m *CallContractReq) Reset()         { *m = CallContractReq{} }
 func (m *CallContractReq) String() string { return proto.CompactTextString(m) }
 func (*CallContractReq) ProtoMessage()    {}
 func (*CallContractReq) Descriptor() ([]byte, []int) {
-	return fileDescriptor_7d78909ad64e3bbb, []int{28}
+	return fileDescriptor_wasm_46d959257a7f74ab, []int{28}
 }
-
 func (m *CallContractReq) XXX_Unmarshal(b []byte) error {
 	return xxx_messageInfo_CallContractReq.Unmarshal(m, b)
 }
 func (m *CallContractReq) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
 	return xxx_messageInfo_CallContractReq.Marshal(b, m, deterministic)
 }
-func (m *CallContractReq) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_CallContractReq.Merge(m, src)
+func (dst *CallContractReq) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_CallContractReq.Merge(dst, src)
 }
 func (m *CallContractReq) XXX_Size() int {
 	return xxx_messageInfo_CallContractReq.Size(m)
@@ -1772,9 +1741,9 @@ func init() {
 	proto.RegisterType((*CallContractReq)(nil), "types.CallContractReq")
 }
 
-func init() { proto.RegisterFile("wasm.proto", fileDescriptor_7d78909ad64e3bbb) }
+func init() { proto.RegisterFile("wasm.proto", fileDescriptor_wasm_46d959257a7f74ab) }
 
-var fileDescriptor_7d78909ad64e3bbb = []byte{
+var fileDescriptor_wasm_46d959257a7f74ab = []byte{
 	// 1201 bytes of a gzipped FileDescriptorProto
 	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xac, 0x57, 0x4d, 0x6f, 0x1c, 0x45,
 	0x13, 0xce, 0xec, 0xec, 0x87, 0x5d, 0xde, 0x24, 0xeb, 0x76, 0xb4, 0xef, 0xc4, 0x2f, 0xb2, 0xac,

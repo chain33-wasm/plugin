@@ -9,6 +9,8 @@ import (
 	"os"
 	"strconv"
 	"time"
+	"errors"
+
 
 	"github.com/33cn/chain33/rpc/jsonclient"
 	rpctypes "github.com/33cn/chain33/rpc/types"
@@ -342,6 +344,58 @@ func noBalanceTx(cmd *cobra.Command, args []string) {
 	}
 	ctx := jsonclient.NewRPCCtx(rpcLaddr, "Chain33.CreateNoBalanceTransaction", params, nil)
 	ctx.RunWithoutMarshal()
+}
+
+func parseTxHeight(expire string) error {
+	if len(expire) == 0 {
+		return errors.New("expire string should not be empty")
+	}
+
+	if expire[0] == 'H' && expire[1] == ':' {
+		txHeight, err := strconv.Atoi(expire[2:])
+		if err != nil {
+			return err
+		}
+		if txHeight <= 0 {
+			//fmt.Printf("txHeight should be grate to 0")
+			return errors.New("txHeight should be grate to 0")
+		}
+
+		return nil
+	}
+
+	return errors.New("Invalid expire format. Should be one of {time:\"3600s/1min/1h\" block:\"123\" txHeight:\"H:123\"}")
+}
+
+func parseExpireOpt(expire string) (string, error) {
+	//时间格式123s/1m/1h
+	expireTime, err := time.ParseDuration(expire)
+	if err == nil {
+		if expireTime < time.Minute*2 && expireTime != time.Second*0 {
+			expire = "120s"
+			fmt.Println("expire time must longer than 2 minutes, changed expire time into 2 minutes")
+		}
+
+		return expire, nil
+	}
+
+	//区块高度格式，123
+	blockInt, err := strconv.Atoi(expire)
+	if err == nil {
+		if blockInt <= 0 {
+			fmt.Printf("block height should be grate to 0")
+			return "", errors.New("block height should be grate to 0")
+		}
+		return expire, nil
+	}
+
+	//Txheight格式，H:123
+	err = parseTxHeight(expire)
+	if err != nil {
+		return "", err
+	}
+
+	return expire, err
 }
 
 func signRawTx(cmd *cobra.Command, args []string) {
