@@ -599,6 +599,11 @@ func (wasm *WASMExecutor) fuzzyGetContractTable(in *wasmtypes.WasmFuzzyQueryTabl
 	abi4CStr := C.CString(string(abi))
 	defer C.free(unsafe.Pointer(abi4CStr))
 
+	if types.IsPara() {
+		in.Format = string(types.LocalPrefix) + "-" + types.GetTitle() + in.ContractName + "-data-" + contractAddr + "：" +in.Format
+	}
+	in.Format = string(types.LocalPrefix) + "-" + in.ContractName + "-data-" + contractAddr + "：" + in.Format
+
 	var fuzzyDataItems []*fuzzyDataItem
 	for i := in.Start; i <= in.Stop; i++  {
 		prefix := []byte(fmt.Sprint(in.Format, i))
