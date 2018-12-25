@@ -657,7 +657,7 @@ func (wasm *WASMExecutor) checkContractNameExists(req *wasmtypes.CheckWASMContra
 		contractName = wasmtypes.UserWasmX + contractName
 	}
 
-	exists := wasm.GetMStateDB().Exist(address.ExecAddress(contractName))
+	exists := wasm.GetMStateDB().Exist(address.ExecAddress(types.ExecName(contractName)))
 	ret := &wasmtypes.CheckWASMAddrResp{ExistAlready: exists}
 	return ret, nil
 }
