@@ -238,10 +238,10 @@ func wasmAddFuzzyQueryContractFlags(cmd *cobra.Command) {
 	cmd.Flags().StringP("format", "f", "", "format of key's prefix for the table info")
 	cmd.MarkFlagRequired("format")
 
-	cmd.Flags().StringP("start", "s", "", "start value for the foramt")
+	cmd.Flags().Int64P("start", "s", 0, "start value for the foramt")
 	cmd.MarkFlagRequired("start")
 
-	cmd.Flags().StringP("stop", "p", "", "stop value for the foramt")
+	cmd.Flags().Int64P("stop", "p", 0, "stop value for the foramt")
 	cmd.MarkFlagRequired("stop")
 }
 

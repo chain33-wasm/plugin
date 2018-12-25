@@ -587,7 +587,10 @@ type fuzzyDataItem struct {
 func (wasm *WASMExecutor) fuzzyGetContractTable(in *wasmtypes.WasmFuzzyQueryTableReq) (types.Message, error) {
 	log.Debug("wasm fuzzy query", "WasmFuzzyQueryTableReq", in)
 
-	resp := &wasmtypes.WasmFuzzyQueryResponse{}
+	resp := &wasmtypes.WasmFuzzyQueryResponse{
+		ContractName:in.ContractName,
+		TableName:in.TableName,
+	}
 	contractAddr := address.ExecAddress(types.ExecName(in.ContractName))
 	wasm.prepareQueryContext([]byte(wasmtypes.WasmX))
 	abi := wasm.mStateDB.GetAbi(contractAddr)
@@ -599,14 +602,11 @@ func (wasm *WASMExecutor) fuzzyGetContractTable(in *wasmtypes.WasmFuzzyQueryTabl
 	abi4CStr := C.CString(string(abi))
 	defer C.free(unsafe.Pointer(abi4CStr))
 
-	if types.IsPara() {
-		in.Format = string(types.LocalPrefix) + "-" + types.GetTitle() + in.ContractName + "-data-" + contractAddr + "：" +in.Format
-	}
-	in.Format = string(types.LocalPrefix) + "-" + in.ContractName + "-data-" + contractAddr + "：" + in.Format
+	in.Format = string(types.LocalPrefix) + "-" + in.ContractName + "-data-" + contractAddr + ":" + in.Format
 
 	var fuzzyDataItems []*fuzzyDataItem
 	for i := in.Start; i <= in.Stop; i++  {
-		prefix := []byte(fmt.Sprint(in.Format, i))
+		prefix := []byte(fmt.Sprintf(in.Format, i))
 		data := wasm.mStateDB.List(prefix)
 		if nil == data {
 			continue
@@ -638,7 +638,9 @@ func (wasm *WASMExecutor) fuzzyGetContractTable(in *wasmtypes.WasmFuzzyQueryTabl
 
 			fuzzyQueryResultItem.ResultJSON = append(fuzzyQueryResultItem.ResultJSON, C.GoString(jsonResult))
 			C.free(unsafe.Pointer(jsonResult))
+
 		}
+		resp.QueryResultItems = append(resp.QueryResultItems, fuzzyQueryResultItem)
 	}
 
 	return resp, nil

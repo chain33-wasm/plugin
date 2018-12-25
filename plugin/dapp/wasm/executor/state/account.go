@@ -79,6 +79,7 @@ func (self *ContractAccount) SetValue2Local(key string, value []byte) {
 		baseChange: baseChange{},
 		account:    self.Addr,
 		key:        []byte(keyStr),
+		data:		value,
 	})
 	self.mdb.LocalDB.Set([]byte(keyStr), value)
 }
