@@ -160,7 +160,7 @@ void dice::set_status(gamestatus status)
 void dice::add_roundinfo(roundinfo info)
 {
   char temp[64] = {0};
-  sprintf(temp, "-height:%lld-round:%lld", info.height, info.round);
+  sprintf(temp, "round:%lld", info.round);
   string key(temp);
   size_t size = pack_size( info );
   void* buffer = max_stack_buffer_size < size ? malloc(size) : alloca(size);
