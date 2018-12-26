@@ -53,9 +53,12 @@ void dice::play(int64_t amount, uint8_t number, uint8_t direction)
   eosio_assert(GAME_PRECISION * 50 * amount < game_balance, "amount is too big");
   eosio_assert(OK == execFrozenCoin(player.c_str(), COIN_PRECISION * amount), "fail to frozen coins");
   int64_t probability = number;
-    
+  if (direction==1)
+  {
+    probability = 99 - number
+  }    
   int64_t payout = GAME_PRECISION * amount * (100 - probability) / probability;
-  printf("payout:%lld\n", payout);
+  printf("payout:%lld \n", payout);
   char arr[32] = {0};
   int length = get_random(arr, 32);
   eosio_assert(length >= 4, "get_random error");
@@ -63,8 +66,12 @@ void dice::play(int64_t amount, uint8_t number, uint8_t direction)
   uint64_t a2 = uint64_t(arr[length - 2]) << 8;
   uint64_t a3 = uint64_t(arr[length - 3]) << 16;
   uint64_t a4 = uint64_t(arr[length - 4]) << 24;
+  printf("a1:%lld ", a1);
+  printf("a2:%lld ", a2);
+  printf("a3:%lld ", a3);
+  printf("a4:%lld ", a4);
   uint8_t rand_num = uint8_t((a1 + a2 + a3 +a4)%100);
-  printf("rand num:%d\n",rand_num);
+  printf("rand num:%d \n",rand_num);
 
   roundinfo info;
   info.round = ++status.current_round;
@@ -73,7 +80,7 @@ void dice::play(int64_t amount, uint8_t number, uint8_t direction)
   info.amount = amount;
   info.guess_num = number;
   info.rand_num = rand_num;
-  if (rand_num < number)
+  if ((direction==0 && rand_num < number) || (direction==1 && rand_num > number))
   {
     eosio_assert(OK == execTransferFrozenCoin(status.game_creator.c_str(), player.c_str(), COIN_PRECISION/GAME_PRECISION * payout), "fail to transfer frozen coins to player");
     status.game_balance -= payout;
@@ -172,10 +179,13 @@ eosio::dice::heightinfo dice::get_localdb_for_height(string key)
   heightinfo info;
   info.start_round = 0;
   info.end_round = 0;
-  int size = dbGetValueSize4chain33(key.c_str(), key.length());
+  print("calling get_localdb_for_height");
+  int size = localdbGetValueSize4chain33(key.c_str(), key.length());
+  printf("get_localdb_for_height, key:%s\n", key.c_str());
+  printf("get_localdb_for_height, size:%d\n", size);
   if (size > 0) {
     void* buffer = max_stack_buffer_size < size ? malloc(size) : alloca(size);
-    dbGet4chain33(key.c_str(), key.length(), (char *)buffer, size);
+    localdbGet4chain33(key.c_str(), key.length(), (char *)buffer, size);
     datastream<char*> ds( (char*)buffer, size );
     ds >> info;
     if (size > max_stack_buffer_size)
@@ -190,12 +200,13 @@ eosio::dice::heightinfo dice::get_localdb_for_height(string key)
 void dice::set_localdb_for_height(int64_t height, int64_t round)
 {
   char temp[64] = {0};
-  sprintf(temp, "height:%lld", height);
+  sprintf(temp, "height:%lld-info", height);
   string key(temp);
   heightinfo info = this->get_localdb_for_height(key);
   if (info.start_round == 0) 
   {
     info.start_round = round;
+    
   }
   info.end_round = round;
 
