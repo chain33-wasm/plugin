@@ -55,7 +55,7 @@ void dice::play(int64_t amount, uint8_t number, uint8_t direction)
   int64_t probability = number;
   if (direction==1)
   {
-    probability = 99 - number
+    probability = 99 - number;
   }    
   int64_t payout = GAME_PRECISION * amount * (100 - probability) / probability;
   printf("payout:%lld \n", payout);

@@ -36,6 +36,7 @@ namespace eosio {
             int64_t current_round;
         };
 
+        // @abi table heightinfo i64
         struct heightinfo {
             int64_t start_round;
             int64_t end_round;
