@@ -55,9 +55,9 @@ grpcLogFile="grpc33.log"
 
 [rpc]
 # 避免与主链配置冲突
-jrpcBindAddr="localhost:8901"
-grpcBindAddr="localhost:8902"
-whitelist=["127.0.0.1"]
+jrpcBindAddr=":8901"
+grpcBindAddr=":8902"
+whitelist=["*"]
 jrpcFuncWhitelist=["*"]
 grpcFuncWhitelist=["*"]
 mainnetJrpcAddr= "http://localhost:8801"

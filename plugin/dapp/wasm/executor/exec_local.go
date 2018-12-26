@@ -25,7 +25,8 @@ func (wasm *WASMExecutor) execLocal(tx *types.Transaction, receipt *types.Receip
 			if err != nil {
 				return set, err
 			}
-			set.KV = append(set.KV, &types.KeyValue{Key: []byte(localData.Key), Value: localData.CurValue})
+			set.KV = append(set.KV, &types.KeyValue{Key: localData.Key, Value: localData.CurValue})
+			log.Debug("execLocal_setkv", "key=", string(localData.Key))
 		}
 	}
 

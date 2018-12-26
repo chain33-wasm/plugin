@@ -48,6 +48,17 @@
         }
       ]
     },{
+      "name": "heightinfo",
+      "base": "",
+      "fields": [{
+          "name": "start_round",
+          "type": "int64"
+        },{
+          "name": "end_round",
+          "type": "int64"
+        }
+      ]
+    },{
       "name": "startgame",
       "base": "",
       "fields": [{
@@ -111,6 +122,16 @@
         "string"
       ],
       "type": "gamestatus"
+    },{
+      "name": "heightinfo",
+      "index_type": "i64",
+      "key_names": [
+        "start_round"
+      ],
+      "key_types": [
+        "int64"
+      ],
+      "type": "heightinfo"
     }
   ],
   "ricardian_clauses": [],

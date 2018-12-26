@@ -609,9 +609,10 @@ func (wasm *WASMExecutor) fuzzyGetContractTable(in *wasmtypes.WasmFuzzyQueryTabl
 		prefix := []byte(fmt.Sprintf(in.Format, i))
 		data := wasm.mStateDB.List(prefix)
 		if nil == data {
+			log.Debug("wasm_fuzzy_query_not_found", "Not found data for", string(prefix))
 			continue
 		}
-
+		log.Debug("wasm_fuzzy_query_found_data", "Found data for", string(prefix))
 		dataItem := &fuzzyDataItem{
 			index:    i,
 			Data:     data,
@@ -632,7 +633,7 @@ func (wasm *WASMExecutor) fuzzyGetContractTable(in *wasmtypes.WasmFuzzyQueryTabl
 			defer C.free(unsafe.Pointer(serializedData))
 
 			if C.int(wasmtypes.Success) != C.convertData2Json(abi4CStr, (*C.char)(serializedData), (C.int)(len(data)), structName, &jsonResult) {
-				log.Error("wasm query", "structure", in.TableName)
+				log.Error("wasm fuzzy query convertData2Json failed", "structure", in.TableName)
 				continue
 			}
 
