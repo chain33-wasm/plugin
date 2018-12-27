@@ -46,7 +46,7 @@ RUN git clone --depth 1 --single-branch --branch release_40 https://github.com/l
     && cmake --build build -j $(nproc) --target install \
     && cd .. && rm -rf llvm
 
-RUN RUN git clone --depth 1 https://github.com/cryptonomex/secp256k1-zkp \
+RUN git clone --depth 1 https://github.com/cryptonomex/secp256k1-zkp \
     && cd secp256k1-zkp \
     && ./autogen.sh \
     && ./configure --prefix=/usr/local \

@@ -7,6 +7,7 @@ CMAKE_BUILD_TYPE=Release
 CXX_COMPILER=clang++-4.0
 C_COMPILER=clang-4.0
 CORE_SYMBOL_NAME="SYS"
+WASM_ROOT="/opt/wasm"
 OPENSSL_ROOT_DIR=/usr/include/openssl
 NABLE_COVERAGE_TESTING=false
 DOXYGEN=false

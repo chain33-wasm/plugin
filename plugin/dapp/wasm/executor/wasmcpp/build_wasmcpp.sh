@@ -5,7 +5,7 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 echo "current dir is:"${CURRENT_DIR}
 
-bash ${CURRENT_DIR}/genMakeFile.sh && cd ${CURRENT_DIR}/build && make -j4
+bash ${CURRENT_DIR}/genMakeFile.sh && cd ${CURRENT_DIR}/build && make -j$(nproc)
 
 
 cp adapter/libwasm_adapter.a ../lib
