@@ -4,7 +4,8 @@ import (
 	//"encoding/json"
 	"bytes"
 	"fmt"
-	//"github.com/33cn/chain33/common"
+	"github.com/33cn/chain33/common"
+	"github.com/33cn/chain33/common/address"
 	"github.com/33cn/chain33/rpc/jsonclient"
 	rpctypes "github.com/33cn/chain33/rpc/types"
 	"github.com/33cn/chain33/types"
@@ -108,44 +109,6 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 	} else {
 		fmt.Fprintln(os.Stderr, "get create to transaction error")
 		return
-	}
-}
-
-func wasmGenAbiCmd() *cobra.Command {
-	cmd := &cobra.Command{
-		Use:   "abi data",
-		Short: "Generate abi data",
-		Run:   wasmGenAbiData,
-	}
-	wasmAddGenAbiDataFlags(cmd)
-	return cmd
-}
-
-func wasmAddGenAbiDataFlags(cmd *cobra.Command) {
-	cmd.Flags().StringP("exec", "e", "", "external contract name, like user.external.xxxxx")
-	cmd.MarkFlagRequired("exec")
-
-	cmd.Flags().StringP("action", "a", "", "action name")
-	cmd.MarkFlagRequired("action")
-
-	cmd.Flags().StringP("data", "d", "", "action data in json string")
-	cmd.MarkFlagRequired("data")
-}
-
-func wasmGenAbiData(cmd *cobra.Command, args []string) {
-	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
-	contractAddr, _ := cmd.Flags().GetString("exec")
-	//actionName, _ := cmd.Flags().GetString("action")
-	//actionData, _ := cmd.Flags().GetString("data")
-
-	req := types.ReqAddr{Addr: contractAddr}
-	var res wasmtypes.WasmGetAbiResp
-	query := sendQuery4wasm(rpcLaddr, "WasmGetAbi", &req, &res)
-	if query {
-		//abidata := genAbiData(string(res.Abi), contractAddr, actionName, actionData)
-		//fmt.Println(string("The converted abi data is:") + common.ToHex(abidata))
-	} else {
-		fmt.Fprintln(os.Stderr, "get abi data error")
 	}
 }
 
