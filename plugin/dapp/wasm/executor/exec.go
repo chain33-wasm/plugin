@@ -17,11 +17,16 @@ import (
 	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
 	"unsafe"
+	"fmt"
 )
 
 func (wasm *WASMExecutor) Exec_CreateWasmContract(createWasmContract *wasmtypes.CreateWasmContract, tx *types.Transaction, index int) (*types.Receipt, error) {
 	wasm.prepareExecContext(tx, index)
 	// 使用随机生成的地址作为合约地址（这个可以保证每次创建的合约地址不会重复，不存在冲突的情况）
+	bytelenthfee := (uint64(len(createWasmContract.Code)) + uint64(len(createWasmContract.Abi))) * loccom.CreateDataGas
+	testusegas:= createWasmContract.GasLimit - (createWasmContract.GasLimit - bytelenthfee)
+	fmt.Println(">>>>>>:GasLimit", createWasmContract.GasLimit,"bytelenthfee:", bytelenthfee, "usegas:" ,testusegas)
+
 	contractAddr := address.GetExecAddress(createWasmContract.Name)
 	contractAddrInStr := contractAddr.String()
 	if !wasm.mStateDB.Empty(contractAddrInStr) {
@@ -66,6 +71,8 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(createWasmContract *wasmtypes.
 
 	usedGas := createWasmContract.GasLimit - contract.Gas
 
+	fmt.Println(">>>>>:createDataGas:",createDataGas, "usedGas:", usedGas)
+
 	receipt, err := wasm.GenerateExecReceipt(usedGas,
 		uint64(createWasmContract.GasPrice),
 		snapshot,
@@ -79,6 +86,9 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(createWasmContract *wasmtypes.
 }
 
 func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.CallWasmContract, tx *types.Transaction, index int) (*types.Receipt, error) {
+
+	fmt.Println(">>>>>>callWasmContract.GasLimit:",callWasmContract.GasLimit)
+
 	wasm.prepareExecContext(tx, index)
 	//因为在真正地执行user.wasm.xxx合约前，还需要通过wasm合约平台获取其合约字节码，
 	//所以需要先将其合约名字设置为wasm
@@ -103,7 +113,7 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 
 	//1st step: create apply context
 	log.Debug("wasm call para", "ActionData", callWasmContract.ActionData,
-		"ContractName", string(tx.Execer),
+			"ContractName", string(tx.Execer),
 		"ActionName", callWasmContract.ActionName)
 	actiondata := C.CBytes(callWasmContract.ActionData)
 	ContractAddr := C.CString(userWasmAddr)
@@ -115,7 +125,7 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 	defer C.free(unsafe.Pointer(Alias))
 	defer C.free(unsafe.Pointer(ActionName))
 	defer C.free(unsafe.Pointer(from))
-
+	fmt.Println(">>>>>>ContractAddr:", userWasmAddr,"Alias:", string(tx.Execer), "ActionName", callWasmContract.ActionName, "from", address.PubKeyToAddress(wasm.tx.GetSignature().GetPubkey()).String() ,"GasLimit:", callWasmContract.GasLimit)
 	context := &C.Apply_context_para{
 		contractAddr: ContractAddr,
 		contractName: Alias,
@@ -148,6 +158,8 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 	}
 	usedGas := callWasmContract.GasLimit - leftGas
 
+	fmt.Println(">>>>>>>callWasmContract.gasAvailable",context.gasAvailable,"leftGas:", leftGas, "usedGas:",usedGas )
+
 	contractAccount := wasm.mStateDB.GetAccount(userWasmAddr)
 	caller := tx.From()
 
@@ -162,4 +174,50 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 	log.Debug("wasm call", "receipt", receipt, "err info", err)
 
 	return receipt, err
+}
+
+func (wasm *WASMExecutor)estimateGasCall(in *wasmtypes.EstimateCallContractReq, tx *types.Transaction) (uint64, error) {
+	wasm.prepareExecContext(tx, 0)
+	userWasmAddr := address.ExecAddress(in.Execer)
+	code := wasm.mStateDB.GetCode(userWasmAddr)
+	if nil == code {
+		log.Error("call wasm contract ", "failed to get code from contract", string(in.Execer))
+		return 0,  wasmtypes.ErrWrongContractAddr
+	}
+	setWasm4Callback(wasm)
+
+	//userWasmAddr := address.ExecAddress(in.Execer)
+	actiondata := C.CBytes(in.ActionData)
+	ContractAddr := C.CString(userWasmAddr)
+	Alias := C.CString(string(in.Execer))
+	ActionName := C.CString(in.ActionName)
+	from := C.CString(in.From)
+	defer C.free(unsafe.Pointer(actiondata))
+	defer C.free(unsafe.Pointer(ContractAddr))
+	defer C.free(unsafe.Pointer(Alias))
+	defer C.free(unsafe.Pointer(ActionName))
+	defer C.free(unsafe.Pointer(from))
+	fmt.Println(">>>>>>ContractAddr:", userWasmAddr,"Alias:", string(in.Execer), "ActionName", in.ActionName, "from", in.From,"GasLimit:", in.GasLimit)
+	context := &C.Apply_context_para{
+		contractAddr: ContractAddr,
+		contractName: Alias,
+		action_name:  ActionName,
+		pdata:        (*C.char)(actiondata),
+		datalen:      C.int(len(in.ActionData)),
+		from:         from,
+		gasAvailable: C.int64_t(in.GasLimit),
+		blocktime:    C.int64_t(wasm.GetBlockTime()),
+		height:       C.int64_t(wasm.GetHeight()),
+	}
+
+	//2nd step: just call contract
+	codePtr := C.CBytes(code)
+	_ = C.callContract4go(C.VMTypeBinaryen, (*C.char)(codePtr), C.int(len(code)), context)
+	defer C.free(codePtr)
+	leftGas := uint64(context.gasAvailable)
+
+	usedGas := in.GasLimit - leftGas
+	fmt.Println(">>>>>>>callWasmContract.gasAvailable",context.gasAvailable,"leftGas:", leftGas, "usedGas:",usedGas )
+
+	return  usedGas, nil
 }

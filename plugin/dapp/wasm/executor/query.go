@@ -18,6 +18,7 @@ import (
 	"regexp"
 	"unsafe"
 	"encoding/hex"
+	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
 )
 
 
@@ -30,14 +31,57 @@ func (wasm *WASMExecutor) Query_CheckContractNameExist(in *wasmtypes.CheckWASMCo
 	return wasm.checkContractNameExists(in)
 }
 
-//TODO:稍后再支持
-// Query_EstimateGasFunc 试运行wasm合约用来估算gas的消耗量
-//func (wasm *WASMExecutor) Query_EstimateGas(in *wasmtypes.EstimateWASMGasReq) (types.Message, error) {
-//	if in == nil {
-//		return nil, types.ErrInvalidParam
-//	}
-//	return wasm.estimateGas(in)
-//}
+
+// Query_EstimateGasCreateContract 试运行wasm合约用来估算gas的消耗量
+func (wasm *WASMExecutor) Query_EstimateGasCreateContract(in *wasmtypes.EstimateCreateContractReq) (types.Message, error) {
+	if in == nil {
+		return nil, types.ErrInvalidParam
+	}
+	createDataGas := (uint64(len(in.Code)) + uint64(len(in.Abi))) * loccom.CreateDataGas
+	resp := &wasmtypes.EstimateWASMGasResp{}
+	resp.Gas = createDataGas
+	return resp, nil
+}
+
+// Query_EstimateGasCallContract 试运行wasm合约用来估算gas的消耗量
+func (wasm *WASMExecutor) Query_EstimateGasCallContract(in *wasmtypes.EstimateCallContractReq) (types.Message, error) {
+	if in == nil {
+		return nil, types.ErrInvalidParam
+	}
+	wasm.prepareQueryContext([]byte(wasmtypes.WasmX))
+
+	//resp := &wasmtypes.Json2AbiResponse{}
+	contractAddr := address.ExecAddress(in.Execer)
+	abi := wasm.mStateDB.GetAbi(contractAddr)
+
+	AbiData := genAbiData(string(abi), in.Execer, in.ActionName, string(in.ActionData))
+	in.ActionData = AbiData
+	action := &wasmtypes.WasmContractAction{
+		Value: &wasmtypes.WasmContractAction_CallWasmContract{
+			CallWasmContract: &wasmtypes.CallWasmContract{
+				GasLimit:   uint64(in.GasLimit),
+				GasPrice:   1,
+				Note:       "",
+				VmType:     wasmtypes.VMBinaryen, //当前只支持binaryen解释执行的方式
+				ActionName: in.ActionName,
+				ActionData: AbiData,
+			},
+		},
+		Ty: wasmtypes.CallWasmContractAction,
+	}
+	tx, err := createRawWasmTx(action, in.Execer, int64(in.GasLimit))
+	if err != nil {
+		return nil, err
+	}
+
+	useGas , err := wasm.estimateGasCall(in, tx)
+	if err != nil {
+		return nil, err
+	}
+	resp := &wasmtypes.EstimateWASMGasResp{}
+	resp.Gas = useGas
+	return resp, nil
+}
 
 //TODO:稍后再支持
 // Query_DebugCode 调试wasm代码

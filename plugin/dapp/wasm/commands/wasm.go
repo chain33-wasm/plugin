@@ -4,8 +4,7 @@ import (
 	//"encoding/json"
 	"bytes"
 	"fmt"
-	"github.com/33cn/chain33/common"
-	"github.com/33cn/chain33/common/address"
+	//"github.com/33cn/chain33/common"
 	"github.com/33cn/chain33/rpc/jsonclient"
 	rpctypes "github.com/33cn/chain33/rpc/types"
 	"github.com/33cn/chain33/types"
@@ -15,6 +14,7 @@ import (
 	"io/ioutil"
 	"os"
 	"regexp"
+	"strings"
 )
 
 func WasmCmd() *cobra.Command {
@@ -108,6 +108,44 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 	} else {
 		fmt.Fprintln(os.Stderr, "get create to transaction error")
 		return
+	}
+}
+
+func wasmGenAbiCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "abi data",
+		Short: "Generate abi data",
+		Run:   wasmGenAbiData,
+	}
+	wasmAddGenAbiDataFlags(cmd)
+	return cmd
+}
+
+func wasmAddGenAbiDataFlags(cmd *cobra.Command) {
+	cmd.Flags().StringP("exec", "e", "", "external contract name, like user.external.xxxxx")
+	cmd.MarkFlagRequired("exec")
+
+	cmd.Flags().StringP("action", "a", "", "action name")
+	cmd.MarkFlagRequired("action")
+
+	cmd.Flags().StringP("data", "d", "", "action data in json string")
+	cmd.MarkFlagRequired("data")
+}
+
+func wasmGenAbiData(cmd *cobra.Command, args []string) {
+	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
+	contractAddr, _ := cmd.Flags().GetString("exec")
+	//actionName, _ := cmd.Flags().GetString("action")
+	//actionData, _ := cmd.Flags().GetString("data")
+
+	req := types.ReqAddr{Addr: contractAddr}
+	var res wasmtypes.WasmGetAbiResp
+	query := sendQuery4wasm(rpcLaddr, "WasmGetAbi", &req, &res)
+	if query {
+		//abidata := genAbiData(string(res.Abi), contractAddr, actionName, actionData)
+		//fmt.Println(string("The converted abi data is:") + common.ToHex(abidata))
+	} else {
+		fmt.Fprintln(os.Stderr, "get abi data error")
 	}
 }
 
@@ -275,33 +313,63 @@ func wasmAddCommonFlags(cmd *cobra.Command) {
 }
 
 func wasmEstimateContract(cmd *cobra.Command, args []string) {
-	code, _ := cmd.Flags().GetString("input")
-	name, _ := cmd.Flags().GetString("exec")
 	caller, _ := cmd.Flags().GetString("caller")
-	amount, _ := cmd.Flags().GetFloat64("amount")
-
-	toAddr := address.ExecAddress("external")
-	if len(name) > 0 {
-		toAddr = address.ExecAddress(name)
-	}
-
-	amountInt64 := uint64(amount*1e4) * 1e4
-	bCode, err := common.FromHex(code)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "parse external code error", err)
-		return
-	}
-
-	var estGasReq = wasmtypes.EstimateWASMGasReq{To: toAddr, Code: bCode, Caller: caller, Amount: amountInt64}
-	var estGasResp wasmtypes.EstimateWASMGasResp
+	method, _ := cmd.Flags().GetString("method")
+	fee, _ := cmd.Flags().GetFloat64("fee")
+	contractName, _ := cmd.Flags().GetString("exec")
+	actionName, _ := cmd.Flags().GetString("action")
+	abiPara, _ := cmd.Flags().GetString("para")
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
-	query := sendQuery4wasm(rpcLaddr, "EstimateGas", &estGasReq, &estGasResp)
+	path, _ := cmd.Flags().GetString("path")
 
-	if query {
-		fmt.Fprintf(os.Stdout, "gas cost estimate %v\n", estGasResp.Gas)
-	} else {
-		fmt.Fprintln(os.Stderr, "gas cost estimate error")
+
+	var estGasResp wasmtypes.EstimateWASMGasResp
+	if method == "create" {
+		name := strings.Split(contractName,".")
+		contractname := name[len(name) -1]
+		codePath := path + "/" + contractname + ".wasm"
+		abiPath := path + "/" + contractname + ".abi"
+		code, err := ioutil.ReadFile(codePath)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "read code error ", err)
+			return
+		}
+
+		abi, err := ioutil.ReadFile(abiPath)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, "read abi error ", err)
+			return
+		}
+		var estimatecreateReq = wasmtypes.EstimateCreateContractReq{
+			Code: code,
+			Abi:  string(abi),
+		}
+		query := sendQuery4wasm(rpcLaddr, "EstimateGasCreateContract", &estimatecreateReq, &estGasResp)
+		if query {
+			fmt.Fprintf(os.Stdout, "create contract gas cost estimate %v\n", estGasResp.Gas)
+		} else {
+			fmt.Fprintln(os.Stderr, "create contract gas cost estimate error")
+			return
+		}
 	}
+	if method == "call" {
+		feeInt64 := uint64(fee*1e4) * 1e4
+		var estimatecallreq = wasmtypes.EstimateCallContractReq{
+			Execer:contractName,
+			GasLimit:feeInt64,
+			From:caller,
+			ActionName:actionName,
+			ActionData:[]byte(abiPara),
+		}
+		query := sendQuery4wasm(rpcLaddr, "EstimateGasCallContract", &estimatecallreq, &estGasResp)
+
+		if query {
+			fmt.Fprintf(os.Stdout, "call contract gas cost estimate %v\n", estGasResp.Gas)
+		} else {
+			fmt.Fprintln(os.Stderr, "call contract gas cost estimate error")
+		}
+	}
+
 }
 
 func addEstimateFlags4wasm(cmd *cobra.Command) {
@@ -316,14 +384,20 @@ func addEstimateFlags4wasm(cmd *cobra.Command) {
 }
 
 func addEstimateFlags(cmd *cobra.Command) {
-	cmd.Flags().StringP("input", "i", "", "input contract binary code")
-	cmd.MarkFlagRequired("input")
+	wasmAddCallContractFlags(cmd)
+	//cmd.Flags().StringP("input", "i", "", "input contract binary code")
+	//cmd.MarkFlagRequired("input")
 
-	cmd.Flags().StringP("exec", "e", "", "evm contract name (like user.evm.xxxxx)")
+	cmd.Flags().StringP("path", "d", "", "path where stores wasm code and abi")
+	cmd.MarkFlagRequired("path")
 
+
+	//cmd.Flags().StringP("exec", "e", "", "evm contract name (like user.evm.xxxxx)")
+	//
 	cmd.Flags().StringP("caller", "c", "", "the caller address")
 
-	cmd.Flags().Float64P("amount", "a", 0, "the amount transfer to the contract (optional)")
+	cmd.Flags().StringP("method", "m", "", "create or call")
+	//cmd.Flags().Float64P("amount", "a", 0, "the amount transfer to the contract (optional)")
 }
 
 // 估算合约消耗

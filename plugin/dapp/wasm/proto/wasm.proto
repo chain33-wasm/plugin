@@ -208,3 +208,22 @@ message CallContractReq {
     int64 Fee                 = 5;
 }
 
+message EstimateCreateContractReq {
+    // abi字符串
+    string Abi              =1;
+    // 合约字节码
+    bytes Code              =2;
+}
+
+message EstimateCallContractReq {
+    // 交易费消耗限制
+    uint64 GasLimit           =1;
+    // 地址 from
+    string From               =2;
+    // 合约名称
+    string Execer             =3;
+    // 执行动作名称
+    string ActionName         =4;
+    //执行参数
+    bytes ActionData          =5;
+}
