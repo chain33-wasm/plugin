@@ -6,5 +6,7 @@ COPY chain33-cli chain33-cli
 COPY chain33-para-cli chain33-para-cli
 COPY chain33.toml chain33*.toml ./
 COPY entrypoint.sh entrypoint.sh
+COPY dice.abi dice.abi
+COPY dice.wasm dice.wasm
 
 CMD ["/root/chain33", "-f", "/root/chain33.toml"]

@@ -17,6 +17,7 @@ export PATH="$PWD:$PATH"
 
 NODE3="${1}_chain33_1"
 CLI="docker exec ${NODE3} /root/chain33-cli"
+PARA_CLI="docker exec ${NODE3} /root/chain33-para-cli"
 
 NODE2="${1}_chain32_1"
 
@@ -316,6 +317,110 @@ function transfer() {
     fi
 }
 
+function dice_test() {
+    echo "=========== # test dice ============="
+    for ((i = 0; i < 3; i++)); do
+        addr=`${CLI} account list | jq ".wallets[${i}].label"`
+        if [[ ${addr} = "\"node award\"" ]]; then
+            continue
+        fi
+        balance=`${CLI} account list | jq ".wallets[${i}].acc.balance"`
+        if [[ ${balance} = "0.0000" ]]; then
+            let i--
+            sleep 1
+        fi
+    done
+    for ((i = 0; i < 3; i++)); do
+        addr=`${PARA_CLI} account list | jq ".wallets[${i}].label"`
+        if [[ ${addr} = "\"paraAuthAccount\"" ]]; then
+            continue
+        fi
+        balance=`${CLI} account list | jq ".wallets[${i}].acc.balance"`
+        if [[ ${balance} = "0.0000" ]]; then
+            let i--
+            sleep 1
+        fi
+    done
+    echo "transfer bty ok"
+
+    echo "== unlock wallet =="
+    result=`${PARA_CLI} wallet unlock -p 1314 | jq '.isOK'`
+    if [[ ${result} != "true" ]]; then
+        echo "wallet unlock error"
+        exit 1
+    fi
+
+    echo "para import private key: CC38546E9E659D15E6B4893F0AB32A06D103931A8230B0BDE71459D2B27D6944"
+    ${PARA_CLI} account import_key -k CC38546E9E659D15E6B4893F0AB32A06D103931A8230B0BDE71459D2B27D6944 -l returnAddr
+
+    echo "para import private key: 4257D8692EF7FE13C68B65D6A52F03933DB2FA5CE8FAF210B5B8B80C721CED01"
+    ${PARA_CLI} account import_key -k 4257D8692EF7FE13C68B65D6A52F03933DB2FA5CE8FAF210B5B8B80C721CED01 -l minerAddr
+
+    echo "== paracross transfer bty =="
+    hash=`${PARA_CLI} send bty transfer -a 10000 -t 12qyocayNF7Lv6C9qW4avxs2E7U41fKSfv -k 14KEKbYtKKQm4wMthSK9J4La4nAiidGozt`
+    echo "${hash}"
+    block_wait "${PARA_CLI}" 2
+    result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
+    if [[ ${result} != '"ExecOk"' ]]; then
+        echo "transfer bty failed"
+    fi
+
+    echo "== create dice contract =="
+    hash=`${PARA_CLI} send wasm create -x dice -f 10 -n deployDice -d . -k 14KEKbYtKKQm4wMthSK9J4La4nAiidGozt`
+    echo "${hash}"
+    block_wait "${PARA_CLI}" 2
+    result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
+    if [[ ${result} != '"ExecOk"' ]]; then
+        echo "create dice contract failed"
+    fi
+
+    echo "== transfer bty to dice =="
+    ${PARA_CLI} send bty send_exec -e user.p.para.user.wasm.dice -a 500 -n transfer2dice -k 12qyocayNF7Lv6C9qW4avxs2E7U41fKSfv
+    hash=`${PARA_CLI} send bty send_exec -e user.p.para.user.wasm.dice -a 5000 -n transfer2dice -k 14KEKbYtKKQm4wMthSK9J4La4nAiidGozt`
+    echo "${hash}"
+    block_wait "${PARA_CLI}" 2
+    result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
+    if [[ ${result} != '"ExecOk"' ]]; then
+        echo "transfer bty to dice failed"
+    fi
+
+    echo "== startgame =="
+    hash=`${PARA_CLI} send wasm call -x startgame -e user.p.para.user.wasm.dice -f 0.002 -n start -r "{\"deposit\":\"4000\"}" -k 14KEKbYtKKQm4wMthSK9J4La4nAiidGozt`
+    echo "${hash}"
+    block_wait "${PARA_CLI}" 2
+    result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
+    if [[ ${result} != '"ExecOk"' ]]; then
+        echo "start game failed"
+    fi
+
+    echo "== play game =="
+    hash=`${PARA_CLI} send wasm call -x play -e user.p.para.user.wasm.dice -f 0.002 -r "{\"amount\":2,\"number\":30,\"direction\":0}" -k 12qyocayNF7Lv6C9qW4avxs2E7U41fKSfv`
+    echo "${hash}"
+    block_wait "${PARA_CLI}" 2
+    result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
+    if [[ ${result} != '"ExecOk"' ]]; then
+        echo "play game failed"
+    fi
+
+    echo "== stop game =="
+    hash=`${PARA_CLI} send wasm call -x stopgame -e user.p.para.user.wasm.dice -f 0.002 -r "{}" -k 14KEKbYtKKQm4wMthSK9J4La4nAiidGozt`
+    echo "${hash}"
+    block_wait "${PARA_CLI}" 2
+    result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
+    if [[ ${result} != '"ExecOk"' ]]; then
+        echo "stop game failed"
+    fi
+
+    echo "== check balance =="
+    result=`${PARA_CLI} account balance -e user.p.para.user.wasm.dice -a 14KEKbYtKKQm4wMthSK9J4La4nAiidGozt | jq '.frozen'`
+    if [[ ${result} != '"0.0000"' ]]; then
+        echo "check balance failed"
+    fi
+
+    echo "dice contract test ok!"
+    echo ""
+}
+
 function base_config() {
     sync
     transfer
@@ -345,6 +450,9 @@ function main() {
 
     ### finish ###
     check_docker_container
+
+    ### test wasm dice ###
+    dice_test
     echo "===============================DAPP=$DAPP main end========================================================="
 }
 

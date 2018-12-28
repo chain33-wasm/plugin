@@ -225,7 +225,7 @@ void dice::set_localdb_for_height(int64_t height, int64_t round)
 void dice::withdraw(string game_creator)
 {
   int64_t balance = this->get_status().game_balance;
-  eosio_assert(OK == execActiveCoin(game_creator.c_str(), balance/GAME_PRECISION*COIN_PRECISION), "fail to active coins");
+  eosio_assert(OK == execActiveCoin(game_creator.c_str(), COIN_PRECISION/GAME_PRECISION*balance), "fail to active coins");
 }
 
 bool dice::is_active()
