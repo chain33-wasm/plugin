@@ -1,11 +1,8 @@
 package commands
 
 import (
-	//"encoding/json"
 	"bytes"
 	"fmt"
-	//"github.com/33cn/chain33/common"
-	//"github.com/33cn/chain33/common/address"
 	"github.com/33cn/chain33/rpc/jsonclient"
 	rpctypes "github.com/33cn/chain33/rpc/types"
 	"github.com/33cn/chain33/types"
@@ -15,7 +12,6 @@ import (
 	"io/ioutil"
 	"os"
 	"regexp"
-	"strings"
 )
 
 func WasmCmd() *cobra.Command {
@@ -68,7 +64,7 @@ func wasmCreateContract(cmd *cobra.Command, args []string) {
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
 	//paraName, _ := cmd.Flags().GetString("paraName")
 
-	nameReg, err:= regexp.Compile(wasmtypes.NameRegExp)
+	nameReg, err := regexp.Compile(wasmtypes.NameRegExp)
 	if !nameReg.MatchString(contractName) {
 		fmt.Fprintln(os.Stderr, "Wrong wasm contract name format, which should be a-z and 0-9 ")
 		return
@@ -167,10 +163,10 @@ func wasmFuzzyQueryContract(cmd *cobra.Command, args []string) {
 
 	queryReq := wasmtypes.WasmFuzzyQueryTableReq{
 		ContractName: contractName,
-		TableName:tableName,
-		Format:format,
-		Start:start,
-		Stop:stop,
+		TableName:    tableName,
+		Format:       format,
+		Start:        start,
+		Stop:         stop,
 	}
 
 	var WasmQueryResponse wasmtypes.WasmFuzzyQueryResponse
@@ -275,102 +271,124 @@ func wasmAddCommonFlags(cmd *cobra.Command) {
 	cmd.Flags().Float64P("fee", "f", 0, "contract gas fee (optional)")
 }
 
-func wasmEstimateContract(cmd *cobra.Command, args []string) {
+
+func addEstimateCallFlags(cmd *cobra.Command) {
+	wasmAddCallContractFlags(cmd)
+
+	cmd.Flags().StringP("caller", "c", "", "the caller address")
+
+}
+func wasmEstimateCallCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "call",
+		Short: "Estimate the gas cost of calling a contract",
+		Run:   wasmestimatecall,
+	}
+	addEstimateCallFlags(cmd)
+	return cmd
+}
+
+func wasmestimatecall(cmd *cobra.Command, args []string) {
 	caller, _ := cmd.Flags().GetString("caller")
-	method, _ := cmd.Flags().GetString("method")
+
 	fee, _ := cmd.Flags().GetFloat64("fee")
 	contractName, _ := cmd.Flags().GetString("exec")
 	actionName, _ := cmd.Flags().GetString("action")
 	abiPara, _ := cmd.Flags().GetString("para")
 	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
-	path, _ := cmd.Flags().GetString("path")
-
 
 	var estGasResp wasmtypes.EstimateWASMGasResp
-	if method == "create" {
-		name := strings.Split(contractName,".")
-		contractname := name[len(name) -1]
-		codePath := path + "/" + contractname + ".wasm"
-		abiPath := path + "/" + contractname + ".abi"
-		code, err := ioutil.ReadFile(codePath)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, "read code error ", err)
-			return
-		}
 
-		abi, err := ioutil.ReadFile(abiPath)
-		if err != nil {
-			fmt.Fprintln(os.Stderr, "read abi error ", err)
-			return
-		}
-		var estimatecreateReq = wasmtypes.EstimateCreateContractReq{
-			Code: code,
-			Abi:  string(abi),
-		}
-		query := sendQuery4wasm(rpcLaddr, "EstimateGasCreateContract", &estimatecreateReq, &estGasResp)
-		if query {
-			fmt.Fprintf(os.Stdout, "create contract gas cost estimate %v\n", estGasResp.Gas)
-		} else {
-			fmt.Fprintln(os.Stderr, "create contract gas cost estimate error")
-			return
-		}
+	feeInt64 := uint64(fee*1e4) * 1e4
+	var estimatecallreq = wasmtypes.EstimateCallContractReq{
+		Execer:     contractName,
+		GasLimit:   feeInt64,
+		From:       caller,
+		ActionName: actionName,
+		ActionData: []byte(abiPara),
 	}
-	if method == "call" {
-		feeInt64 := uint64(fee*1e4) * 1e4
-		var estimatecallreq = wasmtypes.EstimateCallContractReq{
-			Execer:contractName,
-			GasLimit:feeInt64,
-			From:caller,
-			ActionName:actionName,
-			ActionData:[]byte(abiPara),
-		}
-		query := sendQuery4wasm(rpcLaddr, "EstimateGasCallContract", &estimatecallreq, &estGasResp)
+	query := sendQuery4wasm(rpcLaddr, "EstimateGasCallContract", &estimatecallreq, &estGasResp)
 
-		if query {
-			fmt.Fprintf(os.Stdout, "call contract gas cost estimate %v\n", estGasResp.Gas)
-		} else {
-			fmt.Fprintln(os.Stderr, "call contract gas cost estimate error")
-		}
+	if query {
+		fmt.Fprintf(os.Stdout, "call contract gas cost estimate %v\n", estGasResp.Gas)
+	} else {
+		fmt.Fprintln(os.Stderr, "call contract gas cost estimate error")
 	}
 
 }
 
-func addEstimateFlags4wasm(cmd *cobra.Command) {
-	cmd.Flags().StringP("input", "i", "", "input contract binary code")
-	cmd.MarkFlagRequired("input")
-
-	cmd.Flags().StringP("exec", "e", "", "external contract name (like user.external.xxxxx)")
-
-	cmd.Flags().StringP("caller", "c", "", "the caller address")
-
-	cmd.Flags().Float64P("amount", "a", 0, "the amount transfer to the contract (optional)")
-}
-
-func addEstimateFlags(cmd *cobra.Command) {
-	wasmAddCallContractFlags(cmd)
-	//cmd.Flags().StringP("input", "i", "", "input contract binary code")
-	//cmd.MarkFlagRequired("input")
-
+func addEstimateCreateFlags(cmd *cobra.Command) {
 	cmd.Flags().StringP("path", "d", "", "path where stores wasm code and abi")
 	cmd.MarkFlagRequired("path")
 
+	cmd.Flags().StringP("contract", "x", "", "contract name same with the code and abi file")
+	cmd.MarkFlagRequired("contract")
 
-	//cmd.Flags().StringP("exec", "e", "", "evm contract name (like user.evm.xxxxx)")
-	//
-	cmd.Flags().StringP("caller", "c", "", "the caller address")
+}
 
-	cmd.Flags().StringP("method", "m", "", "create or call")
-	//cmd.Flags().Float64P("amount", "a", 0, "the amount transfer to the contract (optional)")
+func wasmestimatecreate(cmd *cobra.Command, args []string) {
+	path, _ := cmd.Flags().GetString("path")
+	contractName, _ := cmd.Flags().GetString("contract")
+	rpcLaddr, _ := cmd.Flags().GetString("rpc_laddr")
+
+	nameReg, err := regexp.Compile(wasmtypes.NameRegExp)
+	if !nameReg.MatchString(contractName) {
+		fmt.Fprintln(os.Stderr, "Wrong wasm contract name format, which should be a-z and 0-9 ")
+		return
+	}
+
+	if len(contractName) > 16 || len(contractName) < 4 {
+		fmt.Fprintln(os.Stderr, "wasm contract name's length should be within range [4-16]")
+		return
+	}
+
+	codePath := path + "/" + contractName + ".wasm"
+	abiPath := path + "/" + contractName + ".abi"
+	code, err := ioutil.ReadFile(codePath)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "read code error ", err)
+		return
+	}
+
+	abi, err := ioutil.ReadFile(abiPath)
+	if err != nil {
+		fmt.Fprintln(os.Stderr, "read abi error ", err)
+		return
+	}
+	var estimatecreateReq = wasmtypes.EstimateCreateContractReq{
+		Code: code,
+		Abi:  string(abi),
+	}
+	var estGasResp wasmtypes.EstimateWASMGasResp
+	query := sendQuery4wasm(rpcLaddr, "EstimateGasCreateContract", &estimatecreateReq, &estGasResp)
+	if query {
+		fmt.Fprintf(os.Stdout, "create contract gas cost estimate %v\n", estGasResp.Gas)
+	} else {
+		fmt.Fprintln(os.Stderr, "create contract gas cost estimate error")
+		return
+	}
+}
+
+func wasmEstimateCreateCmd() *cobra.Command {
+	cmd := &cobra.Command{
+		Use:   "create",
+		Short: "Estimate the gas cost of creating a contract",
+		Run:   wasmestimatecreate,
+	}
+	addEstimateCreateFlags(cmd)
+	return cmd
 }
 
 // 估算合约消耗
 func wasmEstimateContractCmd() *cobra.Command {
+
 	cmd := &cobra.Command{
 		Use:   "estimate",
 		Short: "Estimate the gas cost of calling or creating a contract",
-		Run:   wasmEstimateContract,
 	}
-	addEstimateFlags(cmd)
+	cmd.AddCommand(
+		wasmEstimateCreateCmd(),
+		wasmEstimateCallCmd())
 	return cmd
 }
 
