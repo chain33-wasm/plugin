@@ -26,6 +26,7 @@ typedef struct Apply_context_para {
 	char *pdata;
 	int datalen;
 	char *from;
+	char *loginfo;
 	int64_t gasAvailable;
 	int64_t blocktime;
 	int64_t height;

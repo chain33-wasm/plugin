@@ -5,6 +5,7 @@
 #include <eosio/chain/apply_context.hpp>
 #include <fc/io/json.hpp>
 #include <stdio.h>
+#include <string.h>
 
 //using namespace webassembly;
 //using namespace webassembly::common;
@@ -77,6 +78,12 @@ int callContract4go(int vm, const char *pcode, int code_size, Apply_context_para
 		eosio::chain::wasm_interface *wasmIntInstance = new eosio::chain::wasm_interface(eosio::chain::wasm_interface::vm_type(vm));
 		wasmIntInstance->apply(code_id, pcode, code_size, *pcontext);
 		fc::writewasmRunLog("Successfully finished doing callContract4go\n");
+		if(pcontext->_pending_console_output.str().size() != 0){
+			char *p = NULL;
+			p = (char *)calloc(pcontext->_pending_console_output.str().size()+1, sizeof(char));
+			strcpy(p, pcontext->_pending_console_output.str().c_str());
+			pApply_context->loginfo = p;
+		}
 		pApply_context->gasAvailable = pcontext->gasAvailable;
 
 		return Success;
@@ -88,6 +95,12 @@ int callContract4go(int vm, const char *pcode, int code_size, Apply_context_para
 			("a", e.to_detail_string()));
 	    
 		fc::writewasmRunLog(excpInfo.c_str());
+		if(pcontext->_pending_console_output.str().size() != 0){
+			char *p = NULL;
+			p = (char *)calloc(pcontext->_pending_console_output.str().size()+1, sizeof(char));
+			strcpy(p, pcontext->_pending_console_output.str().c_str());
+			pApply_context->loginfo = p;
+		}
 		pApply_context->gasAvailable = pcontext->gasAvailable;
 	    if (pcontext->gasAvailable < 0) {
 			return OUT_GAS;

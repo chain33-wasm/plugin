@@ -17,6 +17,7 @@ import (
 	loccom "github.com/33cn/plugin/plugin/dapp/wasm/executor/common"
 	wasmtypes "github.com/33cn/plugin/plugin/dapp/wasm/types"
 	"unsafe"
+	"fmt"
 )
 
 func (wasm *WASMExecutor) Exec_CreateWasmContract(createWasmContract *wasmtypes.CreateWasmContract, tx *types.Transaction, index int) (*types.Receipt, error) {
@@ -136,6 +137,10 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 	log.Debug("wasm call", "call back from callContract4go with leftGas", leftGas)
 	result := int(result_cint)
 
+	fmt.Println("loginfo", C.GoString(context.loginfo))
+	if nil != context.loginfo {
+		C.free(unsafe.Pointer(context.loginfo))
+	}
 	//合约执行失败
 	if result != wasmtypes.Success {
 		wasm.mStateDB.RevertToSnapshot(snapshot)
