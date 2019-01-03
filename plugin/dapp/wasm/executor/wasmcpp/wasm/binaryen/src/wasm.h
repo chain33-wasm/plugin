@@ -681,7 +681,9 @@ private:
   std::map<Name, Global*> globalsMap;
 
 public:
-  Module() {std::cout<<"\n\n\n********wasm moule is created now***********\n";};
+  Module() {
+    //std::cout<<"\n\n\n********wasm moule is created now***********\n";
+  };
 
   FunctionType* getFunctionType(Name name);
   Import* getImport(Name name);

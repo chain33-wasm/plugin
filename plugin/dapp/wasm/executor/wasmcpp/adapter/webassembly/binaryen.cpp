@@ -58,11 +58,11 @@ std::unique_ptr<wasm_instantiated_module_interface> binaryen_runtime::instantiat
    fc::writewasmRunLog("binaryen_runtime::instantiate_module flag 1.\n");
    try {
       vector<char> code(code_bytes, code_bytes + code_size);
-	  std::cout<<"Going to create wasm module\n";
+	  //std::cout<<"Going to create wasm module\n";
       unique_ptr<Module> module(new Module());
       WasmBinaryBuilder builder(*module, code, false);
       builder.read();
-	  std::cout<<"finishe builder read \n";
+	  //std::cout<<"finishe builder read \n";
 
       EOS_ASSERT(module->memory.initial * Memory::kPageSize <= wasm_constraints::maximum_linear_memory, binaryen_exception, "exceeds maximum linear memory");
 

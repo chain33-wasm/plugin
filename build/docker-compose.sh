@@ -452,7 +452,9 @@ function main() {
     check_docker_container
 
     ### test wasm dice ###
-    dice_test
+    if [ -n "${DAPP}" ]; then
+        dice_test
+    fi
     echo "===============================DAPP=$DAPP main end========================================================="
 }
 

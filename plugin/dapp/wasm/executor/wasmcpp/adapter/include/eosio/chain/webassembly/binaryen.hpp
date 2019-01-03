@@ -72,10 +72,10 @@ struct interpreter_interface : ModuleInstance::ExternalInterface {
 
    Literal callImport(Import *import, LiteralList &args) override
    {
-      std::cout << "enter callImport of binaryen" <<" \n";
+      //std::cout << "enter callImport of binaryen" <<" \n";
       auto fn_iter = import_lut.find((uintptr_t)import);
       EOS_ASSERT(fn_iter != import_lut.end(), wasm_execution_error, "unknown import ${m}:${n}", ("m", import->module.c_str())("n", import->base.c_str()));
-      std::cout << "call:" << import->module.c_str() << "." << import->base.c_str() <<" \n";
+      //std::cout << "call:" << import->module.c_str() << "." << import->base.c_str() <<" \n";
 	  return fn_iter->second(this, args);
    }
 

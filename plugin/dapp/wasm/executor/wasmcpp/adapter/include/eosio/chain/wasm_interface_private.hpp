@@ -32,7 +32,7 @@ namespace eosio { namespace chain {
       }
 
       std::vector<uint8_t> parse_initial_memory(const Module& module) {
-	  	 std::cout<<"\n\n*********parse_initial_memory\n";
+	  	 //std::cout<<"\n\n*********parse_initial_memory\n";
          std::vector<uint8_t> mem_image;
 
          for(const DataSegment& data_segment : module.dataSegments) {
@@ -49,16 +49,16 @@ namespace eosio { namespace chain {
 			char debugInfo[1024];
 			int len = sprintf(debugInfo, "parse_initial_memory, memcpy base_offset:0x%x, size:%lu\n",
 				base_offset, data_segment.data.size());
-			std::cout<<debugInfo<<"\n";
+			//std::cout<<debugInfo<<"\n";
 			len = 0;
 			for (int j =0; j < data_segment.data.size() && len < 1024; j++) {
 				len += sprintf(debugInfo + len, "%c", data_segment.data[j]);
 			}
-			std::cout<<"data_segment.data: "<<debugInfo<<"\n";
+			//std::cout<<"data_segment.data: "<<debugInfo<<"\n";
             memcpy(mem_image.data() + base_offset, data_segment.data.data(), data_segment.data.size());
          }
 
-		 std::cout<<"\n************\nFinish parse_initial_memory\n";
+		 //std::cout<<"\n************\nFinish parse_initial_memory\n";
 
          return mem_image;
       }

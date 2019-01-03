@@ -569,18 +569,18 @@ Import* Module::getImport(Name name) {
   ASSERT_THROW(importsMap.count(name));
   ///////////////debug code//////////////////  
 #if 1
-    static bool outAlready = false;
-    if (false == outAlready) {
-		std::cout<<"Import info in map is as below:" << "\n";
-		for (std::map<Name, Import*>::iterator it = importsMap.begin(); 
-			it != importsMap.end(); it++) {
-			std::cout<<"Name is:" <<it->first.c_str() << ", and name, module, base:" 
-				<< it->second->name.c_str() 
-				<< it->second->module.c_str()
-				<< it->second->base.c_str()<<"\n";
-		}
-		outAlready = true;
-	}
+//    static bool outAlready = false;
+//    if (false == outAlready) {
+//		std::cout<<"Import info in map is as below:" << "\n";
+//		for (std::map<Name, Import*>::iterator it = importsMap.begin();
+//			it != importsMap.end(); it++) {
+//			std::cout<<"Name is:" <<it->first.c_str() << ", and name, module, base:"
+//				<< it->second->name.c_str()
+//				<< it->second->module.c_str()
+//				<< it->second->base.c_str()<<"\n";
+//		}
+//		outAlready = true;
+//	}
 	
 #endif
 	//////////////////////////////////////////

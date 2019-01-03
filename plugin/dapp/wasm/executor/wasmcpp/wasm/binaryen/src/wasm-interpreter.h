@@ -661,7 +661,7 @@ public:
   Literal callExport(Name name, LiteralList& arguments) {
     Export *export_ = wasm.getExportOrNull(name);
     if (!export_) externalInterface->trap("callExport not found");
-	std::cout<<"callExport with name:" << export_->name.c_str() << ", value:" << export_->value.c_str() << "\n";
+	//std::cout<<"callExport with name:" << export_->name.c_str() << ", value:" << export_->value.c_str() << "\n";
     return callFunction(export_->value, arguments);
   }
 
@@ -786,12 +786,12 @@ public:
         LiteralList arguments;
         Flow flow = generateArguments(curr->operands, arguments);
         if (flow.breaking()) return flow;
-		std::cout<<"_visitCallImport "<<curr->target.c_str()<<"\n";
+		//std::cout<<"_visitCallImport "<<curr->target.c_str()<<"\n";
         return instance.externalInterface->callImport(instance.wasm.getImport(curr->target), arguments);
       }
 
       Flow visitCallImport(CallImport *curr) {
-	  	 std::cout << "debug visitCallImport" <<" \n";
+	  	 //std::cout << "debug visitCallImport" <<" \n";
          Flow ret = _visitCallImport(curr);
          last_call = ret;
          return ret;
@@ -909,7 +909,7 @@ public:
       }
     };
 
-	std::cout << "callDepth: " << callDepth << "\n";
+	//std::cout << "callDepth: " << callDepth << "\n";
 
     if (callDepth > maxCallDepth) externalInterface->trap("stack limit");
     auto previousCallDepth = callDepth;
@@ -927,25 +927,25 @@ public:
 	}
 #endif
 	//////////////////////////////////////////
-    std::cout << "Going to wasm.getFunction with name:" << name.c_str() << "\n";
+    //std::cout << "Going to wasm.getFunction with name:" << name.c_str() << "\n";
     Function *function = wasm.getFunction(name);
     ASSERT_THROW(function);
     FunctionScope scope(function, arguments);
     
 //#ifdef WASM_INTERPRETER_DEBUG
 #if 1
-    std::cout << "entering " << function->name
-              << "\n  with arguments:\n";
-    for (unsigned i = 0; i < arguments.size(); ++i) {
-      std::cout << "    $" << i << ": " << arguments[i] << '\n';
-    }
+//    std::cout << "entering " << function->name
+//              << "\n  with arguments:\n";
+//    for (unsigned i = 0; i < arguments.size(); ++i) {
+//      std::cout << "    $" << i << ": " << arguments[i] << '\n';
+//    }
 #endif
-    int i = 0;
-    std::cout << "Run to Flag: " << i++ <<" \n";
+    //int i = 0;
+    //std::cout << "Run to Flag: " << i++ <<" \n";
     RuntimeExpressionRunner rer(*this, scope);
-	std::cout << "Run to Flag: " << i++ <<" \n";
+	//std::cout << "Run to Flag: " << i++ <<" \n";
     Flow flow = rer.visit(function->body);
-	std::cout << "Run to Flag: " << i++ <<" \n";
+	//std::cout << "Run to Flag: " << i++ <<" \n";
     ASSERT_THROW(!flow.breaking() || flow.breakTo == RETURN_FLOW); // cannot still be breaking, it means we missed our stop
     Literal ret = flow.value;
 #if 1
@@ -954,21 +954,21 @@ public:
           ret = rer.last_call.value;
        }
        else {
-         std::cerr << "calling " << function->name << " resulted in " << ret << " but the function type is " << function->result << '\n';
+         //std::cerr << "calling " << function->name << " resulted in " << ret << " but the function type is " << function->result << '\n';
          WASM_UNREACHABLE();
        }
     }
 #endif
-    std::cout << "Run to Flag: " << i++ <<" \n";
+    //std::cout << "Run to Flag: " << i++ <<" \n";
     callDepth = previousCallDepth; // may decrease more than one, if we jumped up the stack
     // if we jumped up the stack, we also need to pop higher frames
     while (functionStack.size() > previousFunctionStackSize) {
       functionStack.pop_back();
     }
-	std::cout << "Run to Flag: " << i++ <<" \n";
+	//std::cout << "Run to Flag: " << i++ <<" \n";
 //#ifdef WASM_INTERPRETER_DEBUG
 #if 1
-    std::cout << "exiting " << function->name << " with " << ret << '\n';
+    //std::cout << "exiting " << function->name << " with " << ret << '\n';
 #endif
     return ret;
   }

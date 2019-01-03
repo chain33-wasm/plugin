@@ -996,7 +996,7 @@ void WasmBinaryWriter::visitDrop(Drop *curr) {
 static Name RETURN_BREAK("binaryen|break-to-return");
 
 void WasmBinaryBuilder::read() {
-	std::cout<<"void WasmBinaryBuilder::read()"<<"\n";
+	//std::cout<<"void WasmBinaryBuilder::read()"<<"\n";
 
   readHeader();
   readSourceMapHeader();

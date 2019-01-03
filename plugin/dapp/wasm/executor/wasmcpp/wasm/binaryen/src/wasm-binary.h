@@ -679,7 +679,7 @@ class WasmBinaryBuilder {
 
 public:
   WasmBinaryBuilder(Module& wasm, std::vector<char>& input, bool debug) : wasm(wasm), allocator(wasm.allocator), input(input), debug(debug), sourceMap(nullptr), nextDebugLocation(0, { 0, 0, 0 }), useDebugLocation(false) {
-      std::cout<<"WasmBinaryBuilder is being created now"<<"\n";
+      //std::cout<<"WasmBinaryBuilder is being created now"<<"\n";
   }
 
   void read();
