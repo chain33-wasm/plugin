@@ -147,7 +147,7 @@ func wasmQueryContract(cmd *cobra.Command, args []string) {
 	query := sendQuery4wasm(rpcLaddr, wasmtypes.WasmGetContractTable, &queryReq, &WasmQueryResponse)
 	if query {
 		for _, WasmOutItem := range WasmQueryResponse.QueryResultItems {
-			fmt.Println(WasmOutItem.ItemType)
+			//fmt.Println(WasmOutItem.ItemType)
 			fmt.Println(WasmOutItem.ResultJSON)
 		}
 	} else {

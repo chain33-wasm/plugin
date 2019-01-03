@@ -318,30 +318,6 @@ function transfer() {
 }
 
 function dice_test() {
-    echo "=========== # test dice ============="
-    for ((i = 0; i < 3; i++)); do
-        addr=`${CLI} account list | jq ".wallets[${i}].label"`
-        if [[ ${addr} = "\"node award\"" ]]; then
-            continue
-        fi
-        balance=`${CLI} account list | jq ".wallets[${i}].acc.balance"`
-        if [[ ${balance} = "0.0000" ]]; then
-            let i--
-            sleep 1
-        fi
-    done
-    for ((i = 0; i < 3; i++)); do
-        addr=`${PARA_CLI} account list | jq ".wallets[${i}].label"`
-        if [[ ${addr} = "\"paraAuthAccount\"" ]]; then
-            continue
-        fi
-        balance=`${CLI} account list | jq ".wallets[${i}].acc.balance"`
-        if [[ ${balance} = "0.0000" ]]; then
-            let i--
-            sleep 1
-        fi
-    done
-    echo "transfer bty ok"
 
     echo "== unlock wallet =="
     result=`${PARA_CLI} wallet unlock -p 1314 | jq '.isOK'`
@@ -363,6 +339,7 @@ function dice_test() {
     result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
     if [[ ${result} != '"ExecOk"' ]]; then
         echo "transfer bty failed"
+        exit 1
     fi
 
     echo "== create dice contract =="
@@ -372,6 +349,7 @@ function dice_test() {
     result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
     if [[ ${result} != '"ExecOk"' ]]; then
         echo "create dice contract failed"
+        exit 1
     fi
 
     echo "== transfer bty to dice =="
@@ -382,6 +360,7 @@ function dice_test() {
     result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
     if [[ ${result} != '"ExecOk"' ]]; then
         echo "transfer bty to dice failed"
+        exit 1
     fi
 
     echo "== startgame =="
@@ -391,6 +370,26 @@ function dice_test() {
     result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
     if [[ ${result} != '"ExecOk"' ]]; then
         echo "start game failed"
+        exit 1
+    fi
+
+    echo "== query game status =="
+    result=`${PARA_CLI} wasm query -e user.p.para.user.wasm.dice -k dice_statics -n gamestatus`
+    echo ${result}
+    balance=`echo ${result} | jq '.game_balance'`
+    if [[ ${balance} != 400000 ]]; then
+        echo "query game failed"
+        exit 1
+    fi
+    active=`echo ${result} | jq '.is_active'`
+    if [[ ${active} != 1 ]]; then
+        echo "query game failed"
+        exit 1
+    fi
+    creator=`echo ${result} | jq '.game_creator'`
+    if [[ ${creator} != '"14KEKbYtKKQm4wMthSK9J4La4nAiidGozt"' ]]; then
+        echo "query game failed"
+        exit 1
     fi
 
     echo "== play game =="
@@ -400,6 +399,31 @@ function dice_test() {
     result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
     if [[ ${result} != '"ExecOk"' ]]; then
         echo "play game failed"
+        exit 1
+    fi
+
+    echo "== query round info =="
+    result=`${PARA_CLI} wasm query -e user.p.para.user.wasm.dice -k round:1 -n roundinfo`
+    echo ${result}
+    num=`echo ${result} | jq '.guess_num'`
+    if [[ ${num} != 30 ]]; then
+        echo "query round info failed"
+        exit 1
+    fi
+    round=`echo ${result} | jq '.round'`
+    if [[ ${round} != 1 ]]; then
+        echo "query round info failed"
+        exit 1
+    fi
+    amount=`echo ${result} | jq '.amount'`
+    if [[ ${amount} != 2 ]]; then
+        echo "query round info failed"
+        exit 1
+    fi
+    player=`echo ${result} | jq '.player'`
+    if [[ ${player} != '"12qyocayNF7Lv6C9qW4avxs2E7U41fKSfv"' ]]; then
+        echo "query round info failed"
+        exit 1
     fi
 
     echo "== stop game =="
@@ -409,12 +433,23 @@ function dice_test() {
     result=`${PARA_CLI} tx query -s ${hash} | jq '.receipt.tyName'`
     if [[ ${result} != '"ExecOk"' ]]; then
         echo "stop game failed"
+        exit 1
+    fi
+
+    echo "== query game status =="
+    result=`${PARA_CLI} wasm query -e user.p.para.user.wasm.dice -k dice_statics -n gamestatus`
+    echo ${result}
+    active=`echo ${result} | jq '.is_active'`
+    if [[ ${active} != 0 ]]; then
+        echo "query game failed"
+        exit 1
     fi
 
     echo "== check balance =="
     result=`${PARA_CLI} account balance -e user.p.para.user.wasm.dice -a 14KEKbYtKKQm4wMthSK9J4La4nAiidGozt | jq '.frozen'`
     if [[ ${result} != '"0.0000"' ]]; then
         echo "check balance failed"
+        exit 1
     fi
 
     echo "dice contract test ok!"
