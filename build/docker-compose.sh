@@ -352,6 +352,13 @@ function dice_test() {
         exit 1
     fi
 
+    echo "== check dice contract =="
+    result=`${PARA_CLI} wasm check -e dice`
+    if [[ ${result} != true ]]; then
+        echo "dice contract not exist"
+        exit 1
+    fi
+
     echo "== transfer bty to dice =="
     ${PARA_CLI} send bty send_exec -e user.p.para.user.wasm.dice -a 500 -n transfer2dice -k 12qyocayNF7Lv6C9qW4avxs2E7U41fKSfv
     hash=`${PARA_CLI} send bty send_exec -e user.p.para.user.wasm.dice -a 5000 -n transfer2dice -k 14KEKbYtKKQm4wMthSK9J4La4nAiidGozt`
