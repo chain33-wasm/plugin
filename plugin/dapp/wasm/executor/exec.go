@@ -73,7 +73,8 @@ func (wasm *WASMExecutor) Exec_CreateWasmContract(createWasmContract *wasmtypes.
 		createWasmContract.Name,
 		contract.CallerAddress.String(),
 		contractAddrInStr,
-		wasmtypes.CreateWasmContractAction)
+		wasmtypes.CreateWasmContractAction,
+			"")
 	log.Debug("wasm create", "receipt", receipt, "err info", err)
 
 	return receipt, err
@@ -137,9 +138,11 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 	log.Debug("wasm call", "call back from callContract4go with leftGas", leftGas)
 	result := int(result_cint)
 
-	fmt.Println("loginfo", C.GoString(context.loginfo))
+	var wasmLogInfo string
 	if nil != context.loginfo {
+		wasmLogInfo = C.GoString(context.loginfo)
 		C.free(unsafe.Pointer(context.loginfo))
+		fmt.Println("loginfo\n", wasmLogInfo)
 	}
 	//合约执行失败
 	if result != wasmtypes.Success {
@@ -163,7 +166,8 @@ func (wasm *WASMExecutor) Exec_CallWasmContract(callWasmContract *wasmtypes.Call
 		contractAccount.GetExecName(),
 		caller,
 		userWasmAddr,
-		wasmtypes.CallWasmContractAction)
+		wasmtypes.CallWasmContractAction,
+			wasmLogInfo)
 	log.Debug("wasm call", "receipt", receipt, "err info", err)
 
 	return receipt, err

@@ -357,7 +357,7 @@ func (wasm *WASMExecutor) prepareQueryContext(executorName []byte) {
 //	return address.GetExecAddress(loccom.CalcWasmContractName(txHash))
 //}
 
-func (wasm *WASMExecutor) GenerateExecReceipt(usedGas, gasPrice uint64, snapshot int, execName, caller, contractAddr string, opType loccom.WasmContratOpType) (*types.Receipt, error) {
+func (wasm *WASMExecutor) GenerateExecReceipt(usedGas, gasPrice uint64, snapshot int, execName, caller, contractAddr string, opType loccom.WasmContratOpType, debugInfo string) (*types.Receipt, error) {
 	curVer := wasm.mStateDB.GetLastSnapshot()
 
 	// 计算消耗了多少费用（实际消耗的费用）
@@ -388,6 +388,14 @@ func (wasm *WASMExecutor) GenerateExecReceipt(usedGas, gasPrice uint64, snapshot
 	if opType == wasmtypes.CreateWasmContractAction {
 		runLog.Ty = wasmtypes.TyLogCreateUserWasmContract
 	}
+
+	//wasm子合约的debug信息
+	debugLog := &wasmtypes.WasmDebugResp{DebugStatus: debugInfo}
+	runLog2 := &types.ReceiptLog{
+		Ty: wasmtypes.TyLogOutputItemWasm,
+		Log: types.Encode(debugLog),
+	}
+	logs = append(logs, runLog2)
 
 	//调用wasm执行器的log
 	logs = append(logs, runLog)

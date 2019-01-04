@@ -84,6 +84,7 @@ func (wasm *WasmType) GetLogMap() map[int64]*types.LogInfo {
 		TyLogCallContractWasm:      {Ty: reflect.TypeOf(ReceiptWASMContract{}), Name: "LogCallContractWasm"},
 		TyLogStateChangeItemWasm: {Ty: reflect.TypeOf(WASMStateChangeItem{}), Name: "LogStateChangeItemWasm"},
 		TyLogCreateUserWasmContract: {Ty: reflect.TypeOf(ReceiptWASMContract{}), Name: "LogCreateUserWasmContract"},
+		TyLogOutputItemWasm: {Ty: reflect.TypeOf(WasmDebugResp{}), Name: "LogOutputItemWasm"},
 	}
 	return logInfo
 }

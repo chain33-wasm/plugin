@@ -40,6 +40,7 @@ void dice::startgame(int64_t deposit)
 //-x play -r "{\"player\":\"14cM9mnZ5JvbpFQTF4nwTCmix31VgmpweL\",\"amount\":\"2\",\"number\":\"40\"}" 
 void dice::play(int64_t amount, uint8_t number, uint8_t direction)
 { 
+  prints("\n                    *************\n");
   char fromBuf[64] = {0};
   int fromsize = getFrom4chain33(fromBuf, 64);
   string player(fromBuf);
@@ -60,7 +61,7 @@ void dice::play(int64_t amount, uint8_t number, uint8_t direction)
   int64_t payout = GAME_PRECISION * amount * (100 - probability) / probability;
   //debug
   char bufferDebug[16] = {0};
-  sprintf(bufferDebug, "payout:%lld \n", payout);
+  sprintf(bufferDebug, "payout:%lld\n", payout);
   prints((const char*)bufferDebug);
   //end debug
   char arr[32] = {0};
@@ -72,7 +73,7 @@ void dice::play(int64_t amount, uint8_t number, uint8_t direction)
   uint64_t a4 = uint64_t(arr[length - 4]) << 24;
   uint8_t rand_num = uint8_t((a1 + a2 + a3 +a4)%100);
   //debug
-  sprintf(bufferDebug, "rand num:%d \n",rand_num);
+  sprintf(bufferDebug, "rand num:%d\n",rand_num);
   prints((const char*)bufferDebug);
   //end debug
 
